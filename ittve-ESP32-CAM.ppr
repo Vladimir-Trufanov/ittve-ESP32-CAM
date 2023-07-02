@@ -1,0 +1,39 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-ESP32-CAM
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+Extensions=*.*
+[Project tree]
+ittve-ESP32-CAM
+	+ittve-ESP32-CAM
+		-01-Заставляем ESP32-CAM мигать лампочками
+			01-Заставляем ESP32-CAM мигать лампочками\Мы купили Arduino Pro Mini.doc
+		+01-Пробуем ноты на ардуино
+			+NotyNaArduino
+				01-Пробуем ноты на ардуино\NotyNaArduino\NotyNaArduino.ino
+		LICENSE
+		README.md
+		README.md.backup
+		Как определить Arduino Mini Pro 5v против 3v.doc
+		Карелия - ноты.pdf
+		Модуль питания для макетной платы MB.doc
+		Таблица соотношения нот и частот.doc
+[Open project files]
+0=01-Пробуем ноты на ардуино\NotyNaArduino\NotyNaArduino.ino
+[Selected Project Files]
+Main=
+Selected=01-Пробуем ноты на ардуино\NotyNaArduino\NotyNaArduino.ino
+[01-Пробуем ноты на ардуино\NotyNaArduino\NotyNaArduino.ino]
+TopLine=1
+Caret=3,14
