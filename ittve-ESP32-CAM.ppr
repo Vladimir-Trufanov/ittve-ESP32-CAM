@@ -13,6 +13,7 @@ DontOpen=0
 AbsolutePath=0
 FileFormat=0
 ProjectFilesOnly=0
+HTServer=localhost
 Extensions=*.*
 [Project tree]
 ittve-ESP32-CAM
@@ -35,5 +36,5 @@ ittve-ESP32-CAM
 Main=
 Selected=01-Пробуем ноты на ардуино\NotyNaArduino\NotyNaArduino.ino
 [01-Пробуем ноты на ардуино\NotyNaArduino\NotyNaArduino.ino]
-TopLine=1
+TopLine=2
 Caret=3,14
