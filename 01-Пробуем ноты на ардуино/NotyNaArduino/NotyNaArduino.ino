@@ -7,7 +7,24 @@
 
 //                                                   Автор:       Труфанов В.Е.
 //                                                   Дата создания:  02.07.2023
-// Copyright © 2023 tve                              Посл.изменение: 02.07.2023
+// Copyright © 2023 tve                              Посл.изменение: 04.07.2023
+
+/*
+
+Функция tone()
+В ядре Arduino есть встроенная функция для полуаппаратной генерации квадратного сигнала – tone(pin, frequency, duration):
+
+pin – цифровой пин, с которого будет генерироваться сигнал.
+frequency – частота в Герцах. Диапазон 31.. 65’535 Гц
+duration – продолжительность сигнала в миллисекундах. Опциональный параметр, если не указывать – сигнал будет генерироваться без остановки.
+Для ручной остановки генерации сигнала можно вызвать noTone(). Также у генерации при помощи tone() есть особенности:
+
+Генерация является полуаппаратной: пин дёргается МК “вручную” по прерыванию таймера, что на высокой частоте может чуть тормозить код.
+Генерация использует Timer 2, перенастройка или использование его для других целей (включая ШИМ на пинах D3 и D11 у Nano) отключит активную генерацию или изменит её частоту.
+При вызове tone() таймер перенастраивается на генерацию, то есть можно использовать таймер в своих целях между вызовами tone().
+Генерация работает только на одном пине в один момент времени, причём для включения генерации на другом пине нужно сначала отключить текущую генерацию, то есть вызвать noTone().
+
+*/
 
 
 //#include "esp_camera.h"
@@ -26,15 +43,50 @@
 //#define CAMERA_MODEL_WROVER_KIT // Has PSRAM
 //#define CAMERA_MODEL_ESP_EYE // Has PSRAM
 
+const int PinR0=A0;
+const int PinR1=A1;
+const int PinR2=A2;
+const int PinR3=A3;
 
+const int PinB=9;
+
+int ValR;
+int ValF;
+int ValS;
 
 void setup() 
 {
-  // put your setup code here, to run once:
+   //ValR=analogRead(PinR0)+analogRead(PinR1)+analogRead(PinR2)+analogRead(PinR3);
+   //ValR/=7; 
+
+     pinMode(9, OUTPUT);
 }
 
 void loop() 
 {
+   /*
+   ValF=ValS=0;
+   if (analogRead(PinR0)<ValR) {ValS++; ValF+=800;}   
+   if (analogRead(PinR1)<ValR) {ValS++; ValF+=900;}   
+   if (analogRead(PinR2)<ValR) {ValS++; ValF+=1000;}   
+   if (analogRead(PinR3)<ValR) {ValS++; ValF+=1100;} 
+   
+   if (ValS) {tone(PinB,(ValF/ValS)); delay(100);}
+   else {noTone(PinB);}
+   */
+
+  /* на пассивном
+  tone(9, 1000);  // пищать на пине 3, 1 кГц
+  delay(500);
+  noTone(3);      // не пищать
+  delay(500);
+  */
+
+    digitalWrite(9, 1);
+  delay(500);
+  digitalWrite(9, 0);
+  delay(500);
+
 }
 
 

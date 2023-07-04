@@ -36,5 +36,5 @@ ittve-ESP32-CAM
 Main=
 Selected=01-Пробуем ноты на ардуино\NotyNaArduino\NotyNaArduino.ino
 [01-Пробуем ноты на ардуино\NotyNaArduino\NotyNaArduino.ino]
-TopLine=2
-Caret=3,14
+TopLine=38
+Caret=21,72
