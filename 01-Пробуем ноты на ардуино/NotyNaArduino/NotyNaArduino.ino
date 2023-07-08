@@ -56,15 +56,16 @@ int ValS;
 
 void setup() 
 {
-   //ValR=analogRead(PinR0)+analogRead(PinR1)+analogRead(PinR2)+analogRead(PinR3);
-   //ValR/=7; 
+   ValR=analogRead(PinR0)+analogRead(PinR1)+analogRead(PinR2)+analogRead(PinR3);
+   ValR/=7; 
 
-     pinMode(9, OUTPUT);
+   // Тикание на пассивном/зум на активном зуммере - setup
+   // pinMode(9, OUTPUT);
 }
 
 void loop() 
 {
-   /*
+   
    ValF=ValS=0;
    if (analogRead(PinR0)<ValR) {ValS++; ValF+=800;}   
    if (analogRead(PinR1)<ValR) {ValS++; ValF+=900;}   
@@ -73,19 +74,20 @@ void loop()
    
    if (ValS) {tone(PinB,(ValF/ValS)); delay(100);}
    else {noTone(PinB);}
-   */
+   
 
-  /* на пассивном
-  tone(9, 1000);  // пищать на пине 3, 1 кГц
+  /* Писк 1 кГц на пассивном (на активном пищит постоянно)
+  tone(9, 1000);  // пищать 
   delay(500);
-  noTone(3);      // не пищать
+  noTone(9);      // не пищать
   delay(500);
   */
 
-    digitalWrite(9, 1);
-  delay(500);
-  digitalWrite(9, 0);
-  delay(500);
+  // Тикание на пассивном/зум на активном зуммере - loop
+  // digitalWrite(9, 1);
+  // delay(500);
+  // digitalWrite(9, 0);
+  // delay(500);
 
 }
 
