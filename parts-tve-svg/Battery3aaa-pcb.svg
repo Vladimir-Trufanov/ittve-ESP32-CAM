@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Fritzing (http://www.fritzing.org/) -->
+
+<svg
+   version="1.2"
+   x="0in"
+   y="0in"
+   width="1.787in"
+   height="0.472441in"
+   viewBox="0 0 45.3898 12"
+   id="svg1433"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1437" />
+  <circle
+     id="connector0pad"
+     connectorname="PWR@1"
+     cx="1.1049"
+     cy="10.73"
+     r="0.97790003"
+     stroke="#f7bd13"
+     stroke-width="0.254"
+     fill="none" />
+  <circle
+     id="connector1pad"
+     connectorname="GND@1"
+     cx="44.284901"
+     cy="10.73"
+     r="0.97790003"
+     stroke="#f7bd13"
+     stroke-width="0.254"
+     fill="none" />
+  <g
+     id="copper0">
+    <circle
+       id="circle1420"
+       connectorname="PWR@1"
+       cx="1.1049"
+       cy="10.73"
+       r="0.97790003"
+       stroke="#f7bd13"
+       stroke-width="0.254"
+       fill="none" />
+    <circle
+       id="circle1424"
+       connectorname="GND@1"
+       cx="44.284901"
+       cy="10.73"
+       r="0.97790003"
+       stroke="#f7bd13"
+       stroke-width="0.254"
+       fill="none" />
+  </g>
+  <text
+     class="text"
+     font-family="OCRA"
+     stroke="none"
+     stroke-width="0"
+     fill="#f0f0f0"
+     font-size="3.302px"
+     x="2.864893"
+     y="12"
+     text-anchor="start"
+     id="text1428">+</text>
+  <text
+     class="text"
+     font-family="OCRA"
+     stroke="none"
+     stroke-width="0"
+     fill="#f0f0f0"
+     font-size="3.302px"
+     x="39.784782"
+     y="12"
+     text-anchor="start"
+     id="text1430">-</text>
+</svg>
