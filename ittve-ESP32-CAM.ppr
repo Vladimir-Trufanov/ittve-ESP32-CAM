@@ -18,23 +18,408 @@ Extensions=*.*
 [Project tree]
 ittve-ESP32-CAM
 	+ittve-ESP32-CAM
-		-01-Заставляем ESP32-CAM мигать лампочками
-			01-Заставляем ESP32-CAM мигать лампочками\Мы купили Arduino Pro Mini.doc
-		+01-Пробуем ноты на ардуино
-			+NotyNaArduino
-				01-Пробуем ноты на ардуино\NotyNaArduino\NotyNaArduino.ino
+		-00-Купили Arduino Pro Mini
+			00-Купили Arduino Pro Mini\Как определить Arduino Mini Pro 5v против 3v.doc
+			00-Купили Arduino Pro Mini\Мы купили Arduino Pro Mini.doc
+		-01-Изучаем макетную плату перед пайкой
+			01-Изучаем макетную плату перед пайкой\ExamenBreadboardBeforeSoldering.fzz
+			01-Изучаем макетную плату перед пайкой\maketnaya-plata-prezhde.webp
+			01-Изучаем макетную плату перед пайкой\poluprozrachnaya-maketnaya-plata.jpeg
+			01-Изучаем макетную плату перед пайкой\provolochnaya-namotka-shemy.jpg
+			01-Изучаем макетную плату перед пайкой\Изучаем макетную плату перед пайкой.md
+			01-Изучаем макетную плату перед пайкой\Изучаем макетную плату перед пайкой.md.backup
+		-02-Подаем питание и подключаем зуммеры
+			02-Подаем питание и подключаем зуммеры\active-and-passive-buzzer.png
+			02-Подаем питание и подключаем зуммеры\arduino_nano_button_zummer.png
+			02-Подаем питание и подключаем зуммеры\arduino-passive-buzzer.png
+			02-Подаем питание и подключаем зуммеры\KY-006 raspinovka.jpg
+			02-Подаем питание и подключаем зуммеры\KY-006.jpeg
+			02-Подаем питание и подключаем зуммеры\KY-006-подключение-к-Ардуино-Нано.webp
+			02-Подаем питание и подключаем зуммеры\KY-006-подключение-к-Ардуино-УНО.jpeg
+			02-Подаем питание и подключаем зуммеры\ky-012.jpeg
+			02-Подаем питание и подключаем зуммеры\KY-012-подключение-к-Arduino-768x382.jpeg
+			02-Подаем питание и подключаем зуммеры\proteus-arduino-nano-buzzer-button.png
+			02-Подаем питание и подключаем зуммеры\proteus-nano-and-sounder.png
+			02-Подаем питание и подключаем зуммеры\raspinovka.png
+			02-Подаем питание и подключаем зуммеры\Подаем питание и подключаем зуммеры.md
+		-03-Пробуем ноты на ардуино
+			-NotyNaArduino
+				03-Пробуем ноты на ардуино\NotyNaArduino\NotyNaArduino.ino
+			03-Пробуем ноты на ардуино\Arduino Pro Mini – обзор.doc
+			03-Пробуем ноты на ардуино\Arduino Pro Mini.doc
+			03-Пробуем ноты на ардуино\Пробуем ноты на ардуино.md
+		-04-Заставляем ESP32-CAM мигать лампочками
+			-BlinkOnESP32
+				04-Заставляем ESP32-CAM мигать лампочками\BlinkOnESP32\BlinkOnESP32.ino
+			04-Заставляем ESP32-CAM мигать лампочками\esp32camv1-6-1613666780.pdf
+			04-Заставляем ESP32-CAM мигать лампочками\Заставляем ESP32-CAM мигать лампочками.md
+			04-Заставляем ESP32-CAM мигать лампочками\Распиновка ESP32-CAM AI-Thinker Назначение GPIO.doc
+		-05-Изучаем и сравниваем ESP32
+		-98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram
+			-Скетч и библиотеки
+				-Adafruit_SHT31-master
+					-assets
+						98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Adafruit_SHT31-master\assets\board.jpg
+					-examples
+						-SHT31test
+							98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Adafruit_SHT31-master\examples\SHT31test\SHT31test.ino
+					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31.cpp
+					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31.h
+					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Adafruit_SHT31-master\library.properties
+					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Adafruit_SHT31-master\license.txt
+					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Adafruit_SHT31-master\README.md
+				-Telegram_Full_v3_dzen
+					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Telegram_Full_v3_dzen\Telegram_Full_v3_dzen.ino
+				-Universal-Arduino-Telegram-Bot-master
+					-examples
+						-ESP32
+							-ChannelPost
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\ChannelPost\ChannelPost.ino
+							-ChatAction
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\ChatAction\ChatAction.ino
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\ChatAction\README.md
+							-CustomKeyboard
+								-InlineKeyboardMarkup
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\CustomKeyboard\InlineKeyboardMarkup\InlineKeyboardMarkup.ino
+								-ReplyKeyboardMarkup
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\CustomKeyboard\ReplyKeyboardMarkup\ReplyKeyboardMarkup.ino
+								-UpdateInlineKeyboard
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\CustomKeyboard\UpdateInlineKeyboard\README.md
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\CustomKeyboard\UpdateInlineKeyboard\UpdateInlineKeyboard.ino
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\CustomKeyboard\README.md
+							-EchoBot
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\EchoBot\EchoBot.ino
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\EchoBot\README.md
+							-FlashLED
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\FlashLED\FlashLED.ino
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\FlashLED\README.md
+							-Location
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\Location\Location.ino
+							-LongPoll
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\LongPoll\LongPoll.ino
+							-SendMessageFromEvent
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendMessageFromEvent\SendMessageFromEvent.ino
+							-SendPhoto
+								-ESP32-Cam
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendPhoto\ESP32-Cam\camera_code.h
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendPhoto\ESP32-Cam\camera_pins.h
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendPhoto\ESP32-Cam\ESP32-Cam.ino
+								-PhotoFromFileID
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendPhoto\PhotoFromFileID\PhotoFromFileID.ino
+								-PhotoFromSD
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendPhoto\PhotoFromSD\PhotoFromSD.ino
+								-PhotoFromSerial
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendPhoto\PhotoFromSerial\PhotoFromSerial.ino
+								-PhotoFromURL
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendPhoto\PhotoFromURL\PhotoFromURL.ino
+							-SetMyCommands
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SetMyCommands\SetMyCommands.ino
+						-ESP8266
+							-BulkMessages
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\BulkMessages\BulkMessages.ino
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\BulkMessages\README.md
+							-ChannelPost
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\ChannelPost\ChannelPost.ino
+							-ChatAction
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\ChatAction\ChatAction.ino
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\ChatAction\README.md
+							-CustomKeyboard
+								-InlineKeyboardMarkup
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\CustomKeyboard\InlineKeyboardMarkup\InlineKeyboardMarkup.ino
+								-ReplyKeyboardMarkup
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\CustomKeyboard\ReplyKeyboardMarkup\ReplyKeyboardMarkup.ino
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\CustomKeyboard\README.md
+							-EchoBot
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\EchoBot\EchoBot.ino
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\EchoBot\README.md
+							-FlashLED
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\FlashLED\FlashLED.ino
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\FlashLED\README.md
+							-Location
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\Location\Location.ino
+							-LongPoll
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\LongPoll\LongPoll.ino
+							-SendMessageFromEvent
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\SendMessageFromEvent\SendMessageFromEvent.ino
+							-SendPhoto
+								-PhotoFromFileID
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\SendPhoto\PhotoFromFileID\PhotoFromFileID.ino
+								-PhotoFromSD
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\SendPhoto\PhotoFromSD\PhotoFromSD.ino
+								-PhotoFromSerial
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\SendPhoto\PhotoFromSerial\PhotoFromSerial.ino
+								-PhotoFromURL
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\SendPhoto\PhotoFromURL\PhotoFromURL.ino
+							-SetMyCommands
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\SetMyCommands\SetMyCommands.ino
+						-Untested
+							-ESP32
+								-telegramOTA
+									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\Untested\ESP32\telegramOTA\telegramOTA.ino
+						-WifiNINA
+							-EchoBot
+								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\WifiNINA\EchoBot\EchoBot.ino
+					-scripts
+						-travis
+							98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\scripts\travis\platformio.sh
+							98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\scripts\travis\platformioSingle.sh
+					-src
+						98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\src\TelegramCertificate.h
+						98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\src\UniversalTelegramBot.cpp
+						98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\src\UniversalTelegramBot.h
+					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\.travis.yml
+					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\library.json
+					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\library.properties
+					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\LICENSE.md
+					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\platformio.ini
+					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\README.md
+			98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Telegram ESP32-CAM Take and Send Photo Arduino IDE.doc
+			98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram.doc
+		-99-Фото ловушка на ESP32 CAM
+			-1-SH1106 OLED дисплей
+				-lib1106spi
+					99-Фото ловушка на ESP32 CAM\1-SH1106 OLED дисплей\lib1106spi\DefaultFonts.c
+					99-Фото ловушка на ESP32 CAM\1-SH1106 OLED дисплей\lib1106spi\spi1106.c
+					99-Фото ловушка на ESP32 CAM\1-SH1106 OLED дисплей\lib1106spi\spi1106.h
+				-OLED_SH1106
+					-examples
+						-oled_sh1106_128x64
+							99-Фото ловушка на ESP32 CAM\1-SH1106 OLED дисплей\OLED_SH1106\examples\oled_sh1106_128x64\oled_sh1106_128x64.ino
+					99-Фото ловушка на ESP32 CAM\1-SH1106 OLED дисплей\OLED_SH1106\OLED_SH1106.cpp
+					99-Фото ловушка на ESP32 CAM\1-SH1106 OLED дисплей\OLED_SH1106\OLED_SH1106.h
+				99-Фото ловушка на ESP32 CAM\1-SH1106 OLED дисплей\SH1106 OLED дисплей.doc
+				99-Фото ловушка на ESP32 CAM\1-SH1106 OLED дисплей\WEO012864L.pdf
+				99-Фото ловушка на ESP32 CAM\1-SH1106 OLED дисплей\Вывод текста на OLED дисплей с контроллером SH1106.doc
+			-3-СВЕТОДИОД LED 1W 3V 300mA
+				99-Фото ловушка на ESP32 CAM\3-СВЕТОДИОД LED 1W 3V 300mA\СВЕТОДИОД LED 1W 3V 300mA.doc
+			-4-IRL530NPBF - Транзистор
+				99-Фото ловушка на ESP32 CAM\4-IRL530NPBF - Транзистор\IRL530NPBF - Транзистор.doc
+				99-Фото ловушка на ESP32 CAM\4-IRL530NPBF - Транзистор\irl530npbf.pdf
+			-5-OV2640 модуль камеры 21 мм 66-120-160 градусов
+				99-Фото ловушка на ESP32 CAM\5-OV2640 модуль камеры 21 мм 66-120-160 градусов\OV2640 модуль камеры 21 мм 66-120-160 градусов.doc
+			-ESP-Mail-Client-master
+				-examples
+					-IMAP
+						-Copy_Messages
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\IMAP\Copy_Messages\Copy_Messsages.ino
+						-Custom_Client
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\IMAP\Custom_Client\Custom_Client.ino
+						-Custom_Command
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\IMAP\Custom_Command\Custom_Command.ino
+						-Delete_Messages
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\IMAP\Delete_Messages\Delete_Messsages.ino
+						-Mailbox_Changes_Notification
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\IMAP\Mailbox_Changes_Notification\Mailbox_Changes_Notification.ino
+						-Read_Email_Access_Token
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\IMAP\Read_Email_Access_Token\Read_Email_Access_Token.ino
+						-Read_Single_Email
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\IMAP\Read_Single_Email\Read_Single_Email.ino
+						-Read_Single_Email_Loop
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\IMAP\Read_Single_Email_Loop\Read_Single_Email_Loop.ino
+						-Search_Emails
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\IMAP\Search_Emails\Search_Emails.ino
+						-Set_Flags
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\IMAP\Set_Flags\Set_Flags.ino
+					-SMTP
+						-Custom_Client
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Custom_Client\Custom_Client.ino
+						-Ethernet
+							-ESP32
+								-Send_Text
+									-modified_LAN8720_board_images
+										99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Ethernet\ESP32\Send_Text\modified_LAN8720_board_images\lan8720_modified_board.png
+										99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Ethernet\ESP32\Send_Text\modified_LAN8720_board_images\lan8720_modified_schematic.png
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Ethernet\ESP32\Send_Text\Send_Text.ino
+							-ESP8266
+								-Send_Text
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Ethernet\ESP8266\Send_Text\Send_Text.ino
+						-Reply_Text
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Reply_Text\Reply_Text.ino
+						-Send_Access_Token
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Access_Token\Send_Access_Token.ino
+						-Send_Attachment_Blob
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Attachment_Blob\blob_data.h
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Attachment_Blob\Send_Attachment_Blob.ino
+						-Send_Attachment_File
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Attachment_File\Send_Attachment_File.ino
+						-Send_Attachment_PSRAM
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Attachment_PSRAM\Send_Attachment_PSRAM.ino
+						-Send_Camera_Image
+							-ESP_Camera
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\ESP_Camera\ESP_Camera.ino
+							-OV2640
+								-cam
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\camera.c
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\camera.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\camera_common.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\ov264_drive.c
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\ov264_drive.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\OV2640.cpp
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\OV2640.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\ov2640_regs.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\ov7725.c
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\ov7725.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\ov7725_regs.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\sccb.c
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\sccb.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\sensor.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\twi.c
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\cam\twi.h
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Camera_Image\OV2640\OV2640.ino
+						-Send_Embedded_Message
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Embedded_Message\Send_Embedded_Message.ino
+						-Send_Enriched_Text
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Enriched_Text\Send_Enriched_Text.ino
+						-Send_Flash_Message_with_Inline_Image
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Flash_Message_with_Inline_Image\Send_Flash_Message_with_Inline_Image.ino
+						-Send_HTML
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_HTML\Send_HTML.ino
+						-Send_Parallel_Attachment
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Parallel_Attachment\data.h
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Parallel_Attachment\Send_Parallel_Attachment.ino
+						-Send_Reuse_Session
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Reuse_Session\Send_Reuse_Session.ino
+						-Send_RFC822_Attachment
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_RFC822_Attachment\image.h
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_RFC822_Attachment\Send_RFC822_Attachment.ino
+						-Send_Text
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Text\Send_Text.ino
+						-Send_Text_Flowed
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\examples\SMTP\Send_Text_Flowed\Send_Text_Flowed.ino
+				-firmwares
+					-samd21
+						-v1.4.8+21120
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\firmwares\samd21\v1.4.8+21120\nina-fw.bin
+					-SerialNINAPassthrough
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\firmwares\SerialNINAPassthrough\SerialNINAPassthrough.ino
+				-media
+					-images
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\media\images\ArduinoIDE.png
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\media\images\ESP32-PSRAM.png
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\media\images\ESP8266_VM.png
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\media\images\esp-mail-client.png
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\media\images\esp-mail-client.svg
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\media\images\esptool.png
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\media\images\SerialNINAPassthrough.png
+				-src
+					-extras
+						-ESPTimeHelper
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\extras\ESPTimeHelper\ESPTimeHelper.cpp
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\extras\ESPTimeHelper\ESPTimeHelper.h
+						-mb_print
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\extras\mb_print\mb_print.c
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\extras\mb_print\mb_print.h
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\extras\MB_FS.h
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\extras\MB_FS_Interfaces.h
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\extras\MB_List.h
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\extras\MB_MCU.h
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\extras\MB_String.h
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\extras\MIMEInfo.h
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\extras\RFC2047.cpp
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\extras\RFC2047.h
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\extras\SDHelper.h
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\extras\SDK_Version_Common.h
+					-wcs
+						-base
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\base\TCP_Client_Base.h
+						-custom
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\custom\Custom_TCP_Client.h
+						-esp32
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\esp32\ESP32_SSL_Client.cpp
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\esp32\ESP32_SSL_Client.h
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\esp32\ESP32_TCP_Client.cpp
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\esp32\ESP32_TCP_Client.h
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\esp32\ESP32_WCS.cpp
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\esp32\ESP32_WCS.h
+						-esp8266
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\esp8266\ESP8266_TCP_Client.cpp
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\esp8266\ESP8266_TCP_Client.h
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\esp8266\ESP8266_WCS.cpp
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\esp8266\ESP8266_WCS.h
+						-samd
+							-lib
+								-utility
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\utility\debug.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\utility\nano_rp2040_support.cpp
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\utility\server_drv.cpp
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\utility\server_drv.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\utility\spi_drv.cpp
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\utility\spi_drv.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\utility\wifi_drv.cpp
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\utility\wifi_drv.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\utility\wifi_spi.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\utility\WiFiSocketBuffer.cpp
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\utility\WiFiSocketBuffer.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\utility\wl_definitions.h
+									99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\utility\wl_types.h
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\WiFi.cpp
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\WiFi.h
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\WiFiClient.cpp
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\WiFiClient.h
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\WiFiNINA.h
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\WiFiServer.cpp
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\WiFiServer.h
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\WiFiSSLClient.cpp
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\WiFiSSLClient.h
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\WiFiStorage.cpp
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\WiFiStorage.h
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\WiFiUdp.cpp
+								99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\lib\WiFiUdp.h
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\WiFiNINA_TCP_Client.cpp
+							99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\samd\WiFiNINA_TCP_Client.h
+						99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\wcs\ESP_TCP_Clients.h
+					99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\ESP_Mail_Client.cpp
+					99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\ESP_Mail_Client.h
+					99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\ESP_Mail_Const.h
+					99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\ESP_Mail_Error.h
+					99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\ESP_Mail_FS.h
+					99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\README.md
+					99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\src\SDK_Version_Common.h
+				99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\_config.yml
+				99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\keywords.txt
+				99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\library.json
+				99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\library.properties
+				99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\LICENSE
+				99-Фото ловушка на ESP32 CAM\ESP-Mail-Client-master\README.md
+			-тест датчика движения
+				-mini_v1
+					99-Фото ловушка на ESP32 CAM\тест датчика движения\mini_v1\mini_v1.ino
+				-PIR_V4
+					99-Фото ловушка на ESP32 CAM\тест датчика движения\PIR_V4\PIR_V4.ino
+			99-Фото ловушка на ESP32 CAM\2020-12-31 ESP32 CAM подключение и прошивка.doc
+			99-Фото ловушка на ESP32 CAM\2021-01-12 ESP32 CAM PINOUT и внешняя Wi Fi антенна.doc
+			99-Фото ловушка на ESP32 CAM\2021-01-19 ESP32 CAM самодельная плата расширения.doc
+			99-Фото ловушка на ESP32 CAM\2021-07-21 Фото ловушка на ESP32 CAM.doc
+			99-Фото ловушка на ESP32 CAM\2022-02-27 Модуль ESP32-CAM с камерой OV2640 WiFi Bluetooth.doc
+			99-Фото ловушка на ESP32 CAM\fil.txt
+			99-Фото ловушка на ESP32 CAM\Принципиальная электрическая схема фото-ловушки.png
+			99-Фото ловушка на ESP32 CAM\Расширяем отладочную плату ESP32 CAM сверху.jpg
+			99-Фото ловушка на ESP32 CAM\Расширяем отладочную плату ESP32 CAM снизу.jpg
+			99-Фото ловушка на ESP32 CAM\Электрическая принципиальная схема ESP32 CAM плата разработчика.png
+		-Image
+			-gotovim-programmator-dlya-peredachi-koda
+				Image\gotovim-programmator-dlya-peredachi-koda\Com-port-v-windows11.jpg
+				Image\gotovim-programmator-dlya-peredachi-koda\Pianino-bez-klavish.jpg
+				Image\gotovim-programmator-dlya-peredachi-koda\programming.png
+			-probuem-noty-na-arduino
+				Image\probuem-noty-na-arduino\ArduinoProMini.pdf
+				Image\probuem-noty-na-arduino\dlitelnosti-not-i-pauz.gif
+		-parts-tve-svg
+			parts-tve-svg\Battery3AAA.svg
+			parts-tve-svg\Battery3aaa-pcb.svg
+			parts-tve-svg\Battery3aaa-schema.svg
+			parts-tve-svg\Untitled Sketch.fzz
+		+Preferences
+			Preferences\preferences Exa.txt
+			Preferences\preferences.txt
+		ittve-ESP32-CAM.ppr
 		LICENSE
 		README.md
-		README.md.backup
-		Как определить Arduino Mini Pro 5v против 3v.doc
-		Карелия - ноты.pdf
-		Модуль питания для макетной платы MB.doc
-		Таблица соотношения нот и частот.doc
 [Open project files]
-0=01-Пробуем ноты на ардуино\NotyNaArduino\NotyNaArduino.ino
+0=..\ByHeart\style.css
 [Selected Project Files]
 Main=
-Selected=01-Пробуем ноты на ардуино\NotyNaArduino\NotyNaArduino.ino
-[01-Пробуем ноты на ардуино\NotyNaArduino\NotyNaArduino.ino]
-TopLine=38
-Caret=21,72
+Selected=..\ByHeart\style.css
+[..\ByHeart\style.css]
+TopLine=1
+Caret=65,7
