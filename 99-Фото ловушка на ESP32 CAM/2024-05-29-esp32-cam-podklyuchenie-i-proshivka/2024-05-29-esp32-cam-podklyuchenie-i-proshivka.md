@@ -112,5 +112,87 @@ POWER PIN	     GPIO 32      PWDN_GPIO_NUM
 
 ![Подключение ESP32-CAM к программатору](podklyuchenie-esp32-cam-k-programmatoru.jpg)
 
+> ***ВАЖНО: При попытке записи программы в ESP32-CAM, когда он подключен к питанию от USB компьютера, а программатор CP2102 от USB компьютера ошибка "COM-порт не существует!". Только когда ESP32-CAM подключен от сети через 9-вольтовый блок питания, то устройство прошивается***.
+
+Подключение ESP32-CAM к программатору во Fritzing:
+
+![](fritzing-podklyuchenie-esp32-cam-k-programmatoru.jpg)
+
 ```
+// Arduino C/C++                                        *** BlinkOnCam32.ino ***
+
+// *****************************************************************************
+// * ittve-ESP32-CAM             Заставляем ESP32-CAM мигать своими лампочками *
+// *****************************************************************************
+
+//                                                    Автор:       Труфанов В.Е.
+//                                                    Дата создания:  31.05.2024
+// Copyright © 2024 tve                               Посл.изменение: 31.05.2024
+
+void setup() 
+{
+   // Переводим контакты лампочек в режим вывода
+   pinMode(33,OUTPUT);  // "работает"
+   /*
+   pinMode(4,OUTPUT);   // "вспышка"
+   */
+}
+
+void loop() 
+{
+   digitalWrite(33,LOW);
+   // digitalWrite(4,LOW);
+   delay(1000);
+   digitalWrite(33,HIGH);
+   // digitalWrite(4,HIGH);
+   delay(500);
+}
+
+// ******************************************************** BlinkOnCam32.ino ***
 ```
+
+#### Подключаем CameraWebServer
+
+![](podklyuchaem-camerawebserver.png)
+
+Сделал в коде программы настройки доступа к сети WiFi: 
+
+```
+// Замените сетевые учетные данные
+const char* ssid     = "OPPO A9 2020";
+const char* password = "b277a4ee84e8";
+
+// Замените сетевые учетные данные
+//const char* ssid     = "linksystve";
+//const char* password = "x93k6kq6wf";
+```
+К  "linksystve" подключиться не удалось (наверное мешает доктор Вэб или Ситилинк - не разбирался). Постоянно сообщения типа:
+
+```
+rst:0x8 (TG1WDT_SYS_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:1
+load:0x3fff0030,len:1344
+load:0x40078000,len:13964
+load:0x40080400,len:3600
+entry 0x400805f0
+```
+
+Сделал на смартфоне точку доступа, подключился:
+```
+.....
+WiFi connected
+Camera Ready! Use 'http://192.168.255.35' to connect
+```
+
+```
+// Точка доступа для экспериментов c Arduino
+const char* ssid     = "tve-DESKTOP";
+const char* password = "Ue18-647";
+.......................................
+WiFi connected
+Camera Ready! Use 'http://192.168.137.23' to connect
+```
+
+
