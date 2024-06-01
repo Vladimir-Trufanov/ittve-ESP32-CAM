@@ -61,17 +61,13 @@
  
 ###### [к содержанию](#soderzhanie)
 
-###### neobrabotannye-oshibki 
-### 5. Необработанные ошибки и комментарии
+### [Использование модуля камеры ESP32 для видео трансляции и распознавания лиц](https://microkontroller.ru/esp32-projects/ispolzovanie-modulya-kamery-esp32-dlya-video-translyaczii-i-raspoznavaniya-licz/)
 
-**Array to string conversion - Должна была быть строковая переменная, а оказался массив** 
+### [Делаем простой видеорегистратор из ESP32-CAM](https://dzen.ru/a/ZDv6OUs-GT9zVSS5)
 
-    File: C:\TPhpPrown\ViewGlobal.php Line: 53
-    E_NOTICE [HND]
+### [Веб-сервер потокового видео ESP32-CAM (работает с Home Assistant)](https://voltiq.ru/esp32-cam-video-web-server/)
 
-**syntax error, unexpected else - Неожиданно встретился else**
+### [Как своими руками сделать WiFi камеру слежения (ESP32-CAM)](https://habr.com/ru/companies/skillfactory/articles/645877/)
 
-    File: C:\TPhpPrown\ViewGlobal.php Line: 83  
-    E_PARSE [SHT]
  
 ###### [к содержанию](#soderzhanie)
