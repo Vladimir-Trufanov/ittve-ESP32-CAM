@@ -6,8 +6,8 @@
 #include "globals.h"
 
 /**************************************************************************
- Copy & Paste one of the camera models below into the following #define block
- Selecting wrong model may crash your device due to pin conflict
+ Скопируйте и вставьте одну из моделей камер, представленных ниже, в следующий блок #define
+ Неправильный выбор модели может привести к сбою в работе устройства из-за конфликта pin-кода
 ***************************************************************************/
 /*
  * ESP32 models

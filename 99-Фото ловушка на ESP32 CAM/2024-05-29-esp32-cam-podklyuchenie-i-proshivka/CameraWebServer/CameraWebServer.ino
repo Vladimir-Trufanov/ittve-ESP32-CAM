@@ -37,15 +37,15 @@
 // ===========================
 
 // Точка доступа моего смартфона 
-// const char* ssid     = "OPPO A9 2020";
-// const char* password = "b277a4ee84e8";
+const char* ssid     = "OPPO A9 2020";
+const char* password = "b277a4ee84e8";
 // Домашняя сеть WiFi
 // const char* ssid     = "linksystve";
 // const char* password = "x93k6kq6wf";
 
 // Точка доступа для экспериментов c Arduino
-const char* ssid     = "tve-DESKTOP";
-const char* password = "Ue18-647";
+//const char* ssid     = "tve-DESKTOP";
+//const char* password = "Ue18-647";
 
 void startCameraServer();
 void setupLedFlash(int pin);

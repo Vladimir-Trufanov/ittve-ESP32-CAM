@@ -166,6 +166,9 @@ const char* password = "b277a4ee84e8";
 //const char* ssid     = "linksystve";
 //const char* password = "x93k6kq6wf";
 ```
+
+![Настройки платы перед компиляцией и загрузкой](CAMERA_MODEL_AI_THINKER.jpg)
+
 К  "linksystve" подключиться не удалось (наверное мешает доктор Вэб или Ситилинк - не разбирался). Постоянно сообщения типа:
 
 ```
@@ -185,6 +188,7 @@ entry 0x400805f0
 WiFi connected
 Camera Ready! Use 'http://192.168.255.35' to connect
 ```
+![](WiFi connected.jpg)
 
 ```
 // Точка доступа для экспериментов c Arduino
