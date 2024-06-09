@@ -9,30 +9,36 @@
 /* Устанавливаем свои SSID и пароль */
 const char* ssid = "ESP32";  
 const char* password = "01234567";  
+
+#define LampOn  true    // "лампочка включена"
+#define LampOff false   // "лампочка выключена"
+
 /* Настройки IP адреса */
 IPAddress local_ip(192,168,2,1);
 IPAddress gateway(192,168,2,1);
 IPAddress subnet(255,255,255,0);
 WebServer server(80);
 
-uint8_t LED1pin = 4;
-bool LED1status = LOW;
-uint8_t LED2pin = 33;
-bool LED2status = LOW;
+// Инициируем пин и состояние вспышки 4 - прямая логика
+uint8_t LED4pin = 4;
+bool LED4status = LampOff;
+// Инициируем пин и состояние светодиода 33 - инверсная логика
+uint8_t LED33pin = 33;
+bool LED33status = LampOff;
 
 void setup() 
 {
   Serial.begin(115200);
-  pinMode(LED1pin, OUTPUT);
-  pinMode(LED2pin, OUTPUT);
+  pinMode(LED4pin, OUTPUT);
+  pinMode(LED33pin, OUTPUT);
   WiFi.softAP(ssid, password);
   WiFi.softAPConfig(local_ip, gateway, subnet);
   delay(100);
   server.on("/", handle_OnConnect);
-  server.on("/led1on", handle_led1on);
-  server.on("/led1off", handle_led1off);
-  server.on("/led2on", handle_led2on);
-  server.on("/led2off", handle_led2off);
+  server.on("/led4on", handle_led4on);
+  server.on("/led4off", handle_led4off);
+  server.on("/led33on", handle_led33on);
+  server.on("/led33off", handle_led33off);
   server.onNotFound(handle_NotFound);
   server.begin();
   Serial.println("HTTP server started");
@@ -41,50 +47,50 @@ void setup()
 void loop() 
 {
   server.handleClient();
-  if(LED1status)
-    {digitalWrite(LED1pin, HIGH);}
-  else
-    {digitalWrite(LED1pin, LOW);}
-  if(LED2status)
-    {digitalWrite(LED2pin, HIGH);}
-  else
-    {digitalWrite(LED2pin, LOW);}
+  // Управляем вспышкой 4 - прямая логика
+  if (LED4status==LampOn) {digitalWrite(LED4pin, HIGH);}
+  else {digitalWrite(LED4pin, LOW);}
+  // Управляем светодиодом 33 - инверсная логика
+  if(LED33status==LampOn) {digitalWrite(LED33pin, LOW);}
+  else {digitalWrite(LED33pin, HIGH);}
 }
 
 void handle_OnConnect() 
 {
-  LED1status = LOW;
-  LED2status = LOW;
-  Serial.println("GPIO4 Status: OFF | GPIO5 Status: OFF");
-  server.send(200, "text/html", SendHTML(LED1status,LED2status)); 
+  LED4status = LampOff;
+  LED33status = LampOff;
+  Serial.println("GPIO4 Status: OFF | GPIO33 Status: OFF");
+  server.send(200, "text/html", SendHTML(LED4status,LED33status)); 
 }
 
-void handle_led1on() 
+void handle_led4on() 
 {
-  LED1status = HIGH;
+  LED4status = LampOn;
   Serial.println("GPIO4 Status: ON");
-  server.send(200, "text/html", SendHTML(true,LED2status)); 
+  server.send(200, "text/html", SendHTML(LED4status,LED33status)); 
 }
 
-void handle_led1off() 
+void handle_led4off() 
 {
-  LED1status = LOW;
+  LED4status = LampOff;
   Serial.println("GPIO4 Status: OFF");
-  server.send(200, "text/html", SendHTML(false,LED2status)); 
+  server.send(200, "text/html", SendHTML(LED4status,LED33status)); 
 }
 
-void handle_led2on() 
+// Включить светодиод на пине 33
+void handle_led33on() 
 {
-  LED2status = HIGH;
-  Serial.println("GPIO5 Status: ON");
-  server.send(200, "text/html", SendHTML(LED1status,true)); 
+  LED33status = LampOn;
+  Serial.println("GPIO33 Status: ON - Светодиод включен");
+  server.send(200, "text/html", SendHTML(LED4status,LED33status)); 
 }
 
-void handle_led2off() 
+// Выключить светодиод на пине 33
+void handle_led33off() 
 {
-  LED2status = LOW;
-  Serial.println("GPIO5 Status: OFF");
-  server.send(200, "text/html", SendHTML(LED1status,false)); 
+  LED33status = LampOff;
+  Serial.println("GPIO33 Status: OFF - Светодиод ВЫКЛ");
+  server.send(200, "text/html", SendHTML(LED4status,LED33status)); 
 }
 
 void handle_NotFound()
@@ -92,11 +98,11 @@ void handle_NotFound()
   server.send(404, "text/plain", "Not found");
 }
 
-String SendHTML(uint8_t led1stat,uint8_t led2stat)
+String SendHTML(uint8_t led4stat,uint8_t led33stat)
 {
   String ptr = "<!DOCTYPE html> <html>\n";
   ptr +="<meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n";
-  ptr +="<title>Управление светодиодом</title>\n";
+  ptr +="<title>Управление светодиодами</title>\n";
   ptr +="<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}\n";
   ptr +="body{margin-top: 50px;} h1 {color: #444444;margin: 50px auto 30px;} h3 {color: #444444;margin-bottom: 50px;}\n";
   ptr +=".button {display: block;width: 80px;background-color: #3498db;border: none;color: white;padding: 13px 30px;text-decoration: none;font-size: 25px;margin: 0px auto 35px;cursor: pointer;border-radius: 4px;}\n";
@@ -111,16 +117,15 @@ String SendHTML(uint8_t led1stat,uint8_t led2stat)
   ptr +="<h1>ESP32 Веб сервер</h1>\n";
   ptr +="<h3>Режим точка доступа WiFi (AP)</h3>\n";
   
-  if(led1stat)
-    {ptr +="<p>Состояние LED1: ВКЛ.</p><a class=\"button button-off\" href=\"/led1off\">ВЫКЛ.</a>\n";}
+  if(led4stat)
+    {ptr +="<p>Состояние LED4: ВКЛ.</p><a class=\"button button-off\" href=\"/led4off\">ВЫКЛ.</a>\n";}
   else
-    {ptr +="<p>Состояние LED1: ВЫКЛ.</p><a class=\"button button-on\" href=\"/led1on\">ВКЛ.</a>\n";}
+    {ptr +="<p>Состояние LED4: ВЫКЛ.</p><a class=\"button button-on\" href=\"/led4on\">ВКЛ.</a>\n";}
   
-  if(led2stat)
-    {ptr +="<p>Состояние LED2: ВКЛ.</p><a class=\"button button-off\" href=\"/led2off\">ВЫКЛ.</a>\n";}
+  if(led33stat)
+  {ptr +="<p>Состояние LED33: ВКЛ.</p><a class=\"button button-off\" href=\"/led33off\">ВЫКЛ.</a>\n";}
   else
-    {ptr +="<p>Состояние LED2: ВЫКЛ.</p><a class=\"button button-on\" href=\"/led2on\">ВКЛ.</a>\n";}
-  
+  {ptr +="<p>Состояние LED33: ВЫКЛ.</p><a class=\"button button-on\" href=\"/led33on\">ВКЛ.</a>\n";}
   ptr +="</body>\n";
   ptr +="</html>\n";
   return ptr;
