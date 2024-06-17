@@ -12,18 +12,18 @@ void setup()
 {
    // Переводим контакты лампочек в режим вывода
    pinMode(33,OUTPUT);  // "работает"
-   /*
-   pinMode(4,OUTPUT);   // "вспышка"
-   */
+   
+   //pinMode(4,OUTPUT);   // "вспышка"
+   
 }
 
 void loop() 
 {
    digitalWrite(33,LOW);
-   // digitalWrite(4,LOW);
+   //digitalWrite(4,LOW);
    delay(1000);
    digitalWrite(33,HIGH);
-   // digitalWrite(4,HIGH);
+   //digitalWrite(4,HIGH);
    delay(500);
 }
 

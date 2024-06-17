@@ -1,0 +1,165 @@
+## [Доступ и контроль дачи через telegram](https://randomnerdtutorials.com/telegram-esp32-cam-photo-arduino/)
+
+#### [Контрольные боты telegram, снятые 2024-06-17](#)
+
+> Вся информация датирована 2023-10-13, когда был создан чат-бот ESP32tve.
+> 
+
+***BotFather***:
+
+BotFather is the one bot to rule them all. Use it to create new bot accounts and manage your existing bots.
+
+[About Telegram bots](https://core.telegram.org/bots)
+
+[Bot API manual](https://core.telegram.org/bots/api)
+
+Contact ***@BotSupport*** if you have questions about the Bot API.
+
+/start
+
+```
+I can help you create and manage Telegram bots. If you're new to the Bot API, please see the manual (https://core.telegram.org/bots).
+
+You can control me by sending these commands:
+
+/newbot - create a new bot
+/mybots - edit your bots
+
+Edit Bots
+/setname - change a bot's name
+/setdescription - change bot description
+/setabouttext - change bot about info
+/setuserpic - change bot profile photo
+/setcommands - change the list of commands
+/deletebot - delete a bot
+
+Bot Settings
+/token - generate authorization token
+/revoke - revoke bot access token
+/setinline - toggle inline mode (https://core.telegram.org/bots/inline)
+/setinlinegeo - toggle inline location requests (https://core.telegram.org/bots/inline#location-based-results)
+/setinlinefeedback - change inline feedback (https://core.telegram.org/bots/inline#collecting-feedback) settings
+/setjoingroups - can your bot be added to groups?
+/setprivacy - toggle privacy mode (https://core.telegram.org/bots/features#privacy-mode) in groups
+
+Web Apps
+/myapps - edit your web apps (https://core.telegram.org/bots/webapps)
+/newapp - create a new web app (https://core.telegram.org/bots/webapps)
+/listapps - get a list of your web apps
+/editapp - edit a web app
+/deleteapp - delete an existing web app
+
+Games
+/mygames - edit your games (https://core.telegram.org/bots/games)
+/newgame - create a new game (https://core.telegram.org/bots/games)
+/listgames - get a list of your games
+/editgame - edit a game
+/deletegame - delete an existing game
+```
+/newbot
+
+Alright, a new bot. How are we going to call it? Please choose a name for your bot.
+
+ESP32tve
+
+Good. Now let's choose a username for your bot. It must end in `bot`. Like this, for example: TetrisBot or tetris_bot.
+
+tve58bot
+
+> Done! Congratulations on your new bot. You will find it at t.me/tve58bot. You can now add a description, about section and profile picture for your bot, see /help for a list of commands. By the way, when you've finished creating your cool bot, ping our Bot Support if you want a better username for it. Just make sure the bot is fully operational before you do this.
+> 
+> Use this token to access the HTTP API:
+> 6610230475:AAHSLATpcFDQF6sS9UycZoYK_vjIcAaegDg
+> Keep your token secure and store it safely, it can be used by anyone to control your bot.
+> 
+> For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+> 
+
+Сделано! Поздравляем вас с новым ботом. Вы найдете его по ссылке ***t.me/tve58bo***t. Теперь вы можете добавить описание, раздел "О программе" и фотографию профиля для своего бота, список команд смотрите в разделе ***/help***. Кстати, когда вы закончите создавать своего крутого бота, свяжитесь с нашей службой поддержки, если вам нужно более подходящее имя пользователя для него. Просто убедитесь, что бот полностью работоспособен, прежде чем делать это.
+
+Используйте этот токен для доступа к HTTP API:
+
+6610230475:AAHSLATpcFDQF6sS9UycZoYK_vjIcAaegDg
+
+Берегите свой токен и храните его в надежном месте, он может быть использован кем угодно для управления вашим ботом.
+
+Описание API для ботов приведено на этой странице: https://core.telegram.org/bots/api
+
+***Telegram***:
+
+Код для входа в Telegram: 33599. Не давайте код никому, даже если его требуют от имени Telegram!
+
+Этот код используется для входа в Ваш аккаунт в Telegram. Он не может быть использован для чего-либо ещё. 
+
+Если Вы не запрашивали код для входа, проигнорируйте это сообщение.
+
+***IDBot***:
+
+Send me username or joinchat-link, forward a message to me or add me to a group or channel. Напиши username или ссылку-приглашение (для чатов и каналов). Также можно переслать чужое сообщение или добавить бота в группу или канал.
+
+/start
+
+Привет! Добро пожаловать в @username_to_id_bot! Справка: /help. Канал с обновлениями: @idbotnews. P.S. Твой ID: 5302818460
+
+/getid
+
+tve58bot
+
+```
+Пользователь
+@tve58bot
+ESP32tve
+id: 6610230475
+```
+
+🛫🛫🛫🛫🛫🛫🛫🛫🛫🛫
+
+Новости и информация о боте: @idbotnews. Подпишись ;)
+
+***ESP32tve***:
+
+/start
+
+/getid
+
+#### Обзор проекта, который вы создадите:
+
+```
+Вы создадите Telegram-бот для своей ESP32-CAM;
+Вы можете начать разговор с ботом ESP32-CAM;
+Когда вы отправляете сообщение / фотографию боту ESP32-CAM, плата ESP32-CAM получает сообщение, делает новое фото и отвечает этим фото;
+Вы можете отправить сообщение / flash, чтобы переключить светодиодную вспышку ESP32-CAM;
+Вы можете отправить сообщение / start, чтобы получить приветственное сообщение с командами для управления платой;
+ESP32-CAM будет отвечать только на сообщения, поступающие от вашего идентификатора учетной записи Telegram.
+```
+
+У нас также есть специальный проект для ESP32-CAM с Telegram, который охватывает более продвинутые функции: [делайте фотографии, управляйте выходами, запрашивайте показания датчиков и уведомления о движении](https://randomnerdtutorials.com/esp32-cam-shield-pcb-telegram/).
+
+#### Представляем Telegram
+
+Telegram Messenger - это облачный сервис обмена мгновенными сообщениями и передачи голоса по IP. Вы можете легко установить его на свой смартфон (Android и iPhone) или компьютер (ПК, Mac и Linux). Это бесплатно и без рекламы. Telegram позволяет создавать ботов, с которыми вы можете взаимодействовать.
+
+“Боты - это сторонние приложения, которые запускаются внутри Telegram. Пользователи могут взаимодействовать с ботами, отправляя им сообщения, команды и встроенные запросы. Вы управляете своими ботами с помощью HTTPS-запросов к Telegram Bot API”.
+
+ESP32-CAM будет взаимодействовать с Telegram-ботом для получения и обработки сообщений, а также отправки ответов. В этом уроке вы узнаете, как использовать Telegram для отправки сообщений вашему боту с запросом новой фотографии, сделанной с помощью ESP32-CAM. Вы можете получить фото, где бы вы ни находились (вам просто нужен Telegram и доступ в Интернет).
+
+
+
+
+
+### Библиография:
+
+#### [Руководство по распиновке ESP32-CAM AI-Thinker: объясняется использование GPIOs](https://randomnerdtutorials.com/esp32-cam-ai-thinker-pinout/)
+
+#### [Как программировать / загрузить код в ESP32-CAM AI-Thinker (Arduino IDE)](https://randomnerdtutorials.com/program-upload-code-esp32-cam/)
+
+#### [Установка платы ESP32 в Arduino IDE 2 (Windows, Mac OS X, Linux)](https://randomnerdtutorials.com/installing-esp32-arduino-ide-2-0/)
+
+#### [ESP32-CAM с Telegram: делайте фотографии, управляйте выходами, запрашивайте показания датчика и уведомления о движении](https://randomnerdtutorials.com/esp32-cam-shield-pcb-telegram/)
+
+
+
+
+
+
+

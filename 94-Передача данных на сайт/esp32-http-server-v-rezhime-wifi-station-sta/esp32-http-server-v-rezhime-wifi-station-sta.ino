@@ -6,11 +6,7 @@
 
 //                                                    Автор:       Труфанов В.Е.
 //                                                    Дата создания:  11.06.2024
-// Copyright © 2024 tve                               Посл.изменение: 11.05.2024
-
-
-
-// 
+// Copyright © 2024 tve                               Посл.изменение: 11.06.2024
 
 #include <WiFi.h>
 #include <WebServer.h>
@@ -20,23 +16,25 @@
 // ===========================
 
 // Точка доступа моего смартфона 
-const char* ssid     = "OPPO A9 2020";
-const char* password = "b277a4ee84e8";
+// const char* ssid     = "OPPO A9 2020";
+// const char* password = "b277a4ee84e8";
 
 // Домашняя сеть WiFi
-// const char* ssid     = "linksystve";
-// const char* password = "x93k6kq6wf";
+const char* ssid     = "linksystve";
+const char* password = "x93k6kq6wf";
 
 // Точка доступа для экспериментов c Arduino
-//const char* ssid     = "tve-DESKTOP";
-//const char* password = "Ue18-647";
+// const char* ssid     = "tve-DESKTOP";
+// const char* password = "Ue18-647";
 
 WebServer server(80);
 uint8_t LED1pin = 4;
 bool LED1status = LOW;
-uint8_t LED2pin = 5;
+uint8_t LED2pin = 33;
 bool LED2status = LOW;
-void setup() {
+
+void setup() 
+{
   Serial.begin(115200);
   delay(100);
   pinMode(LED1pin, OUTPUT);
@@ -46,9 +44,10 @@ void setup() {
   //connect to your local wi-fi network
   WiFi.begin(ssid, password);
   //check wi-fi is connected to wi-fi network
-  while (WiFi.status() != WL_CONNECTED) {
-  delay(1000);
-  Serial.print(".");
+  while (WiFi.status() != WL_CONNECTED) 
+  {
+    delay(1000);
+    Serial.print(".");
   }
   Serial.println("");
   Serial.println("WiFi connected..!");
@@ -62,7 +61,9 @@ void setup() {
   server.begin();
   Serial.println("HTTP server started");
 }
-void loop() {
+
+void loop() 
+{
   server.handleClient();
   if(LED1status)
   {digitalWrite(LED1pin, HIGH);}
@@ -73,36 +74,50 @@ void loop() {
   else
   {digitalWrite(LED2pin, LOW);}
 }
-void handle_OnConnect() {
+
+void handle_OnConnect() 
+{
   LED1status = LOW;
   LED2status = LOW;
-  Serial.println("GPIO4 Status: OFF | GPIO5 Status: OFF");
+  Serial.println("GPIO4 Status: OFF | GPIO33 Status: OFF");
   server.send(200, "text/html", SendHTML(LED1status,LED2status)); 
 }
-void handle_led1on() {
+
+void handle_led1on() 
+{
   LED1status = HIGH;
   Serial.println("GPIO4 Status: ON");
   server.send(200, "text/html", SendHTML(true,LED2status)); 
 }
-void handle_led1off() {
+
+void handle_led1off() 
+{
   LED1status = LOW;
   Serial.println("GPIO4 Status: OFF");
   server.send(200, "text/html", SendHTML(false,LED2status)); 
 }
-void handle_led2on() {
+
+void handle_led2on() 
+{
   LED2status = HIGH;
-  Serial.println("GPIO5 Status: ON");
+  Serial.println("GPIO33 Status: ON");
   server.send(200, "text/html", SendHTML(LED1status,true)); 
 }
-void handle_led2off() {
+
+void handle_led2off() 
+{
   LED2status = LOW;
-  Serial.println("GPIO5 Status: OFF");
+  Serial.println("GPIO33 Status: OFF");
   server.send(200, "text/html", SendHTML(LED1status,false)); 
 }
-void handle_NotFound(){
+
+void handle_NotFound()
+{
   server.send(404, "text/plain", "Not found");
 }
-String SendHTML(uint8_t led1stat,uint8_t led2stat){
+
+String SendHTML(uint8_t led1stat,uint8_t led2stat)
+{
   String ptr = "<!DOCTYPE html> <html>\n";
   ptr +="<meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n";
   ptr +="<title>Управление светодиодом</title>\n";
