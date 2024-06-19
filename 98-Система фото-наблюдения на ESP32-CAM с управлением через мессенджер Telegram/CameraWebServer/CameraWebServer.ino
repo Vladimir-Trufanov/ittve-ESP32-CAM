@@ -1,3 +1,11 @@
+// Это скетч для изучения 2024-06-18 Arduino 1.8.18:
+//
+// Preferences (по v1 получается стабильней):
+// v1: https://dl.espressif.com/dl/package_esp32_index.json
+// v2: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json 
+//
+// Замена "esp32 от Espressif Systems" версии 1.0.4 на более старую 1.0.2
+
 #include "esp_camera.h"
 #include <WiFi.h>
 
@@ -15,15 +23,8 @@
 
 #include "camera_pins.h"
 
-//const char* ssid = "*********";
-//const char* password = "*********";
-
-//const char* ssid     = "OPPO A9 2020";
-//const char* password = "b277a4ee84e8";
-
-const char* ssid     = "tve-DESKTOP";
-const char* password = "Ue18-647";
-
+const char* ssid     = "OPPO A9 2020";
+const char* password = "b277a4ee84e8";
 
 void startCameraServer();
 
