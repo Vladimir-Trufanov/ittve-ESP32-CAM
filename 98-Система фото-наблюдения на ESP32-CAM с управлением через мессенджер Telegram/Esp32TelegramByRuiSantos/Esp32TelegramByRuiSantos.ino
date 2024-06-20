@@ -1,5 +1,16 @@
 // Esp32TelegramByRuiSantos.ino    2024-06-19
+
 // (ArduinoJson 6.15.2)
+// (UniversalTelegramBot 1.3.0)
+
+// Preferences:
+// p1: https://dl.espressif.com/dl/package_esp32_index.json
+// p2: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json 
+// p3: https://espressif.github.io/arduino-esp32/package_esp32_dev_index.json
+
+// Espressif Systems:
+// e1: Esp32 от Espressif Systems версии 1.0.2 
+// e2: Esp32 от Espressif Systems версии 1.0.4 
 
 /*
   Rui Santos
@@ -28,6 +39,7 @@ const char* password = "b277a4ee84e8";
 // Initialize Telegram BOT
 // String BOTtoken = "XXXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";  // your Bot Token (Get from Botfather)
    String BOTtoken = "6610230475:AAHSLATpcFDQF6sS9UycZoYK_vjIcAaegDg";  // your Bot Token (Get from Botfather)
+//                    6610230475:AAHSLATpcFDQF6sS9UycZoYK_vjIcAaegDg
 
 // Используйте @myidbot, чтобы узнать идентификатор Вашего чата. Также обратите внимание, 
 // что вам нужно нажать "start", прежде чем он сможет отправить вам сообщение
@@ -54,6 +66,11 @@ int botRequestDelay = 1000;
 // Определяем переменную хранения времени последней проверки наличия сообщения
 unsigned long lastTimeBotRan;
 
+// Инициализируем-назначаем контакты ESP32-CAM AI-Thinker. Если используется другую модель 
+// камеры ESP32, следует изменить распиновку 
+// (платы камер ESP32-CAM: руководство по назначению выводов и GPIOs
+// : https://randomnerdtutorials.com/esp32-cam-camera-pin-gpios/ )
+
 //CAMERA_MODEL_AI_THINKER
 #define PWDN_GPIO_NUM     32
 #define RESET_GPIO_NUM    -1
@@ -73,8 +90,11 @@ unsigned long lastTimeBotRan;
 #define HREF_GPIO_NUM     23
 #define PCLK_GPIO_NUM     22
 
-
-void configInitCamera(){
+// ***************************************************************
+// *             Проинициализировать камеру ESP32                *
+// ***************************************************************
+void configInitCamera()
+{
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
   config.ledc_timer = LEDC_TIMER_0;
@@ -98,67 +118,110 @@ void configInitCamera(){
   config.pixel_format = PIXFORMAT_JPEG;
   config.grab_mode = CAMERA_GRAB_LATEST;
 
-  //init with high specs to pre-allocate larger buffers
-  if(psramFound()){
+  // Инициализируем достаточно большие буферы для обеспечения
+  // высоких характеристик камеры
+  // (качество в диапазоне 0-63, меньшее число означает более высокое качество)
+  
+  if(psramFound())
+  {
     config.frame_size = FRAMESIZE_UXGA;
-    config.jpeg_quality = 10;  //0-63 lower number means higher quality
+    config.jpeg_quality = 10; 
     config.fb_count = 1;
-  } else {
+  } 
+  else 
+  {
     config.frame_size = FRAMESIZE_SVGA;
-    config.jpeg_quality = 12;  //0-63 lower number means higher quality
+    config.jpeg_quality = 12; 
     config.fb_count = 1;
   }
   
   // camera init
   esp_err_t err = esp_camera_init(&config);
-  if (err != ESP_OK) {
+  if (err != ESP_OK) 
+  {
     Serial.printf("Camera init failed with error 0x%x", err);
     delay(1000);
     ESP.restart();
   }
 }
 
-void handleNewMessages(int numNewMessages) {
+// ***************************************************************
+// *          Обработать поступление нового сообщения            *
+// ***************************************************************
+void handleNewMessages(int numNewMessages) 
+{
   Serial.print("Handle New Messages: ");
   Serial.println(numNewMessages);
 
-  for (int i = 0; i < numNewMessages; i++) {
+  // Просматриваем все доступные сообщения
+  for (int i = 0; i < numNewMessages; i++) 
+  {
+    // Получаем идентификатор чата текущего сообщения 
+    // (таким образом узнаем, кто отправил сообщение)
     String chat_id = String(bot.messages[i].chat_id);
-    if (chat_id != CHAT_ID){
-      bot.sendMessage(chat_id, "Unauthorized user", "");
+    // Если идентификатор чата отличается от идентификатора нашего бота (CHAT_ID),
+    // это означает, что кто-то другой отправил сообщение вашему боту. 
+    // В этом случае игнорируем сообщение и ждем следующее
+    if (chat_id != CHAT_ID)
+    {
+      bot.sendMessage(chat_id, "Неавторизованный пользователь! Unauthorized user", "");
       continue;
     }
-    
-    // Print the received message
+    // Иначе считаем, что это наше сообщение, поэтому сохраняем его в текстовой переменной 
+    // и показываем его содержимое
     String text = bot.messages[i].text;
     Serial.println(text);
-    
+    // Фиксируем имя отправителя
     String from_name = bot.messages[i].from_name;
-    if (text == "/start") {
+
+    // При поступлении сообщения /start, показываем, для информации,
+    // какие могут быть команды по управлению ESP. 
+    // (это полезно, если, случайно, забыты команды для управления платой)
+    if (text == "/start") 
+    {
       String welcome = "Welcome , " + from_name + "\n";
       welcome += "Use the following commands to interact with the ESP32-CAM \n";
       welcome += "/photo : takes a new photo\n";
       welcome += "/flash : toggles flash LED \n";
+      // Передаем сообщение боту с помощью метода SendMessage() 
+      // по идентификатору чата получателя (второй параметр - текст сообщения,
+      // третий - режим синтаксического анализа)
       bot.sendMessage(CHAT_ID, welcome, "");
     }
-    if (text == "/flash") {
+    // При поступлении сообщения /flash, инвертируем переменную состояния вспышки и 
+    // обновляем состояние индикатора вспышки. Если ранее он был НИЗКИМ, устанавливаем на ВЫСОКИЙ
+    // и наоборот, если ранее он был ВЫСОКИМ, устанавливаем на НИЗКИЙ.
+    if (text == "/flash") 
+    {
       flashState = !flashState;
       digitalWrite(FLASH_LED_PIN, flashState);
       Serial.println("Change flash LED state");
     }
-    if (text == "/photo") {
+    // Наконец, при поступлении сообщения /photo, 
+    // устанавливаем для переменной sendPhoto значение true.
+    // (далее в цикле() проверим значение переменной sendPhoto и 
+    // поступим соответствующим образом)
+    if (text == "/photo") 
+    {
       sendPhoto = true;
       Serial.println("New photo request");
     }
   }
 }
 
-String sendPhotoTelegram() {
+// ***********************************************************************
+// *               Cделать снимок с помощью ESP32-CAM                    *
+// * (Примечание: часто первый снимок, сделанный с помощью ESP32-CAM,    *
+// * получается некачественным, поскольку датчик еще не настроил         *
+// * баланс белого. Чтобы получать хорошую картинку, отбрасываем первую) *
+// ***********************************************************************
+String sendPhotoTelegram() 
+{
   const char* myDomain = "api.telegram.org";
   String getAll = "";
   String getBody = "";
 
-  //Dispose first picture because of bad quality
+  // Выбрасываем первую фотографию из-за плохого качества
   camera_fb_t * fb = NULL;
   fb = esp_camera_fb_get();
   esp_camera_fb_return(fb); // dispose the buffered image
@@ -166,7 +229,8 @@ String sendPhotoTelegram() {
   // Take a new photo
   fb = NULL;  
   fb = esp_camera_fb_get();  
-  if(!fb) {
+  if(!fb) 
+  {
     Serial.println("Camera capture failed");
     delay(1000);
     ESP.restart();
@@ -175,8 +239,8 @@ String sendPhotoTelegram() {
   
   Serial.println("Connect to " + String(myDomain));
 
-
-  if (clientTCP.connect(myDomain, 443)) {
+  if (clientTCP.connect(myDomain, 443)) 
+  {
     Serial.println("Connection successful");
     
     String head = "--RandomNerdTutorials\r\nContent-Disposition: form-data; name=\"chat_id\"; \r\n\r\n" + CHAT_ID + "\r\n--RandomNerdTutorials\r\nContent-Disposition: form-data; name=\"photo\"; filename=\"esp32-cam.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n";
@@ -185,6 +249,8 @@ String sendPhotoTelegram() {
     size_t imageLen = fb->len;
     size_t extraLen = head.length() + tail.length();
     size_t totalLen = imageLen + extraLen;
+
+    // Отправляем HTTP POST-запрос со ссылкой на файл изображения telegram-боту
   
     clientTCP.println("POST /bot"+BOTtoken+"/sendPhoto HTTP/1.1");
     clientTCP.println("Host: " + String(myDomain));
@@ -195,12 +261,15 @@ String sendPhotoTelegram() {
   
     uint8_t *fbBuf = fb->buf;
     size_t fbLen = fb->len;
-    for (size_t n=0;n<fbLen;n=n+1024) {
-      if (n+1024<fbLen) {
+    for (size_t n=0;n<fbLen;n=n+1024) 
+    {
+      if (n+1024<fbLen) 
+      {
         clientTCP.write(fbBuf, 1024);
         fbBuf += 1024;
       }
-      else if (fbLen%1024>0) {
+      else if (fbLen%1024>0) 
+      {
         size_t remainder = fbLen%1024;
         clientTCP.write(fbBuf, remainder);
       }
@@ -214,13 +283,16 @@ String sendPhotoTelegram() {
     long startTimer = millis();
     boolean state = false;
     
-    while ((startTimer + waitTime) > millis()){
+    while ((startTimer + waitTime) > millis())
+    {
       Serial.print(".");
       delay(100);      
-      while (clientTCP.available()) {
+      while (clientTCP.available()) 
+      {
         char c = clientTCP.read();
         if (state==true) getBody += String(c);        
-        if (c == '\n') {
+        if (c == '\n') 
+        {
           if (getAll.length()==0) state=true; 
           getAll = "";
         } 
@@ -233,14 +305,22 @@ String sendPhotoTelegram() {
     clientTCP.stop();
     Serial.println(getBody);
   }
-  else {
+  else 
+  {
     getBody="Connected to api.telegram.org failed.";
     Serial.println("Connected to api.telegram.org failed.");
   }
   return getBody;
 }
 
-void setup(){
+// ***************************************************************
+// *      Проинициализировать монитор последовательного порта,   *
+// *         установить вспышку, как управляемый выход,          *
+// *       сконфигурировать и проинициализировать камеру,        *
+// *       подключить ESP 32-CAM к своей локальной сети          *
+// ***************************************************************
+void setup()
+{
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); 
   // Init Serial Monitor
   Serial.begin(115200);
@@ -252,14 +332,15 @@ void setup(){
   // Config and init the camera
   configInitCamera();
 
-  // Connect to Wi-Fi
+  // Подключаем ESP 32-CAM к своей локальной сети
   WiFi.mode(WIFI_STA);
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(ssid);
   WiFi.begin(ssid, password);
   clientTCP.setCACert(TELEGRAM_CERTIFICATE_ROOT); // Add root certificate for api.telegram.org
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED) 
+  {
     Serial.print(".");
     delay(500);
   }
@@ -268,15 +349,27 @@ void setup(){
   Serial.println(WiFi.localIP()); 
 }
 
-void loop() {
-  if (sendPhoto) {
+// ******************************************************************
+// * Проверить состояние переменной sendPhoto. Если оно равно true, *
+// *  вызвать функцию sendPhotoTelegram(), чтобы сделать снимок  и  *
+// *             отправить его в свой аккаунт telegram              *
+// ******************************************************************
+void loop() 
+{
+  if (sendPhoto) 
+  {
     Serial.println("Preparing photo");
     sendPhotoTelegram(); 
+    // После отправки фотографии сбрасываем признак готовности фото к отправке
     sendPhoto = false; 
   }
-  if (millis() > lastTimeBotRan + botRequestDelay)  {
+  // Ежесекундно проверяем наличие новых сообщений
+  if (millis() > lastTimeBotRan + botRequestDelay)  
+  {
     int numNewMessages = bot.getUpdates(bot.last_message_received + 1);
-    while (numNewMessages) {
+    // Когда приходит новое сообщение, вызываем функцию его обработки
+    while (numNewMessages) 
+    {
       Serial.println("got response");
       handleNewMessages(numNewMessages);
       numNewMessages = bot.getUpdates(bot.last_message_received + 1);
