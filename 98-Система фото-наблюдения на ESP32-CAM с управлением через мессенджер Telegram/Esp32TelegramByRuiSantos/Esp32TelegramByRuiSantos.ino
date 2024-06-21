@@ -38,8 +38,8 @@ const char* password = "b277a4ee84e8";
 
 // Initialize Telegram BOT
 // String BOTtoken = "XXXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";  // your Bot Token (Get from Botfather)
-   String BOTtoken = "6610230475:AAHSLATpcFDQF6sS9UycZoYK_vjIcAaegDg";  // your Bot Token (Get from Botfather)
-//                    6610230475:AAHSLATpcFDQF6sS9UycZoYK_vjIcAaegDg
+// String BOTtoken = "6610230475:AAHSLATpcFDQF6sS9UycZoYK_vjIcAaegDg";  // @tve58bot
+   String BOTtoken = "7348764883:AAER1MlELtB7H2bn6sJyAG1q3eE2ypoVzlk";  // @tveEsp_bot
 
 // Используйте @myidbot, чтобы узнать идентификатор Вашего чата. Также обратите внимание, 
 // что вам нужно нажать "start", прежде чем он сможет отправить вам сообщение
@@ -47,8 +47,10 @@ const char* password = "b277a4ee84e8";
 //                                                                Пользователь @tve58bot
 //                                                                              ESP32tve
 //                                                                        id: 6610230475
-// String CHAT_ID = "XXXXXXXXXX";
-   String CHAT_ID = "6610230475";
+
+   String CHAT_ID = "5302818460";
+// String CHAT_ID = "6610230475";
+// String CHAT_ID = "7348764883";
 
 // Отмечаем, что еще не пришло время отправить новую фотографию в вашу учетную запись telegram
 bool sendPhoto = false;
@@ -159,12 +161,14 @@ void handleNewMessages(int numNewMessages)
     // Получаем идентификатор чата текущего сообщения 
     // (таким образом узнаем, кто отправил сообщение)
     String chat_id = String(bot.messages[i].chat_id);
+
     // Если идентификатор чата отличается от идентификатора нашего бота (CHAT_ID),
     // это означает, что кто-то другой отправил сообщение вашему боту. 
     // В этом случае игнорируем сообщение и ждем следующее
     if (chat_id != CHAT_ID)
     {
       bot.sendMessage(chat_id, "Неавторизованный пользователь! Unauthorized user", "");
+      Serial.print("chat_id: "); Serial.println(chat_id);
       continue;
     }
     // Иначе считаем, что это наше сообщение, поэтому сохраняем его в текстовой переменной 
