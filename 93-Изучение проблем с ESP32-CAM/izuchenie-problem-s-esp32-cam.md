@@ -196,3 +196,39 @@ void loop() {
 3.
 
 
+
+
+
+2024-07-10 
+
+Скетч использует 995765 байт (50%) памяти устройства. Всего доступно 1966080 байт.
+Глобальные переменные используют 46792 байт (14%) динамической памяти, оставляя 280888 байт для локальных переменных. Максимум: 327680 байт.
+esptool.py v4.6
+Serial port COM5
+Connecting......................................
+
+A fatal error occurred: Failed to connect to ESP32: Serial data stream stopped: Possible serial noise or corruption.
+For troubleshooting steps visit: https://docs.espressif.com/projects/esptool/en/latest/troubleshooting.html
+выбранный последовательный порт For troubleshooting steps visit: https://docs.espressif.com/projects/esptool/en/latest/troubleshooting.html
+ не существует или плата не подключена к нему
+
+Ошибка возникла, когда для программирования подключался программатор USB UART обычный, но земля и питание от отдельного источника.
+
+Ошибка пропала, когда питание и землю восстановил от программатора.
+
+2024-07-20
+
+Скетч использует 271993 байт (13%) памяти устройства. Всего доступно 1966080 байт.
+Глобальные переменные используют 17080 байт (5%) динамической памяти, оставляя 310600 байт для локальных переменных. Максимум: 327680 байт.
+esptool.py v4.6
+Serial port COM5
+Connecting......................................
+
+A fatal error occurred: Failed to connect to ESP32: No serial data received.
+For troubleshooting steps visit: https://docs.espressif.com/projects/esptool/en/latest/troubleshooting.html
+выбранный последовательный порт For troubleshooting steps visit: https://docs.espressif.com/projects/esptool/en/latest/troubleshooting.html
+ не существует или плата не подключена к нему
+
+Ошибка возникла, когда для программирования подключался программатор USB UART обычный.
+
+Ошибка пропала, когда землю замкнул на IO0 и нажал кнопку сброса.
