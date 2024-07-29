@@ -12,6 +12,22 @@
 // e1: Esp32 от Espressif Systems версии 1.0.2 
 // e2: Esp32 от Espressif Systems версии 1.0.4 
 
+// 2024-07-29
+// 
+// Payment:                              "Al Thinker ESP32-CAM"
+// CPU Frequency:                        "240MHz (WiFi/BT)"
+// Flash Frequency:                      "80MHz"
+// Flash Mode:                           "QIO"
+// Partition Scheme:                     "Minimal SPIFFS (1.9MB APP with OTA/190KB SPIFFS)"
+// Core Debug Level:                     "Ничего"
+// Erase All Flash Before Sketch Upload: "Enabled"
+// Port:                                 "COM5"
+
+// Additional links for the Board Manager: https://espressif.github.io/arduino-esp32/package_esp32_dev_index.json
+// (2024-07-29 в preferences стояло:
+// https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json)
+// Менеджер плат: esp32 by Espressif Systems 3.0.3 installed
+
 /*
   Rui Santos
   Complete project details at https://RandomNerdTutorials.com/telegram-esp32-cam-photo-arduino/
@@ -39,7 +55,6 @@ const char* password = "b277a4ee84e8";
 // Initialize Telegram BOT
 // String BOTtoken = "XXXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";  // your Bot Token (Get from Botfather)
 // String BOTtoken = "6610230475:AAHSLATpcFDQF6sS9UycZoYK_vjIcAaegDg";  // @tve58bot
-   String BOTtoken = "7348764883:AAER1MlELtB7H2bn6sJyAG1q3eE2ypoVzlk";  // @tveEsp_bot
 
 // Используйте @myidbot, чтобы узнать идентификатор Вашего чата. Также обратите внимание, 
 // что вам нужно нажать "start", прежде чем он сможет отправить вам сообщение
@@ -48,9 +63,11 @@ const char* password = "b277a4ee84e8";
 //                                                                              ESP32tve
 //                                                                        id: 6610230475
 
-   String CHAT_ID = "5302818460";
 // String CHAT_ID = "6610230475";
 // String CHAT_ID = "7348764883";
+
+String BOTtoken = "7348764883:AAER1MlELtB7H2bn6sJyAG1q3eE2ypoVzlk";  // @tveEsp_bot
+String CHAT_ID = "5302818460";
 
 // Отмечаем, что еще не пришло время отправить новую фотографию в вашу учетную запись telegram
 bool sendPhoto = false;
@@ -63,7 +80,7 @@ UniversalTelegramBot bot(BOTtoken, clientTCP);
 // указываем начальное его состояние
 #define FLASH_LED_PIN 4
 bool flashState = LOW;
-// Указываем время звдержки (1 сек) для проверки наличия новых сообщений
+// Указываем время задержки (1 сек) для проверки наличия новых сообщений
 int botRequestDelay = 1000;
 // Определяем переменную хранения времени последней проверки наличия сообщения
 unsigned long lastTimeBotRan;
@@ -73,7 +90,7 @@ unsigned long lastTimeBotRan;
 // (платы камер ESP32-CAM: руководство по назначению выводов и GPIOs
 // : https://randomnerdtutorials.com/esp32-cam-camera-pin-gpios/ )
 
-//CAMERA_MODEL_AI_THINKER
+// CAMERA_MODEL_AI_THINKER
 #define PWDN_GPIO_NUM     32
 #define RESET_GPIO_NUM    -1
 #define XCLK_GPIO_NUM      0
