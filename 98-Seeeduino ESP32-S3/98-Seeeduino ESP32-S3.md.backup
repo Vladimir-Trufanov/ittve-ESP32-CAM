@@ -129,7 +129,7 @@ GND - Питание / данные / сигнальная база
 3. Включил в настройки:
 ***https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json***
 4. Активировал в менеджере плат последнюю версию Arduino ESP32 2.0.13:
-(по ходу установки был вопрос по подключению драйвера USB для платы)
+(по ходу )
 
 ![](ustanovka-arduino-esp32.jpg)
 

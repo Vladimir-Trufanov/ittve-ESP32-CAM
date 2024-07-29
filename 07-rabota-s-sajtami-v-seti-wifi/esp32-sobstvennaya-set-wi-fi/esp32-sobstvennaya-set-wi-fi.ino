@@ -58,7 +58,8 @@ void setup()
   server.onNotFound(handle_NotFound);
   
   server.begin();
-  Serial.println("HTTP server started");
+  Serial.println("HTTP server - точка доступа: 'ESP32' стартовал!");
+  Serial.println("Подключитесь и загрузите страницу: http://192.168.2.1");
 }
 
 // Основной цикл loop(). Для обработки входящих HTTP-запросы, постоянно

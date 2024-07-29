@@ -2,6 +2,13 @@
 
 ---
 
+### [Miscellaneоus System APIs - разные системные API-интерфейсы](#miscellaneous-system-apis)
+
+### [Распределениe памяти в ESP32](#%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%B0%D0%BC%D1%8F%D1%82%D0%B8-%D0%B2-esp32)
+
+
+---
+
 ### [Miscellaneous System APIs](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/misc_system_api.html#_CPPv411esp_restartv)
 
 #### Сброс программного обеспечения
@@ -85,40 +92,9 @@ enumerator ESP_RST_CPU_LOCKUP
 Сброс из-за блокировки процессора.
 
 ```
-
-
-
-
-
-esp_err_t esp_register_shutdown_handler(shutdown_handler_t handle)
-Register shutdown handler.
-
-This function allows you to register a handler that gets invoked before the application is restarted using esp_restart function.
-
-Parameters
-handle -- function to execute on restart
-
-Returns
-ESP_OK on success
-
-ESP_ERR_INVALID_STATE if the handler has already been registered
-
-ESP_ERR_NO_MEM if no more shutdown handler slots are available
-
-esp_err_t esp_unregister_shutdown_handler(shutdown_handler_t handle)
-Unregister shutdown handler.
-
-This function allows you to unregister a handler which was previously registered using esp_register_shutdown_handler function.
-
-ESP_OK on success
-
-ESP_ERR_INVALID_STATE if the given handler hasn't been registered before
+###### [в начало](#%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D0%B5-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D1%8B%D0%B5-api-%D0%B4%D0%BB%D1%8F-esp32)
 
 ---
-
-
----
-
 
 ### [Распределение памяти в ESP32](https://kotyara12.ru/iot/esp32_memory/)
 
@@ -140,12 +116,69 @@ D/IRAM — это ОЗУ, которое подключено к шине дан
 
 Также к ESP32 можно подключить внешнюю SPI RAM. Внешняя оперативная память интегрирована в карту памяти ESP32 через кеш в DRAM, и доступ к ней осуществляется аналогично DRAM. Такая память установлена в модулях серии ESP32-WROVER и на плате ESP32-CAM.
 
-### [Miscellaneous System APIs](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/misc_system_api.html#_CPPv411esp_restartv)
+Если обратиться к спецификациям на ESP32, то можно увидеть, что данный микроконтроллер имеет несколько разных типов оперативной памяти ( RAM ). Например для модуля ESP32-WROOM-32D/U ( ESP32-D0WD-V3 ) это выглядит примерно так:
 
-### [ICMP Echo](https://docs.espressif.com/projects/esp-idf/en/v5.0/esp32/api-reference/protocols/icmp_echo.html)
+```
+520 КБ встроенной SRAM для данных и инструкций
+
+8 КБ SRAM в RTC, которая называется RTC FAST Memory и может использоваться основным процессором во время загрузки RTC из режима глубокого сна
+
+8 КБ SRAM в RTC, которая называется RTC SLOW Memory и может быть доступна только сопроцессору ULP в режиме глубокого сна
+
+1 Кбит eFuse: 
+256 бит используются для системы (MAC-адрес и конфигурация чипа), 
+768 бит зарезервированы для клиентских приложений, включая флэш-шифрование и идентификатор чипа
+```
+> Для большинства приложений, мы можем использовать только первый тип RAM – ***520 КБ встроенной SRAM***. 
+> 
+> ***Это именно общий размер памяти MEMORY_CAP_DEFAULT (тип памяти при вызове malloc(), calloc())***, в том числе выделяемый и для нужд FreeRTOS. Куда делись около 200 КБ памяти!!!??? Дело в том, что общий блок памяти 520 КБ делится на два:
+> 
+***IRAM 192 КБ*** – Instruction RAM (сегмент кода, также называемый текстовым сегментом, в котором скомпилированная программа находится в памяти)
+
+> ***DRAM 328 КБ*** – Data RAM (используется для BSS, данных, кучи)
+
+***То есть на самом деле для размещения данных доступно только 328 КБ. DRAM распределяется следующим образом:***
+> 
+```
+Первые 8 КБ используются в качестве памяти данных для некоторых функций ПЗУ
+
+Затем компоновщик помещает инициализированный сегмент данных после этой первой памяти объемом 8 КБ
+
+Далее следуют сегмент BSS («block started by symbol», также называемый сегментом неинициализированных данных, где хранятся глобальные и статические переменные с нулевой инициализацией)
+
+Сегмент данных (также называемый сегментом инициализированных данных, где хранятся инициализированные глобальные и статические переменные)
+
+Память, оставшаяся после выделения данных и сегментов BSS, настроена на использование в виде кучи. Вот где обычно происходит динамическое распределение памяти
+
+Стек вызовов, в котором хранятся параметры функций, локальные переменные и другая информация, относящаяся к функциям
+```
+
+![Распределение DRAM - BSS, данных, кучи, стека](raspredelenie-DRAM.png)
+
+#### А что с PROGMEM?
+
+На Arduino макросы препроцессора PROGMEM, PSTR и F заставляют компоновщик изменять место хранения переменной в программе. Например PROGMEM помещает переменную во FLASH память. А что с ними на ESP32?
+
+> А на ESP32 макросы PROGMEM, PSTR и F отсутствуют!
+
+В avr-gcc все данные (в том числе и static const) по умолчанию размещаются в SRAM. А так как размер RAM в avr очень маленький, то использовался атрибут PROGMEM, который позволял разместить static const данные во flash (но при этом при непосредственном использовании все равно происходило копирование в SRAM – pgm_read….).
+
+В ESP32 весь код по умолчанию размещается уже в external flash, кроме того в external flash размещаются все static const данные (при этом обращение к этим данным происходит непосредственно без всяких pgm_read), и таким образом атрибут PROGMEM становится ненужным.
+
+Однако возникает противоположная проблема – в определенных режимах (например в обработчиках прерываний и т.д.) external flash недоступен, поэтому код, который работает в таких режимах должен быть размещен в SRAM (конкретно в IRAM). Для этого используется атрибут IRAM_ATTR. Код функций помеченный этим аттрибутом, будет размещен в IRAM. 
+
+Однако размещение кода в IRAM не гарантирует также и размещение данных в RAM, т.е. например если внутри функции помеченной атрибутом IRAM_ATTR у нас будет static const массив, то этот массив компилятор все равно сможет разместить в external flash. Для того чтобы этого избежать и явно указать компилятору что static const данные нужно тоже размещать в RAM (конкретно в DRAM) используется атрибут DRAM_ATTR.
+
+> ***Все доступные для ESP32 атрибуты размещены в файле esp_attr.h***
+
+
+
+###### [в начало](#%D1%80%D0%B0%D0%B7%D0%BD%D1%8B%D0%B5-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%BD%D1%8B%D0%B5-api-%D0%B4%D0%BB%D1%8F-esp32)
+
+---
+
+### [ICMP Echo - последняя стабильная версия на 2024-07-29](https://docs.espressif.com/projects/esp-idf/en/v5.3/esp32/api-reference/protocols/icmp_echo.html)
+
 
 ### [ESP32Ping](https://github.com/marian-craciunescu/ESP32Ping)
-
-
-
 

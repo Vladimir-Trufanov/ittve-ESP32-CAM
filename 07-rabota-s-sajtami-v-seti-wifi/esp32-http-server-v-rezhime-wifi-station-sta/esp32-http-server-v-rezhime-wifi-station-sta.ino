@@ -16,12 +16,12 @@
 // ===========================
 
 // Точка доступа моего смартфона 
-// const char* ssid     = "OPPO A9 2020";
-// const char* password = "b277a4ee84e8";
+const char* ssid     = "OPPO A9 2020";
+const char* password = "b277a4ee84e8";
 
 // Домашняя сеть WiFi
-const char* ssid     = "linksystve";
-const char* password = "x93k6kq6wf";
+// const char* ssid     = "linksystve";
+// const char* password = "x93k6kq6wf";
 
 // Точка доступа для экспериментов c Arduino
 // const char* ssid     = "tve-DESKTOP";
@@ -148,4 +148,3 @@ String SendHTML(uint8_t led1stat,uint8_t led2stat)
 }
 
 // ************************ esp32-http-server-v-rezhime-wifi-station-sta.ino ***
-
