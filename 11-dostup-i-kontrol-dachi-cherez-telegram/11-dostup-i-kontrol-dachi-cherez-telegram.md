@@ -367,8 +367,6 @@ A fatal error occurred: Could not open COM5, the port doesn't exist
 
 #### [Отправка изображений в Telegram с ESP32 без использования сторонних библиотек](https://kotyara12.ru/iot/esp32_telegram_photo/)
 
-#### [Камера видеонаблюдения на ESP32-CAM своими руками](https://microkontroller.ru/esp32-projects/kamera-videonablyudeniya-na-esp32-cam-svoimi-rukami/)
-
 #### [Руководство по распиновке ESP32-CAM AI-Thinker: объясняется использование GPIOs](https://randomnerdtutorials.com/esp32-cam-ai-thinker-pinout/)
 
 #### [Как программировать / загрузить код в ESP32-CAM AI-Thinker (Arduino IDE)](https://randomnerdtutorials.com/program-upload-code-esp32-cam/)

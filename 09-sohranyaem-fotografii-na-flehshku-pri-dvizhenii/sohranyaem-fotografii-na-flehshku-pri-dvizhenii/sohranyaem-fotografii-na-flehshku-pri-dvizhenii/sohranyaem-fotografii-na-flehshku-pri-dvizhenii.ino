@@ -40,10 +40,11 @@ RTC_DATA_ATTR int bootCount = 0;
 #define PCLK_GPIO_NUM     22
  
 int pictureNumber = 0;
-// Определяем переменные wifi
-String _ssid     = "Имя_точки_wi-fi"; // Для хранения SSID
-String _password = "пароль_от_wi-fi"; // Для хранения пароля сети
-int timezone = 3;               // часовой пояс GTM
+
+// Определяем переменные wifi (точка доступа моего смартфона)
+String _ssid     = "OPPO A9 2020";    // Для хранения SSID
+String _password = "b277a4ee84e8";    // Для хранения пароля сети
+int timezone = 3;                     // часовой пояс GTM
 
 #define uS_TO_S_FACTOR 1000000
   
