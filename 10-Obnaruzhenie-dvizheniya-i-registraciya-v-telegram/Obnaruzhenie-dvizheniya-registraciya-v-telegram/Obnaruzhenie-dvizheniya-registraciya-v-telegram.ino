@@ -3,7 +3,7 @@
 // (ArduinoJson 6.15.2)
 // (UniversalTelegramBot 1.3.0)
 // Preferences: NoDefine
-// Esp32 от Espressif Systems версии 3.0.1
+// Esp32 от Espressif Systems версии 3.0.3
 
 /*
   Rui Santos
@@ -28,9 +28,9 @@ const char* password = "b277a4ee84e8";
 // Создаём нового WiFi-клиента 
 WiFiClientSecure client;
 // Создаём бота с помощью токена и клиента
-// UniversalTelegramBot bot(BOTtoken, client);
+UniversalTelegramBot bot(BOTtoken, client);
 // Определяем пин GPIO, к которому подключен датчик движения
-// const int motionSensor = 16; // PIR Motion Sensor
+const int motionSensor = 16; // PIR Motion Sensor
 // Инициализируем (сбрасываем) признак того, что было обнаружено движение
 bool motionDetected = false;
 
