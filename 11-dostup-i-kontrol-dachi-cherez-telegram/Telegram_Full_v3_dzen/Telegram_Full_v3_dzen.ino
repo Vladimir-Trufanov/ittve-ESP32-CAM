@@ -1,3 +1,41 @@
+/** Arduino C/C++ ******************************** Telegram_Full_v3_dzen.ino ***
+ * 
+ * Обеспечить отправку фото по запросу, при срабатывании датчика движения, 
+ * мониторинг температуры и влажности, удаленное управление фотовспышкой и PIR 
+ * сенсором через мессенджер Telegram. 
+ * 
+ * Флеш-карта в этом проекте не используется. Фотографии напрямую из оперативной 
+ * памяти отправляются в мессенджер Телеграмм. Поэтому пир-сенсор и датчик 
+ * температуры/влажности подключены на свободные контакты ESP32 CAM.
+ * 
+ * PIR Motion Sensor: GPIO 13
+ * SHT31:             GPIO 14 (SDA), GPIO 15 (SCL)
+ * 
+ * Также появляется возможность использовать встроенный в плату ESP32 CAM 
+ * светодиод фотовспышки. (GPIO 4).
+ * 
+ * Дополнительный встроенный в плату светодиод (с обратной стороны платы) 
+ * также используется в данном проекте (GPIO 33) - он гаснет каждый раз когда 
+ * срабатывает датчик движения.
+ * 
+ * v1.0, 01.08.2024                                    Автор:      Труфанов В.Е.
+ * Copyright © 2024 tve                                Дата создания: 01.08.2024
+**/
+
+// 2024-08-01
+// 
+// Payment:                              "Al Thinker ESP32-CAM"
+// CPU Frequency:                        "240MHz (WiFi/BT)"
+// Flash Frequency:                      "80MHz"
+// Flash Mode:                           "QIO"
+// Partition Scheme:                     "Minimal SPIFFS (1.9MB APP with OTA/190KB SPIFFS)"
+// Core Debug Level:                     "Ничего"
+// Erase All Flash Before Sketch Upload: "Enabled"
+// Port:                                 "COM5"
+
+// Additional links for the Board Manager: https://espressif.github.io/arduino-esp32/package_esp32_dev_index.json
+// Менеджер плат:         esp32 by Espressif Systems 3.0.3 installed
+
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
 #include "soc/soc.h"
@@ -6,17 +44,19 @@
 #include <UniversalTelegramBot.h>
 #include <ArduinoJson.h>
 #include <Wire.h>
-#include "Adafruit_SHT31.h" //!!!
+#include <Adafruit_SHT31.h>
 
 // Replace with your network credentials
-const char* ssid = "";
-const char* password = "";
-String chatId = "";
-String BOTtoken = "";
+const char* ssid     = "OPPO A9 2020";
+const char* password = "b277a4ee84e8";
+
+String chatId = "5302818460";
+String BOTtoken = "7348764883:AAER1MlELtB7H2bn6sJyAG1q3eE2ypoVzlk";  // @tveEsp_bot
 
 bool sendPhoto = false;
 
-const char *onoff[]  = {
+const char *onoff[]  = 
+{
   "OFF",   // 0
   "ON",    // 1
 };
@@ -70,7 +110,8 @@ void handleNewMessages(int numNewMessages);
 String sendPhotoTelegram();
 
 // Get sht31 sensor readings and return them as a String variable
-String getReadings() {
+String getReadings() 
+{
   float temperature = sht31.readTemperature();
   float humidity = sht31.readHumidity();
   String message = "Temperature: " + String(temperature) + " ºC \n";
@@ -82,12 +123,14 @@ String getReadings() {
 }
 
 // Indicates when motion is detected
-static void IRAM_ATTR detectsMovement(void * arg) {
+static void IRAM_ATTR detectsMovement(void * arg) 
+{
   //Serial.println("MOTION DETECTED!!!");
   motionDetected = true;
 }
 
-void setup() {
+void setup() 
+{
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
   Wire.begin(I2C_SDA, I2C_SCL);
   Serial.begin(115200);
@@ -99,7 +142,8 @@ void setup() {
   digitalWrite(BUILTIN_LED_PIN, LOW);    // зажигаем светодиод
 
   Serial.println("SHT31 test");
-  if (! sht31.begin(0x44)) {   // Set to 0x45 for alternate i2c addr
+  if (! sht31.begin(0x44)) 
+  {   // Set to 0x45 for alternate i2c addr
     Serial.println("Couldn't find SHT31");
     while (1) delay(1);
   }
@@ -110,7 +154,8 @@ void setup() {
   Serial.println(ssid);
   WiFi.begin(ssid, password);
   clientTCP.setCACert(TELEGRAM_CERTIFICATE_ROOT); // Add root certificate for api.telegram.org
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED) 
+  {
     Serial.print(".");
     delay(500);
   }
@@ -141,11 +186,14 @@ void setup() {
   config.pixel_format = PIXFORMAT_JPEG;
 
   //init with high specs to pre-allocate larger buffers
-  if (psramFound()) {
+  if (psramFound()) 
+  {
     config.frame_size = FRAMESIZE_UXGA;
     config.jpeg_quality = 10;  //0-63 lower number means higher quality
     config.fb_count = 2;
-  } else {
+  } 
+  else 
+  {
     config.frame_size = FRAMESIZE_SVGA;
     config.jpeg_quality = 12;  //0-63 lower number means higher quality
     config.fb_count = 1;
@@ -153,7 +201,8 @@ void setup() {
 
   // camera init
   esp_err_t err = esp_camera_init(&config);
-  if (err != ESP_OK) {
+  if (err != ESP_OK) 
+  {
     Serial.printf("Camera init failed with error 0x%x", err);
     delay(1000);
     ESP.restart();
@@ -166,25 +215,32 @@ void setup() {
   // PIR Motion Sensor mode INPUT_PULLUP
   //err = gpio_install_isr_service(0);
   err = gpio_isr_handler_add(GPIO_NUM_13, &detectsMovement, (void *) 13);
-  if (err != ESP_OK) {
+  if (err != ESP_OK) 
+  {
     Serial.printf("handler add failed with error 0x%x \r\n", err);
   }
   err = gpio_set_intr_type(GPIO_NUM_13, GPIO_INTR_POSEDGE);
-  if (err != ESP_OK) {
+  if (err != ESP_OK) 
+  {
     Serial.printf("set intr type failed with error 0x%x \r\n", err);
   }
 }
 
-void loop() {
-  if (sendPhoto) {
+void loop() 
+{
+  if (sendPhoto) 
+  {
     Serial.println("Preparing photo");
     sendPhotoTelegram();
     sendPhoto = false;
   }
 
-  if (motionDetected) {
-    if (PIRSensor) {                              // если датчик движения разрешен!
-      if (digitalRead(BUILTIN_LED_PIN) == LOW) {    // если светодиод горит
+  if (motionDetected) 
+  {
+    if (PIRSensor) 
+    {                              // если датчик движения разрешен!
+      if (digitalRead(BUILTIN_LED_PIN) == LOW) 
+      {    // если светодиод горит
         lastTimePIR = millis();                   // не отправляем фотки в течении PIRDelay
         digitalWrite(BUILTIN_LED_PIN, HIGH);      // гасим светодиод
         bot.sendMessage(chatId, "Motion detected!!", "");
@@ -195,13 +251,16 @@ void loop() {
     motionDetected = false;
   }
 
-  if (millis() > lastTimePIR + PIRDelay) {
+  if (millis() > lastTimePIR + PIRDelay) 
+  {
     digitalWrite(BUILTIN_LED_PIN, LOW);         // зажигаем светодиод
   }
 
-  if (millis() > lastTimeBotRan + botRequestDelay) {
+  if (millis() > lastTimeBotRan + botRequestDelay) 
+  {
     int numNewMessages = bot.getUpdates(bot.last_message_received + 1);
-    while (numNewMessages) {
+    while (numNewMessages) 
+    {
       Serial.println("got response");
       handleNewMessages(numNewMessages);
       numNewMessages = bot.getUpdates(bot.last_message_received + 1);
@@ -211,14 +270,16 @@ void loop() {
 
 }
 
-String sendPhotoTelegram() {
+String sendPhotoTelegram() 
+{
   const char* myDomain = "api.telegram.org";
   String getAll = "";
   String getBody = "";
 
   camera_fb_t * fb = NULL;
   fb = esp_camera_fb_get();
-  if (!fb) {
+  if (!fb) 
+  {
     Serial.println("Camera capture failed");
     delay(1000);
     ESP.restart();
@@ -227,7 +288,8 @@ String sendPhotoTelegram() {
 
   Serial.println("Connect to " + String(myDomain));
 
-  if (clientTCP.connect(myDomain, 443)) {
+  if (clientTCP.connect(myDomain, 443)) 
+  {
     Serial.println("Connection successful");
 
     String head = "--RandomNerdTutorials\r\nContent-Disposition: form-data; name=\"chat_id\"; \r\n\r\n" + chatId + "\r\n--RandomNerdTutorials\r\nContent-Disposition: form-data; name=\"photo\"; filename=\"esp32-cam.jpg\"\r\nContent-Type: image/jpeg\r\n\r\n";
@@ -246,12 +308,15 @@ String sendPhotoTelegram() {
 
     uint8_t *fbBuf = fb->buf;
     size_t fbLen = fb->len;
-    for (size_t n = 0; n < fbLen; n = n + 1024) {
-      if (n + 1024 < fbLen) {
+    for (size_t n = 0; n < fbLen; n = n + 1024) 
+    {
+      if (n + 1024 < fbLen) 
+      {
         clientTCP.write(fbBuf, 1024);
         fbBuf += 1024;
       }
-      else if (fbLen % 1024 > 0) {
+      else if (fbLen % 1024 > 0) 
+      {
         size_t remainder = fbLen % 1024;
         clientTCP.write(fbBuf, remainder);
       }
@@ -265,18 +330,20 @@ String sendPhotoTelegram() {
     long startTimer = millis();
     boolean state = false;
 
-    while ((startTimer + waitTime) > millis()) {
+    while ((startTimer + waitTime) > millis()) 
+    {
       Serial.print(".");
       delay(100);
-      while (clientTCP.available()) {
+      while (clientTCP.available()) 
+      {
         char c = clientTCP.read();
         if (state == true) getBody += String(c);
-        if (c == '\n') {
+        if (c == '\n') 
+        {
           if (getAll.length() == 0) state = true;
           getAll = "";
         }
-        else if (c != '\r')
-          getAll += String(c);
+        else if (c != '\r') getAll += String(c);
         startTimer = millis();
       }
       if (getBody.length() > 0) break;
@@ -284,21 +351,25 @@ String sendPhotoTelegram() {
     clientTCP.stop();
     Serial.println(getBody);
   }
-  else {
+  else 
+  {
     getBody = "Connected to api.telegram.org failed.";
     Serial.println("Connected to api.telegram.org failed.");
   }
   return getBody;
 }
 
-void handleNewMessages(int numNewMessages) {
+void handleNewMessages(int numNewMessages) 
+{
   Serial.print("Handle New Messages: ");
   Serial.println(numNewMessages);
 
-  for (int i = 0; i < numNewMessages; i++) {
+  for (int i = 0; i < numNewMessages; i++) 
+  {
     // Chat id of the requester
     String chat_id = String(bot.messages[i].chat_id);
-    if (chat_id != chatId) {
+    if (chat_id != chatId) 
+    {
       bot.sendMessage(chat_id, "Unauthorized user", "");
       continue;
     }
@@ -309,32 +380,39 @@ void handleNewMessages(int numNewMessages) {
 
     String fromName = bot.messages[i].from_name;
 
-    if (text == "/flash") {
+    if (text == "/flash") 
+    {
       flashState = !flashState;
       digitalWrite(FLASH_LED_PIN, flashState);
     }
 
-    if (text == "/pir") {
+    if (text == "/pir") 
+    {
       PIRSensor = !PIRSensor;
     }
 
-    if (text == "/pirup") {
+    if (text == "/pirup") 
+    {
       PIRDelay = PIRDelay + 5000;
     }
 
-    if (text == "/pirdown") {
+    if (text == "/pirdown") 
+    {
       PIRDelay = PIRDelay - 5000;
     }
 
-    if (text == "/photo") {
+    if (text == "/photo") 
+    {
       sendPhoto = true;
       Serial.println("New photo  request");
     }
-    if (text == "/readings") {
+    if (text == "/readings") 
+    {
       String readings = getReadings();
       bot.sendMessage(chatId, readings, "");
     }
-    if (text == "/start") {
+    if (text == "/start") 
+    {
       String s = String(WiFi.localIP().toString());
       String welcome = "Welcome to the ESP32-CAM Telegram bot.\n";
       welcome += "IP:" + s + "\n";
@@ -348,3 +426,5 @@ void handleNewMessages(int numNewMessages) {
     }
   }
 }
+
+// *********************************************** Telegram_Full_v3_dzen.ino ***

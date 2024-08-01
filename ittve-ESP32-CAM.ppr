@@ -21,14 +21,21 @@ ittve-ESP32-CAM
 		-00-Купили Arduino Pro Mini
 			00-Купили Arduino Pro Mini\Как определить Arduino Mini Pro 5v против 3v.doc
 			00-Купили Arduino Pro Mini\Мы купили Arduino Pro Mini.doc
+			00-Купили Arduino Pro Mini\Мы купили Arduino Pro Mini.md
 		-01-Изучаем макетную плату перед пайкой
 			01-Изучаем макетную плату перед пайкой\ExamenBreadboardBeforeSoldering.fzz
 			01-Изучаем макетную плату перед пайкой\maketnaya-plata-prezhde.webp
 			01-Изучаем макетную плату перед пайкой\poluprozrachnaya-maketnaya-plata.jpeg
 			01-Изучаем макетную плату перед пайкой\provolochnaya-namotka-shemy.jpg
 			01-Изучаем макетную плату перед пайкой\Изучаем макетную плату перед пайкой.md
-			01-Изучаем макетную плату перед пайкой\Изучаем макетную плату перед пайкой.md.backup
 		-02-Подаем питание и подключаем зуммеры
+			-gotovim-programmator-dlya-peredachi-koda
+				02-Подаем питание и подключаем зуммеры\gotovim-programmator-dlya-peredachi-koda\Com-port-v-windows11.jpg
+				02-Подаем питание и подключаем зуммеры\gotovim-programmator-dlya-peredachi-koda\Pianino-bez-klavish.jpg
+				02-Подаем питание и подключаем зуммеры\gotovim-programmator-dlya-peredachi-koda\programming.png
+			-probuem-noty-na-arduino
+				02-Подаем питание и подключаем зуммеры\probuem-noty-na-arduino\ArduinoProMini.pdf
+				02-Подаем питание и подключаем зуммеры\probuem-noty-na-arduino\dlitelnosti-not-i-pauz.gif
 			02-Подаем питание и подключаем зуммеры\active-and-passive-buzzer.png
 			02-Подаем питание и подключаем зуммеры\arduino_nano_button_zummer.png
 			02-Подаем питание и подключаем зуммеры\arduino-passive-buzzer.png
@@ -48,133 +55,358 @@ ittve-ESP32-CAM
 			03-Пробуем ноты на ардуино\Arduino Pro Mini – обзор.doc
 			03-Пробуем ноты на ардуино\Arduino Pro Mini.doc
 			03-Пробуем ноты на ардуино\Пробуем ноты на ардуино.md
-		-04-Заставляем ESP32-CAM мигать лампочками
-			-BlinkOnESP32
-				04-Заставляем ESP32-CAM мигать лампочками\BlinkOnESP32\BlinkOnESP32.ino
-			04-Заставляем ESP32-CAM мигать лампочками\esp32camv1-6-1613666780.pdf
-			04-Заставляем ESP32-CAM мигать лампочками\Заставляем ESP32-CAM мигать лампочками.md
-			04-Заставляем ESP32-CAM мигать лампочками\Распиновка ESP32-CAM AI-Thinker Назначение GPIO.doc
-		-05-Изучаем и сравниваем ESP32
-		-98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram
+		-04-esp32-kak-uznat-i-kak-ispolzovat-psram
+			-kakoj-obem-operativnoj-pamyati-dostupen
+				04-esp32-kak-uznat-i-kak-ispolzovat-psram\kakoj-obem-operativnoj-pamyati-dostupen\kakoj-obem-operativnoj-pamyati-dostupen.ino
+			04-esp32-kak-uznat-i-kak-ispolzovat-psram\04-esp32-kak-uznat-i-kak-ispolzovat-psram.md
+			04-esp32-kak-uznat-i-kak-ispolzovat-psram\kakoj-obem-operativnoj-pamyati-dostupen.jpg
+			04-esp32-kak-uznat-i-kak-ispolzovat-psram\Менеджер плат.jpg
+			04-esp32-kak-uznat-i-kak-ispolzovat-psram\Настройки.jpg
+		-05-zastavlyaem-esp32-cam-migat-lampochkami
+			-BlinkOnCam32
+				05-zastavlyaem-esp32-cam-migat-lampochkami\BlinkOnCam32\BlinkOnCam32.ino
+				05-zastavlyaem-esp32-cam-migat-lampochkami\BlinkOnCam32\BlinkOnCam32.ppr
+				05-zastavlyaem-esp32-cam-migat-lampochkami\BlinkOnCam32\tveEsp32Cam10.h
+			05-zastavlyaem-esp32-cam-migat-lampochkami\05-zastavlyaem-esp32-cam-migat-lampochkami.md
+		-06-raznye-sistemnye-api
+			-raznye-sistemnye-api
+				06-raznye-sistemnye-api\raznye-sistemnye-api\raznye-sistemnye-api.ino
+				06-raznye-sistemnye-api\raznye-sistemnye-api\raznye-sistemnye-api.ppr
+				06-raznye-sistemnye-api\raznye-sistemnye-api\tveEsp32Cam10.h
+			06-raznye-sistemnye-api\06-raznye-sistemnye-api.md
+			06-raznye-sistemnye-api\esp32_technical_reference_manual_en.pdf
+			06-raznye-sistemnye-api\raspredelenie-DRAM.png
+		-07-rabota-s-sajtami-v-seti-wifi
+			-esp32-http-server-v-rezhime-wifi-station-sta
+				07-rabota-s-sajtami-v-seti-wifi\esp32-http-server-v-rezhime-wifi-station-sta\esp32-http-server-v-rezhime-wifi-station-sta.ino
+			-esp32-sobstvennaya-set-wi-fi
+				07-rabota-s-sajtami-v-seti-wifi\esp32-sobstvennaya-set-wi-fi\esp32-sobstvennaya-set-wi-fi.ino
+			-get-zapros-k-stranice-sajta
+				07-rabota-s-sajtami-v-seti-wifi\get-zapros-k-stranice-sajta\get-zapros-k-stranice-sajta.ino
+			07-rabota-s-sajtami-v-seti-wifi\07-rabota-s-sajtami-v-seti-wifi.md
+			07-rabota-s-sajtami-v-seti-wifi\rezhim-stancii.png
+			07-rabota-s-sajtami-v-seti-wifi\rezhim-tochki-dostupa.png
+		-08-camerawebserver
+			-CameraWebServer
+				08-camerawebserver\CameraWebServer\app_httpd.cpp
+				08-camerawebserver\CameraWebServer\camera_index.h
+				08-camerawebserver\CameraWebServer\camera_pins.h
+				08-camerawebserver\CameraWebServer\CameraWebServer.ino
+			-CameraWebServerV2
+				08-camerawebserver\CameraWebServerV2\app_httpd.cpp
+				08-camerawebserver\CameraWebServerV2\camera_index.h
+				08-camerawebserver\CameraWebServerV2\camera_pins.h
+				08-camerawebserver\CameraWebServerV2\CameraWebServerV2.ino
+		-09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii
+			-sohranyaem-fotografii-na-flehshku-pri-dvizhenii
+				-sohranyaem-fotografii-na-flehshku-pri-dvizhenii
+					09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii\sohranyaem-fotografii-na-flehshku-pri-dvizhenii\sohranyaem-fotografii-na-flehshku-pri-dvizhenii\sohranyaem-fotografii-na-flehshku-pri-dvizhenii.ino
+			09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii\09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii.md
+			09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii\esp32-cam-shema-podklyucheniya.jpg
+			09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii\nastrojka-vremeni-srabatyvaniya-i-distancii-pir-datchika-hc-sr501.jpg
+		-10-Obnaruzhenie-dvizheniya-i-registraciya-v-telegram
+			-Obnaruzhenie-dvizheniya-registraciya-v-telegram
+				10-Obnaruzhenie-dvizheniya-i-registraciya-v-telegram\Obnaruzhenie-dvizheniya-registraciya-v-telegram\Obnaruzhenie-dvizheniya-registraciya-v-telegram.ino
+			10-Obnaruzhenie-dvizheniya-i-registraciya-v-telegram\10-Obnaruzhenie-dvizheniya-i-registraciya-v-telegram.md
+			10-Obnaruzhenie-dvizheniya-i-registraciya-v-telegram\ESP32-PIR-Motion-Sensor-Send-Message-Notificatio-Telegram.png
+			10-Obnaruzhenie-dvizheniya-i-registraciya-v-telegram\ESP32-PIR-Motion-Sensor-Wiring-Diagram.jpg
+			10-Obnaruzhenie-dvizheniya-i-registraciya-v-telegram\joy-it-sbc-esp32-cam-camera-module-pinout_vv75XtX6O0.jpg
+		+11-dostup-i-kontrol-dachi-cherez-telegram
+			+ESP32_CAM_Shield_PCB_Telegram
+				-Images
+					11-dostup-i-kontrol-dachi-cherez-telegram\ESP32_CAM_Shield_PCB_Telegram\Images\ESP32-CAM-Shield-Telegram-Project.jpg
+				11-dostup-i-kontrol-dachi-cherez-telegram\ESP32_CAM_Shield_PCB_Telegram\ESP32_CAM_Shield_PCB_Telegram.ino
+				11-dostup-i-kontrol-dachi-cherez-telegram\ESP32_CAM_Shield_PCB_Telegram\README.md
+			-Esp32TelegramByRuiSantos
+				11-dostup-i-kontrol-dachi-cherez-telegram\Esp32TelegramByRuiSantos\Esp32TelegramByRuiSantos.ino
+			+Telegram_Full_v3_dzen
+				11-dostup-i-kontrol-dachi-cherez-telegram\Telegram_Full_v3_dzen\Telegram_Full_v3_dzen.ino
 			-Скетч и библиотеки
 				-Adafruit_SHT31-master
-					-assets
-						98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Adafruit_SHT31-master\assets\board.jpg
-					-examples
-						-SHT31test
-							98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Adafruit_SHT31-master\examples\SHT31test\SHT31test.ino
-					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31.cpp
-					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31.h
-					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Adafruit_SHT31-master\library.properties
-					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Adafruit_SHT31-master\license.txt
-					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Adafruit_SHT31-master\README.md
-				-Telegram_Full_v3_dzen
-					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Telegram_Full_v3_dzen\Telegram_Full_v3_dzen.ino
-				-Universal-Arduino-Telegram-Bot-master
-					-examples
-						-ESP32
-							-ChannelPost
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\ChannelPost\ChannelPost.ino
-							-ChatAction
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\ChatAction\ChatAction.ino
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\ChatAction\README.md
-							-CustomKeyboard
-								-InlineKeyboardMarkup
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\CustomKeyboard\InlineKeyboardMarkup\InlineKeyboardMarkup.ino
-								-ReplyKeyboardMarkup
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\CustomKeyboard\ReplyKeyboardMarkup\ReplyKeyboardMarkup.ino
-								-UpdateInlineKeyboard
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\CustomKeyboard\UpdateInlineKeyboard\README.md
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\CustomKeyboard\UpdateInlineKeyboard\UpdateInlineKeyboard.ino
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\CustomKeyboard\README.md
-							-EchoBot
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\EchoBot\EchoBot.ino
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\EchoBot\README.md
-							-FlashLED
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\FlashLED\FlashLED.ino
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\FlashLED\README.md
-							-Location
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\Location\Location.ino
-							-LongPoll
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\LongPoll\LongPoll.ino
-							-SendMessageFromEvent
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendMessageFromEvent\SendMessageFromEvent.ino
-							-SendPhoto
-								-ESP32-Cam
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendPhoto\ESP32-Cam\camera_code.h
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendPhoto\ESP32-Cam\camera_pins.h
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendPhoto\ESP32-Cam\ESP32-Cam.ino
-								-PhotoFromFileID
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendPhoto\PhotoFromFileID\PhotoFromFileID.ino
-								-PhotoFromSD
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendPhoto\PhotoFromSD\PhotoFromSD.ino
-								-PhotoFromSerial
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendPhoto\PhotoFromSerial\PhotoFromSerial.ino
-								-PhotoFromURL
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SendPhoto\PhotoFromURL\PhotoFromURL.ino
-							-SetMyCommands
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP32\SetMyCommands\SetMyCommands.ino
-						-ESP8266
-							-BulkMessages
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\BulkMessages\BulkMessages.ino
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\BulkMessages\README.md
-							-ChannelPost
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\ChannelPost\ChannelPost.ino
-							-ChatAction
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\ChatAction\ChatAction.ino
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\ChatAction\README.md
-							-CustomKeyboard
-								-InlineKeyboardMarkup
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\CustomKeyboard\InlineKeyboardMarkup\InlineKeyboardMarkup.ino
-								-ReplyKeyboardMarkup
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\CustomKeyboard\ReplyKeyboardMarkup\ReplyKeyboardMarkup.ino
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\CustomKeyboard\README.md
-							-EchoBot
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\EchoBot\EchoBot.ino
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\EchoBot\README.md
-							-FlashLED
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\FlashLED\FlashLED.ino
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\FlashLED\README.md
-							-Location
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\Location\Location.ino
-							-LongPoll
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\LongPoll\LongPoll.ino
-							-SendMessageFromEvent
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\SendMessageFromEvent\SendMessageFromEvent.ino
-							-SendPhoto
-								-PhotoFromFileID
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\SendPhoto\PhotoFromFileID\PhotoFromFileID.ino
-								-PhotoFromSD
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\SendPhoto\PhotoFromSD\PhotoFromSD.ino
-								-PhotoFromSerial
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\SendPhoto\PhotoFromSerial\PhotoFromSerial.ino
-								-PhotoFromURL
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\SendPhoto\PhotoFromURL\PhotoFromURL.ino
-							-SetMyCommands
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\ESP8266\SetMyCommands\SetMyCommands.ino
-						-Untested
-							-ESP32
-								-telegramOTA
-									98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\Untested\ESP32\telegramOTA\telegramOTA.ino
-						-WifiNINA
-							-EchoBot
-								98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\examples\WifiNINA\EchoBot\EchoBot.ino
-					-scripts
-						-travis
-							98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\scripts\travis\platformio.sh
-							98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\scripts\travis\platformioSingle.sh
-					-src
-						98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\src\TelegramCertificate.h
-						98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\src\UniversalTelegramBot.cpp
-						98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\src\UniversalTelegramBot.h
-					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\.travis.yml
-					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\library.json
-					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\library.properties
-					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\LICENSE.md
-					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\platformio.ini
-					98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master\README.md
-			98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Telegram ESP32-CAM Take and Send Photo Arduino IDE.doc
-			98-Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram\Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram.doc
+					-Adafruit_SHT31-master
+						-.github
+							-workflows
+								11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\.github\workflows\githubci.yml
+							11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\.github\ISSUE_TEMPLATE.md
+							11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\.github\PULL_REQUEST_TEMPLATE.md
+						-assets
+							11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\assets\board.jpg
+						-examples
+							-SHT31test
+								11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\examples\SHT31test\SHT31test.ino
+						11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\.gitignore
+						11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\Adafruit_SHT31.cpp
+						11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\Adafruit_SHT31.h
+						11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\library.properties
+						11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\license.txt
+						11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\README.md
+				11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master.zip
+				11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\ArduinoJson-7.x.zip
+				11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master.zip
+			11-dostup-i-kontrol-dachi-cherez-telegram\11-dostup-i-kontrol-dachi-cherez-telegram.md
+			11-dostup-i-kontrol-dachi-cherez-telegram\ESP32-CAM-Take-Send-Photo-Telegram.jpg
+			11-dostup-i-kontrol-dachi-cherez-telegram\ESP32-CAM-Telegram-Serial-Monitor.jpg
+			11-dostup-i-kontrol-dachi-cherez-telegram\make-standard.png
+			11-dostup-i-kontrol-dachi-cherez-telegram\razem-dlya-podklyucheniya-vneshnej-antenny.png
+			11-dostup-i-kontrol-dachi-cherez-telegram\seans-v-bote.jpg
+			11-dostup-i-kontrol-dachi-cherez-telegram\tveEsp_bot.jpg
+			11-dostup-i-kontrol-dachi-cherez-telegram\vpajka-peremychki-kusok-provoda.png
+		-12-MJPEG2SD
+			-ESP32-CAM_MJPEG2SD
+				-data
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\data\common.js
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\data\MJPEG2SD.htm
+				-extras
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\extras\motion.png
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\extras\partitions.csv
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\extras\portForward.png
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\extras\telegram.png
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\extras\TinyML.png
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\extras\webdav.png
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\appGlobals.h
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\appSpecific.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\audio.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\avi.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\camera_pins.h
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\certificates.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\ESP32-CAM_MJPEG2SD.ino
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\externalHeartbeat.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\ftp.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\globals.h
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\LICENSE
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\mjpeg2sd.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\motionDetect.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\mqtt.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\peripherals.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\prefs.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\README.md
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\setupAssist.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\smtp.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\streamServer.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\telegram.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\telemetry.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\uart.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\utils.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\utilsFS.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\webDav.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\webServer.cpp
+			12-MJPEG2SD\12-MJPEG2SD.md
+			12-MJPEG2SD\ESP32-CAM_MJPEG2SD-master.zip
+		-13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp
+			-ESP32-devcam-tve
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\CRtspSession.cpp
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\CRtspSession.h
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\CStreamer.cpp
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\CStreamer.h
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\ESP32-devcam-tve.ino
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\JPEGSamples.cpp
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\JPEGSamples.h
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\LinkedListElement.h
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\OV2640.cpp
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\OV2640.h
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\OV2640Streamer.cpp
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\OV2640Streamer.h
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platformio.ini
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platglue.h
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platglue-esp32.h
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platglue-mbed.h
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platglue-posix.h
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\SimStreamer.cpp
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\SimStreamer.h
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\wifikeys.h
+			-MicroRTSP
+				-examples
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\.gitignore
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\ESP32-devcam.ino
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\platformio.ini
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\wifikeys_template.h
+				-src
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\CRtspSession.cpp
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\CRtspSession.h
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\CStreamer.cpp
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\CStreamer.h
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\JPEGSamples.cpp
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\JPEGSamples.h
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\LinkedListElement.h
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\OV2640.cpp
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\OV2640.h
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\OV2640Streamer.cpp
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\OV2640Streamer.h
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\platglue.h
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\platglue-esp32.h
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\platglue-mbed.h
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\platglue-posix.h
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\SimStreamer.cpp
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\SimStreamer.h
+				-test
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\devvlc.sh
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\Makefile
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\README.md
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\rfccode.cpp
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\RTSPTestServer.cpp
+					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\runvlc.sh
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\library.json
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\library.properties
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\LICENSE
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\README.md
+				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\TODO.md
+			13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp.md
+			13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\nastroiki-scetcha.jpeg
+		-93-Изучение проблем с ESP32-CAM
+			93-Изучение проблем с ESP32-CAM\ESP32-Board-add-on-in-Arduino-IDE-installed.webp
+			93-Изучение проблем с ESP32-CAM\ESP32-CAM-MB-CH340G-Serial-Chip-USB-Converter.webp
+			93-Изучение проблем с ESP32-CAM\ESP32-CAM-MB-CH340G-Serial-Chip-USB-Port.webp
+			93-Изучение проблем с ESP32-CAM\ESP32-CAM-MB-Micro-USB-Programmer-CH340G-Serial-Chip.webp
+			93-Изучение проблем с ESP32-CAM\ESP32-CAM-MB-Micro-USB-Programmer-CH340G-Serial-Chip-for-OV2640.webp
+			93-Изучение проблем с ESP32-CAM\Install esptool on Windows 11.mp4
+			93-Изучение проблем с ESP32-CAM\izuchenie-problem-s-esp32-cam.md
+			93-Изучение проблем с ESP32-CAM\Select-ESP32-CAM-Ai-Thinker-Arduino-IDE.webp
+		-97-WiFi камера слежения
+			-Distributivy
+				-ESP32-CAM_MJPEG2SD-20200130
+					-data
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\data\configs.txt
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\data\jquery.min.js
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\data\LOG.htm
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\data\MJPEG2SD.htm
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\data\OTA.htm
+					-extras
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\extras\motion.png
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\extras\screenshot.png
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\avi.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\camera_pins.h
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\ds18b20.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\ESP32-CAM_MJPEG2SD-20200130.ino
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\ftp.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\LICENSE
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\mic.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\mjpeg2sd.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\motionDetect.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\myConfig.h
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\prefs.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\README.md
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\README.md.backup
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\setupAssist.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\smtp.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\utils.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\utilsSD.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\webServer.cpp
+				-ESP32-CAM_MJPEG2SD-v971
+					-data
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\data\common.js
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\data\MJPEG2SD.htm
+					-extras
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\extras\motion.png
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\extras\partitions.csv
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\extras\portForward.png
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\extras\telegram.png
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\extras\TinyML.png
+						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\extras\webdav.png
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\appGlobals.h
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\appSpecific.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\audio.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\avi.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\camera_pins.h
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\certificates.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\ESP32-CAM_MJPEG2SD-v971.ino
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\ftp.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\globals.h
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\LICENSE
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\mjpeg2sd.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\motionDetect.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\mqtt.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\peripherals.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\prefs.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\README.md
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\README.md.backup
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\setupAssist.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\smtp.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\streamServer.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\telegram.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\telemetry.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\TODO.txt
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\uart.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\utils.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\utilsFS.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\webDav.cpp
+					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\webServer.cpp
+				-package_esp32_dev_index-20200130
+					97-WiFi камера слежения\Distributivy\package_esp32_dev_index-20200130\package_esp32_dev_index.json
+				-package_esp32_dev_index-v971
+					97-WiFi камера слежения\Distributivy\package_esp32_dev_index-v971\package_esp32_dev_index.json
+			-ESP32-CAM_MJPEG2SD-v971
+				-data
+					97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\data\common.js
+					97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\data\MJPEG2SD.htm
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\appGlobals.h
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\appSpecific.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\audio.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\avi.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\camera_pins.h
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\certificates.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\ESP32-CAM_MJPEG2SD-v971.ino
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\ftp.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\globals.h
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\mjpeg2sd.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\motionDetect.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\mqtt.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\peripherals.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\prefs.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\setupAssist.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\smtp.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\streamServer.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\telegram.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\telemetry.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\uart.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\utils.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\utilsFS.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\webDav.cpp
+				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\webServer.cpp
+			-ESP32-CAM-MJPEG2SD
+				-data
+					97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\data\configs.txt
+					97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\data\jquery.min.js
+					97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\data\LOG.htm
+					97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\data\MJPEG2SD.htm
+					97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\data\OTA.htm
+				-extras
+					97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\extras\motion.png
+					97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\extras\screenshot.png
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\avi.cpp
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\camera_pins.h
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\ds18b20.cpp
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\ESP32-CAM-MJPEG2SD.ino
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\ftp.cpp
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\LICENSE
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\mic.cpp
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\mjpeg2sd.cpp
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\motionDetect.cpp
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\myConfig.h
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\prefs.cpp
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\README.md
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\README.md.backup
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\setupAssist.cpp
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\smtp.cpp
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\utils.cpp
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\utilsSD.cpp
+				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\webServer.cpp
+			97-WiFi камера слежения\chastota-kadrov-dlya-ov5460-s-maksimalnymi-razmerami-kadrov.jpg
+			97-WiFi камера слежения\kak-svoimi-rukami-sdelat-wifi-kameru-slezheniya.md
+			97-WiFi камера слежения\nastroika.jpg
+			97-WiFi камера слежения\nizhnjaja-chast-zagruzki.jpg
+			97-WiFi камера слежения\verhnjaja-chast-zagruzki.jpg
+			97-WiFi камера слежения\vremya-obnaruzheniya-v-ms.jpg
+			97-WiFi камера слежения\Как своими руками сделать WiFi камеру слежения.doc
+		-98-Seeeduino ESP32-S3
+			98-Seeeduino ESP32-S3\98-Seeeduino ESP32-S3.md
+			98-Seeeduino ESP32-S3\98-Seeeduino ESP32-S3.md.backup
+			98-Seeeduino ESP32-S3\ustanovka-arduino-esp32.jpg
+			98-Seeeduino ESP32-S3\xiaoesp32s3.jpg
+			98-Seeeduino ESP32-S3\XIAO-ESP32-S3_p0.jpg
+			98-Seeeduino ESP32-S3\XIAO-ESP32-S3_p1.jpg
+			98-Seeeduino ESP32-S3\XIAO-ESP32-S3_p2.jpg
+			98-Seeeduino ESP32-S3\XIAO-ESP32-S3_p3.jpg
+			98-Seeeduino ESP32-S3\xiaoesp32s3sense.jpg
 		-99-Фото ловушка на ESP32 CAM
 			-1-SH1106 OLED дисплей
 				-lib1106spi
@@ -190,6 +422,16 @@ ittve-ESP32-CAM
 				99-Фото ловушка на ESP32 CAM\1-SH1106 OLED дисплей\SH1106 OLED дисплей.doc
 				99-Фото ловушка на ESP32 CAM\1-SH1106 OLED дисплей\WEO012864L.pdf
 				99-Фото ловушка на ESP32 CAM\1-SH1106 OLED дисплей\Вывод текста на OLED дисплей с контроллером SH1106.doc
+			-2024-05-29-esp32-cam-podklyuchenie-i-proshivka
+				99-Фото ловушка на ESP32 CAM\2024-05-29-esp32-cam-podklyuchenie-i-proshivka\2024-05-29-esp32-cam-podklyuchenie-i-proshivka.md
+				99-Фото ловушка на ESP32 CAM\2024-05-29-esp32-cam-podklyuchenie-i-proshivka\CAMERA_MODEL_AI_THINKER.jpg
+				99-Фото ловушка на ESP32 CAM\2024-05-29-esp32-cam-podklyuchenie-i-proshivka\fritzing-podklyuchenie-esp32-cam-k-programmatoru.jpg
+				99-Фото ловушка на ESP32 CAM\2024-05-29-esp32-cam-podklyuchenie-i-proshivka\kontaktnye-ploshchadki-opredeleniya-vyhodnogo-napryazheniya.jpg
+				99-Фото ловушка на ESP32 CAM\2024-05-29-esp32-cam-podklyuchenie-i-proshivka\podklyuchaem-camerawebserver.png
+				99-Фото ловушка на ESP32 CAM\2024-05-29-esp32-cam-podklyuchenie-i-proshivka\podklyuchenie-esp32-cam-k-programmatoru.fzz
+				99-Фото ловушка на ESP32 CAM\2024-05-29-esp32-cam-podklyuchenie-i-proshivka\podklyuchenie-esp32-cam-k-programmatoru.jpg
+				99-Фото ловушка на ESP32 CAM\2024-05-29-esp32-cam-podklyuchenie-i-proshivka\raspinovka-esp32-cam-ai-thinker.jpg
+				99-Фото ловушка на ESP32 CAM\2024-05-29-esp32-cam-podklyuchenie-i-proshivka\WiFi connected.jpg
 			-3-СВЕТОДИОД LED 1W 3V 300mA
 				99-Фото ловушка на ESP32 CAM\3-СВЕТОДИОД LED 1W 3V 300mA\СВЕТОДИОД LED 1W 3V 300mA.doc
 			-4-IRL530NPBF - Транзистор
@@ -386,40 +628,26 @@ ittve-ESP32-CAM
 					99-Фото ловушка на ESP32 CAM\тест датчика движения\mini_v1\mini_v1.ino
 				-PIR_V4
 					99-Фото ловушка на ESP32 CAM\тест датчика движения\PIR_V4\PIR_V4.ino
-			99-Фото ловушка на ESP32 CAM\2020-12-31 ESP32 CAM подключение и прошивка.doc
 			99-Фото ловушка на ESP32 CAM\2021-01-12 ESP32 CAM PINOUT и внешняя Wi Fi антенна.doc
 			99-Фото ловушка на ESP32 CAM\2021-01-19 ESP32 CAM самодельная плата расширения.doc
 			99-Фото ловушка на ESP32 CAM\2021-07-21 Фото ловушка на ESP32 CAM.doc
 			99-Фото ловушка на ESP32 CAM\2022-02-27 Модуль ESP32-CAM с камерой OV2640 WiFi Bluetooth.doc
-			99-Фото ловушка на ESP32 CAM\fil.txt
 			99-Фото ловушка на ESP32 CAM\Принципиальная электрическая схема фото-ловушки.png
 			99-Фото ловушка на ESP32 CAM\Расширяем отладочную плату ESP32 CAM сверху.jpg
 			99-Фото ловушка на ESP32 CAM\Расширяем отладочную плату ESP32 CAM снизу.jpg
 			99-Фото ловушка на ESP32 CAM\Электрическая принципиальная схема ESP32 CAM плата разработчика.png
-		-Image
-			-gotovim-programmator-dlya-peredachi-koda
-				Image\gotovim-programmator-dlya-peredachi-koda\Com-port-v-windows11.jpg
-				Image\gotovim-programmator-dlya-peredachi-koda\Pianino-bez-klavish.jpg
-				Image\gotovim-programmator-dlya-peredachi-koda\programming.png
-			-probuem-noty-na-arduino
-				Image\probuem-noty-na-arduino\ArduinoProMini.pdf
-				Image\probuem-noty-na-arduino\dlitelnosti-not-i-pauz.gif
-		-parts-tve-svg
-			parts-tve-svg\Battery3AAA.svg
-			parts-tve-svg\Battery3aaa-pcb.svg
-			parts-tve-svg\Battery3aaa-schema.svg
-			parts-tve-svg\Untitled Sketch.fzz
-		+Preferences
-			Preferences\preferences Exa.txt
-			Preferences\preferences.txt
 		ittve-ESP32-CAM.ppr
 		LICENSE
 		README.md
 [Open project files]
-0=..\ByHeart\style.css
+0=11-dostup-i-kontrol-dachi-cherez-telegram\Telegram_Full_v3_dzen\Telegram_Full_v3_dzen.ino
+1=11-dostup-i-kontrol-dachi-cherez-telegram\ESP32_CAM_Shield_PCB_Telegram\ESP32_CAM_Shield_PCB_Telegram.ino
 [Selected Project Files]
 Main=
-Selected=..\ByHeart\style.css
-[..\ByHeart\style.css]
-TopLine=1
-Caret=65,7
+Selected=11-dostup-i-kontrol-dachi-cherez-telegram\ESP32_CAM_Shield_PCB_Telegram\ESP32_CAM_Shield_PCB_Telegram.ino
+[11-dostup-i-kontrol-dachi-cherez-telegram\Telegram_Full_v3_dzen\Telegram_Full_v3_dzen.ino]
+TopLine=27
+Caret=2,55
+[11-dostup-i-kontrol-dachi-cherez-telegram\ESP32_CAM_Shield_PCB_Telegram\ESP32_CAM_Shield_PCB_Telegram.ino]
+TopLine=413
+Caret=61,438

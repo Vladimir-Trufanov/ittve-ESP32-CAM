@@ -4,6 +4,8 @@
 
 ### [Telegram: ESP32-CAM Take and Send Photo (Arduino IDE)](#esp32-cam-take-and-send-photo-telegram)
 
+### [Пoдключение внешней антенны](#%D0%BF%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2%D0%BD%D0%B5%D1%88%D0%BD%D0%B5%D0%B9-%D0%B0%D0%BD%D1%82%D0%B5%D0%BD%D0%BD%D1%8B)
+
 ### [Система фoто-наблюдения на ESP32-CAM с управлением через мессенджер Telegram](#%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0-%D1%84%D0%BE%D1%82%D0%BE-%D0%BD%D0%B0%D0%B1%D0%BB%D1%8E%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F-%D0%BD%D0%B0-esp32-cam-%D1%81-%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%D0%BC-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-%D0%BC%D0%B5%D1%81%D1%81%D0%B5%D0%BD%D0%B4%D0%B6%D0%B5%D1%80-telegram)
 
 ### [Рабoта над ошибками](#%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0-%D0%BD%D0%B0%D0%B4-%D0%BE%D1%88%D0%B8%D0%B1%D0%BA%D0%B0%D0%BC%D0%B8)
@@ -383,7 +385,33 @@ A fatal error occurred: Could not open COM5, the port doesn't exist
 
 ### [Система фото-наблюдения на ESP32-CAM с управлением через мессенджер Telegram](https://dzen.ru/a/Yr1MFCHCYGuW_akT)
 
-[Исходный код проекта](Telegram_Full_v3_dzen/Telegram_Full_v3_dzen.ino)
+[Исходный код системы фото-наблюдения с управлением через Telegram](Telegram_Full_v3_dzen/Telegram_Full_v3_dzen.ino)
+
+### [ESP32-CAM with Telegram: Take Photos, Control Outputs, Request Sensor Readings and Motion Notifications](https://randomnerdtutorials.com/esp32-cam-shield-pcb-telegram/)
+
+[Исходный код проекта](ESP32_CAM_Shield_PCB_Telegram/ESP32_CAM_Shield_PCB_Telegram.ino)
+
+![Схема на макетной плате](ESP32-CAM-Project-Telegram-Test-Circuit-Diagram-Breadboard-Wiring.jpg)
+
+![Принципиальная схема](ESP32-CAM-BME280-PIR-Motion-Sensor-Wiring-Schematic-Diagram.jpg)
+
+
+
+###### [в начало](#%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF-%D0%B8-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D1%8C-%D0%B4%D0%B0%D1%87%D0%B8-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-telegram)
+
+---
+
+### [Подключение внешней антенны](https://dzen.ru/a/X_iqa7sU1U_7kgTl)
+
+Для эффективной работы c Wi-Fi в плате ESP32 предусмотрена возможность подключения внешней антенны.
+
+![Разъем для подключения внешней антенны](razem-dlya-podklyucheniya-vneshnej-antenny.png)
+
+Для переключения платы ESP32 CAM необходимо перепаять резистор (показан красной линий - или просто капнуть каплю припоя).
+
+![Впайка перемычки (кусок провода)](vpajka-peremychki-kusok-provoda.png)
+
+Cкорость передачи фотографий даже с маленькой внешней антенной значительно возрастет. С использованием внутренней антенны полноценно поработать с платой ESP32 CAM не получится (объемы передаваемых данных тут значительно больше чем у часов или метеостанций).
 
 ###### [в начало](#%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF-%D0%B8-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D1%8C-%D0%B4%D0%B0%D1%87%D0%B8-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-telegram)
 
