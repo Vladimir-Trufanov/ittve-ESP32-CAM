@@ -34,7 +34,7 @@
  * 
  * 
  * 
- * v1.0, 01.08.2024                                    Автор:      Труфанов В.Е.
+ * v1.1, 02.08.2024                                    Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                                Дата создания: 01.08.2024
 **/
 
@@ -49,8 +49,9 @@
 // Erase All Flash Before Sketch Upload: "Enabled"
 // Port:                                 "COM5"
 
-// Additional links for the Board Manager: https://espressif.github.io/arduino-esp32/package_esp32_dev_index.json
-// Менеджер плат:         esp32 by Espressif Systems 3.0.3 installed
+// Additional links for the Board Manager: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+// резерв:                                 https://espressif.github.io/arduino-esp32/package_esp32_dev_index.json
+// Менеджер плат:                          esp32 by Espressif Systems 3.0.3 installed
 
 /*
   Rui Santos
@@ -153,7 +154,6 @@ String getReadings()
   message += "Humidity: " + String (humidity) + " % \n";
   return message;
 }
-
 // ****************************************************************************
 // *        Отметить (индицировать), когда будет обнаружено движение          *
 // *    (функция обратного вызова, которая устанавливает для переменной       *
@@ -166,15 +166,18 @@ static void IRAM_ATTR detectsMovement(void * arg)
   motionDetected = true;
 }
 
+// ****************************************************************************
+// *                          Настроить оборудование                          *
+// ****************************************************************************
 void setup()
 {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); 
   Serial.begin(115200);
-  
+  // Устанавливаем светодиод вспышки в качестве выходного сигнала и переведим
+  // его в исходное состояние.
   pinMode(FLASH_LED_PIN, OUTPUT);
   digitalWrite(FLASH_LED_PIN, flashState);
-
-  // Init BME280 sensor
+  // Инициализируем датчик BME280
   Wire.begin(I2C_SDA, I2C_SCL);
   bme.settings.commInterface = I2C_MODE;
   bme.settings.I2CAddress = 0x76;
@@ -185,13 +188,15 @@ void setup()
   bme.settings.pressOverSample = 1;
   bme.settings.humidOverSample = 1;
   bme.begin();
-  
+  // Подключаем ESP32-CAM к локальной сети
   WiFi.mode(WIFI_STA);
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(ssid);
   WiFi.begin(ssid, password);
-  clientTCP.setCACert(TELEGRAM_CERTIFICATE_ROOT); // Add root certificate for api.telegram.org
+  // Добавляем корневой сертификат для api.telegram.org
+  clientTCP.setCACert(TELEGRAM_CERTIFICATE_ROOT); 
+  // Подключаемся
   while (WiFi.status() != WL_CONNECTED) 
   {
     Serial.print(".");
@@ -200,7 +205,7 @@ void setup()
   Serial.println();
   Serial.print("ESP32-CAM IP Address: ");
   Serial.println(WiFi.localIP());
-
+  // Настраиваем камеру
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
   config.ledc_timer = LEDC_TIMER_0;
@@ -222,22 +227,23 @@ void setup()
   config.pin_reset = RESET_GPIO_NUM;
   config.xclk_freq_hz = 20000000;
   config.pixel_format = PIXFORMAT_JPEG;
-
-  //init with high specs to pre-allocate larger buffers
+  // Инициализируем с высокими характеристиками для предварительного 
+  // выделения больших буферов  
+  // (config.jpeg_quality в диапазоне 0-63, где меньшее число 
+  // означает более высокое качество)
   if(psramFound())
   {
     config.frame_size = FRAMESIZE_UXGA;
-    config.jpeg_quality = 10;  //0-63 lower number means higher quality
+    config.jpeg_quality = 10;
     config.fb_count = 2;
   } 
   else 
   {
     config.frame_size = FRAMESIZE_SVGA;
-    config.jpeg_quality = 12;  //0-63 lower number means higher quality
+    config.jpeg_quality = 12;  
     config.fb_count = 1;
   }
-  
-  // camera init
+  // Инициализируем камеру.
   esp_err_t err = esp_camera_init(&config);
   if (err != ESP_OK) 
   {
@@ -245,13 +251,13 @@ void setup()
     delay(1000);
     ESP.restart();
   }
-
-  // Drop down frame size for higher initial frame rate
+  // Определяемся с раскрывающимся списком размеров кадра 
+  // для увеличения начальной частоты кадров
   sensor_t * s = esp_camera_sensor_get();
   s->set_framesize(s, FRAMESIZE_CIF);  // UXGA|SXGA|XGA|SVGA|VGA|CIF|QVGA|HQVGA|QQVGA
-
-  // PIR Motion Sensor mode INPUT_PULLUP
-  //err = gpio_install_isr_service(0); 
+  // Настраиваем прерывания на GPIO 13 от датчика движения (PIR Motion Sensor),
+  // установленного в режиме INPUT_PULLUP
+  // err = gpio_install_isr_service(0); 
   err = gpio_isr_handler_add(GPIO_NUM_13, &detectsMovement, (void *) 13);  
   if (err != ESP_OK)
   {
@@ -264,26 +270,35 @@ void setup()
   }
 }
 
+// ****************************************************************************
+// *             Крутиться, опрашивать оборудование и работать                *
+// ****************************************************************************
 void loop()
 {
+  // Проверяем состояние переменной sendPhoto. Если возникли условия для
+  // отправки фотографии, то делаем снимок и отправляем его в учетную запись Telegram
   if (sendPhoto)
   {
     Serial.println("Preparing photo");
     sendPhotoTelegram(); 
+    // Отмечаем, что отработаны условия по отправке фотографии
     sendPhoto = false; 
   }
-
+  // При обнаружении движения отправляем уведомление в учетную запись Telegram,
+  // делаем снимок и отправляем его также в свою учетную запись Telegram 
   if(motionDetected)
   {
     bot.sendMessage(chatId, "Motion detected!!", "");
     Serial.println("Motion Detected");
     sendPhotoTelegram();
+    // Отмечаем, что отработаны условия при обнаружении движения
     motionDetected = false;
   }
-  
+  // Проверяем наличие новых сообщений от Telegram каждую секунду
   if (millis() > lastTimeBotRan + botRequestDelay)
   {
     int numNewMessages = bot.getUpdates(bot.last_message_received + 1);
+    // Когда приходит новое сообщение, реагируем на него
     while (numNewMessages)
     {
       Serial.println("got response");
@@ -294,12 +309,17 @@ void loop()
   }
 }
 
+// ****************************************************************************
+// *  Сделать снимок с помощью ESP32-CAM, затем сформировать и отправить HTTP *
+// *        POST-запрос для отправки фотографии нашему telegram-боту          *
+// ****************************************************************************
 String sendPhotoTelegram()
 {
   const char* myDomain = "api.telegram.org";
   String getAll = "";
   String getBody = "";
 
+  // Делаем снимок с помощью ESP32-CAM
   camera_fb_t * fb = NULL;
   fb = esp_camera_fb_get();  
   if(!fb) 
@@ -323,6 +343,7 @@ String sendPhotoTelegram()
     uint16_t extraLen = head.length() + tail.length();
     uint16_t totalLen = imageLen + extraLen;
   
+    // Отправляем HTTP POST запрос с фотографией нашему telegram-боту
     clientTCP.println("POST /bot"+BOTtoken+"/sendPhoto HTTP/1.1");
     clientTCP.println("Host: " + String(myDomain));
     clientTCP.println("Content-Length: " + String(totalLen));
