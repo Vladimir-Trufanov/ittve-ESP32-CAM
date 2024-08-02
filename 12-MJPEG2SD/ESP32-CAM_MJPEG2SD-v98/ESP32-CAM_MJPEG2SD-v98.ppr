@@ -1,0 +1,69 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-ESP32-CAM\12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+Extensions=*.*
+[Project tree]
+ESP32-CAM_MJPEG2SD-v98
+	+ESP32-CAM_MJPEG2SD-v98
+		-data
+			data\common.js
+			data\MJPEG2SD.htm
+		-extras
+			extras\motion.png
+			extras\partitions.csv
+			extras\portForward.png
+			extras\telegram.png
+			extras\TinyML.png
+			extras\webdav.png
+		appGlobals.h
+		appSpecific.cpp
+		audio.cpp
+		avi.cpp
+		camera_pins.h
+		certificates.cpp
+		ESP32-CAM_MJPEG2SD-v98.ino
+		externalHeartbeat.cpp
+		ftp.cpp
+		globals.h
+		LICENSE
+		mjpeg2sd.cpp
+		motionDetect.cpp
+		mqtt.cpp
+		peripherals.cpp
+		photogram.cpp
+		prefs.cpp
+		README.md
+		setupAssist.cpp
+		smtp.cpp
+		streamServer.cpp
+		telegram.cpp
+		telemetry.cpp
+		uart.cpp
+		utils.cpp
+		utilsFS.cpp
+		webDav.cpp
+		webServer.cpp
+[Open project files]
+0=ESP32-CAM_MJPEG2SD-v98.ino
+1=appGlobals.h
+[Selected Project Files]
+Main=
+Selected=appGlobals.h
+[ESP32-CAM_MJPEG2SD-v98.ino]
+TopLine=1
+Caret=1,1
+[appGlobals.h]
+TopLine=29
+Caret=92,50
