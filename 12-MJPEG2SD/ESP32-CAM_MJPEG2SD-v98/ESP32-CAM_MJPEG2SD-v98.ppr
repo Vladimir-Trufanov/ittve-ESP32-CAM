@@ -13,6 +13,7 @@ DontOpen=0
 AbsolutePath=0
 FileFormat=0
 ProjectFilesOnly=0
+HTServer=localhost
 Extensions=*.*
 [Project tree]
 ESP32-CAM_MJPEG2SD-v98
