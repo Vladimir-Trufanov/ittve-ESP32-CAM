@@ -72,7 +72,15 @@ LittleFS находится в активной разработке.
 
 Файлы будут успешно загружены в файловую систему ESP32, когда вы увидите сообщение “Изображение LittleFS загружено“.
 
-2024-08-06: Загрузил ***test_example.txt*** в файловую систему со второй попытки. Вначале была ошибка, потом нажал Reset микросхемы с замкнутым GND и IO0, и запись была успешной:
+#### 2024-08-06: Загрузка  в файловую систему
+
+Подготовил загрузку - сделал каталог ***data*** в каталоге приложения ***ESP32-Send-Email-HTML-and-raw-text.ino*** и сделал файл ***test_example.txt***:
+
+```
+Пример файла для загрузки в файловую систему LittleFS микросхемы ESP32-CAM.
+```
+
+> Загрузил ***test_example.txt*** в файловую систему со второй попытки. Вначале была ошибка, потом нажал Reset микросхемы с замкнутым GND и IO0, и запись была успешной
 
 ```
 LittleFS Image Uploaded
@@ -123,10 +131,16 @@ esptool : C:\Users\Евгеньевич\AppData\Local\Arduino15\packages\esp32\t
 ->Hard resetting via RTS pin...
 ```
 
-#### Тестирование плагина для загрузки файловой системы
+#### 2024-08-06: Проверка загрузки файловой системы
 
+Проверка загруженного файла  делалась в скетче ***Testing-the-Filesystem-Uploader-Plugin.ino***. Так же получались ошибки в начале, сообщения двух видов.
+
+> Причина была одна - я компилировал скетч для проверки загруженного файла с настройкой ***Erase All Flash Before Sketch Upload =  "Enabled"***, поэтому затиралась флэш-память, в том числе и файловая система. Замена настройки на ***"Disabled"*** устранило проблему.
 
 ```
+Сообщения с первой ошибкой
+--------------------------
+
 ets Jun  8 2016 00:22:57
 
 rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
@@ -144,11 +158,12 @@ E (456) esp_littlefs: ./managed_components/joltwallet__littlefs/src/littlefs/lfs
 E (456) esp_littlefs: mount failed,  (-84)
 E (460) esp_littlefs: Failed to initialize LittleFS
 An Error has occurred while mounting SPIFFS
-
-
 ```
 
 ```
+Сообщения со второй ошибкой
+---------------------------
+
 ets Jun  8 2016 00:22:57
 
 rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
@@ -169,7 +184,7 @@ An Error has occurred while mounting SPIFFS
 
 ```
 
-Наконец !!!
+Наконец, все получилось !!!
 
 ```
 ets Jun  8 2016 00:22:57
