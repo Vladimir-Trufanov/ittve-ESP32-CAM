@@ -65,6 +65,7 @@ ittve-ESP32-CAM
 		-05-zastavlyaem-esp32-cam-migat-lampochkami
 			-BlinkOnCam32
 				05-zastavlyaem-esp32-cam-migat-lampochkami\BlinkOnCam32\BlinkOnCam32.ino
+				05-zastavlyaem-esp32-cam-migat-lampochkami\BlinkOnCam32\BlinkOnCam32.ino.esp32.bin
 				05-zastavlyaem-esp32-cam-migat-lampochkami\BlinkOnCam32\BlinkOnCam32.ppr
 				05-zastavlyaem-esp32-cam-migat-lampochkami\BlinkOnCam32\tveEsp32Cam10.h
 			05-zastavlyaem-esp32-cam-migat-lampochkami\05-zastavlyaem-esp32-cam-migat-lampochkami.md
@@ -92,58 +93,44 @@ ittve-ESP32-CAM
 				08-camerawebserver\CameraWebServer\camera_index.h
 				08-camerawebserver\CameraWebServer\camera_pins.h
 				08-camerawebserver\CameraWebServer\CameraWebServer.ino
-			-CameraWebServerV2
-				08-camerawebserver\CameraWebServerV2\app_httpd.cpp
-				08-camerawebserver\CameraWebServerV2\camera_index.h
-				08-camerawebserver\CameraWebServerV2\camera_pins.h
-				08-camerawebserver\CameraWebServerV2\CameraWebServerV2.ino
 		-09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii
 			-sohranyaem-fotografii-na-flehshku-pri-dvizhenii
-				-sohranyaem-fotografii-na-flehshku-pri-dvizhenii
-					09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii\sohranyaem-fotografii-na-flehshku-pri-dvizhenii\sohranyaem-fotografii-na-flehshku-pri-dvizhenii\sohranyaem-fotografii-na-flehshku-pri-dvizhenii.ino
+				09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii\sohranyaem-fotografii-na-flehshku-pri-dvizhenii\sohranyaem-fotografii-na-flehshku-pri-dvizhenii.ino
 			09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii\09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii.md
 			09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii\esp32-cam-shema-podklyucheniya.jpg
 			09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii\nastrojka-vremeni-srabatyvaniya-i-distancii-pir-datchika-hc-sr501.jpg
-		-10-Obnaruzhenie-dvizheniya-i-registraciya-v-telegram
-			-Obnaruzhenie-dvizheniya-registraciya-v-telegram
-				10-Obnaruzhenie-dvizheniya-i-registraciya-v-telegram\Obnaruzhenie-dvizheniya-registraciya-v-telegram\Obnaruzhenie-dvizheniya-registraciya-v-telegram.ino
-			10-Obnaruzhenie-dvizheniya-i-registraciya-v-telegram\10-Obnaruzhenie-dvizheniya-i-registraciya-v-telegram.md
-			10-Obnaruzhenie-dvizheniya-i-registraciya-v-telegram\ESP32-PIR-Motion-Sensor-Send-Message-Notificatio-Telegram.png
-			10-Obnaruzhenie-dvizheniya-i-registraciya-v-telegram\ESP32-PIR-Motion-Sensor-Wiring-Diagram.jpg
-			10-Obnaruzhenie-dvizheniya-i-registraciya-v-telegram\joy-it-sbc-esp32-cam-camera-module-pinout_vv75XtX6O0.jpg
-		+11-dostup-i-kontrol-dachi-cherez-telegram
-			+ESP32_CAM_Shield_PCB_Telegram
+		-10-Изучение проблем с ESP32-CAM
+			10-Изучение проблем с ESP32-CAM\10-Изучение проблем с ESP32-CAM.md
+			10-Изучение проблем с ESP32-CAM\ESP32-Board-add-on-in-Arduino-IDE-installed.webp
+			10-Изучение проблем с ESP32-CAM\ESP32-CAM-MB-CH340G-Serial-Chip-USB-Converter.webp
+			10-Изучение проблем с ESP32-CAM\ESP32-CAM-MB-CH340G-Serial-Chip-USB-Port.webp
+			10-Изучение проблем с ESP32-CAM\ESP32-CAM-MB-Micro-USB-Programmer-CH340G-Serial-Chip.webp
+			10-Изучение проблем с ESP32-CAM\ESP32-CAM-MB-Micro-USB-Programmer-CH340G-Serial-Chip-for-OV2640.webp
+			10-Изучение проблем с ESP32-CAM\Install esptool on Windows 11.mp4
+			10-Изучение проблем с ESP32-CAM\Select-ESP32-CAM-Ai-Thinker-Arduino-IDE.webp
+		-11-dostup-i-kontrol-dachi-cherez-telegram
+			-2024-08-02 Фотопротокол
+				11-dostup-i-kontrol-dachi-cherez-telegram\2024-08-02 Фотопротокол\IMG20240728202311.jpg
+				11-dostup-i-kontrol-dachi-cherez-telegram\2024-08-02 Фотопротокол\IMG20240802094329.jpg
+				11-dostup-i-kontrol-dachi-cherez-telegram\2024-08-02 Фотопротокол\IMG20240802094540.jpg
+				11-dostup-i-kontrol-dachi-cherez-telegram\2024-08-02 Фотопротокол\IMG20240802094600.jpg
+				11-dostup-i-kontrol-dachi-cherez-telegram\2024-08-02 Фотопротокол\IMG20240802094649.jpg
+			-ESP32_CAM_Shield_PCB_Telegram
 				-Images
 					11-dostup-i-kontrol-dachi-cherez-telegram\ESP32_CAM_Shield_PCB_Telegram\Images\ESP32-CAM-Shield-Telegram-Project.jpg
 				11-dostup-i-kontrol-dachi-cherez-telegram\ESP32_CAM_Shield_PCB_Telegram\ESP32_CAM_Shield_PCB_Telegram.ino
 				11-dostup-i-kontrol-dachi-cherez-telegram\ESP32_CAM_Shield_PCB_Telegram\README.md
 			-Esp32TelegramByRuiSantos
 				11-dostup-i-kontrol-dachi-cherez-telegram\Esp32TelegramByRuiSantos\Esp32TelegramByRuiSantos.ino
-			+Telegram_Full_v3_dzen
+			-Telegram_Full_v3_dzen
 				11-dostup-i-kontrol-dachi-cherez-telegram\Telegram_Full_v3_dzen\Telegram_Full_v3_dzen.ino
 			-Скетч и библиотеки
-				-Adafruit_SHT31-master
-					-Adafruit_SHT31-master
-						-.github
-							-workflows
-								11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\.github\workflows\githubci.yml
-							11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\.github\ISSUE_TEMPLATE.md
-							11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\.github\PULL_REQUEST_TEMPLATE.md
-						-assets
-							11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\assets\board.jpg
-						-examples
-							-SHT31test
-								11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\examples\SHT31test\SHT31test.ino
-						11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\.gitignore
-						11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\Adafruit_SHT31.cpp
-						11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\Adafruit_SHT31.h
-						11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\library.properties
-						11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\license.txt
-						11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master\Adafruit_SHT31-master\README.md
 				11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Adafruit_SHT31-master.zip
 				11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\ArduinoJson-7.x.zip
 				11-dostup-i-kontrol-dachi-cherez-telegram\Скетч и библиотеки\Universal-Arduino-Telegram-Bot-master.zip
 			11-dostup-i-kontrol-dachi-cherez-telegram\11-dostup-i-kontrol-dachi-cherez-telegram.md
+			11-dostup-i-kontrol-dachi-cherez-telegram\ESP32-CAM-BME280-PIR-Motion-Sensor-Wiring-Schematic-Diagram.jpg
+			11-dostup-i-kontrol-dachi-cherez-telegram\ESP32-CAM-Project-Telegram-Test-Circuit-Diagram-Breadboard-Wiring.jpg
 			11-dostup-i-kontrol-dachi-cherez-telegram\ESP32-CAM-Take-Send-Photo-Telegram.jpg
 			11-dostup-i-kontrol-dachi-cherez-telegram\ESP32-CAM-Telegram-Serial-Monitor.jpg
 			11-dostup-i-kontrol-dachi-cherez-telegram\make-standard.png
@@ -152,254 +139,680 @@ ittve-ESP32-CAM
 			11-dostup-i-kontrol-dachi-cherez-telegram\tveEsp_bot.jpg
 			11-dostup-i-kontrol-dachi-cherez-telegram\vpajka-peremychki-kusok-provoda.png
 		-12-MJPEG2SD
-			-ESP32-CAM_MJPEG2SD
+			-ESP32-CAM_MJPEG2SD-v98
 				-data
-					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\data\common.js
-					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\data\MJPEG2SD.htm
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\data\common.js
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\data\MJPEG2SD.htm
 				-extras
-					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\extras\motion.png
-					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\extras\partitions.csv
-					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\extras\portForward.png
-					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\extras\telegram.png
-					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\extras\TinyML.png
-					12-MJPEG2SD\ESP32-CAM_MJPEG2SD\extras\webdav.png
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\appGlobals.h
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\appSpecific.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\audio.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\avi.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\camera_pins.h
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\certificates.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\ESP32-CAM_MJPEG2SD.ino
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\externalHeartbeat.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\ftp.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\globals.h
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\LICENSE
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\mjpeg2sd.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\motionDetect.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\mqtt.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\peripherals.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\prefs.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\README.md
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\setupAssist.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\smtp.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\streamServer.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\telegram.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\telemetry.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\uart.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\utils.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\utilsFS.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\webDav.cpp
-				12-MJPEG2SD\ESP32-CAM_MJPEG2SD\webServer.cpp
-			12-MJPEG2SD\12-MJPEG2SD.md
-			12-MJPEG2SD\ESP32-CAM_MJPEG2SD-master.zip
-		-13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\extras\motion.png
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\extras\partitions.csv
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\extras\portForward.png
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\extras\telegram.png
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\extras\TinyML.png
+					12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\extras\webdav.png
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\appGlobals.h
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\appSpecific.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\audio.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\avi.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\camera_pins.h
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\certificates.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\ESP32-CAM_MJPEG2SD-v98.ino
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\ESP32-CAM_MJPEG2SD-v98.ppr
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\externalHeartbeat.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\ftp.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\globals.h
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\LICENSE
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\mjpeg2sd.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\motionDetect.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\mqtt.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\peripherals.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\photogram.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\prefs.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\README.md
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\setupAssist.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\smtp.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\streamServer.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\telegram.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\telemetry.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\uart.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\utils.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\utilsFS.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\webDav.cpp
+				12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\webServer.cpp
+			-kak-svoimi-rukami-sdelat-wifi-kameru-slezheniya
+				12-MJPEG2SD\kak-svoimi-rukami-sdelat-wifi-kameru-slezheniya\chastota-kadrov-dlya-ov5460-s-maksimalnymi-razmerami-kadrov.jpg
+				12-MJPEG2SD\kak-svoimi-rukami-sdelat-wifi-kameru-slezheniya\kak-svoimi-rukami-sdelat-wifi-kameru-slezheniya.md
+				12-MJPEG2SD\kak-svoimi-rukami-sdelat-wifi-kameru-slezheniya\nastroika.jpg
+				12-MJPEG2SD\kak-svoimi-rukami-sdelat-wifi-kameru-slezheniya\nizhnjaja-chast-zagruzki.jpg
+				12-MJPEG2SD\kak-svoimi-rukami-sdelat-wifi-kameru-slezheniya\verhnjaja-chast-zagruzki.jpg
+				12-MJPEG2SD\kak-svoimi-rukami-sdelat-wifi-kameru-slezheniya\vremya-obnaruzheniya-v-ms.jpg
+			12-MJPEG2SD\12-MJPEG2SD-2024-08-02.md
+		-13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32
+			-esp32fs
+				13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\esp32fs\esp32fs.jar
+			-Testing-the-Filesystem-Uploader-Plugin
+				13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\Testing-the-Filesystem-Uploader-Plugin\Testing-the-Filesystem-Uploader-Plugin.ino
+			13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32.md
+			13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\esp32fs.zip
+			13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\Update-to-support-Big-Sur.jpg
+		-14-cdelat-snimok-i-sohranit-na-kartu-microsd
+			-esp32-cam-take-photo-save-microsd-card
+				14-cdelat-snimok-i-sohranit-na-kartu-microsd\esp32-cam-take-photo-save-microsd-card\esp32-cam-take-photo-save-microsd-card.ino
+			14-cdelat-snimok-i-sohranit-na-kartu-microsd\14-cdelat-snimok-i-sohranit-na-kartu-microsd.md
+			14-cdelat-snimok-i-sohranit-na-kartu-microsd\format-SD-card-1.webp
+			14-cdelat-snimok-i-sohranit-na-kartu-microsd\format-SD-card-2.webp
+		+15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek
+			+udalit-prostranstvo-imen
+				15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek\udalit-prostranstvo-imen\udalit-prostranstvo-imen.ino
+			15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek\15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek.md
+			15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek\15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek.md.backup
+		-16-otpravit-ehlektronnoe-pismo-s-pomoshchyu-smtp-servera
+			-ESP_Email_Attachments
+				-data
+					16-otpravit-ehlektronnoe-pismo-s-pomoshchyu-smtp-servera\ESP_Email_Attachments\data\image.png
+					16-otpravit-ehlektronnoe-pismo-s-pomoshchyu-smtp-servera\ESP_Email_Attachments\data\text_file.txt
+				16-otpravit-ehlektronnoe-pismo-s-pomoshchyu-smtp-servera\ESP_Email_Attachments\ESP_Email_Attachments.ino
+			-ESP32-Send-Email-HTML-and-raw-text
+				-data
+					16-otpravit-ehlektronnoe-pismo-s-pomoshchyu-smtp-servera\ESP32-Send-Email-HTML-and-raw-text\data\test_example.txt
+				16-otpravit-ehlektronnoe-pismo-s-pomoshchyu-smtp-servera\ESP32-Send-Email-HTML-and-raw-text\ESP32-Send-Email-HTML-and-raw-text.ino
+			16-otpravit-ehlektronnoe-pismo-s-pomoshchyu-smtp-servera\16-otpravit-ehlektronnoe-pismo-s-pomoshchyu-smtp-servera.md
+		-17-foto-lovushka-na-esp32-cam
+			-ESP-Mail-Client
+				-examples
+					-IMAP
+						-ACL
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\ACL\ACL.ino
+						-Append_Message
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Append_Message\Append_Message.ino
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Append_Message\data.h
+						-Copy_Messages
+							-Copy_Messages_List
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Copy_Messages\Copy_Messages_List\Copy_Messages_List.ino
+							-Copy_Messages_Message_Numbers_Ranges
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Copy_Messages\Copy_Messages_Message_Numbers_Ranges\Copy_Messages_Message_Numbers_Ranges.ino
+							-Copy_Messages_UIDs_Ranges
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Copy_Messages\Copy_Messages_UIDs_Ranges\Copy_Messages_UIDs_Ranges.ino
+						-Custom_Character_Decoding
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Custom_Character_Decoding\Custom_Character_Decoding.ino
+						-Custom_Command
+							-Append_Message
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Custom_Command\Append_Message\Append_Message.ino
+							-Basic_Auth
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Custom_Command\Basic_Auth\Basic_Auth.ino
+							-Custom_Auth
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Custom_Command\Custom_Auth\Custom_Auth.ino
+							-Idle
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Custom_Command\Idle\Idle.ino
+						-Custom_Ports
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Custom_Ports\Custom_Ports.ino
+						-Data_Stream_Callback
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Data_Stream_Callback\Data_Stream_Callback.ino
+						-Delete_Messages
+							-Delete_Messages_List
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Delete_Messages\Delete_Messages_List\Delete_Messages_List.ino
+							-Delete_Messages_Message_Numbers_Ranges
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Delete_Messages\Delete_Messages_Message_Numbers_Ranges\Delete_Messages_Message_Numbers_Ranges.ino
+							-Delete_Messages_UIDs_Ranges
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Delete_Messages\Delete_Messages_UIDs_Ranges\Delete_Messages_UIDs_Ranges.ino
+						-External_Client
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\External_Client\External_Client.ino
+						-Firmware_Update_Attachment
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Firmware_Update_Attachment\Firmware_Update_Attachment.ino
+						-Get_Quota
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Get_Quota\Get_Quota.ino
+						-Mailbox_Changes_Notification
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Mailbox_Changes_Notification\Mailbox_Changes_Notification.ino
+						-Move_Messages
+							-Move_Messages_List
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Move_Messages\Move_Messages_List\Move_Messages_List.ino
+							-Move_Messages_Message_Numbers_Ranges
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Move_Messages\Move_Messages_Message_Numbers_Ranges\Move_Messages_Message_Numbers_Ranges.ino
+							-Move_Messages_UIDs_Ranges
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Move_Messages\Move_Messages_UIDs_Ranges\Move_Messages_UIDs_Ranges.ino
+						-Namespaces
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Namespaces\Namespaces.ino
+						-Read_Email_Access_Token
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Read_Email_Access_Token\Read_Email_Access_Token.ino
+						-Read_Sequence_Set
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Read_Sequence_Set\Read_Sequence_Set.ino
+						-Read_Single_Email
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Read_Single_Email\Read_Single_Email.ino
+						-Read_Single_Email_Loop
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Read_Single_Email_Loop\Read_Single_Email_Loop.ino
+						-Read_Single_Email_Loop_Silent_Mode
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Read_Single_Email_Loop_Silent_Mode\Read_Single_Email_Loop_Silent_Mode.ino
+						-Search_And_Read
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Search_And_Read\Search_And_Read.ino
+						-Search_Emails
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Search_Emails\Search_Emails.ino
+						-Search_Emails_Silent_Mode
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Search_Emails_Silent_Mode\Search_Emails_Silent_Mode.ino
+						-Set_Flags
+							-Set_Flags_List
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Set_Flags\Set_Flags_List\Set_Flags_List.ino
+							-Set_Flags_Message_Numbers_Ranges
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Set_Flags\Set_Flags_Message_Numbers_Ranges\Set_Flags_Message_Numbers_Ranges.ino
+							-Set_Flags_UIDs_Ranges
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\IMAP\Set_Flags\Set_Flags_UIDs_Ranges\Set_Flags_UIDs_Ranges.ino
+					-SMTP
+						-Custom_Command
+							-Basic_Auth
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Custom_Command\Basic_Auth\Basic_Auth.ino
+							-Custom_Auth
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Custom_Command\Custom_Auth\Custom_Auth.ino
+							-STARTTLS
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Custom_Command\STARTTLS\STARTTLS.ino
+						-Custom_Ports
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Custom_Ports\Custom_Ports.ino
+						-Ethernet
+							-ESP32
+								-Send_Text
+									-modified_LAN8720_board_images
+										17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Ethernet\ESP32\Send_Text\modified_LAN8720_board_images\lan8720_modified_board.png
+										17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Ethernet\ESP32\Send_Text\modified_LAN8720_board_images\lan8720_modified_schematic.png
+									17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Ethernet\ESP32\Send_Text\Send_Text.ino
+							-ESP8266
+								-Send_Text
+									17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Ethernet\ESP8266\Send_Text\Send_Text.ino
+						-External_Client
+							-EthernetClient
+								-ESP32
+									17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\External_Client\EthernetClient\ESP32\ESP32.ino
+								-ESP8266
+									17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\External_Client\EthernetClient\ESP8266\ESP8266.ino
+							-Generic
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\External_Client\Generic\Generic.ino
+							-GSMClient
+								-ESP32_SIMA7670
+									17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\External_Client\GSMClient\ESP32_SIMA7670\ESP32_SIMA7670.ino
+								-ESP6266_SIMA7600
+									17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\External_Client\GSMClient\ESP6266_SIMA7600\ESP8266_SIMA7600.ino
+						-Reply_Text
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Reply_Text\Reply_Text.ino
+						-Send_Access_Token
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Access_Token\Send_Access_Token.ino
+						-Send_Attachment_Blob
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Attachment_Blob\blob_data.h
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Attachment_Blob\Send_Attachment_Blob.ino
+						-Send_Attachment_File
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Attachment_File\Send_Attachment_File.ino
+						-Send_Attachment_Flash
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Attachment_Flash\Send_Attachment_Flash.ino
+						-Send_Attachment_PSRAM
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Attachment_PSRAM\Send_Attachment_PSRAM.ino
+						-Send_Camera_Image
+							-ESP_Camera
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Camera_Image\ESP_Camera\camera_pins.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Camera_Image\ESP_Camera\ESP_Camera.ino
+						-Send_Embedded_Message
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Embedded_Message\Send_Embedded_Message.ino
+						-Send_Enriched_Text
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Enriched_Text\Send_Enriched_Text.ino
+						-Send_Flash_Message_with_Inline_Image
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Flash_Message_with_Inline_Image\Send_Flash_Message_with_Inline_Image.ino
+						-Send_HTML
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_HTML\Send_HTML.ino
+						-Send_Parallel_Attachment
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Parallel_Attachment\data.h
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Parallel_Attachment\Send_Parallel_Attachment.ino
+						-Send_Reuse_Session
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Reuse_Session\Send_Reuse_Session.ino
+						-Send_RFC822_Attachment
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_RFC822_Attachment\image.h
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_RFC822_Attachment\Send_RFC822_Attachment.ino
+						-Send_Text
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Text\Send_Text.ino
+						-Send_Text _Silent_Mode
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Text _Silent_Mode\Send_Text_Silent_Mode.ino
+						-Send_Text_Flowed
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Send_Text_Flowed\Send_Text_Flowed.ino
+						-Set_Time
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Set_Time\Set_Time.ino
+						-Sleep
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\examples\SMTP\Sleep\Sleep.ino
+				-media
+					-images
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\media\images\ArduinoIDE.png
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\media\images\ESP32-PSRAM.png
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\media\images\ESP8266_VM.png
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\media\images\esp-mail-client.png
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\media\images\esp-mail-client.svg
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\media\images\esptool.png
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\media\images\SerialNINAPassthrough.png
+				-src
+					-client
+						-SSLClient
+							-bssl
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_big_cbcdec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_big_cbcenc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_big_ctr.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_big_ctrcbc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_big_dec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_big_enc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_common.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_ct.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_ct_cbcdec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_ct_cbcenc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_ct_ctr.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_ct_ctrcbc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_ct_dec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_ct_enc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_ct64.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_ct64_cbcdec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_ct64_cbcenc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_ct64_ctr.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_ct64_ctrcbc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_ct64_dec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_ct64_enc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_pwr8.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_pwr8_cbcdec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_pwr8_cbcenc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_pwr8_ctr.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_pwr8_ctrcbc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_small_cbcdec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_small_cbcenc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_small_ctr.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_small_ctrcbc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_small_dec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_small_enc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_x86ni.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_x86ni_cbcdec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_x86ni_cbcenc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_x86ni_ctr.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aes_x86ni_ctrcbc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\aesctr_drbg.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\asn1.t0
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\asn1enc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\bearssl.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\bearssl_aead.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\bearssl_block.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\bearssl_ec.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\bearssl_hash.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\bearssl_hmac.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\bearssl_kdf.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\bearssl_pem.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\bearssl_prf.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\bearssl_rand.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\bearssl_rsa.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\bearssl_ssl.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\bearssl_x509.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ccm.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ccopy.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\chacha20_ct.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\chacha20_sse2.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\config.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\dec16be.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\dec16le.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\dec32be.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\dec32le.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\dec64be.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\dec64le.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\des_ct.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\des_ct_cbcdec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\des_ct_cbcenc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\des_support.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\des_tab.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\des_tab_cbcdec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\des_tab_cbcenc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\dig_oid.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\dig_size.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\eax.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_all_m15.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_all_m31.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_c25519_i15.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_c25519_i31.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_c25519_m15.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_c25519_m31.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_c25519_m62.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_c25519_m64.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_curve25519.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_default.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_keygen.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_p256_m15.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_p256_m31.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_p256_m62.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_p256_m64.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_prime_i15.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_prime_i31.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_pubkey.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_secp256r1.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_secp384r1.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ec_secp521r1.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_atr.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_default_sign_asn1.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_default_sign_raw.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_default_vrfy_asn1.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_default_vrfy_raw.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_i15_bits.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_i15_sign_asn1.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_i15_sign_raw.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_i15_vrfy_asn1.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_i15_vrfy_raw.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_i31_bits.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_i31_sign_asn1.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_i31_sign_raw.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_i31_vrfy_asn1.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_i31_vrfy_raw.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ecdsa_rta.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\enc16be.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\enc16le.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\enc32be.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\enc32le.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\enc64be.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\enc64le.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\encode_ec_pk8der.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\encode_ec_rawder.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\encode_rsa_pk8der.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\encode_rsa_rawder.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\gcm.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ghash_ctmul.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ghash_ctmul32.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ghash_ctmul64.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ghash_pclmul.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ghash_pwr8.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\hkdf.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\hmac.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\hmac_ct.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\hmac_drbg.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_add.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_bitlen.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_decmod.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_decode.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_decred.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_encode.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_fmont.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_iszero.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_moddiv.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_modpow.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_modpow2.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_montmul.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_mulacc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_muladd.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_ninv15.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_reduce.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_rshift.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_sub.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i15_tmont.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_add.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_bitlen.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_decmod.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_decode.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_decred.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_encode.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_fmont.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_iszero.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_moddiv.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_modpow.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_modpow2.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_montmul.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_mulacc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_muladd.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_ninv31.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_reduce.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_rshift.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_sub.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i31_tmont.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_add.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_bitlen.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_decmod.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_decode.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_decred.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_div32.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_encode.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_fmont.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_iszero.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_modpow.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_montmul.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_mulacc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_muladd.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_ninv32.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_reduce.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_sub.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i32_tmont.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\i62_modpow2.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\inner.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\md5.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\md5sha1.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\mgf1.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\multihash.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\pemdec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\pemdec.t0
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\pemenc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\pkey_decoder.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\poly1305_ctmul.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\poly1305_ctmul32.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\poly1305_ctmulq.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\poly1305_i15.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\prf.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\prf_md5sha1.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\prf_sha256.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\prf_sha384.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_default_keygen.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_default_modulus.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_default_oaep_decrypt.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_default_oaep_encrypt.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_default_pkcs1_sign.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_default_pkcs1_vrfy.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_default_priv.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_default_privexp.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_default_pss_sign.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_default_pss_vrfy.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_default_pub.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_default_pubexp.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i15_keygen.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i15_modulus.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i15_oaep_decrypt.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i15_oaep_encrypt.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i15_pkcs1_sign.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i15_pkcs1_vrfy.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i15_priv.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i15_privexp.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i15_pss_sign.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i15_pss_vrfy.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i15_pub.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i15_pubexp.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i31_keygen.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i31_keygen_inner.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i31_modulus.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i31_oaep_decrypt.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i31_oaep_encrypt.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i31_pkcs1_sign.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i31_pkcs1_vrfy.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i31_priv.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i31_privexp.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i31_pss_sign.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i31_pss_vrfy.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i31_pub.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i31_pubexp.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i32_oaep_decrypt.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i32_oaep_encrypt.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i32_pkcs1_sign.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i32_pkcs1_vrfy.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i32_priv.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i32_pss_sign.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i32_pss_vrfy.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i32_pub.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i62_keygen.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i62_oaep_decrypt.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i62_oaep_encrypt.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i62_pkcs1_sign.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i62_pkcs1_vrfy.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i62_priv.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i62_pss_sign.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i62_pss_vrfy.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_i62_pub.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_oaep_pad.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_oaep_unpad.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_pkcs1_sig_pad.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_pkcs1_sig_unpad.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_pss_sig_pad.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_pss_sig_unpad.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\rsa_ssl_decrypt.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\settings.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\sha1.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\sha2big.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\sha2small.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\shake.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\skey_decoder.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\skey_decoder.t0
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_ccert_single_ec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_ccert_single_rsa.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_client.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_client_default_rsapub.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_client_full.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_engine.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_engine_default_aescbc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_engine_default_aesccm.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_engine_default_aesgcm.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_engine_default_chapol.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_engine_default_descbc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_engine_default_ec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_engine_default_ecdsa.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_engine_default_rsavrfy.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_hashes.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_hs_client.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_hs_client.t0
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_hs_common.t0
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_hs_server.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_hs_server.t0
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_io.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_keyexport.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_lru.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_rec_cbc.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_rec_ccm.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_rec_chapol.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_rec_gcm.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_scert_single_ec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_scert_single_rsa.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_server.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_server_full_ec.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_server_full_rsa.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_server_mine2c.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_server_mine2g.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_server_minf2c.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_server_minf2g.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_server_minr2g.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_server_minu2g.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\ssl_server_minv2g.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\sysrng.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\x509_decoder.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\x509_decoder.t0
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\x509_knownkey.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\x509_minimal.c
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\x509_minimal.t0
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\bssl\x509_minimal_full.c
+							-client
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\client\BSSL_CertStore.cpp
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\client\BSSL_CertStore.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\client\BSSL_Helper.cpp
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\client\BSSL_Helper.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\client\BSSL_SSL_Client.cpp
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\client\BSSL_SSL_Client.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\client\BSSL_TCP_Client.cpp
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\client\BSSL_TCP_Client.h
+								17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\client\stm32_time_fix.c
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\Custom_ESP_SSLClient_FS.h
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\ESP_SSLClient.h
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\ESP_SSLClient_Const.h
+							17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\SSLClient\ESP_SSLClient_FS.h
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\ESP_Mail_TCPClient.h
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\client\WiFiClientImpl.h
+					-extras
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\extras\Build_Options.h
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\extras\MB_FS.h
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\extras\MB_FS_Interfaces.h
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\extras\MB_MCU.h
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\extras\MB_String.h
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\extras\MB_Time.h
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\extras\Networks.h
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\extras\RFC2047.cpp
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\extras\RFC2047.h
+						17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\extras\SDHelper.h
+					17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\ESP_Mail_Client.cpp
+					17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\ESP_Mail_Client.h
+					17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\ESP_Mail_Client_Version.h
+					17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\ESP_Mail_Const.h
+					17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\ESP_Mail_Error.h
+					17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\ESP_Mail_FS.h
+					17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\ESP_Mail_IMAP.h
+					17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\ESP_Mail_SMTP.h
+					17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\ESP_Mail_TCPClient.h
+					17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\HeapStat.h
+					17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\src\README.md
+				17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\_config.yml
+				17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\keywords.txt
+				17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\library.json
+				17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\library.properties
+				17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\LICENSE
+				17-foto-lovushka-na-esp32-cam\ESP-Mail-Client\README.md
+			-PIR_V4
+				17-foto-lovushka-na-esp32-cam\PIR_V4\PIR_V4.ino
+			17-foto-lovushka-na-esp32-cam\16-foto-lovushka-na-esp32-cam.md
+			17-foto-lovushka-na-esp32-cam\ESP-Mail-Client-master.zip
+			17-foto-lovushka-na-esp32-cam\principialnaya-ehlektricheskaya-shema.png
+		-18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp
 			-ESP32-devcam-tve
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\CRtspSession.cpp
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\CRtspSession.h
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\CStreamer.cpp
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\CStreamer.h
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\ESP32-devcam-tve.ino
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\JPEGSamples.cpp
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\JPEGSamples.h
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\LinkedListElement.h
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\OV2640.cpp
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\OV2640.h
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\OV2640Streamer.cpp
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\OV2640Streamer.h
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platformio.ini
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platglue.h
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platglue-esp32.h
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platglue-mbed.h
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platglue-posix.h
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\SimStreamer.cpp
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\SimStreamer.h
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\wifikeys.h
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\CRtspSession.cpp
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\CRtspSession.h
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\CStreamer.cpp
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\CStreamer.h
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\ESP32-devcam-tve.ino
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\JPEGSamples.cpp
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\JPEGSamples.h
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\LinkedListElement.h
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\OV2640.cpp
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\OV2640.h
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\OV2640Streamer.cpp
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\OV2640Streamer.h
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platformio.ini
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platglue.h
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platglue-esp32.h
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platglue-mbed.h
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\platglue-posix.h
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\SimStreamer.cpp
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\SimStreamer.h
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\wifikeys.h
 			-MicroRTSP
 				-examples
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\.gitignore
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\ESP32-devcam.ino
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\platformio.ini
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\wifikeys_template.h
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\.gitignore
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\ESP32-devcam.ino
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\platformio.ini
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\wifikeys_template.h
 				-src
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\CRtspSession.cpp
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\CRtspSession.h
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\CStreamer.cpp
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\CStreamer.h
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\JPEGSamples.cpp
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\JPEGSamples.h
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\LinkedListElement.h
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\OV2640.cpp
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\OV2640.h
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\OV2640Streamer.cpp
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\OV2640Streamer.h
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\platglue.h
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\platglue-esp32.h
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\platglue-mbed.h
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\platglue-posix.h
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\SimStreamer.cpp
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\SimStreamer.h
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\CRtspSession.cpp
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\CRtspSession.h
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\CStreamer.cpp
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\CStreamer.h
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\JPEGSamples.cpp
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\JPEGSamples.h
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\LinkedListElement.h
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\OV2640.cpp
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\OV2640.h
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\OV2640Streamer.cpp
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\OV2640Streamer.h
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\platglue.h
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\platglue-esp32.h
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\platglue-mbed.h
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\platglue-posix.h
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\SimStreamer.cpp
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\src\SimStreamer.h
 				-test
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\devvlc.sh
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\Makefile
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\README.md
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\rfccode.cpp
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\RTSPTestServer.cpp
-					13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\runvlc.sh
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\library.json
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\library.properties
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\LICENSE
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\README.md
-				13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\TODO.md
-			13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp.md
-			13-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\nastroiki-scetcha.jpeg
-		-93-Изучение проблем с ESP32-CAM
-			93-Изучение проблем с ESP32-CAM\ESP32-Board-add-on-in-Arduino-IDE-installed.webp
-			93-Изучение проблем с ESP32-CAM\ESP32-CAM-MB-CH340G-Serial-Chip-USB-Converter.webp
-			93-Изучение проблем с ESP32-CAM\ESP32-CAM-MB-CH340G-Serial-Chip-USB-Port.webp
-			93-Изучение проблем с ESP32-CAM\ESP32-CAM-MB-Micro-USB-Programmer-CH340G-Serial-Chip.webp
-			93-Изучение проблем с ESP32-CAM\ESP32-CAM-MB-Micro-USB-Programmer-CH340G-Serial-Chip-for-OV2640.webp
-			93-Изучение проблем с ESP32-CAM\Install esptool on Windows 11.mp4
-			93-Изучение проблем с ESP32-CAM\izuchenie-problem-s-esp32-cam.md
-			93-Изучение проблем с ESP32-CAM\Select-ESP32-CAM-Ai-Thinker-Arduino-IDE.webp
-		-97-WiFi камера слежения
-			-Distributivy
-				-ESP32-CAM_MJPEG2SD-20200130
-					-data
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\data\configs.txt
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\data\jquery.min.js
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\data\LOG.htm
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\data\MJPEG2SD.htm
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\data\OTA.htm
-					-extras
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\extras\motion.png
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\extras\screenshot.png
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\avi.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\camera_pins.h
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\ds18b20.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\ESP32-CAM_MJPEG2SD-20200130.ino
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\ftp.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\LICENSE
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\mic.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\mjpeg2sd.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\motionDetect.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\myConfig.h
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\prefs.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\README.md
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\README.md.backup
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\setupAssist.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\smtp.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\utils.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\utilsSD.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-20200130\webServer.cpp
-				-ESP32-CAM_MJPEG2SD-v971
-					-data
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\data\common.js
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\data\MJPEG2SD.htm
-					-extras
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\extras\motion.png
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\extras\partitions.csv
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\extras\portForward.png
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\extras\telegram.png
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\extras\TinyML.png
-						97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\extras\webdav.png
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\appGlobals.h
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\appSpecific.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\audio.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\avi.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\camera_pins.h
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\certificates.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\ESP32-CAM_MJPEG2SD-v971.ino
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\ftp.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\globals.h
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\LICENSE
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\mjpeg2sd.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\motionDetect.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\mqtt.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\peripherals.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\prefs.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\README.md
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\README.md.backup
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\setupAssist.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\smtp.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\streamServer.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\telegram.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\telemetry.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\TODO.txt
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\uart.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\utils.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\utilsFS.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\webDav.cpp
-					97-WiFi камера слежения\Distributivy\ESP32-CAM_MJPEG2SD-v971\webServer.cpp
-				-package_esp32_dev_index-20200130
-					97-WiFi камера слежения\Distributivy\package_esp32_dev_index-20200130\package_esp32_dev_index.json
-				-package_esp32_dev_index-v971
-					97-WiFi камера слежения\Distributivy\package_esp32_dev_index-v971\package_esp32_dev_index.json
-			-ESP32-CAM_MJPEG2SD-v971
-				-data
-					97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\data\common.js
-					97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\data\MJPEG2SD.htm
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\appGlobals.h
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\appSpecific.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\audio.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\avi.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\camera_pins.h
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\certificates.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\ESP32-CAM_MJPEG2SD-v971.ino
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\ftp.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\globals.h
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\mjpeg2sd.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\motionDetect.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\mqtt.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\peripherals.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\prefs.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\setupAssist.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\smtp.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\streamServer.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\telegram.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\telemetry.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\uart.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\utils.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\utilsFS.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\webDav.cpp
-				97-WiFi камера слежения\ESP32-CAM_MJPEG2SD-v971\webServer.cpp
-			-ESP32-CAM-MJPEG2SD
-				-data
-					97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\data\configs.txt
-					97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\data\jquery.min.js
-					97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\data\LOG.htm
-					97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\data\MJPEG2SD.htm
-					97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\data\OTA.htm
-				-extras
-					97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\extras\motion.png
-					97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\extras\screenshot.png
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\avi.cpp
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\camera_pins.h
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\ds18b20.cpp
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\ESP32-CAM-MJPEG2SD.ino
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\ftp.cpp
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\LICENSE
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\mic.cpp
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\mjpeg2sd.cpp
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\motionDetect.cpp
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\myConfig.h
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\prefs.cpp
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\README.md
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\README.md.backup
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\setupAssist.cpp
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\smtp.cpp
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\utils.cpp
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\utilsSD.cpp
-				97-WiFi камера слежения\ESP32-CAM-MJPEG2SD\webServer.cpp
-			97-WiFi камера слежения\chastota-kadrov-dlya-ov5460-s-maksimalnymi-razmerami-kadrov.jpg
-			97-WiFi камера слежения\kak-svoimi-rukami-sdelat-wifi-kameru-slezheniya.md
-			97-WiFi камера слежения\nastroika.jpg
-			97-WiFi камера слежения\nizhnjaja-chast-zagruzki.jpg
-			97-WiFi камера слежения\verhnjaja-chast-zagruzki.jpg
-			97-WiFi камера слежения\vremya-obnaruzheniya-v-ms.jpg
-			97-WiFi камера слежения\Как своими руками сделать WiFi камеру слежения.doc
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\devvlc.sh
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\Makefile
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\README.md
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\rfccode.cpp
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\RTSPTestServer.cpp
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\test\runvlc.sh
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\library.json
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\library.properties
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\LICENSE
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\README.md
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\TODO.md
+			18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp.md
+			18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\nastroiki-scetcha.jpeg
 		-98-Seeeduino ESP32-S3
 			98-Seeeduino ESP32-S3\98-Seeeduino ESP32-S3.md
-			98-Seeeduino ESP32-S3\98-Seeeduino ESP32-S3.md.backup
 			98-Seeeduino ESP32-S3\ustanovka-arduino-esp32.jpg
 			98-Seeeduino ESP32-S3\xiaoesp32s3.jpg
 			98-Seeeduino ESP32-S3\XIAO-ESP32-S3_p0.jpg
@@ -631,7 +1044,6 @@ ittve-ESP32-CAM
 			99-Фото ловушка на ESP32 CAM\2021-01-12 ESP32 CAM PINOUT и внешняя Wi Fi антенна.doc
 			99-Фото ловушка на ESP32 CAM\2021-01-19 ESP32 CAM самодельная плата расширения.doc
 			99-Фото ловушка на ESP32 CAM\2021-07-21 Фото ловушка на ESP32 CAM.doc
-			99-Фото ловушка на ESP32 CAM\2022-02-27 Модуль ESP32-CAM с камерой OV2640 WiFi Bluetooth.doc
 			99-Фото ловушка на ESP32 CAM\Принципиальная электрическая схема фото-ловушки.png
 			99-Фото ловушка на ESP32 CAM\Расширяем отладочную плату ESP32 CAM сверху.jpg
 			99-Фото ловушка на ESP32 CAM\Расширяем отладочную плату ESP32 CAM снизу.jpg
@@ -640,14 +1052,10 @@ ittve-ESP32-CAM
 		LICENSE
 		README.md
 [Open project files]
-0=11-dostup-i-kontrol-dachi-cherez-telegram\Telegram_Full_v3_dzen\Telegram_Full_v3_dzen.ino
-1=11-dostup-i-kontrol-dachi-cherez-telegram\ESP32_CAM_Shield_PCB_Telegram\ESP32_CAM_Shield_PCB_Telegram.ino
+0=15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek\udalit-prostranstvo-imen\udalit-prostranstvo-imen.ino
 [Selected Project Files]
 Main=
-Selected=11-dostup-i-kontrol-dachi-cherez-telegram\ESP32_CAM_Shield_PCB_Telegram\ESP32_CAM_Shield_PCB_Telegram.ino
-[11-dostup-i-kontrol-dachi-cherez-telegram\Telegram_Full_v3_dzen\Telegram_Full_v3_dzen.ino]
-TopLine=27
-Caret=2,55
-[11-dostup-i-kontrol-dachi-cherez-telegram\ESP32_CAM_Shield_PCB_Telegram\ESP32_CAM_Shield_PCB_Telegram.ino]
-TopLine=295
-Caret=57,300
+Selected=15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek\udalit-prostranstvo-imen\udalit-prostranstvo-imen.ino
+[15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek\udalit-prostranstvo-imen\udalit-prostranstvo-imen.ino]
+TopLine=1
+Caret=1,72
