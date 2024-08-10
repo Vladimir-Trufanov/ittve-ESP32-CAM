@@ -8,6 +8,6 @@
 
 #### [Удалить пространство имен](udalit-prostranstvo-imen/udalit-prostranstvo-imen.ino)
 
-#### [Запомнить, изменить и прочитать значение счетчика в настройках](StartCounter/StartCounter.ino)
+#### [Запомнить, изменить и прочитать значение счетчикалить пространство имен](StartCounter/StartCounter.ino)
 
 ![](ESP32-Preferences-StartCounter-Example-Serial-Monitor.webp)
