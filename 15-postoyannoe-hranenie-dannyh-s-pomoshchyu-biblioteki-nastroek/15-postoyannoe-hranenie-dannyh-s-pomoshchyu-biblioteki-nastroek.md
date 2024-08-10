@@ -10,4 +10,5 @@
 
 #### [Запомнить, изменить и прочитать значение счетчика в настройках](StartCounter/StartCounter.ino)
 
-![](ESP32-Preferences-StartCounter-Example-Serial-Monitor.webp)
+![Сообщения COM-порта в стандартном примере](ESP32-Preferences-StartCounter-Example-Serial-Monitor.webp)
+

@@ -4,7 +4,7 @@
  *                                         с помошью библиотеки "Preferences.h"
  *     https://randomnerdtutorials.com/esp32-save-data-permanently-preferences/
  *                                               
- * v1.0, 10.08.2024                                   Автор:      Труфанов В.Е.
+ * v1.1, 10.08.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 10.08.2024
 **/
 
@@ -49,11 +49,9 @@ void setup()
   // значения (по умолчанию), то возвращается 0.
   // Имя переменной ограничено 15-ью символами.
   unsigned int counter = preferences.getUInt("counter",0);
-  unsigned int counter2 = preferences.getUInt("counter",7);
+  unsigned int counter2 = preferences.getUInt("counter2",7);
   // Увеличиваем значение счетчика на единицу
   counter++;
-  // Выводим новое значение счетчика в последовательный монитор
-  Serial.printf("Текущее значение счетчика: %u\n",counter);
   // Сохраняем новое значение в хранилище Preferences
   preferences.putUInt("counter", counter);
   
@@ -62,10 +60,11 @@ void setup()
   if (counter>5)
   {
     preferences.clear();
-    Serial.println("Почистили пространство имен после counter>5!");
-    Serial.printf("Значение счетчика после очистки: %u\n", preferences.getUInt("counter",9));
+    Serial.println("Почистили пространство имен после counter > 5");
+    Serial.printf("Значение счетчика после очистки и инициализации: %u\n", preferences.getUInt("counter",9));
     preferences.putUInt("counter", 7);
-    Serial.printf("Значение счетчика после переустановки: %u\n", preferences.getUInt("counter",9));
+    Serial.printf("Значение счетчика после переустановки:           %u\n", preferences.getUInt("counter",9));
+    Serial.println();
     delay(1000);
   }
 
@@ -73,11 +72,15 @@ void setup()
   if (counter>7)
   {
     preferences.remove("counter");
+    Serial.println("Удалили ключ counter,когда его значение стало > 7");
+    Serial.println();
   }
 
+  // Выводим значения счетчика в последовательный монитор
+  Serial.printf("Текущее значение счетчика:      %u\n",counter);
+  Serial.printf("Значение контрольного счетчика: %u\n",counter2);
   // Закрываем текущее пространство имен в настройках
   // (здесь запоминаются и все новые значения пар настроек)
-  Serial.printf("Значение контрольного счетчика: %u\n",counter2);
   preferences.end();
   
   // Ждем 5 секунд и перезагружаем ESP
