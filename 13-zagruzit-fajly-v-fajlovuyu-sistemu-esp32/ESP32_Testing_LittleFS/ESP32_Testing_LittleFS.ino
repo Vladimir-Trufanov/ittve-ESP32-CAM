@@ -363,9 +363,37 @@ void setup()
       Serial.println("LittleFS Mount Failed");
       return;
    }
-   createDir(LittleFS, "/mydir"); // Create a mydir folder
-   writeFile(LittleFS, "/mydir/hello1.txt", "Hello1"); // Create a hello1.txt file with the content "Hello1"
+
+   size_t size;
+
+   //int array[5] = { 1, 2, 3, 4, 5 };
+   //size_t size = sizeof(array);
+   //printf("The size of the array is: %lu\n", size);
+
+   size = sizeof(LittleFS.totalBytes());
+   Serial.print("    Размер LittleFS: ");
+   Serial.println(size);
+
+   size = sizeof(LittleFS.usedBytes());
+   Serial.print("Свободно в LittleFS: ");
+   Serial.println(size);
+
+   //createDir(LittleFS, "/mydir"); // Create a mydir folder
+   //writeFile(LittleFS, "/mydir/hello1.txt", "Hello1"); // Create a hello1.txt file with the content "Hello1"
+   
    listDir(LittleFS, "/", 1); // List the directories up to one level beginning at the root directory
+
+
+   size = sizeof(LittleFS.totalBytes());
+   Serial.print("    Размер LittleFS: ");
+   Serial.println(size);
+
+   size = sizeof(LittleFS.usedBytes());
+   Serial.print("Свободно в LittleFS: ");
+   Serial.println(size);
+
+   /*
+
    deleteFile(LittleFS, "/mydir/hello1.txt"); //delete the previously created file
    removeDir(LittleFS, "/mydir"); //delete the previously created folder
    listDir(LittleFS, "/", 1); // list all directories to make sure they were deleted
@@ -378,6 +406,8 @@ void setup()
    deleteFile(LittleFS, "/foo.txt"); //Delete the file
    testFileIO(LittleFS, "/test.txt"); //Testin
    //deleteFile(LittleFS, "/test.txt"); //Delete the file
+   */
+   
    Serial.println( "Test complete" ); 
 }
 
