@@ -2,6 +2,12 @@
 
 ### [Arduino IDE2 - установка загрузчика ESP32 LittleFS для загрузки файлов в файловую систему](https://randomnerdtutorials.com/arduino-ide-2-install-esp32-littlefs/)
 
+---
+
+### [ESP32: запись данных в файл (LittleFS) – Arduino IDE](#%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0-%D1%81-%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%BC%D0%B8-%D0%B2-%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D0%BE%D0%B9-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5-littlefs)
+
+---
+
 ### [Arduino IDE1.8 - установка загрузчика ESP32 LittleFS для загрузки файлов в файловую систему](https://randomnerdtutorials.com/esp32-littlefs-arduino-ide/)
 
 ***LittleFS*** - это облегченная файловая система, созданная для микроконтроллеров, которая позволяет вам обращаться к флэш-памяти так же, как вы это делали бы в стандартной файловой системе вашего компьютера, но более простая и ограниченная. Плагин, который мы установим, позволяет использовать три разные файловые системы: LittleFS, SPIFFS или FatFs.
@@ -204,3 +210,14 @@ File Content:
 
 Пример файла для загрузки в файловую систему LittleFS микросхемы ESP32-CAM.
 ```
+---
+
+### [Работа с данными в файловой системе LittleFS](https://randomnerdtutorials.com/esp32-write-data-littlefs-arduino/#listDir)
+
+[Показать примеры работы с файлами и каталогами в файловой системе LittleFS](ESP32_Testing_LittleFS/ESP32_Testing_LittleFS.ino)
+
+![Сообщения при успешной инициализации LittleFS](testing-Little-FS-Serial-Monitor.webp)
+
+###### [в начало](#%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%B8%D1%82%D1%8C-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B-%D0%B2-%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D1%83%D1%8E-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83-esp32)
+
+---

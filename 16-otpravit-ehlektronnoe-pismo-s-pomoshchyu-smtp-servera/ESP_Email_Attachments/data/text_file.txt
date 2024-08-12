@@ -1,1 +1,2 @@
-ESP32 text file sample stored in SPIFFS
+ESP32: text file sample stored in SPIFFS
+ESP32: пример текстового файла, размещенного в SPIFFS

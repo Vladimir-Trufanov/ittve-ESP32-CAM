@@ -9,7 +9,6 @@
   Example adapted from: https://github.com/mobizt/ESP-Mail-Client
 */
 
-
 // 2024-08-06
 // 
 // Payment:                                "Al Thinker ESP32-CAM"

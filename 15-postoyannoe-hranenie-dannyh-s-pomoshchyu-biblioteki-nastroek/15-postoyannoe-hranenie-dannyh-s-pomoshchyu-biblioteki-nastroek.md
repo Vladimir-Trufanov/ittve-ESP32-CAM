@@ -12,3 +12,6 @@
 
 ![Сообщения COM-порта в стандартном примере](ESP32-Preferences-StartCounter-Example-Serial-Monitor.webp)
 
+#### [Сохранить сетевые учетные данные с помощью Preferences.h](ESP32_Save_Credentials/ESP32_Save_Credentials.ino)
+
+#### [Подключиться к Wi-Fi с сохранением сетевых учетных данных в настройках](ESP32_Connect_WiFi_Preferences/ESP32_Connect_WiFi_Preferences.ino)

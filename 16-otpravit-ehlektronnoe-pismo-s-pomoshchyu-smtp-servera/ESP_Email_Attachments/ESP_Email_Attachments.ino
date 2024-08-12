@@ -1,4 +1,6 @@
 /*
+  Отправить вложения по электронной почте с помощью ESP32 (Arduino IDE)
+  
   Rui Santos
   Complete project details at:
    - ESP32: https://RandomNerdTutorials.com/esp32-send-email-smtp-server-arduino-ide/
@@ -8,6 +10,19 @@
   The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
   Example adapted K. Suwatchai (Mobizt): https://github.com/mobizt/ESP-Mail-Client Copyright (c) 2021 mobizt
 */
+
+// 2024-08-11
+// 
+// Payment:                                "Al Thinker ESP32-CAM"
+// CPU Frequency:                          "240MHz (WiFi/BT)"
+// Flash Frequency:                        "80MHz"
+// Flash Mode:                             "QIO"
+// Partition Scheme:                       "Minimal SPIFFS (1.9MB APP with OTA/190KB SPIFFS)"
+// Core Debug Level:                       "Ничего"
+// Erase All Flash Before Sketch Upload:   "Enabled"
+
+// Additional links for the Board Manager: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+// Менеджер плат:                          esp32 by Espressif Systems 3.0.3 installed
 
 // To use send Email for Gmail to port 465 (SSL), less secure app option should be enabled. https://myaccount.google.com/lesssecureapps?pli=1
 
@@ -19,8 +34,8 @@
 #endif
 #include <ESP_Mail_Client.h>
 
-#define WIFI_SSID "REPLACE_WITH_YOUR_SSID"
-#define WIFI_PASSWORD "REPLACE_WITH_YOUR_PASSWORD"
+#define WIFI_SSID "TP-Link_B394"
+#define WIFI_PASSWORD "18009217"
 
 #define SMTP_HOST "smtp.gmail.com"
 
@@ -31,12 +46,15 @@
 */
 #define SMTP_PORT 465
 
-/* The sign in credentials */
-#define AUTHOR_EMAIL "YOUR_EMAIL@XXXX.com"
-#define AUTHOR_PASSWORD "YOUR_EMAIL_APP_PASS"
+// Указываем данные для входа по электронной почте отправителя 
+// (полный адрес электронной почты и пароль ПРИЛОЖЕНИЯ,
+// а не пароль фактической электронной почты)
+#define AUTHOR_EMAIL "tvegoo@gmail.com"
+#define AUTHOR_PASSWORD "xtyodirpuhcixfsb"
+#define AUTHOR_XNAME "esp32866"
 
 /* Recipient's email*/
-#define RECIPIENT_EMAIL "RECIPIENTE_EMAIL@XXXX.com"
+#define RECIPIENT_EMAIL "tve58@inbox.ru"
 
 /* The SMTP Session object used for Email sending */
 SMTPSession smtp;
@@ -44,12 +62,14 @@ SMTPSession smtp;
 /* Callback function to get the Email sending status */
 void smtpCallback(SMTP_Status status);
 
-void setup(){
+void setup()
+{
   Serial.begin(115200);
   Serial.println();
   Serial.print("Connecting to AP");
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  while (WiFi.status() != WL_CONNECTED){
+  while (WiFi.status() != WL_CONNECTED)
+  {
     Serial.print(".");
     delay(200);
   }
@@ -99,7 +119,7 @@ void setup(){
   message.enable.chunking = true;
 
   /* Set the message headers */
-  message.sender.name = "ESP Mail";
+  message.sender.name = AUTHOR_XNAME;
   message.sender.email = AUTHOR_EMAIL;
 
   message.subject = F("Test sending Email with attachments and inline images from Flash");
@@ -121,9 +141,9 @@ void setup(){
    * file name, MIME type, file path, file storage type,
    * transfer encoding and content encoding
   */
-  att.descr.filename = "image.png";
+  att.descr.filename = "image1.png";
   att.descr.mime = "image/png"; //binary data
-  att.file.path = "/image.png";
+  att.file.path = "/image1.png";
   att.file.storage_type = esp_mail_file_storage_type_flash;
   att.descr.transfer_encoding = Content_Transfer_Encoding::enc_base64;
 
@@ -141,12 +161,14 @@ void setup(){
   message.addAttachment(att);
 
   /* Connect to server with the session config */
-  if (!smtp.connect(&config)){
+  if (!smtp.connect(&config))
+  {
     ESP_MAIL_PRINTF("Connection error, Status Code: %d, Error Code: %d, Reason: %s", smtp.statusCode(), smtp.errorCode(), smtp.errorReason().c_str());
     return;
   }
 
-  if (!smtp.isLoggedIn()){
+  if (!smtp.isLoggedIn())
+  {
     Serial.println("\nNot yet logged in.");
   }
   else{
@@ -161,23 +183,27 @@ void setup(){
     Serial.println("Error sending Email, " + smtp.errorReason());
 }
 
-void loop(){
+void loop()
+{
 }
 
 /* Callback function to get the Email sending status */
-void smtpCallback(SMTP_Status status){
+void smtpCallback(SMTP_Status status)
+{
   /* Print the current status */
   Serial.println(status.info());
 
   /* Print the sending result */
-  if (status.success()){
+  if (status.success())
+  {
     Serial.println("----------------");
     ESP_MAIL_PRINTF("Message sent success: %d\n", status.completedCount());
     ESP_MAIL_PRINTF("Message sent failled: %d\n", status.failedCount());
     Serial.println("----------------\n");
     struct tm dt;
 
-    for (size_t i = 0; i < smtp.sendingResult.size(); i++){
+    for (size_t i = 0; i < smtp.sendingResult.size(); i++)
+    {
       /* Get the result item */
       SMTP_Result result = smtp.sendingResult.getItem(i);
       time_t ts = (time_t)result.timestamp;

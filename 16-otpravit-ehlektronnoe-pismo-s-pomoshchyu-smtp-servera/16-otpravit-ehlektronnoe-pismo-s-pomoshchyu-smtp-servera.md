@@ -125,7 +125,10 @@ Subject: ESP Test Email
 
 ### [ESP32 Send Emails with Attachments-image and txt file](https://randomnerdtutorials.com/esp32-send-email-smtp-server-arduino-ide/#attachment)
 
-#### Отправить вложения по электронной почте с помощью ESP32 (Arduino IDE)
+#### [Отправить вложения по электронной почте с помощью ESP32 (Arduino IDE)](ESP_Email_Attachments/ESP_Email_Attachments.ino)
+
+После перемещения файлов в папку ***data*** вам необходимо загрузить их на свою плату. В Arduino IDE нажмите ***[Ctrl] + [Shift] + [P]*** в Windows, чтобы открыть палитру команд. Найдите команду Загрузить LittleFS в Pico / ESP8266 / ESP32 и нажмите на нее.
+
 
 
 
