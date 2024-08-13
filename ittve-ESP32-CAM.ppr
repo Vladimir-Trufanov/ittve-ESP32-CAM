@@ -17,7 +17,7 @@ HTServer=localhost
 Extensions=*.*
 [Project tree]
 ittve-ESP32-CAM
-	+ittve-ESP32-CAM
+	-ittve-ESP32-CAM
 		-00-Купили Arduino Pro Mini
 			00-Купили Arduino Pro Mini\Как определить Arduino Mini Pro 5v против 3v.doc
 			00-Купили Arduino Pro Mini\Мы купили Arduino Pro Mini.doc
@@ -57,6 +57,7 @@ ittve-ESP32-CAM
 			03-Пробуем ноты на ардуино\Пробуем ноты на ардуино.md
 		-04-esp32-kak-uznat-i-kak-ispolzovat-psram
 			-kakoj-obem-operativnoj-pamyati-dostupen
+				-data
 				04-esp32-kak-uznat-i-kak-ispolzovat-psram\kakoj-obem-operativnoj-pamyati-dostupen\kakoj-obem-operativnoj-pamyati-dostupen.ino
 			04-esp32-kak-uznat-i-kak-ispolzovat-psram\04-esp32-kak-uznat-i-kak-ispolzovat-psram.md
 			04-esp32-kak-uznat-i-kak-ispolzovat-psram\kakoj-obem-operativnoj-pamyati-dostupen.jpg
@@ -187,16 +188,17 @@ ittve-ESP32-CAM
 				12-MJPEG2SD\kak-svoimi-rukami-sdelat-wifi-kameru-slezheniya\verhnjaja-chast-zagruzki.jpg
 				12-MJPEG2SD\kak-svoimi-rukami-sdelat-wifi-kameru-slezheniya\vremya-obnaruzheniya-v-ms.jpg
 			12-MJPEG2SD\12-MJPEG2SD-2024-08-02.md
-		+13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32
-			+ESP32_Testing_LittleFS
+		-13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32
+			-ESP32_Testing_LittleFS
+				-data
 				13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\ESP32_Testing_LittleFS\ESP32_Testing_LittleFS.ino
 			-esp32fs
 				13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\esp32fs\esp32fs.jar
 			-Testing-the-Filesystem-Uploader-Plugin
 				13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\Testing-the-Filesystem-Uploader-Plugin\Testing-the-Filesystem-Uploader-Plugin.ino
 			13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32.md
-			13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32.md.backup
 			13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\esp32fs.zip
+			13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\testing-Little-FS-Serial-Monitor.webp
 			13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\Update-to-support-Big-Sur.jpg
 		-14-cdelat-snimok-i-sohranit-na-kartu-microsd
 			-esp32-cam-take-photo-save-microsd-card
@@ -1069,5 +1071,5 @@ ittve-ESP32-CAM
 Main=
 Selected=13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\ESP32_Testing_LittleFS\ESP32_Testing_LittleFS.ino
 [13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\ESP32_Testing_LittleFS\ESP32_Testing_LittleFS.ino]
-TopLine=317
-Caret=22,346
+TopLine=252
+Caret=2,283

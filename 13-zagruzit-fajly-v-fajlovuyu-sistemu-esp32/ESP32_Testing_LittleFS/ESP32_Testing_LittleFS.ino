@@ -1,15 +1,21 @@
-// Показать примеры работы с файлами и каталогами в файловой системе LittleFS
+/** Arduino C/C++ ****************************** ESP32_Testing_LittleFS.ino ***
+ * 
+ * Показать примеры работы с файлами и каталогами в файловой системе LittleFS
+ * 
+ * v1.1, 13.08.2024                                   Автор:      Труфанов В.Е.
+ * Copyright © 2024 tve                               Дата создания: 12.08.2024
+**/
 
 // Adapted from: https://github.com/espressif/arduino-esp32/blob/master/libraries/LittleFS/examples/LITTLEFS_test/LITTLEFS_test.ino
 // Project details: https://RandomNerdTutorials.com/esp32-write-data-littlefs-arduino/
 
-// 2024-08-12
+// 2024-08-12 для ESP32-CAM №1
 // 
 // Payment:                                "Al Thinker ESP32-CAM"
 // CPU Frequency:                          "240MHz (WiFi/BT)"
 // Flash Frequency:                        "80MHz"
 // Flash Mode:                             "QIO"
-// Partition Scheme:                       "Minimal SPIFFS (1.9MB APP with OTA/190KB SPIFFS)"
+// Partition Scheme:                       "Minimal(1.3MB APP/700KB SPIFFS)"
 // Core Debug Level:                       "Ничего"
 
 // Это важно !!!
@@ -27,7 +33,6 @@
 //  https://github.com/lorol/arduino-esp32littlefs-plugin
 
 /*
-
 // В этом примере кода выполняется монтирование файловой системы или 
 // создание файловой системы, если таковой нет.
 #pragma once
@@ -65,40 +70,15 @@ void InitFilesystem()
   }
 }
 
-// Это код для функции LittleFS.format(). Код идентичен в реализации SPIFFS.
-bool LittleFSFS::format()
-{
-  disableCore0WDT();
-  esp_err_t err = esp_littlefs_format(partitionLabel_);
-  enableCore0WDT();
-  if(err)
-  {
-    log_e("Formatting LittleFS failed! Error: %d", err);
-    return false;
-  }
-  return true;
-}
-
-// Как Получить Размер Файла В LittleFS (ESP32/PlatformIO):
-// После инициализации LittleFS вы можете получить размер 
-// файла, сначала открыв файл, а затем вызвав .size() 
-// для открытого файла. Не забудьте после этого закрыть файл.
-auto file = LittleFS.open(filename, "r");
-size_t filesize = file.size();
-// Don't forget to clean up!
-file.close();
 // Служебная функция для получения размера файла, хранящегося в LittleFS:
 size_t LittleFSFilesize(const char* filename) 
 {
   auto file = LittleFS.open(filename, "r");
   size_t filesize = file.size();
-  // Don't forget to clean up!
   file.close();
   return filesize;
 }
-//
 Serial.println(LittleFSFilesize("/cert.pem"));
-
 */
 
 // ****************************************************************************
@@ -282,21 +262,52 @@ void deleteFile(fs::FS &fs, const char * path)
 // ****************************************************************************
 // *     Показать, сколько времени требуется для чтения содержимого файла.    *
 // ****************************************************************************
+void LittleFSinfo(String title)
+/*
+FSInfo fs_info;
+LittleFS.info(fs_info);
+Serial.println("LittleFS Info:");
+Serial.printf("Total Bytes: %u\n", fs_info.totalBytes);
+Serial.printf("Used Bytes: %u\n", fs_info.usedBytes);
+Serial.printf("Free Bytes: %u\n", fs_info.totalBytes - fs_info.usedBytes);
+*/
+{
+   size_t sizeTotal, sizeUsed, sizeFree;
+   Serial.println("");
+   Serial.println(title);
+
+   sizeTotal = LittleFS.totalBytes();
+   Serial.print("Размер LittleFS: ");
+   Serial.println(sizeTotal);
+
+   sizeUsed = LittleFS.usedBytes();
+   Serial.print("Используется:    ");
+   Serial.println(sizeUsed);
+
+   sizeFree = sizeTotal-sizeUsed;
+   Serial.print("Свободно:        ");
+   Serial.println(sizeFree);
+}
+// ****************************************************************************
+// *        Показать, сколько времени требуется на запись в файл              *
+// *                      и чтение содержимого файла                          *
+// ****************************************************************************
 void testFileIO(fs::FS &fs, const char * path)
 {
+   // ========================== Часть1: тестировать скорость записи в файл ===
    Serial.println("");
-   Serial.printf("Тестируем скорость ввода/вывода файла: %s\r\n", path);
+   Serial.printf("Часть1: тестируем скорость записи в файл: %s\r\n", path);
    static uint8_t buf[512];
    size_t len = 0;
    File file = fs.open(path, FILE_WRITE);
    if(!file)
    {
-      Serial.println(" - ошибка открытия файла для записи");
+      Serial.println("- ошибка открытия файла для записи");
       return;
    }
 
    size_t i;
-   Serial.print(" - записано:" );
+   Serial.print("- записано:" );
    uint32_t start = millis();
 
    // Готовим переменную для подсчета символов, загруженных в файл
@@ -308,6 +319,9 @@ void testFileIO(fs::FS &fs, const char * path)
    int nost = 0;
    // Определяем число буферов для записи в файл
    uint32_t niter = 1261; 
+   //uint32_t niter = 1000;
+   // Назначаем переменную для фактического размера файла 
+   size_t flen;
    
    Serial.println("");
    for(i=0; i<niter; i++)
@@ -333,16 +347,28 @@ void testFileIO(fs::FS &fs, const char * path)
          break; 
       }
    }
+   // Закрываем файл и отмечаем число итераций
    file.close();
-   uint32_t end = millis() - start;
-   Serial.printf(" - %u байт записано за %u ms\r\n", kolvo+nost, end);
-
    if (i>niter) i=niter;
-   Serial.print(" число итераций = ");
+   Serial.print("число итераций = ");
    Serial.println(i);
-
-   /*
    
+   // Контроллируем успешность создания файла в файловой системе
+   file = fs.open(path);
+   flen = file.size();
+   file.close();
+   if (flen!=kolvo+nost)
+   {
+      Serial.println("Файл не поместился в файловую систему!");
+      return;
+   }
+   // Показываем количество байт и время записи файла
+   uint32_t end = millis() - start;
+   Serial.printf("- %u байт записано за %u ms\r\n", kolvo+nost, end);
+
+   // =========================== Часть2: тестировать скорость чтения файла ===
+   Serial.println("");
+   Serial.printf("Часть2: тестируем скорость чтения файла: %s\r\n", path);
 
    file = fs.open(path);
    start = millis();
@@ -350,11 +376,12 @@ void testFileIO(fs::FS &fs, const char * path)
    i = 0;
    if(file && !file.isDirectory())
    {
-      len = file.size();
-      size_t flen = len;
+      flen = file.size();
+      Serial.printf("Количество байт в файле: %u\r\n",flen);
       start = millis();
-      Serial.print("- reading" );
-      while(len)
+
+      size_t len=flen;
+      while (len>0)
       {
          size_t toRead = len;
          if(toRead > 512)
@@ -362,28 +389,22 @@ void testFileIO(fs::FS &fs, const char * path)
             toRead = 512;
          }
          file.read(buf, toRead);
-         if ((i++ & 0x001F) == 0x001F)
-         {
-            Serial.print(".");
-         }
          len -= toRead;
       }
-      Serial.println("");
       end = millis() - start;
-      Serial.printf("- %u bytes read in %u ms\r\n", flen, end);
+      Serial.printf("- %u байт прочитано за %u ms\r\n",flen,end);
       file.close();
-   } 
+   }
    else 
    {
-      Serial.println("- failed to open file for reading");
+      Serial.println("- ошибка открытия файла для чтения");
    }
-   */
 }
 
 // Определяем флаг для фиксирования первого использовании LittleFS на ESP32,
 // заставляющий создать и отформатировать раздел для использования этой файловой системы 
-//#define FORMAT_LITTLEFS_IF_FAILED true
-#define FORMAT_LITTLEFS_IF_FAILED false
+#define FORMAT_LITTLEFS_IF_FAILED true
+//#define FORMAT_LITTLEFS_IF_FAILED false
 
 void setup()
 {
@@ -396,43 +417,13 @@ void setup()
    // инициализации. 
    if(!LittleFS.begin(FORMAT_LITTLEFS_IF_FAILED))
    {
-      Serial.println("LittleFS Mount Failed");
+      Serial.println("Ошибка монтирования LittleFS");
       return;
    }
+   if (FORMAT_LITTLEFS_IF_FAILED) LittleFSinfo("Состояние LittleFS после форматирования ...");
 
-   /*
-   size_t size;
-
-   //int array[5] = { 1, 2, 3, 4, 5 };
-   //size_t size = sizeof(array);
-   //printf("The size of the array is: %lu\n", size);
-
-   size = sizeof(LittleFS.totalBytes());
-   Serial.print("    Размер LittleFS: ");
-   Serial.println(size);
-
-   size = sizeof(LittleFS.usedBytes());
-   Serial.print("Свободно в LittleFS: ");
-   Serial.println(size);
-   */
+   LittleFSinfo("Состояние LittleFS перед группой тестов ...");
    
-   /*
-   size = sizeof(LittleFS.totalBytes());
-   Serial.print("    Размер LittleFS: ");
-   Serial.println(size);
-
-   size = sizeof(LittleFS.usedBytes());
-   Serial.print("Свободно в LittleFS: ");
-   Serial.println(size);
-
-   FSInfo fs_info;
-   LittleFS.info(fs_info);
-   Serial.println("LittleFS Info:");
-   Serial.printf("Total Bytes: %u\n", fs_info.totalBytes);
-   Serial.printf("Used Bytes: %u\n", fs_info.usedBytes);
-   Serial.printf("Free Bytes: %u\n", fs_info.totalBytes - fs_info.usedBytes);
-   */
-
    createDir(LittleFS, "/mydir"); // Create a mydir folder
    writeFile(LittleFS, "/mydir/hello1.txt", "Hello1"); // Create a hello1.txt file with the content "Hello1"
    
@@ -448,10 +439,14 @@ void setup()
    renameFile(LittleFS, "/hello.txt", "/foo.txt"); //Rename the previous file
    readFile(LittleFS, "/foo.txt"); //Read the file with the new name
    deleteFile(LittleFS, "/foo.txt"); //Delete the file
+
+   LittleFSinfo("Состояние файловой системы до скоростного теста ...");
    testFileIO(LittleFS, "/test.txt"); //Testin
+   LittleFSinfo("Состояние файловой системы перед удалением /test.txt ...");
    deleteFile(LittleFS, "/test.txt"); //Delete the file
-   
-   Serial.println( "Test complete" ); 
+   LittleFSinfo("Тестирование завершено ...");
 }
 
 void loop(){}
+
+// ********************************************* ESP32_Testing_LittleFS.ino ***
