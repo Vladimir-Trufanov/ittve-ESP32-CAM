@@ -32,7 +32,7 @@ void setup()
 
 void loop() 
 {
-   loop32CamBlinks(100); 
+   loop32CamBlinks(500); 
 }
 
 // ******************************************************* BlinkOnCam32.ino ***

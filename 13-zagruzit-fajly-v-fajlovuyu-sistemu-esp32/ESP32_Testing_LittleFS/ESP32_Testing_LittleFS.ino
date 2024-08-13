@@ -284,31 +284,65 @@ void deleteFile(fs::FS &fs, const char * path)
 // ****************************************************************************
 void testFileIO(fs::FS &fs, const char * path)
 {
-   Serial.printf("Testing file I/O with %s\r\n", path);
+   Serial.println("");
+   Serial.printf("Тестируем скорость ввода/вывода файла: %s\r\n", path);
    static uint8_t buf[512];
    size_t len = 0;
    File file = fs.open(path, FILE_WRITE);
    if(!file)
    {
-      Serial.println("- failed to open file for writing");
+      Serial.println(" - ошибка открытия файла для записи");
       return;
    }
 
    size_t i;
-   Serial.print("- writing" );
+   Serial.print(" - записано:" );
    uint32_t start = millis();
-   for(i=0; i<2048; i++)
-   {
-      if ((i & 0x001F) == 0x001F)
-      {
-         Serial.print(".");
-      }
-      file.write(buf, 512);
-   }
+
+   // Готовим переменную для подсчета символов, загруженных в файл
+   uint32_t kolvo = 0; 
+   // Готовим счетчик для вывода трассировочной информации
+   // при загрузке и выгрузке файла
+   int npoint = 0;
+   // Инициируем остаточек файла в последнем загруженном буфере
+   int nost = 0;
+   // Определяем число буферов для записи в файл
+   uint32_t niter = 1261; 
+   
    Serial.println("");
-   uint32_t end = millis() - start;
-   Serial.printf(" - %u bytes written in %u ms\r\n", 2048 * 512, end);
+   for(i=0; i<niter; i++)
+   {
+      size_t size;
+      size=file.write(buf, 512);
+      nost = static_cast<int>(size);     
+      npoint++;
+
+      if (nost==512)
+      {
+         kolvo = (i+1)*512;
+         if (npoint>127)
+         {
+            npoint = 0;
+            Serial.print(kolvo);
+            Serial.println(" байт");
+         }
+         nost = 0;
+      }
+      else
+      {
+         break; 
+      }
+   }
    file.close();
+   uint32_t end = millis() - start;
+   Serial.printf(" - %u байт записано за %u ms\r\n", kolvo+nost, end);
+
+   if (i>niter) i=niter;
+   Serial.print(" число итераций = ");
+   Serial.println(i);
+
+   /*
+   
 
    file = fs.open(path);
    start = millis();
@@ -343,10 +377,12 @@ void testFileIO(fs::FS &fs, const char * path)
    {
       Serial.println("- failed to open file for reading");
    }
+   */
 }
 
 // Определяем флаг для фиксирования первого использовании LittleFS на ESP32,
 // заставляющий создать и отформатировать раздел для использования этой файловой системы 
+//#define FORMAT_LITTLEFS_IF_FAILED true
 #define FORMAT_LITTLEFS_IF_FAILED false
 
 void setup()
@@ -364,6 +400,7 @@ void setup()
       return;
    }
 
+   /*
    size_t size;
 
    //int array[5] = { 1, 2, 3, 4, 5 };
@@ -377,13 +414,9 @@ void setup()
    size = sizeof(LittleFS.usedBytes());
    Serial.print("Свободно в LittleFS: ");
    Serial.println(size);
-
-   //createDir(LittleFS, "/mydir"); // Create a mydir folder
-   //writeFile(LittleFS, "/mydir/hello1.txt", "Hello1"); // Create a hello1.txt file with the content "Hello1"
+   */
    
-   listDir(LittleFS, "/", 1); // List the directories up to one level beginning at the root directory
-
-
+   /*
    size = sizeof(LittleFS.totalBytes());
    Serial.print("    Размер LittleFS: ");
    Serial.println(size);
@@ -392,7 +425,18 @@ void setup()
    Serial.print("Свободно в LittleFS: ");
    Serial.println(size);
 
-   /*
+   FSInfo fs_info;
+   LittleFS.info(fs_info);
+   Serial.println("LittleFS Info:");
+   Serial.printf("Total Bytes: %u\n", fs_info.totalBytes);
+   Serial.printf("Used Bytes: %u\n", fs_info.usedBytes);
+   Serial.printf("Free Bytes: %u\n", fs_info.totalBytes - fs_info.usedBytes);
+   */
+
+   createDir(LittleFS, "/mydir"); // Create a mydir folder
+   writeFile(LittleFS, "/mydir/hello1.txt", "Hello1"); // Create a hello1.txt file with the content "Hello1"
+   
+   listDir(LittleFS, "/", 1); // List the directories up to one level beginning at the root directory
 
    deleteFile(LittleFS, "/mydir/hello1.txt"); //delete the previously created file
    removeDir(LittleFS, "/mydir"); //delete the previously created folder
@@ -405,8 +449,7 @@ void setup()
    readFile(LittleFS, "/foo.txt"); //Read the file with the new name
    deleteFile(LittleFS, "/foo.txt"); //Delete the file
    testFileIO(LittleFS, "/test.txt"); //Testin
-   //deleteFile(LittleFS, "/test.txt"); //Delete the file
-   */
+   deleteFile(LittleFS, "/test.txt"); //Delete the file
    
    Serial.println( "Test complete" ); 
 }
