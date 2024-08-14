@@ -214,9 +214,33 @@ File Content:
 
 ### [Работа с данными в файловой системе LittleFS](https://randomnerdtutorials.com/esp32-write-data-littlefs-arduino/#listDir)
 
-[Показать примеры работы с файлами и каталогами в файловой системе LittleFS](ESP32_Testing_LittleFS/ESP32_Testing_LittleFS.ino)
+#### [Показать примеры работы с файлами и каталогами в файловой системе LittleFS](ESP32_Testing_LittleFS/ESP32_Testing_LittleFS.ino)
 
 ![Сообщения при успешной инициализации LittleFS](testing-Little-FS-Serial-Monitor.webp)
+
+#### [ESP32 с LittleFS – Как сохранить значения переменных в файл](ESP32_Write_File_LittleFS/ESP32_Write_File_LittleFS.ino)
+
+![Демонстрация добавления нового случайного числа в файл через 30 сек](ESP32-LittleFS-Append-Data.webp)
+
+#### Проверка существования файла
+
+```
+// Check if the file already exists to prevent overwritting existing data
+
+bool fileexists = LittleFS.exists("/data.txt");
+Serial.print(fileexists);
+if(!fileexists)
+{
+  Serial.println("File doesn’t exist");  
+  Serial.println("Creating file...");
+  // Create File and add header
+  writeFile(LittleFS, "/data.txt", "MY ESP32 DATA \r\n");
+}
+else 
+{
+  Serial.println("File already exists");
+}
+```
 
 ###### [в начало](#%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%B8%D1%82%D1%8C-%D1%84%D0%B0%D0%B9%D0%BB%D1%8B-%D0%B2-%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D1%83%D1%8E-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83-esp32)
 
