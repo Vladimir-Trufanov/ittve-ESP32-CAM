@@ -11,15 +11,20 @@
   Example adapted K. Suwatchai (Mobizt): https://github.com/mobizt/ESP-Mail-Client Copyright (c) 2021 mobizt
 */
 
-// 2024-08-11
-// 
 // Payment:                                "Al Thinker ESP32-CAM"
 // CPU Frequency:                          "240MHz (WiFi/BT)"
 // Flash Frequency:                        "80MHz"
 // Flash Mode:                             "QIO"
+
+// 2024-08-12 для ESP32-CAM №2
 // Partition Scheme:                       "Minimal SPIFFS (1.9MB APP with OTA/190KB SPIFFS)"
+// 2024-08-15 для ESP32-CAM №1
+// Partition Scheme:                       "Minimal(1.3MB APP/700KB SPIFFS)"
+
 // Core Debug Level:                       "Ничего"
-// Erase All Flash Before Sketch Upload:   "Enabled"
+
+// Это важно !!!
+// Erase All Flash Before Sketch Upload:   "Enabled" заменить на "Disabled" для того, чтобы сделанная LittleFS не затиралась!
 
 // Additional links for the Board Manager: https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 // Менеджер плат:                          esp32 by Espressif Systems 3.0.3 installed
@@ -34,6 +39,9 @@
 #endif
 #include <ESP_Mail_Client.h>
 
+// Указываем учетные данные сети WiFi
+// #define WIFI_SSID "OPPO A9 2020"
+// #define WIFI_PASSWORD "b277a4ee84e8"
 #define WIFI_SSID "TP-Link_B394"
 #define WIFI_PASSWORD "18009217"
 
@@ -134,30 +142,27 @@ void setup()
   message.priority = esp_mail_smtp_priority::esp_mail_smtp_priority_normal;
   message.response.notify = esp_mail_smtp_notify_success | esp_mail_smtp_notify_failure | esp_mail_smtp_notify_delay;
 
-  /* The attachment data item */
+  /* The attachment data item - создаём вложение */
   SMTP_Attachment att;
 
-  /** Set the attachment info e.g. 
-   * file name, MIME type, file path, file storage type,
-   * transfer encoding and content encoding
+  /** Добавляем сведения о вложении: имя файла, тип MIME, путь к файлу, тип 
+   *  хранилища файла и кодировку передачи и отправляем файл изображения
   */
-  att.descr.filename = "image1.png";
-  att.descr.mime = "image/png"; //binary data
-  att.file.path = "/image1.png";
+  att.descr.filename = "image2.jpg";
+  att.descr.mime = "image/jpg"; //binary data
+  att.file.path = "/image2.jpg";
   att.file.storage_type = esp_mail_file_storage_type_flash;
   att.descr.transfer_encoding = Content_Transfer_Encoding::enc_base64;
-
-  /* Add attachment to the message */
+  /* Добавляем вложение в сообщение */
   message.addAttachment(att);
-
+  /* Добавляем сведения о вложении текстового файла */
   message.resetAttachItem(att);
   att.descr.filename = "text_file.txt";
   att.descr.mime = "text/plain";
   att.file.path = "/text_file.txt";
   att.file.storage_type = esp_mail_file_storage_type_flash;
   att.descr.transfer_encoding = Content_Transfer_Encoding::enc_base64;
-
-  /* Add attachment to the message */
+  /* Добавляем вложение в сообщение */
   message.addAttachment(att);
 
   /* Connect to server with the session config */
