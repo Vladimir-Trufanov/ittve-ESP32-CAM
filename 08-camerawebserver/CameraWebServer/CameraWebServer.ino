@@ -39,11 +39,11 @@
 //const char *ssid = "**********";
 //const char *password = "**********";
 
-//const char* ssid     = "OPPO A9 2020";
-//const char* password = "b277a4ee84e8";
+const char* ssid     = "OPPO A9 2020";
+const char* password = "b277a4ee84e8";
 
-const char* ssid     = "TP-Link_B394";
-const char* password = "18009217";
+//const char* ssid     = "TP-Link_B394";
+//const char* password = "18009217";
 
 void startCameraServer();
 void setupLedFlash(int pin);

@@ -6,7 +6,7 @@
 
 //                                                    Автор:       Труфанов В.Е.
 //                                                    Дата создания:  11.06.2024
-// Copyright © 2024 tve                               Посл.изменение: 11.06.2024
+// Copyright © 2024 tve                               Посл.изменение: 05.09.2024
 
 #include <WiFi.h>
 #include <WebServer.h>
@@ -16,8 +16,14 @@
 // ===========================
 
 // Точка доступа моего смартфона 
+// 2024-09-05 сервер на OPPO работал хорошо
+// с третьей микросхемой и на HugeApp(3Mb no OTA / 1Mb Spiffs)
+
 const char* ssid     = "OPPO A9 2020";
 const char* password = "b277a4ee84e8";
+
+//const char* ssid     = "TP-Link_B394";
+//const char* password = "18009217";
 
 // Домашняя сеть WiFi
 // const char* ssid     = "linksystve";
