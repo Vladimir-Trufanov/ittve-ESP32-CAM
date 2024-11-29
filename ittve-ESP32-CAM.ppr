@@ -55,29 +55,19 @@ ittve-ESP32-CAM
 			03-Пробуем ноты на ардуино\Arduino Pro Mini – обзор.doc
 			03-Пробуем ноты на ардуино\Arduino Pro Mini.doc
 			03-Пробуем ноты на ардуино\Пробуем ноты на ардуино.md
-		-04-esp32-kak-uznat-i-kak-ispolzovat-psram
-			-kakoj-obem-operativnoj-pamyati-dostupen
-				-data
-				04-esp32-kak-uznat-i-kak-ispolzovat-psram\kakoj-obem-operativnoj-pamyati-dostupen\kakoj-obem-operativnoj-pamyati-dostupen.ino
-			04-esp32-kak-uznat-i-kak-ispolzovat-psram\04-esp32-kak-uznat-i-kak-ispolzovat-psram.md
-			04-esp32-kak-uznat-i-kak-ispolzovat-psram\kakoj-obem-operativnoj-pamyati-dostupen.jpg
-			04-esp32-kak-uznat-i-kak-ispolzovat-psram\Менеджер плат.jpg
-			04-esp32-kak-uznat-i-kak-ispolzovat-psram\Настройки.jpg
+		+04-Работаем с сообщениями через очередь
+			+QueueHandlMulti
+				04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessa.h
+				04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessa.hpp
+				04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino
+			04-Работаем с сообщениями через очередь\04-Работаем с сообщениями через очередь.md
+			04-Работаем с сообщениями через очередь\04-Работаем с сообщениями через очередь.md.backup
 		-05-zastavlyaem-esp32-cam-migat-lampochkami
 			-BlinkOnCam32
 				05-zastavlyaem-esp32-cam-migat-lampochkami\BlinkOnCam32\BlinkOnCam32.ino
 				05-zastavlyaem-esp32-cam-migat-lampochkami\BlinkOnCam32\BlinkOnCam32.ino.esp32.bin
-				05-zastavlyaem-esp32-cam-migat-lampochkami\BlinkOnCam32\BlinkOnCam32.ppr
 				05-zastavlyaem-esp32-cam-migat-lampochkami\BlinkOnCam32\tveEsp32Cam10.h
 			05-zastavlyaem-esp32-cam-migat-lampochkami\05-zastavlyaem-esp32-cam-migat-lampochkami.md
-		-06-raznye-sistemnye-api
-			-raznye-sistemnye-api
-				06-raznye-sistemnye-api\raznye-sistemnye-api\raznye-sistemnye-api.ino
-				06-raznye-sistemnye-api\raznye-sistemnye-api\raznye-sistemnye-api.ppr
-				06-raznye-sistemnye-api\raznye-sistemnye-api\tveEsp32Cam10.h
-			06-raznye-sistemnye-api\06-raznye-sistemnye-api.md
-			06-raznye-sistemnye-api\esp32_technical_reference_manual_en.pdf
-			06-raznye-sistemnye-api\raspredelenie-DRAM.png
 		-07-rabota-s-sajtami-v-seti-wifi
 			-esp32-http-server-v-rezhime-wifi-station-sta
 				07-rabota-s-sajtami-v-seti-wifi\esp32-http-server-v-rezhime-wifi-station-sta\esp32-http-server-v-rezhime-wifi-station-sta.ino
@@ -236,7 +226,7 @@ ittve-ESP32-CAM
 				16-otpravit-ehlektronnoe-pismo-s-pomoshchyu-smtp-servera\ESP32-Send-Email-HTML-and-raw-text\ESP32-Send-Email-HTML-and-raw-text.ino
 			16-otpravit-ehlektronnoe-pismo-s-pomoshchyu-smtp-servera\16-otpravit-ehlektronnoe-pismo-s-pomoshchyu-smtp-servera.md
 			16-otpravit-ehlektronnoe-pismo-s-pomoshchyu-smtp-servera\ESP-send-email-attachments-demonstration.webp
-		+17-RepeatTimer
+		-17-RepeatTimer
 			17-RepeatTimer\17-RepeatTimer.ino
 		-18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp
 			-ESP32-devcam-tve
@@ -298,6 +288,11 @@ ittve-ESP32-CAM
 				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\TODO.md
 			18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp.md
 			18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\nastroiki-scetcha.jpeg
+		-19-kak-ustroena-pamyat-esp32-cam
+			19-kak-ustroena-pamyat-esp32-cam\19-kak-ustroena-pamyat-esp32-cam.md
+			19-kak-ustroena-pamyat-esp32-cam\19-kak-ustroena-pamyat-esp32-cam.xls
+			19-kak-ustroena-pamyat-esp32-cam\ArduinoNvs-master.zip
+			19-kak-ustroena-pamyat-esp32-cam\esp32_technical_reference_manual_en.pdf
 		-98-Seeeduino ESP32-S3
 			98-Seeeduino ESP32-S3\98-Seeeduino ESP32-S3.md
 			98-Seeeduino ESP32-S3\ustanovka-arduino-esp32.jpg
@@ -309,8 +304,10 @@ ittve-ESP32-CAM
 			98-Seeeduino ESP32-S3\xiaoesp32s3sense.jpg
 		-Clear_EEPROM
 			Clear_EEPROM\Clear_EEPROM.ino
-		-RepeatTimer
-			RepeatTimer\RepeatTimer.ino
+		-MakeException
+			MakeException\MakeException.ino
+		-UsesMutex
+			UsesMutex\UsesMutex.ino
 		-Рабочие материалы
 			Рабочие материалы\ESP32-CAM datasheet c примером фотографирования и сохранения.pdf
 			Рабочие материалы\ESP32-CAM Product Specification.pdf
@@ -321,14 +318,18 @@ ittve-ESP32-CAM
 		LICENSE
 		README.md
 [Open project files]
-0=13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\ESP32_Testing_LittleFS\ESP32_Testing_LittleFS.ino
-1=17-RepeatTimer\17-RepeatTimer.ino
+0=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino
+1=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessa.h
+2=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessa.hpp
 [Selected Project Files]
 Main=
-Selected=17-RepeatTimer\17-RepeatTimer.ino
-[13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32\ESP32_Testing_LittleFS\ESP32_Testing_LittleFS.ino]
-TopLine=411
-Caret=80,452
-[17-RepeatTimer\17-RepeatTimer.ino]
+Selected=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessa.hpp
+[04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino]
 TopLine=1
-Caret=51,100
+Caret=1,12
+[04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessa.h]
+TopLine=11
+Caret=1,1
+[04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessa.hpp]
+TopLine=8
+Caret=41,9
