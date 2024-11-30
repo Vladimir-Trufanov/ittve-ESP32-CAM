@@ -2,124 +2,159 @@
  * 
  *                                                       Общий реестр сообщений 
  * 
- * v1.0, 29.11.2024                                   Автор:      Труфанов В.Е.
+ * v1.1, 30.11.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
-// Типы сообщений
-typedef enum {
-   tmt_NOTICE,          // информационное сообщение приложения 
-   tmt_TRACE,           // трассировочное сообщение при отладке
-   tmt_WARNING,         // предупреждение, позволяющие работать задаче дальше 
-   tmt_ERROR,           // ошибка, не дающие возможность правильно выполнить задачу
-   tmt_FATAL,           // ошибка, вызывающие перезагрузку контроллера 
-} 
-tMessageType;
 // Уровни вывода сообщений
 typedef enum {
-   tml_VERBOSE,         // выводятся все типы сообщений 
-   tml_ERROR,           // выводятся все типы сообщений, кроме трассировочных 
-   tml_NOTICE,          // выводятся только информационные сообщения 
-   tml_SILENT,          // сообщения не выводятся 
-} 
-tMessageOutputLevel;
-// Категории сообщений
-typedef enum {
-   tmc_WDT,             // общее сообщение сторожевого таймера
-   tmc_ISR,             // общее сообщение обработчика прерывания
-   tmc_EUE,             // общее сообщение в работе с очередями
-   tmc_KVIZZY,          // сообщение приложения KVIZZY 
-   tmc_KRUTJAK,         // сообщение приложения KRUTJAK 
-} 
-tMessageCategory;
+   tml_VERBOSE,         // 0 выводятся все типы сообщений 
+   tml_ERROR,           // 1 выводятся все типы сообщений, кроме трассировочных 
+   tml_NOTICE,          // 2 выводятся только информационные сообщения 
+   tml_SILENT,          // 3 сообщения не выводятся 
+} tMessageOutputLevel;
+
 // Буфер сообщений
 char tBuffer[1024];     // текст сообщения
-
-
-/*
-example:
-queMess(WARNING-EUE, "Управление передаётся планировщику");
-queMess(2024-11-29,19:36:18 WARNING-EUE, "Управление передаётся планировщику");
-*/
 
 // Сообщения о причинах перезагрузки ESP32
 /*
 typedef enum {
-   ESP_RST_UNKNOWN,     // невозможно определить причину сброса
-   ESP_RST_POWERON,     // сброс из-за события включения питания
-   ESP_RST_EXT,         // сброс с помощью внешнего PIN-кода (не применимо для ESP32)
-   ESP_RST_SW,          // сброс программного обеспечения через esp_restart
-   ESP_RST_PANIC,       // сброс программного обеспечения из-за исключения/паники
-   ESP_RST_INT_WDT,     // сброс (программный или аппаратный) из-за сторожевого таймера прерывания
-   ESP_RST_TASK_WDT,    // сброс из-за диспетчера задач
-   ESP_RST_WDT,         // сброс из-за других сторожевых псов
-   ESP_RST_DEEPSLEEP,   // сброс после выхода из режима глубокого сна
-   ESP_RST_BROWNOUT,    // сброс отключения (программный или аппаратный)
-   ESP_RST_SDIO,        // сброс через SDIO
-   ESP_RST_USB,         // сброс с помощью периферийного устройства USB
-   ESP_RST_JTAG,        // сброс с помощью JTAG
-   ESP_RST_EFUSE,       // сброс из-за ошибки efuse
-   ESP_RST_PWR_GLITCH,  // сброс из-за обнаруженного сбоя питания
-   ESP_RST_CPU_LOCKUP,  // сброс из-за блокировки процессора
-} 
-esp_reset_reason_t;
+   ESP_RST_UNKNOWN,     //  0 невозможно определить причину сброса
+   ESP_RST_POWERON,     //  1 сброс из-за события включения питания
+   ESP_RST_EXT,         //  2 сброс с помощью внешнего PIN-кода (не применимо для ESP32)
+   ESP_RST_SW,          //  3 сброс программного обеспечения через esp_restart
+   ESP_RST_PANIC,       //  4 сброс программного обеспечения из-за исключения/паники
+   ESP_RST_INT_WDT,     //  5 сброс (программный или аппаратный) из-за сторожевого таймера прерывания
+   ESP_RST_TASK_WDT,    //  6 сброс из-за диспетчера задач
+   ESP_RST_WDT,         //  7 сброс из-за других сторожевых псов
+   ESP_RST_DEEPSLEEP,   //  8 сброс после выхода из режима глубокого сна
+   ESP_RST_BROWNOUT,    //  9 сброс отключения (программный или аппаратный)
+   ESP_RST_SDIO,        // 10 сброс через SDIO
+   ESP_RST_USB,         // 11 сброс с помощью периферийного устройства USB
+   ESP_RST_JTAG,        // 12 сброс с помощью JTAG
+   ESP_RST_EFUSE,       // 13 сброс из-за ошибки efuse
+   ESP_RST_PWR_GLITCH,  // 14 сброс из-за обнаруженного сбоя питания
+   ESP_RST_CPU_LOCKUP,  // 15 сброс из-за блокировки процессора
+} esp_reset_reason_t;
 */
 
-// Обработка очередей ------------------------------------------- QueueHandling
+// Сообщения из прерываний ------------------------------------------------ ISR
+#ifdef tmk_ISR
 typedef enum {
-   tqh_NOTCREATE,       // "Очередь не была создана и не может использоваться" - queue has not been created and cannot be used
-   tqh_BEFORMED,        // "Очередь сформирована"                              - queue has been formed
-   tqh_SENDFAILED,      // "Не удалось отправить структуру из задачи"          - failed to send structure from task
-   tqh_SENDFAILED_ISR,  // "Не удалось отправить структуру из прерывания"      - failed to send structure from interrupt
-} 
-tQueueHandling;
+   isr_StruMessNotSend, // 0 "Не удалось отправить структуру сообщения"        - message structure could not be sent
+   isr_QueueNotCreated, // 1 "Очередь для структур не создана"                 - queue has not been created for structures
+   isr_CtrlToScheduler, // 2 "Управление передаётся планировщику"              - control is transferred to the scheduler
+} tISR;
+
+String messISR(int mode, String fmess32, String smess32) 
+{
+   switch (mode) {
+   case isr_StruMessNotSend:
+      sprintf(tBuffer,"Не удалось отправить структуру сообщения"); break;
+   case isr_QueueNotCreated:
+      sprintf(tBuffer,"Очередь для структур не создана"); break;
+   case isr_CtrlToScheduler:
+      sprintf(tBuffer,"Управление передаётся планировщику"); break;
+   default:
+      sprintf(tBuffer,"Неопределенное сообщение из прерывания"); break;
+   }
+   String result=String(tBuffer);
+   return result;
+}
+#endif
+
+// Обработка очередей ------------------------------------- QueueHandling [EUE]
+#ifdef tmk_EUE
+typedef enum {
+   tqh_NotCreate,     // 0 "Очередь не была создана и не может использоваться" - queue has not been created and cannot be used
+   tqh_Beformed,      // 1 "Очередь сформирована"                              - queue has been formed
+   tqh_SendFailed,    // 2 "Не удалось отправить структуру из задачи"          - failed to send structure from task
+} tQueueHandling;
 
 String messQueueHandling(int mode, String fmess32, String smess32) 
 {
    switch (mode) {
-   case tqh_NOTCREATE:
+   case tqh_NotCreate:
       sprintf(tBuffer,"Очередь не была создана и не может использоваться"); break;
-   case tqh_BEFORMED:
+   case tqh_Beformed:
       sprintf(tBuffer,"Очередь сформирована"); break;
-   case tqh_SENDFAILED:
+   case tqh_SendFailed:
       sprintf(tBuffer,"Не удалось отправить структуру из задачи"); break;
-   case tqh_SENDFAILED_ISR:
-      sprintf(tBuffer,"Не удалось отправить структуру из прерывания"); break;
    default:
       sprintf(tBuffer,"Неопределенное сообщение обработки очередей"); break;
    }
    String result=String(tBuffer);
    return result;
 }
+#endif
 
-// Пример по обработке очередей ------------------------------- QueueHandlMulti
+// Пример по обработке очередей ------------------------- QueueHandlMulti [QHM]
+#ifdef tmk_QHM
 typedef enum {
-   tqhm_ITSBEENMS,      // "Прошло %s миллисекунд"                             - it's been %s milliseconds
-   tqhm_SENDFROMTASK,   // "Передано %s сообщение из задачи"                   - %s message from the task has been sent
-} 
-tQueueHandlMulti;
+   tqhm_ItsBeenMS,      // 0 "Прошло %s миллисекунд"                           - it's been %s milliseconds
+   tqhm_SendFromTask,   // 1 "Передано %s сообщение из задачи"                 - %s message from the task has been sent
+   tqhm_StructNoSend,   // 2 "Не удалось отправить структуру после %s тиков"   - structure could not be sent after %s ticks
+   tqhm_TaskNoQueue,    // 3 "Очереди структур нет в задаче"                   - there is no queue of structures in the task
+} tQueueHandlMulti;
 
 String messQueueHandlMulti(int mode, String fmess32, String smess32) 
 {
    switch (mode) {
-   case tqhm_ITSBEENMS:
+   case tqhm_ItsBeenMS:
       sprintf(tBuffer,"Прошло %s миллисекунд",fmess32); break;
-   case tqhm_SENDFROMTASK:
+   case tqhm_SendFromTask:
       sprintf(tBuffer,"Передано %s сообщение из задачи",fmess32); break;
+   case tqhm_StructNoSend:
+      sprintf(tBuffer,"Не удалось отправить структуру после %s тиков",fmess32); break;
    default:
       sprintf(tBuffer,"Неопределенное сообщение примера очередей"); break;
    }
    String result=String(tBuffer);
    return result;
 }
-
+#endif
 
 /*
-ISR: "Очередь для структур не создана"
-ISR: "Управление передаётся планировщику"
+// Может пригодится!!!
 
-TASK: "Не удалось отправить структуру даже после 5 тиков"
-TASK: "Очередь для структур не создана"
+// Сделать определитель типов:
+#define tstr "tstr"
+#define tchr "tchr"
+#define tint "tint"
+String types(String a) {return tstr;}
+String types(char *a)  {return tchr;}
+String types(int a)    {return tint;}
+
+// Перевести массив char в String и обратно
+void schastr()
+{
+   // Определяем структуру изменяемого сообщения
+   struct AMessage
+   {
+      int  ucSize;        // Длина сообщения (максимально 256 байт)
+      char ucData[256];   // Текст сообщения
+   }  xMessage;
+   
+   String temp = "Всем привет!";
+   strcpy(xMessage.ucData, temp.c_str());
+   xMessage.ucSize = 0;
+   while (xMessage.ucData[xMessage.ucSize]>0) 
+   {
+      xMessage.ucSize++;
+   }
+   Serial.println(temp);
+   Serial.println(types(temp));
+   Serial.println(xMessage.ucData);
+   Serial.println(types(xMessage.ucData));
+   Serial.println(xMessage.ucSize);
+   Serial.println(types(xMessage.ucSize));
+   
+   String temp1=String(xMessage.ucData);
+   Serial.println(temp1);
+   Serial.println(temp1.length());
+   Serial.println("-----");
+}
 */
 
 

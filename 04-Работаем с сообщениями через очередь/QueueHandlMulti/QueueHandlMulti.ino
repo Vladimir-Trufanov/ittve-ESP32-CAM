@@ -7,14 +7,17 @@
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
 
-#include "QueMessa.h"    
+// Определяем очередь сообщений
+#define tmk_QHM "QHM"    // разрешили сообщения от имени приложения 
+QueueHandle_t tQueue;    // определили очередь сообщений
+#include "QueMessa.h"    // подключили передачу и приём сообщений через очередь
+
+QueueHandle_t xQueue;
 
 // Создаем структуру для передачи сообщения из задачи и указатель на нее   
 struct AMessage xMessage, *pxMessage;
 // Создаем структуру для приёма сообщений   
 struct AMessage xRxedStructure;
-// Определяем очередь сообщений
-QueueHandle_t xQueue;
 // Инициируем счетчик циклов дополнительной задачи
 unsigned long nLoop = 0UL;
 // ****************************************************************************
@@ -82,16 +85,15 @@ void setup()
 {
    Serial.begin(115200);
    
-   Serial.println(messQueueHandling(tqh_SENDFAILED, "fmess32", "smess32")); 
-   Serial.println(messQueueHandlMulti(tqhm_SENDFROMTASK, "123", "smess32")); 
-   Serial.println(messQueueHandlMulti(7, "fmess32", "smess32")); 
-   
+   //Serial.println(messQueueHandling(tqh_SendFailed, "fmess32", "smess32")); 
+   //Serial.println(messQueueHandlMulti(tqhm_SendFromTask, "123", "smess32")); 
+   //Serial.println(messQueueHandlMulti(7, "fmess32", "smess32")); 
 
    // Определяем дополнительную задачу
    xTaskCreatePinnedToCore (
       vATask,         // название функции, которая будет запускаться, как параллельная задача
       "Сообщение",    // название задачи
-      1024,           // размер стека в байтах
+      2048,           // размер стека в байтах
       NULL,           // указатель параметра, который будет передан задаче (NULL, если параметр не передаётся)
       0,              // приоритет задачи
       NULL,           // дескриптор или указатель на задачу
@@ -105,9 +107,18 @@ void setup()
    // всегда повторяем перезапуск (третий параметр = true), неограниченное число 
    // раз (четвертый параметр = 0) 
    timerAlarm(timer, 1400000, true, 0);
-   // Создаем очередь из 10 структур
+   
+   // Создаем старую очередь из 10 структур
    xQueue = xQueueCreate(10, sizeof(struct AMessage));
    if(xQueue==NULL)
+   {
+      Serial.println("SETUP: Очередь СТАРАЯ не была создана и не может использоваться!");
+   }
+   Serial.println("SETUP: Очередь СТАРАЯ сформирована!");
+   
+   // Создаем очередь из 10 структур
+   tQueue = xQueueCreate(10, sizeof(struct tStruMessage));
+   if(tQueue==NULL)
    {
       Serial.println("SETUP: Очередь не была создана и не может использоваться!");
    }
@@ -119,9 +130,17 @@ void setup()
 // ****************************************************************************
 void vATask (void* pvParameters) 
 {
+   // Привязываем к задаче структуру для для отправки сообщения из задачи
+   // в статической памяти для того, чтобы уменьшить фрагментацию кучи и
+   // не делить с другими модулями
+   static DRAM_ATTR struct tStruMessage taskStruMess;
+
    while (1) 
    {
       nLoop++;
+      // Отправляем информационное сообщение "Передано %s сообщение из задачи"
+      SendMess(tQueue,taskStruMess,tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
+      
       if (xQueue!=0)
       {
          // Формируем сообщение для передачи в очередь

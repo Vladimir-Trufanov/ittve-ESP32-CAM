@@ -323,13 +323,13 @@ ittve-ESP32-CAM
 2=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessa.hpp
 [Selected Project Files]
 Main=
-Selected=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueueHandlMulti.ino
+Selected=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessa.h
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueueHandlMulti.ino]
-TopLine=61
-Caret=62,86
+TopLine=13
+Caret=80,133
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessa.h]
-TopLine=3
-Caret=16,30
+TopLine=58
+Caret=87,75
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessa.hpp]
-TopLine=86
-Caret=26,107
+TopLine=79
+Caret=62,96
