@@ -1,4 +1,4 @@
-/** Arduino-Esp32-CAM                              *** QueueHandlMulti2.ino ***
+/** Arduino-Esp32-CAM                               *** QueueHandlMulti.ino ***
  * 
  *                        Пример передачи сообщения из задачи и из прерывания с
  *                                                     приемом в основном цикле
@@ -82,8 +82,9 @@ void setup()
 {
    Serial.begin(115200);
    
-   xMessage.ucSize=5;
-   xMessage.ucSize=tqh_BEFORMED;
+   Serial.println(messQueueHandling(tqh_SENDFAILED, "fmess32", "smess32")); 
+   Serial.println(messQueueHandlMulti(tqhm_SENDFROMTASK, "123", "smess32")); 
+   Serial.println(messQueueHandlMulti(7, "fmess32", "smess32")); 
    
 
    // Определяем дополнительную задачу
@@ -173,4 +174,4 @@ void loop()
    delay(1300);
 }
 
-// *************************************************** QueueHandlMulti2.ino ***
+// **************************************************** QueueHandlMulti.ino ***

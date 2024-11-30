@@ -15,7 +15,6 @@ typedef enum {
    tmt_FATAL,           // ошибка, вызывающие перезагрузку контроллера 
 } 
 tMessageType;
-
 // Уровни вывода сообщений
 typedef enum {
    tml_VERBOSE,         // выводятся все типы сообщений 
@@ -24,7 +23,6 @@ typedef enum {
    tml_SILENT,          // сообщения не выводятся 
 } 
 tMessageOutputLevel;
-
 // Категории сообщений
 typedef enum {
    tmc_WDT,             // общее сообщение сторожевого таймера
@@ -34,6 +32,9 @@ typedef enum {
    tmc_KRUTJAK,         // сообщение приложения KRUTJAK 
 } 
 tMessageCategory;
+// Буфер сообщений
+char tBuffer[1024];     // текст сообщения
+
 
 /*
 example:
@@ -64,7 +65,7 @@ typedef enum {
 esp_reset_reason_t;
 */
 
-// Общие сообщения обработки очередей
+// Обработка очередей ------------------------------------------- QueueHandling
 typedef enum {
    tqh_NOTCREATE,       // "Очередь не была создана и не может использоваться" - queue has not been created and cannot be used
    tqh_BEFORMED,        // "Очередь сформирована"                              - queue has been formed
@@ -73,6 +74,44 @@ typedef enum {
 } 
 tQueueHandling;
 
+String messQueueHandling(int mode, String fmess32, String smess32) 
+{
+   switch (mode) {
+   case tqh_NOTCREATE:
+      sprintf(tBuffer,"Очередь не была создана и не может использоваться"); break;
+   case tqh_BEFORMED:
+      sprintf(tBuffer,"Очередь сформирована"); break;
+   case tqh_SENDFAILED:
+      sprintf(tBuffer,"Не удалось отправить структуру из задачи"); break;
+   case tqh_SENDFAILED_ISR:
+      sprintf(tBuffer,"Не удалось отправить структуру из прерывания"); break;
+   default:
+      sprintf(tBuffer,"Неопределенное сообщение обработки очередей"); break;
+   }
+   String result=String(tBuffer);
+   return result;
+}
+
+// Пример по обработке очередей ------------------------------- QueueHandlMulti
+typedef enum {
+   tqhm_ITSBEENMS,      // "Прошло %s миллисекунд"                             - it's been %s milliseconds
+   tqhm_SENDFROMTASK,   // "Передано %s сообщение из задачи"                   - %s message from the task has been sent
+} 
+tQueueHandlMulti;
+
+String messQueueHandlMulti(int mode, String fmess32, String smess32) 
+{
+   switch (mode) {
+   case tqhm_ITSBEENMS:
+      sprintf(tBuffer,"Прошло %s миллисекунд",fmess32); break;
+   case tqhm_SENDFROMTASK:
+      sprintf(tBuffer,"Передано %s сообщение из задачи",fmess32); break;
+   default:
+      sprintf(tBuffer,"Неопределенное сообщение примера очередей"); break;
+   }
+   String result=String(tBuffer);
+   return result;
+}
 
 
 /*
@@ -81,9 +120,6 @@ ISR: "Управление передаётся планировщику"
 
 TASK: "Не удалось отправить структуру даже после 5 тиков"
 TASK: "Очередь для структур не создана"
-
-"Прошло %d миллисекунд",timeMillis
-"Передано %d сообщение из задачи",nLoop
 */
 
 
