@@ -11,6 +11,9 @@
 #define que_messa
 #pragma once     
 
+#include <Arduino.h>
+#include <QueMessa.hpp>
+
 // Определяем структуру передаваемого сообщения
 struct AMessage
 {
@@ -18,7 +21,15 @@ struct AMessage
    char ucData[256];   // Текст сообщения
 };
 
-#include <Arduino.h>
+// Определяем структуру передаваемого сообщения
+struct queMessage
+{
+   int  Type;          // Тип сообщения
+   int  Category;      // Категория сообщения
+   int  Number;        // Номер сообщения
+   char fmess32[32];   // Первое уточнение сообщения
+   char smess32[32];   // Второе уточнение сообщения
+};
 
 // Определяем переменную прежнего состояния светодиода
 //volatile int oLed33Status=inLOW; 

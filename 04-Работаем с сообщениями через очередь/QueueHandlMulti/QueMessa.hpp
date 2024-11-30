@@ -6,95 +6,86 @@
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
+// Типы сообщений
+typedef enum {
+   tmt_NOTICE,          // информационное сообщение приложения 
+   tmt_TRACE,           // трассировочное сообщение при отладке
+   tmt_WARNING,         // предупреждение, позволяющие работать задаче дальше 
+   tmt_ERROR,           // ошибка, не дающие возможность правильно выполнить задачу
+   tmt_FATAL,           // ошибка, вызывающие перезагрузку контроллера 
+} 
+tMessageType;
+
+// Уровни вывода сообщений
+typedef enum {
+   tml_VERBOSE,         // выводятся все типы сообщений 
+   tml_ERROR,           // выводятся все типы сообщений, кроме трассировочных 
+   tml_NOTICE,          // выводятся только информационные сообщения 
+   tml_SILENT,          // сообщения не выводятся 
+} 
+tMessageOutputLevel;
+
+// Категории сообщений
+typedef enum {
+   tmc_WDT,             // общее сообщение сторожевого таймера
+   tmc_ISR,             // общее сообщение обработчика прерывания
+   tmc_EUE,             // общее сообщение в работе с очередями
+   tmc_KVIZZY,          // сообщение приложения KVIZZY 
+   tmc_KRUTJAK,         // сообщение приложения KRUTJAK 
+} 
+tMessageCategory;
+
 /*
-// Уровни ошибок и сообщений: 
-// 0, SILENT         - сообщения не выводятся
-// 1, FATAL          - ошибки, вызывающие перезагрузку компьютера 
-// 2, ERROR          - ошибки, не дающие возможность правильно завершить задачу  
-// 3, WARNING        - ошибки, позволяющие работать задаче дальше 
-// 4, NOTICE         - информационные сообщения приложения 
-// 5, TRACE          - трассировочные сообщения при отладке 
-// 6, VERBOSE        - все 
-
-// Категории ошибок: 
-// 0, APP            - ошибка конкретного приложения: Kvizzy, Krutjak
-// 1, WDT            - общие ошибки сторожевого таймера
-// 2, ISR            - общие ошибки обработчика прерывания
-// 3, EUE            - общие ошибки работы с очередями
-
 example:
 queMess(WARNING-EUE, "Управление передаётся планировщику");
 queMess(2024-11-29,19:36:18 WARNING-EUE, "Управление передаётся планировщику");
 */
 
+// Сообщения о причинах перезагрузки ESP32
 /*
- * 
- typedef enum {
-    ESP_RST_UNKNOWN,    //!< Reset reason can not be determined
-    ESP_RST_POWERON,    //!< Reset due to power-on event
-    ESP_RST_EXT,        //!< Reset by external pin (not applicable for ESP32)
-    ESP_RST_SW,         //!< Software reset via esp_restart
-    ESP_RST_PANIC,      //!< Software reset due to exception/panic
-    ESP_RST_INT_WDT,    //!< Reset (software or hardware) due to interrupt watchdog
-    ESP_RST_TASK_WDT,   //!< Reset due to task watchdog
-    ESP_RST_WDT,        //!< Reset due to other watchdogs
-    ESP_RST_DEEPSLEEP,  //!< Reset after exiting deep sleep mode
-    ESP_RST_BROWNOUT,   //!< Brownout reset (software or hardware)
-    ESP_RST_SDIO,       //!< Reset over SDIO
-    ESP_RST_USB,        //!< Reset by USB peripheral
-    ESP_RST_JTAG,       //!< Reset by JTAG
-    ESP_RST_EFUSE,      //!< Reset due to efuse error
-    ESP_RST_PWR_GLITCH, //!< Reset due to power glitch detected
-    ESP_RST_CPU_LOCKUP, //!< Reset due to CPU lock up
-} esp_reset_reason_t;
-
-enumerator ESP_RST_UNKNOWN
-Невозможно определить причину сброса.
-
-enumerator ESP_RST_POWERON
-Сброс из-за события включения питания.
-
-enumerator ESP_RST_EXT
-Сброс с помощью внешнего PIN-кода (не применимо для ESP32)
-
-enumerator ESP_RST_SW
-Сброс программного обеспечения через esp_restart.
-
-enumerator ESP_RST_PANIC
-Сброс программного обеспечения из-за исключения / паники.
-
-enumerator ESP_RST_INT_WDT
-Сброс (программный или аппаратный) из-за сторожевого таймера прерывания.
-
-enumerator ESP_RST_TASK_WDT
-Сброс из-за диспетчера задач.
-
-enumerator ESP_RST_WDT
-Сброс из-за других сторожевых псов.
-
-enumerator ESP_RST_DEEPSLEEP
-Сброс после выхода из режима глубокого сна.
-
-enumerator ESP_RST_BROWNOUT
-Сброс отключения (программный или аппаратный)
-
-enumerator ESP_RST_SDIO
-Сброс через SDIO.
-
-enumerator ESP_RST_USB
-Сброс с помощью периферийного устройства USB.
-
-enumerator ESP_RST_JTAG
-Сброс с помощью JTAG.
-
-enumerator ESP_RST_EFUSE
-Сброс из-за ошибки efuse.
-
-enumerator ESP_RST_PWR_GLITCH
-Сброс из-за обнаруженного сбоя питания
-
-enumerator ESP_RST_CPU_LOCKUP
-Сброс из-за блокировки процессора
+typedef enum {
+   ESP_RST_UNKNOWN,     // невозможно определить причину сброса
+   ESP_RST_POWERON,     // сброс из-за события включения питания
+   ESP_RST_EXT,         // сброс с помощью внешнего PIN-кода (не применимо для ESP32)
+   ESP_RST_SW,          // сброс программного обеспечения через esp_restart
+   ESP_RST_PANIC,       // сброс программного обеспечения из-за исключения/паники
+   ESP_RST_INT_WDT,     // сброс (программный или аппаратный) из-за сторожевого таймера прерывания
+   ESP_RST_TASK_WDT,    // сброс из-за диспетчера задач
+   ESP_RST_WDT,         // сброс из-за других сторожевых псов
+   ESP_RST_DEEPSLEEP,   // сброс после выхода из режима глубокого сна
+   ESP_RST_BROWNOUT,    // сброс отключения (программный или аппаратный)
+   ESP_RST_SDIO,        // сброс через SDIO
+   ESP_RST_USB,         // сброс с помощью периферийного устройства USB
+   ESP_RST_JTAG,        // сброс с помощью JTAG
+   ESP_RST_EFUSE,       // сброс из-за ошибки efuse
+   ESP_RST_PWR_GLITCH,  // сброс из-за обнаруженного сбоя питания
+   ESP_RST_CPU_LOCKUP,  // сброс из-за блокировки процессора
+} 
+esp_reset_reason_t;
 */
+
+// Общие сообщения обработки очередей
+typedef enum {
+   tqh_NOTCREATE,       // "Очередь не была создана и не может использоваться" - queue has not been created and cannot be used
+   tqh_BEFORMED,        // "Очередь сформирована"                              - queue has been formed
+   tqh_SENDFAILED,      // "Не удалось отправить структуру из задачи"          - failed to send structure from task
+   tqh_SENDFAILED_ISR,  // "Не удалось отправить структуру из прерывания"      - failed to send structure from interrupt
+} 
+tQueueHandling;
+
+
+
+/*
+ISR: "Очередь для структур не создана"
+ISR: "Управление передаётся планировщику"
+
+TASK: "Не удалось отправить структуру даже после 5 тиков"
+TASK: "Очередь для структур не создана"
+
+"Прошло %d миллисекунд",timeMillis
+"Передано %d сообщение из задачи",nLoop
+*/
+
+
 
 // *********************************************************** QueMessa.hpp ***

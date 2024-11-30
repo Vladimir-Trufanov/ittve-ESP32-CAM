@@ -81,6 +81,10 @@ void ARDUINO_ISR_ATTR onTimer()
 void setup() 
 {
    Serial.begin(115200);
+   
+   xMessage.ucSize=5;
+   xMessage.ucSize=tqh_BEFORMED;
+   
 
    // Определяем дополнительную задачу
    xTaskCreatePinnedToCore (
