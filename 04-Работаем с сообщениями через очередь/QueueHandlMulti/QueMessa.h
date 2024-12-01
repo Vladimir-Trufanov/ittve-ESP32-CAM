@@ -66,13 +66,6 @@ String ExtractMess(String Source, int Number, String fmess32, String smess32)
 #define t_MessFormat   tfm_FULL    // формат вывода сообщений
 
 // Определяем структуру передаваемого сообщения
-struct AMessage
-{
-   int  ucSize;        // Длина сообщения (максимально 256 байт)
-   char ucData[256];   // Текст сообщения
-};
-
-// Определяем структуру передаваемого сообщения
 struct tStruMessage
 {
    char Type[7];       // Тип сообщения
@@ -145,7 +138,9 @@ void SendMess(QueueHandle_t tQueue, tStruMessage xMessage, String Type, String S
       }
       else
       {
-         Serial.println("SendMess: Новое сообщение ушло!");
+         int Space = int(uxQueueSpacesAvailable(tQueue));
+         Serial.print(Space);
+         Serial.println(": SendMess = Новое сообщение ушло!");
       }
    }
    else 
@@ -156,10 +151,14 @@ void SendMess(QueueHandle_t tQueue, tStruMessage xMessage, String Type, String S
 // ****************************************************************************
 // *                              Принять сообщение                           *
 // ****************************************************************************
-void ReceiveMess(QueueHandle_t tQueue, tStruMessage xMessage)
+void ReceiveMess(QueueHandle_t tQueue, tStruMessage xMessage, int t_MessFormat)
 {
    if (tQueue != NULL)
    {
+         int Space = int(uxQueueSpacesAvailable(tQueue));
+         Serial.print(Space);
+         Serial.println(" = ДО ВЫБОРКИ");
+
       // Получаем сообщение из созданной очереди для хранения сложного
       // структурного сообщения. Блокировка на 10 тиков, если сообщение
       // недоступно немедленно.
@@ -169,20 +168,27 @@ void ReceiveMess(QueueHandle_t tQueue, tStruMessage xMessage)
       }
       else
       {
-         // char Type[7];       // Тип сообщения
-         // char Source[7];     // Источник сообщения
-         // int  Number;        // Номер сообщения
-         // char fmess32[32];   // Первое уточнение сообщения
-         // char smess32[32];   // Второе уточнение сообщения
-         // tfm_BRIEF,   // 0 Краткий             - WARNING-ISR[2]
-         // tfm_FULL,    // 1 Полный              - 2024-11-29,19:36:18 WARNING-ISR[2], Управление передаётся планировщику
-         // tfm_NOTIME,  // 2 Без даты и времени  - WARNING-ISR[2], Управление передаётся планировщику
+         Serial.print(Space);
+         Serial.println(" = ПОСЛЕ");
+
+         // char Type[7];                     - Тип сообщения
+         // char Source[7];                   - Источник сообщения
+         // int  Number;                      - Номер сообщения
+         // char fmess32[32];                 - Первое уточнение сообщения
+         // char smess32[32];                 - Второе уточнение сообщения
+
+         // tfm_BRIEF,  0 Краткий             - WARNING-ISR[2]
+         // tfm_FULL,   1 Полный              - 2024-11-29,19:36:18 WARNING-ISR[2], Управление передаётся планировщику
+         // tfm_NOTIME, 2 Без даты и времени  - WARNING-ISR[2], Управление передаётся планировщику
 
          // Формируем фрагменты текста сообщения
          String Type=String(xMessage.Type);
          String Source=String(xMessage.Source);
          String Number=String(xMessage.Number);
          String Line = Type+"-"+Source+"["+Number+"]";
+
+         int Space = int(uxQueueSpacesAvailable(tQueue));
+
          // Если заказан вывод кратких сообщений, то выводим сообщение
          if (t_MessFormat==tfm_BRIEF) Serial.println(Line);
          // Иначе, формируем сообщение дальше
@@ -198,11 +204,7 @@ void ReceiveMess(QueueHandle_t tQueue, tStruMessage xMessage)
             {
                String DTime=ExtractTime();
                Line=DTime+" "+Line;
-
-               Serial.println("LOOP: ПРИНЯТА структура!");
-               Serial.print("Text ");
-               Serial.print(Line);
-               Serial.println(" Text");
+               Serial.println(Line);
             }
          }
       }

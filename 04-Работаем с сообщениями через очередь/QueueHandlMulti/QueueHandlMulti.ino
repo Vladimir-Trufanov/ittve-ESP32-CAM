@@ -12,15 +12,9 @@
 QueueHandle_t tQueue;    // определили очередь сообщений
 #include "QueMessa.h"    // подключили передачу и приём сообщений через очередь
 // Переопределяем размер очереди и формат вывода сообщений
-#define t_QueueSize    4           // размер очереди 
-#define t_MessFormat   tfm_FULL    // формат вывода сообщений
+#define t_QueueSize    13           // размер очереди 
+#define t_MessFormat   tfm_FULL     // формат вывода сообщений
 
-QueueHandle_t xQueue;
-
-// Создаем структуру для передачи сообщения из задачи и указатель на нее   
-struct AMessage xMessage, *pxMessage;
-// Создаем структуру для приёма сообщений   
-struct AMessage xRxedStructure;
 // Инициируем счетчик циклов дополнительной задачи
 unsigned long nLoop = 0UL;
 // ****************************************************************************
@@ -36,7 +30,7 @@ void ARDUINO_ISR_ATTR onTimer()
 {
    // Размещаем структуру для сообщения в статической памяти для того,
    // чтобы уменьшить фрагментацию кучи 
-   static DRAM_ATTR struct AMessage xiMessage;
+   // static DRAM_ATTR struct AMessage xiMessage;
    // Выделяем переменную планировщикe задач FreeRTOS для указания
    // необходимости переключения после прерывания на более приоритетную 
    // задачу, связанную с очередью
@@ -46,7 +40,7 @@ void ARDUINO_ISR_ATTR onTimer()
    // Выделяем переменную для прошедшего времени с начала запуска приложения
    static DRAM_ATTR int timeMillis;
    
-   int i=10;
+   int i=15;
    
    /* 
    // Если в очереди есть место, будем размещать сообщение
@@ -91,24 +85,9 @@ void ARDUINO_ISR_ATTR onTimer()
 void setup() 
 {
    Serial.begin(115200);
-   Serial.println(ExtractTime()); 
    
-   //Serial.println(messQueueHandling(tqh_SendFailed, "fmess32", "smess32")); 
-   //Serial.println(messQueueHandlMulti(tqhm_SendFromTask, "123", "smess32")); 
-   //Serial.println(messQueueHandlMulti(7, "fmess32", "smess32")); 
-   
-   // Создаем старую очередь из 10 структур
-   /*
-   xQueue = xQueueCreate(10, sizeof(struct AMessage));
-   if(xQueue==NULL)
-   {
-      Serial.println("SETUP: Очередь СТАРАЯ не была создана и не может использоваться!");
-   }
-   Serial.println("SETUP: Очередь СТАРАЯ сформирована!");
-   */
-   
-   // Создаем очередь из 10 структур
-   tQueue = xQueueCreate(10, sizeof(struct tStruMessage));
+   // Создаем очередь из t_QueueSize структур
+   tQueue = xQueueCreate(t_QueueSize, sizeof(struct tStruMessage));
    if(tQueue==NULL)
    {
       Serial.println("SETUP: Очередь не была создана и не может использоваться!");
@@ -150,28 +129,6 @@ void vATask (void* pvParameters)
       nLoop++;
       // Отправляем информационное сообщение "Передано %s сообщение из задачи"
       SendMess(tQueue,taskStruMess,tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
-      
-      /*
-      if (xQueue!=0)
-      {
-         // Формируем сообщение для передачи в очередь
-         sprintf(xMessage.ucData, "Передано %d сообщение из задачи", nLoop);
-         xMessage.ucSize = 0;
-         while (xMessage.ucData[xMessage.ucSize]>0) 
-         {
-            xMessage.ucSize++;
-         }
-         pxMessage = &xMessage;
-         if (xQueueSend(xQueue,pxMessage,5) != pdPASS)
-         {
-            Serial.println("TASK: Не удалось отправить структуру даже после 5 тиков!");
-         }
-      }
-      else 
-      {
-         Serial.println("TASK: Очередь для структур не создана!");
-      }
-      */
       delay (1600); 
    }
 }
@@ -182,33 +139,7 @@ void loop()
 {
    // Привязываем к основному циклу статическую структуру для приема сообщений
    static DRAM_ATTR struct tStruMessage loopStruMess;
-   ReceiveMess(tQueue, loopStruMess);  
-   
-   /*
-   if (xQueue != NULL)
-   {
-      // Получаем сообщение из созданной очереди для хранения сложного
-      // структурного сообщения. Блокировка на 10 тиков, если сообщение
-      // недоступно немедленно. Значение считывается в структурную
-      // переменную AMessage, поэтому после вызова xQueueReceive()  
-      // xRxedStructure будет содержать копию сообщения
-      if (xQueueReceive(xQueue,&xRxedStructure,10) != pdPASS)
-      {
-         Serial.println("LOOP: Не удалось принять структуру даже после 10 тиков!");
-      }
-      else
-      {
-         Serial.print(xRxedStructure.ucSize);
-         Serial.print(": ");
-         Serial.println(xRxedStructure.ucData);
-      }
-   }
-   else
-   {
-      Serial.println("LOOP: Нет очереди!");
-   }
-   */
-   
+   ReceiveMess(tQueue, loopStruMess, t_MessFormat);  
    delay(1300);
 }
 

@@ -117,8 +117,9 @@ String messQueueHandlMulti(int mode, String fmess32, String smess32)
    case tqhm_ItsBeenMS:
       sprintf(tBuffer,"Прошло %s миллисекунд",fmess32); break;
    case tqhm_SendFromTask:
-    //sprintf(tBuffer,"Передано %s сообщение из задачи йцукенгшщзхъфывапролджэячсмитьбю.ЙЦУКЕНГШЩЗХЪФЫВАПРОЛ 1234567811  фыва ПРРОЛЛЛЛЛЛДДДЖЙЦУКЕНГЩШЩЯЧЧСЬЬИТББТЮЬЮ 123",fmess32); break;
+      //sprintf(tBuffer,"Передано %s сообщение из задачи йцукенгшщзхъфывапролджэячсмитьбю.ЙЦУКЕНГШЩЗХЪФЫВАПРОЛ 1234567811  фыва ПРРОЛЛЛЛЛЛДДДЖЙЦУКЕНГЩШЩЯЧЧСЬЬИТББТЮЬЮ 123",fmess32); break;
       sprintf(tBuffer,"Передано %s сообщение из задачи йцукенгшщзхъфывапролджэячсмитьбю.ЙЦУКЕНГШЩЗХЪФЫВАПРОЛ 12  фыва ПРРОЛЛЛЛЛЛДДДЖЙЦУКЕНГЩШЩЯЧЧСЬЬИТББТЮЬЮ 123",fmess32); break;
+      //sprintf(tBuffer,"Передано %s сообщение из задачи",fmess32); break;
    case tqhm_StructNoSend:
       sprintf(tBuffer,"Не удалось отправить структуру после %s тиков",fmess32); break;
    default:
