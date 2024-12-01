@@ -56,12 +56,15 @@ ittve-ESP32-CAM
 			03-Пробуем ноты на ардуино\Arduino Pro Mini.doc
 			03-Пробуем ноты на ардуино\Пробуем ноты на ардуино.md
 		+04-Работаем с сообщениями через очередь
-			+QueueHandlMulti
+			-QueueHandlMulti
 				04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessa.h
 				04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessa.hpp
 				04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino
+			-ResetReason2
+				04-Работаем с сообщениями через очередь\ResetReason2\ResetReason2.ino
+			+sketch_dec01a
+				04-Работаем с сообщениями через очередь\sketch_dec01a\sketch_dec01a.ino
 			04-Работаем с сообщениями через очередь\04-Работаем с сообщениями через очередь.md
-			04-Работаем с сообщениями через очередь\04-Работаем с сообщениями через очередь.md.backup
 		-05-zastavlyaem-esp32-cam-migat-lampochkami
 			-BlinkOnCam32
 				05-zastavlyaem-esp32-cam-migat-lampochkami\BlinkOnCam32\BlinkOnCam32.ino
@@ -321,15 +324,19 @@ ittve-ESP32-CAM
 0=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino
 1=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessa.h
 2=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessa.hpp
+3=04-Работаем с сообщениями через очередь\sketch_dec01a\sketch_dec01a.ino
 [Selected Project Files]
 Main=
 Selected=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessa.h
 [04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino]
-TopLine=13
-Caret=80,133
+TopLine=49
+Caret=13,49
 [04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessa.h]
-TopLine=58
-Caret=87,75
+TopLine=146
+Caret=29,180
 [04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessa.hpp]
-TopLine=79
-Caret=62,96
+TopLine=123
+Caret=44,153
+[04-Работаем с сообщениями через очередь\sketch_dec01a\sketch_dec01a.ino]
+TopLine=81
+Caret=30,115

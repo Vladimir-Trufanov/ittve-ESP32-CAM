@@ -14,9 +14,6 @@ typedef enum {
    tml_SILENT,          // 3 сообщения не выводятся 
 } tMessageOutputLevel;
 
-// Буфер сообщений
-char tBuffer[1024];     // текст сообщения
-
 // Сообщения о причинах перезагрузки ESP32
 /*
 typedef enum {
@@ -60,6 +57,14 @@ String messISR(int mode, String fmess32, String smess32)
       sprintf(tBuffer,"Неопределенное сообщение из прерывания"); break;
    }
    String result=String(tBuffer);
+      /*
+               String result=String(tBuffer);
+               Serial.print("Text ");
+               Serial.print(result);
+               Serial.println(" Text");
+   */
+
+
    return result;
 }
 #endif
@@ -85,6 +90,14 @@ String messQueueHandling(int mode, String fmess32, String smess32)
       sprintf(tBuffer,"Неопределенное сообщение обработки очередей"); break;
    }
    String result=String(tBuffer);
+      /*
+               String result=String(tBuffer);
+               Serial.print("Text ");
+               Serial.print(result);
+               Serial.println(" Text");
+   */
+
+
    return result;
 }
 #endif
@@ -104,14 +117,17 @@ String messQueueHandlMulti(int mode, String fmess32, String smess32)
    case tqhm_ItsBeenMS:
       sprintf(tBuffer,"Прошло %s миллисекунд",fmess32); break;
    case tqhm_SendFromTask:
-      sprintf(tBuffer,"Передано %s сообщение из задачи",fmess32); break;
+    //sprintf(tBuffer,"Передано %s сообщение из задачи йцукенгшщзхъфывапролджэячсмитьбю.ЙЦУКЕНГШЩЗХЪФЫВАПРОЛ 1234567811  фыва ПРРОЛЛЛЛЛЛДДДЖЙЦУКЕНГЩШЩЯЧЧСЬЬИТББТЮЬЮ 123",fmess32); break;
+      sprintf(tBuffer,"Передано %s сообщение из задачи йцукенгшщзхъфывапролджэячсмитьбю.ЙЦУКЕНГШЩЗХЪФЫВАПРОЛ 12  фыва ПРРОЛЛЛЛЛЛДДДЖЙЦУКЕНГЩШЩЯЧЧСЬЬИТББТЮЬЮ 123",fmess32); break;
    case tqhm_StructNoSend:
       sprintf(tBuffer,"Не удалось отправить структуру после %s тиков",fmess32); break;
    default:
       sprintf(tBuffer,"Неопределенное сообщение примера очередей"); break;
    }
-   String result=String(tBuffer);
-   return result;
+         Serial.print("ДЛИНА [255 + 0]: ");
+         Serial.println(String(tBuffer).length());
+
+   return String(tBuffer);
 }
 #endif
 

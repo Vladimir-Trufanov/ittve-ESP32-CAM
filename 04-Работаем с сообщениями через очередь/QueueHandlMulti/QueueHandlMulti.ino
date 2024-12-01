@@ -11,6 +11,9 @@
 #define tmk_QHM "QHM"    // разрешили сообщения от имени приложения 
 QueueHandle_t tQueue;    // определили очередь сообщений
 #include "QueMessa.h"    // подключили передачу и приём сообщений через очередь
+// Переопределяем размер очереди и формат вывода сообщений
+#define t_QueueSize    4           // размер очереди 
+#define t_MessFormat   tfm_FULL    // формат вывода сообщений
 
 QueueHandle_t xQueue;
 
@@ -42,7 +45,10 @@ void ARDUINO_ISR_ATTR onTimer()
    static DRAM_ATTR int currMillis;
    // Выделяем переменную для прошедшего времени с начала запуска приложения
    static DRAM_ATTR int timeMillis;
-    
+   
+   int i=10;
+   
+   /* 
    // Если в очереди есть место, будем размещать сообщение
    if (xQueue!=0)
    {
@@ -77,6 +83,7 @@ void ARDUINO_ISR_ATTR onTimer()
       Serial.println("ISR: Управление передаётся планировщику!");
       portYIELD_FROM_ISR();
    }
+   */
 }
 // ****************************************************************************
 // *                          Инициировать приложение                         *
@@ -84,10 +91,29 @@ void ARDUINO_ISR_ATTR onTimer()
 void setup() 
 {
    Serial.begin(115200);
+   Serial.println(ExtractTime()); 
    
    //Serial.println(messQueueHandling(tqh_SendFailed, "fmess32", "smess32")); 
    //Serial.println(messQueueHandlMulti(tqhm_SendFromTask, "123", "smess32")); 
    //Serial.println(messQueueHandlMulti(7, "fmess32", "smess32")); 
+   
+   // Создаем старую очередь из 10 структур
+   /*
+   xQueue = xQueueCreate(10, sizeof(struct AMessage));
+   if(xQueue==NULL)
+   {
+      Serial.println("SETUP: Очередь СТАРАЯ не была создана и не может использоваться!");
+   }
+   Serial.println("SETUP: Очередь СТАРАЯ сформирована!");
+   */
+   
+   // Создаем очередь из 10 структур
+   tQueue = xQueueCreate(10, sizeof(struct tStruMessage));
+   if(tQueue==NULL)
+   {
+      Serial.println("SETUP: Очередь не была создана и не может использоваться!");
+   }
+   Serial.println("SETUP: Очередь сформирована!");
 
    // Определяем дополнительную задачу
    xTaskCreatePinnedToCore (
@@ -107,22 +133,6 @@ void setup()
    // всегда повторяем перезапуск (третий параметр = true), неограниченное число 
    // раз (четвертый параметр = 0) 
    timerAlarm(timer, 1400000, true, 0);
-   
-   // Создаем старую очередь из 10 структур
-   xQueue = xQueueCreate(10, sizeof(struct AMessage));
-   if(xQueue==NULL)
-   {
-      Serial.println("SETUP: Очередь СТАРАЯ не была создана и не может использоваться!");
-   }
-   Serial.println("SETUP: Очередь СТАРАЯ сформирована!");
-   
-   // Создаем очередь из 10 структур
-   tQueue = xQueueCreate(10, sizeof(struct tStruMessage));
-   if(tQueue==NULL)
-   {
-      Serial.println("SETUP: Очередь не была создана и не может использоваться!");
-   }
-   Serial.println("SETUP: Очередь сформирована!");
 }
 // ****************************************************************************
 // *           Выполнять ПЕРЕДАЧУ СООБЩЕНИЯ ИЗ ЗАДАЧИ в бесконечном цикле     *
@@ -141,6 +151,7 @@ void vATask (void* pvParameters)
       // Отправляем информационное сообщение "Передано %s сообщение из задачи"
       SendMess(tQueue,taskStruMess,tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
       
+      /*
       if (xQueue!=0)
       {
          // Формируем сообщение для передачи в очередь
@@ -160,6 +171,7 @@ void vATask (void* pvParameters)
       {
          Serial.println("TASK: Очередь для структур не создана!");
       }
+      */
       delay (1600); 
    }
 }
@@ -168,6 +180,11 @@ void vATask (void* pvParameters)
 // ****************************************************************************
 void loop() 
 {
+   // Привязываем к основному циклу статическую структуру для приема сообщений
+   static DRAM_ATTR struct tStruMessage loopStruMess;
+   ReceiveMess(tQueue, loopStruMess);  
+   
+   /*
    if (xQueue != NULL)
    {
       // Получаем сообщение из созданной очереди для хранения сложного
@@ -190,6 +207,8 @@ void loop()
    {
       Serial.println("LOOP: Нет очереди!");
    }
+   */
+   
    delay(1300);
 }
 
