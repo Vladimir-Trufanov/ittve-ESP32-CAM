@@ -3,22 +3,23 @@
  *                        Пример передачи сообщения из задачи и из прерывания с
  *                                                     приемом в основном цикле
  * 
- * v1.2, 02.12.2024                                   Автор:      Труфанов В.Е.
+ * v2.0, 02.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
 
-// Подключаем библиотеку передачи и приёма сообщений через очередь 
-// #define isQueMessage_lib
-#if !defined(isQueMessage_lib)
-   #include "QueMessage.h"
-#else
-   #include <QueMessage.h>  
-#endif
+// Определяем буфер текстов сообщений на 255 символов и завершающий ноль
+char tBuffer[256];             
+// Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
+#include "QueMessage.h"         // заголовочный файл класса TQueMessage 
+#include "QueMessage.hpp"       // 
+#include "QueueHandlMulti.hpp"
+
 // Определяем объект работы с сообщениями через очередь
 TQueMessage queMessa; 
 // Инициируем счетчик циклов дополнительной задачи отправки сообщений
 unsigned long nLoop = 0UL;
-bool ret=true;
+
+bool bRet=true;   // возвращаемые значения
 
 // ****************************************************************************
 // *  Сформировать сообщение о прошедшем времени с начала запуска приложения  *
@@ -88,9 +89,9 @@ void ARDUINO_ISR_ATTR onTimer()
 void setup() 
 {
    Serial.begin(115200);
-   ret=queMessa.Create();
-   if (!ret) Serial.println("SETUP: Очередь не была создана и не может использоваться!");
-   else Serial.println("SETUP:SETUP: Очередь сформирована!");
+   bRet=queMessa.Create();
+   if (!bRet) Serial.println("SETUP: Очередь не была создана и не может использоваться!");
+   else Serial.println("SETUP: Очередь сформирована!");
 
    // Определяем дополнительную задачу по отправке сообщений
    xTaskCreatePinnedToCore (

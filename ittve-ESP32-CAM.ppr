@@ -342,29 +342,25 @@ ittve-ESP32-CAM
 2=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.cpp
 3=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\ArduinoANNtve.h
 4=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\ArduinoANNtve.cpp
-5=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\simplelib.h
-6=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\simplelib.cpp
+5=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.hpp
 [Selected Project Files]
 Main=
-Selected=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueueHandlMulti.ino
+Selected=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.h
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueueHandlMulti.ino]
-TopLine=59
-Caret=59,93
+TopLine=1
+Caret=31,94
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.h]
-TopLine=27
-Caret=1,44
+TopLine=14
+Caret=1,30
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.cpp]
-TopLine=9
-Caret=22,31
+TopLine=4
+Caret=111,94
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\ArduinoANNtve.h]
-TopLine=34
+TopLine=22
 Caret=1,1
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\ArduinoANNtve.cpp]
-TopLine=17
+TopLine=15
 Caret=1,1
-[04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\simplelib.h]
+[04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.hpp]
 TopLine=1
-Caret=1,1
-[04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\simplelib.cpp]
-TopLine=1
-Caret=1,8
+Caret=1,19

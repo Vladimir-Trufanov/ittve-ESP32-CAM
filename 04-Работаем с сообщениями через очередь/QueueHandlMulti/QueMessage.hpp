@@ -6,6 +6,12 @@
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
+//#ifndef que_messa_hpp
+//#define que_messa_hpp
+//#pragma once     
+
+//#include "QueMessage.h"
+
 // Источники сообщений. По умолчанию разрешены и 
 // включаются в код только некоторые общие сообщения.
 // Для включения в код и разрешения других сообщений на использование
@@ -15,9 +21,10 @@
    #define tmk_EUE     "EUE"     // общие сообщения в работе с очередями
 // #define tmk_KVIZZY  "KVIZZY"  // сообщения приложения KVIZZY 
 // #define tmk_KRUTJAK "KRUTJAK" // сообщения приложения KVIZZY 
-   #define tmk_QHM     "QHM"     // пример по обработке очередей
+//   #define tmk_QHM     "QHM"     // пример по обработке очередей
 
-char tBuffer[256];               // буфер текстов сообщений
+// Определяем буфер текстов сообщений на 255 символов и завершающий ноль
+//char tBuffer[256];             
 
 // Сообщения о причинах перезагрузки ESP32
 /*
@@ -47,7 +54,7 @@ typedef enum {
    isr_StruMessNotSend, // 0 "Не удалось отправить структуру сообщения"        - message structure could not be sent
    isr_QueueNotCreated, // 1 "Очередь для структур не создана"                 - queue has not been created for structures
    isr_CtrlToScheduler, // 2 "Управление передаётся планировщику"              - control is transferred to the scheduler
-} tISR;
+}tISR;
 
 String messISR(int mode, String fmess32, String smess32) 
 {
@@ -74,6 +81,7 @@ String messISR(int mode, String fmess32, String smess32)
 }
 #endif
 
+/*
 // Обработка очередей ------------------------------------- QueueHandling [EUE]
 #ifdef tmk_EUE
 typedef enum {
@@ -95,12 +103,12 @@ String messQueueHandling(int mode, String fmess32, String smess32)
       sprintf(tBuffer,"Неопределенное сообщение обработки очередей"); break;
    }
    String result=String(tBuffer);
-      /*
+      / *
                String result=String(tBuffer);
                Serial.print("Text ");
                Serial.print(result);
                Serial.println(" Text");
-   */
+   * /
 
 
    return result;
@@ -179,6 +187,8 @@ void schastr()
 }
 */
 
+
+//#endif
 
 
 // ********************************************************* QueMessage.hpp ***

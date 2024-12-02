@@ -10,58 +10,19 @@
 #include "Arduino.h"
 #include "QueMessage.h"
 
-//TQueMessage::TQueMessage(int _QueueSize=4)
+// Конструктор класса
 TQueMessage::TQueMessage()
 {
 }
-
 // ****************************************************************************
 // *            Извлечь сообщение по источнику и номеру сообщения             *
 // ****************************************************************************
-
 bool TQueMessage::Create(int iQueueSize)
 {
    QueueSize=iQueueSize;
    // Создаем очередь из структур в количестве QueueSize 
-   //tQueue = xQueueCreate(QueueSize, sizeof(struct tStruMessage));
    tQueue = xQueueCreate(QueueSize, sizeof(struct tStruMessage));
-   if(tQueue==NULL) return false;
-   else return true;
-   //{
-      //
-   //}
-   //Serial.println("");
-   /*
-   // Создаем очередь из структур в количестве QueueSize 
-   tQueue = xQueueCreate(QueueSize, sizeof(struct tStruMessage));
-   if(tQueue==NULL)
-   {
-      Serial.println("SETUP: Очередь не была создана и не может использоваться!");
-   }
-   Serial.println("SETUP: Очередь сформирована!");
-   */
-
-  
-  /*
-  int i, j, p, q, r;
-  int ReportEvery1000;
-  int RandomizedIndex[PatternCount];
-  long  TrainingCycle;
-  float Rando;
-  float Error;
-  float Accum;
-
-  float Hidden[HiddenNodes];
-  float Output[OutputNodes];
-  float HiddenWeights[InputNodes+1][HiddenNodes];         // Веса, поступающие в промежуточный слой  
-  float OutputWeights[HiddenNodes+1][OutputNodes];        // Веса, поступающие на выход
-  float HiddenDelta[HiddenNodes];
-  float OutputDelta[OutputNodes];
-  float ChangeHiddenWeights[InputNodes+1][HiddenNodes];   // Изменения обратного распространения из скрытого слоя
-  float ChangeOutputWeights[HiddenNodes+1][OutputNodes];  // Изменения обратного распространения с выходов в скрытый слой
-
-  void toTerminal();
-  */
+   if(tQueue==NULL) return false; else return true;
 };
 
 /*
