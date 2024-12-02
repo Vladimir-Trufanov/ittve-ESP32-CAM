@@ -7,18 +7,10 @@
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
 
-// Подключаем библиотеку передачи и приёма сообщений через очередь 
-// #define isQueMessage_lib
-#if !defined(isQueMessage_lib)
-   #include "QueMessage.h"
-#else
-   #include <QueMessage.h>  
-#endif
-// Определяем объект работы с сообщениями через очередь
-TQueMessage queMessa; 
+#include "QueMessa.h"    // подключили передачу и приём сообщений через очередь
+
 // Инициируем счетчик циклов дополнительной задачи отправки сообщений
 unsigned long nLoop = 0UL;
-bool ret=true;
 
 // ****************************************************************************
 // *  Сформировать сообщение о прошедшем времени с начала запуска приложения  *
@@ -88,9 +80,14 @@ void ARDUINO_ISR_ATTR onTimer()
 void setup() 
 {
    Serial.begin(115200);
-   ret=queMessa.Create();
-   if (!ret) Serial.println("SETUP: Очередь не была создана и не может использоваться!");
-   else Serial.println("SETUP:SETUP: Очередь сформирована!");
+
+   // Создаем очередь из структур в количестве QueueSize 
+   tQueue = xQueueCreate(QueueSize, sizeof(struct tStruMessage));
+   if(tQueue==NULL)
+   {
+      Serial.println("SETUP: Очередь не была создана и не может использоваться!");
+   }
+   Serial.println("SETUP: Очередь сформирована!");
 
    // Определяем дополнительную задачу по отправке сообщений
    xTaskCreatePinnedToCore (
@@ -128,13 +125,13 @@ void setup()
 void vATask (void *pvParameters) 
 {
    // Привязываем структуру для для отправки сообщения 
-   // struct tStruMessage taskStruMess;
+   struct tStruMessage taskStruMess;
    // Готовим цикл задачи
    while (1) 
    {
       nLoop++;
       // Отправляем информационное сообщение "Передано %s сообщение из задачи"
-      // SendMess(tQueue,taskStruMess,tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
+      SendMess(tQueue,taskStruMess,tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
       delay (1601); 
    }
 }
@@ -145,11 +142,11 @@ void vATask (void *pvParameters)
 void vReceiveMess (void *pvParameters) 
 {
    // Привязываем структуру для для приема сообщения 
-   // struct tStruMessage ReceiveStruMess;
+   struct tStruMessage ReceiveStruMess;
    // Готовим цикл задачи
    while (1) 
    {
-      // ReceiveMess(tQueue, ReceiveStruMess, MessFormat);  
+      ReceiveMess(tQueue, ReceiveStruMess, MessFormat);  
       delay (1300); 
    }
 }
