@@ -3,23 +3,13 @@
  *                        Пример передачи сообщения из задачи и из прерывания с
  *                                                     приемом в основном цикле
  * 
- * v2.0, 02.12.2024                                   Автор:      Труфанов В.Е.
+ * v2.1, 03.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
 
-// Определяем буфер текстов сообщений на 255 символов и завершающий ноль
-char tBuffer[256];             
-// Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
-#include "QueMessage.h"         // заголовочный файл класса TQueMessage 
-#include "QueMessage.hpp"       // 
-#include "QueueHandlMulti.hpp"
-
-// Определяем объект работы с сообщениями через очередь
-TQueMessage queMessa; 
-// Инициируем счетчик циклов дополнительной задачи отправки сообщений
-unsigned long nLoop = 0UL;
-
-bool bRet=true;   // возвращаемые значения
+#include "QueMessage.h"    // заголовочный файл класса TQueMessage 
+TQueMessage queMessa;      // объект работы с сообщениями через очередь
+unsigned long nLoop=0UL;   // счётчик циклов задачи отправки сообщений 
 
 // ****************************************************************************
 // *  Сформировать сообщение о прошедшем времени с начала запуска приложения  *
@@ -89,7 +79,7 @@ void ARDUINO_ISR_ATTR onTimer()
 void setup() 
 {
    Serial.begin(115200);
-   bRet=queMessa.Create();
+   bool bRet=queMessa.Create();
    if (!bRet) Serial.println("SETUP: Очередь не была создана и не может использоваться!");
    else Serial.println("SETUP: Очередь сформирована!");
 
@@ -129,13 +119,15 @@ void setup()
 void vATask (void *pvParameters) 
 {
    // Привязываем структуру для для отправки сообщения 
-   // struct tStruMessage taskStruMess;
+   struct tStruMessage taskStruMess;
    // Готовим цикл задачи
    while (1) 
    {
       nLoop++;
       // Отправляем информационное сообщение "Передано %s сообщение из задачи"
-      // SendMess(tQueue,taskStruMess,tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
+      //bool bRet=queMessa.Send();
+      //bool bRet=queMessa.Send(taskStruMess,tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
+      //Serial.println("vATask: Сообщение отправлено!");
       delay (1601); 
    }
 }
@@ -146,12 +138,14 @@ void vATask (void *pvParameters)
 void vReceiveMess (void *pvParameters) 
 {
    // Привязываем структуру для для приема сообщения 
-   // struct tStruMessage ReceiveStruMess;
+   struct tStruMessage ReceiveStruMess;
+   String c=EmptyMessage;
    // Готовим цикл задачи
    while (1) 
    {
       // ReceiveMess(tQueue, ReceiveStruMess, MessFormat);  
-      delay (1300); 
+      queMessa.Receive();
+      delay (1303); 
    }
 }
 // ****************************************************************************
@@ -160,7 +154,7 @@ void vReceiveMess (void *pvParameters)
 void loop() 
 {
    int i=7;
-   delay(1300);
+   delay(905);
 }
 
 // **************************************************** QueueHandlMulti.ino ***

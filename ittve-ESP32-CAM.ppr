@@ -66,7 +66,7 @@ ittve-ESP32-CAM
 				04-–аботаем с сообщени€ми через очередь\old\simplelib.cpp
 				04-–аботаем с сообщени€ми через очередь\old\simplelib.h
 			+QueueHandlMulti
-				+fil
+				-fil
 					04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\ArduinoANNtve.cpp
 					04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\ArduinoANNtve.h
 					04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\RedesNeurais.ino
@@ -75,11 +75,10 @@ ittve-ESP32-CAM
 				04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.cpp
 				04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.h
 				04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.hpp
+				04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueueHandlMulti.hpp
 				04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueueHandlMulti.ino
 			-ResetReason2
 				04-–аботаем с сообщени€ми через очередь\ResetReason2\ResetReason2.ino
-			-sketch_dec01a
-				04-–аботаем с сообщени€ми через очередь\sketch_dec01a\sketch_dec01a.ino
 			04-–аботаем с сообщени€ми через очередь\04-–аботаем с сообщени€ми через очередь.md
 		-05-zastavlyaem-esp32-cam-migat-lampochkami
 			-BlinkOnCam32
@@ -340,27 +339,15 @@ ittve-ESP32-CAM
 0=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueueHandlMulti.ino
 1=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.h
 2=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.cpp
-3=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\ArduinoANNtve.h
-4=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\ArduinoANNtve.cpp
-5=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.hpp
 [Selected Project Files]
 Main=
-Selected=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.h
+Selected=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.cpp
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueueHandlMulti.ino]
 TopLine=1
-Caret=31,94
+Caret=57,1
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.h]
-TopLine=14
-Caret=1,30
-[04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.cpp]
-TopLine=4
-Caret=111,94
-[04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\ArduinoANNtve.h]
-TopLine=22
-Caret=1,1
-[04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\ArduinoANNtve.cpp]
-TopLine=15
-Caret=1,1
-[04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.hpp]
 TopLine=1
-Caret=1,19
+Caret=1,17
+[04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.cpp]
+TopLine=1
+Caret=1,1

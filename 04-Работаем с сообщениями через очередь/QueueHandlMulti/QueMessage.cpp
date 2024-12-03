@@ -10,6 +10,10 @@
 #include "Arduino.h"
 #include "QueMessage.h"
 
+// Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
+#include "QueMessage.hpp"       // общий реестр сообщений
+#include "QueueHandlMulti.hpp"  // сообщения примера по обработке очередей
+
 // Конструктор класса
 TQueMessage::TQueMessage()
 {
@@ -24,6 +28,131 @@ bool TQueMessage::Create(int iQueueSize)
    tQueue = xQueueCreate(QueueSize, sizeof(struct tStruMessage));
    if(tQueue==NULL) return false; else return true;
 };
+// ****************************************************************************
+// *            Отправить сообщение с первым уточнением целого типа           *
+// ****************************************************************************
+//bool TQueMessage::Send() 
+bool TQueMessage::Send(tStruMessage xMessage, String Type, String Source, int Number, int fmess32) 
+{
+   bool Result=false;
+   if (tQueue!=0)
+   {
+      int Space = int(uxQueueSpacesAvailable(tQueue));
+      Serial.print("До отправки: ");  Serial.println(Space);
+
+      // Формируем сообщение для передачи в очередь
+      strcpy(xMessage.Type, Type.c_str());  
+      strcpy(xMessage.Source, Source.c_str());  
+      xMessage.Number=Number;
+      sprintf(xMessage.fmess32, "%d", fmess32);
+      strcpy(xMessage.smess32, EmptyMessage.c_str()); 
+       
+      /*
+      sprintf(xMessage.ucData, "Передано %d сообщение из задачи", nLoop);
+      xMessage.ucSize = 0;
+      while (xMessage.ucData[xMessage.ucSize]>0) 
+      {
+         xMessage.ucSize++;
+      }
+      */
+
+      /*
+      if (xQueueSend(tQueue,&xMessage,5) != pdPASS)
+      {
+         Serial.println("SendMess: Не удалось отправить структуру даже после 5 тиков!");
+      }
+      else
+      {
+         Space = int(uxQueueSpacesAvailable(tQueue));
+         Serial.print("После отправки: ");  Serial.println(Space);
+         Serial.println("SendMess: Новое сообщение ушло!");
+      }
+      */
+   }
+   else 
+   {
+      Serial.println("SendMess: Очередь для структур не создана!");
+   }
+   Result=true;
+   return Result; 
+}
+// ****************************************************************************
+// *                              Принять сообщение                           *
+// ****************************************************************************
+//void TQueMessage::Receive(QueueHandle_t tQueue, tStruMessage xMessage, int t_MessFormat=MessFormat)
+String TQueMessage::Receive()
+{
+   String inMess;
+   inMess=EmptyMessage;
+   inMess=messISR(tBuffer,isr_QueueNotCreated, " ", " ");
+   Serial.print("TQueMessage::Send: ");
+   Serial.println(inMess);
+
+   /*
+   if (tQueue != NULL)
+   {
+      int Space = int(uxQueueSpacesAvailable(tQueue));
+      Serial.print("До приёма: ");  Serial.println(Space);
+
+      // Получаем сообщение из созданной очереди для хранения сложного
+      // структурного сообщения. Блокировка на 10 тиков, если сообщение
+      // недоступно немедленно.
+      if (xQueueReceive(tQueue,&xMessage,8) != pdPASS)
+      {
+         Serial.println("LOOP: Не удалось принять структуру даже после 8 тиков!");
+      }
+      else
+      {
+         Space = int(uxQueueSpacesAvailable(tQueue));
+         Serial.print("После приёма: ");  Serial.println(Space);
+
+         // char Type[7];                     - Тип сообщения
+         // char Source[7];                   - Источник сообщения
+         // int  Number;                      - Номер сообщения
+         // char fmess32[32];                 - Первое уточнение сообщения
+         // char smess32[32];                 - Второе уточнение сообщения
+
+         // tfm_BRIEF,  0 Краткий             - WARNING-ISR[2]
+         // tfm_FULL,   1 Полный              - 2024-11-29,19:36:18 WARNING-ISR[2], Управление передаётся планировщику
+         // tfm_NOTIME, 2 Без даты и времени  - WARNING-ISR[2], Управление передаётся планировщику
+
+         // Формируем фрагменты текста сообщения
+         String Type=String(xMessage.Type);
+         String Source=String(xMessage.Source);
+         String Number=String(xMessage.Number);
+         String Line = Type+"-"+Source+"["+Number+"]";
+
+         int Space = int(uxQueueSpacesAvailable(tQueue));
+
+         // Если заказан вывод кратких сообщений, то выводим сообщение
+         if (t_MessFormat==tfm_BRIEF) Serial.println(Line);
+         // Иначе, формируем сообщение дальше
+         else
+         {
+            // По источнику и номеру сообщения извлекаем текст
+            String Text=ExtractMess(Source,xMessage.Number,String(xMessage.fmess32),String(xMessage.smess32));
+            Line=Line+", "+Text;
+            // Если заказан вывод сообщений без даты и времени, то выводим сообщение
+            if (t_MessFormat==tfm_NOTIME) Serial.println(Line);
+            // Иначе, формируем полное сообщение
+            else
+            {
+               String DTime=ExtractTime();
+               Line=DTime+" "+Line;
+               Serial.println(Line);
+            }
+         }
+         Space = int(uxQueueSpacesAvailable(tQueue));
+         Serial.print("После печати: ");  Serial.println(Space);
+      }
+   }
+   else
+   {
+      Serial.println("LOOP: Нет очереди!");
+   }
+   */
+   return inMess;
+}
 
 /*
 
@@ -119,114 +248,6 @@ String ExtractTime()
   time(&rawtime);
   strftime(buffer,20,"%Y-%m-%d,%H:%M:%S",localtime(&rawtime));
   return String(buffer);
-}
-// ****************************************************************************
-// *            Отправить сообщение с первым уточнением целого типа           *
-// ****************************************************************************
-void SendMess(QueueHandle_t tQueue, tStruMessage xMessage, String Type, String Source, int Number, int fmess32) 
-{
-   if (tQueue!=0)
-   {
-      int Space = int(uxQueueSpacesAvailable(tQueue));
-      Serial.print("До отправки: ");  Serial.println(Space);
-
-      // Формируем сообщение для передачи в очередь
-      strcpy(xMessage.Type, Type.c_str());  
-      strcpy(xMessage.Source, Source.c_str());  
-      xMessage.Number=Number;
-      sprintf(xMessage.fmess32, "%d", fmess32);
-      strcpy(xMessage.smess32, cNULL.c_str());  
-      / *
-      sprintf(xMessage.ucData, "Передано %d сообщение из задачи", nLoop);
-      xMessage.ucSize = 0;
-      while (xMessage.ucData[xMessage.ucSize]>0) 
-      {
-         xMessage.ucSize++;
-      }
-      * /
-
-      if (xQueueSend(tQueue,&xMessage,5) != pdPASS)
-      {
-         Serial.println("SendMess: Не удалось отправить структуру даже после 5 тиков!");
-      }
-      else
-      {
-         Space = int(uxQueueSpacesAvailable(tQueue));
-         Serial.print("После отправки: ");  Serial.println(Space);
-         Serial.println("SendMess: Новое сообщение ушло!");
-      }
-   }
-   else 
-   {
-      Serial.println("SendMess: Очередь для структур не создана!");
-   }
-}
-// ****************************************************************************
-// *                              Принять сообщение                           *
-// ****************************************************************************
-void ReceiveMess(QueueHandle_t tQueue, tStruMessage xMessage, int t_MessFormat=MessFormat)
-{
-   if (tQueue != NULL)
-   {
-      int Space = int(uxQueueSpacesAvailable(tQueue));
-      Serial.print("До приёма: ");  Serial.println(Space);
-
-      // Получаем сообщение из созданной очереди для хранения сложного
-      // структурного сообщения. Блокировка на 10 тиков, если сообщение
-      // недоступно немедленно.
-      if (xQueueReceive(tQueue,&xMessage,8) != pdPASS)
-      {
-         Serial.println("LOOP: Не удалось принять структуру даже после 8 тиков!");
-      }
-      else
-      {
-         Space = int(uxQueueSpacesAvailable(tQueue));
-         Serial.print("После приёма: ");  Serial.println(Space);
-
-         // char Type[7];                     - Тип сообщения
-         // char Source[7];                   - Источник сообщения
-         // int  Number;                      - Номер сообщения
-         // char fmess32[32];                 - Первое уточнение сообщения
-         // char smess32[32];                 - Второе уточнение сообщения
-
-         // tfm_BRIEF,  0 Краткий             - WARNING-ISR[2]
-         // tfm_FULL,   1 Полный              - 2024-11-29,19:36:18 WARNING-ISR[2], Управление передаётся планировщику
-         // tfm_NOTIME, 2 Без даты и времени  - WARNING-ISR[2], Управление передаётся планировщику
-
-         // Формируем фрагменты текста сообщения
-         String Type=String(xMessage.Type);
-         String Source=String(xMessage.Source);
-         String Number=String(xMessage.Number);
-         String Line = Type+"-"+Source+"["+Number+"]";
-
-         int Space = int(uxQueueSpacesAvailable(tQueue));
-
-         // Если заказан вывод кратких сообщений, то выводим сообщение
-         if (t_MessFormat==tfm_BRIEF) Serial.println(Line);
-         // Иначе, формируем сообщение дальше
-         else
-         {
-            // По источнику и номеру сообщения извлекаем текст
-            String Text=ExtractMess(Source,xMessage.Number,String(xMessage.fmess32),String(xMessage.smess32));
-            Line=Line+", "+Text;
-            // Если заказан вывод сообщений без даты и времени, то выводим сообщение
-            if (t_MessFormat==tfm_NOTIME) Serial.println(Line);
-            // Иначе, формируем полное сообщение
-            else
-            {
-               String DTime=ExtractTime();
-               Line=DTime+" "+Line;
-               Serial.println(Line);
-            }
-         }
-         Space = int(uxQueueSpacesAvailable(tQueue));
-         Serial.print("После печати: ");  Serial.println(Space);
-      }
-   }
-   else
-   {
-      Serial.println("LOOP: Нет очереди!");
-   }
 }
 */
 
