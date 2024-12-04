@@ -3,10 +3,9 @@
  *                                     Общий реестр перечислений всех сообщений 
  *                       функции заполнения буфера соответствующими сообщениями  
  * 
- * v2.1, 02.12.2024                                   Автор:      Труфанов В.Е.
+ * v3.1, 02.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
-
 
 #ifndef Common_Message
 #define Common_Message
@@ -34,7 +33,7 @@ typedef enum {
 } esp_reset_reason_t;
 */
 
-//#ifdef tmk_ISR
+#ifdef tmk_ISR
 // Сообщения из прерываний ------------------------------------------------ ISR
 typedef enum {
    isr_StruMessNotSend, // 0 "Не удалось отправить структуру сообщения"        - message structure could not be sent
@@ -53,15 +52,9 @@ inline String messISR(char tBuffer[], int mode, String fmess32, String smess32)
    default:
       sprintf(tBuffer,"Неопределенное сообщение из прерывания"); break;
    }
-   /*
-   String result=String(tBuffer);
-   Serial.print("Text ");
-   Serial.print(result);
-   Serial.println(" Text");
-   */
    return String(tBuffer);
 }
-//#endif
+#endif
 
 #ifdef tmk_EUE
 // Обработка очередей ------------------------------------- QueueHandling [EUE]
@@ -83,12 +76,6 @@ inline String messQueueHandling(char tBuffer[], int mode, String fmess32, String
       sprintf(tBuffer,"Неопределенное сообщение обработки очередей"); break;
    }
    String result=String(tBuffer);
-   /*
-   String result=String(tBuffer);
-   Serial.print("Text ");
-   Serial.print(result);
-   Serial.println(" Text");
-   */
    return result;
 }
 #endif
@@ -135,8 +122,6 @@ void schastr()
 }
 */
 
-
 #endif
-
 
 // ********************************************************* CommonMessage.h ***

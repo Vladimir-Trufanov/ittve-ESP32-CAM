@@ -8,14 +8,11 @@
 **/
 
 #include "Arduino.h"
-#include "QueMessage.h"
-#include "CommonMessage.h"
-#include "QHM_Message.h"
-
 
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
-//#include "QueMessage.hpp"       // общий реестр сообщений
-//#include "QueueHandlMulti.hpp"  // сообщения примера по обработке очередей
+#include "QueMessage.h"
+#include "CommonMessage.h"  // общий реестр сообщений
+#include "QHM_Message.h"    // сообщения примера по обработке очередей
 
 // Конструктор класса
 TQueMessage::TQueMessage()
@@ -34,8 +31,7 @@ bool TQueMessage::Create(int iQueueSize)
 // ****************************************************************************
 // *            Отправить сообщение с первым уточнением целого типа           *
 // ****************************************************************************
-//bool TQueMessage::Send() 
-bool TQueMessage::Send(tStruMessage xMessage, String Type, String Source, int Number, int fmess32) 
+bool TQueMessage::Send(String Type, String Source, int Number, int fmess32) 
 {
    bool Result=false;
    if (tQueue!=0)
@@ -44,23 +40,13 @@ bool TQueMessage::Send(tStruMessage xMessage, String Type, String Source, int Nu
       Serial.print("До отправки: ");  Serial.println(Space);
 
       // Формируем сообщение для передачи в очередь
-      strcpy(xMessage.Type, Type.c_str());  
-      strcpy(xMessage.Source, Source.c_str());  
-      xMessage.Number=Number;
-      sprintf(xMessage.fmess32, "%d", fmess32);
-      strcpy(xMessage.smess32, EmptyMessage.c_str()); 
-       
-      /*
-      sprintf(xMessage.ucData, "Передано %d сообщение из задачи", nLoop);
-      xMessage.ucSize = 0;
-      while (xMessage.ucData[xMessage.ucSize]>0) 
-      {
-         xMessage.ucSize++;
-      }
-      */
+      strcpy(taskStruMess.Type, Type.c_str());  
+      strcpy(taskStruMess.Source, Source.c_str());  
+      taskStruMess.Number=Number;
+      sprintf(taskStruMess.fmess32, "%d", fmess32);
+      strcpy(taskStruMess.smess32, EmptyMessage.c_str()); 
 
-      /*
-      if (xQueueSend(tQueue,&xMessage,5) != pdPASS)
+      if (xQueueSend(tQueue,&taskStruMess,5) != pdPASS)
       {
          Serial.println("SendMess: Не удалось отправить структуру даже после 5 тиков!");
       }
@@ -70,7 +56,6 @@ bool TQueMessage::Send(tStruMessage xMessage, String Type, String Source, int Nu
          Serial.print("После отправки: ");  Serial.println(Space);
          Serial.println("SendMess: Новое сообщение ушло!");
       }
-      */
    }
    else 
    {
@@ -79,38 +64,57 @@ bool TQueMessage::Send(tStruMessage xMessage, String Type, String Source, int Nu
    Result=true;
    return Result; 
 }
-
-
+// ****************************************************************************
+// *          Извлечь информацию о текущем времени в отформатированном        *
+// *                виде с помощью struct tm структуры данных:                *
+// *                               https://cplusplus.com/reference/ctime/tm/  *
+// ****************************************************************************
+/*
+ "%A, %B %d %Y %H:%M:%S" - это спецификаторы формата,  которые определяют,  как
+ в struct tm timeinfo; будет отформатирован текст, а члены tm struct следующие:
+  
+  Тип элемента Значение                        Диапазон
+  -----------------------------------------------------
+  tm_sec  int  секунды после минуты            0-61*
+  tm_min  int  минуты после часа               0-59
+  tm_hour int  часы с полуночи                 0-23
+  tm_mday int  день месяца                     1-31
+  tm_mon  int  месяцы с января                 0-11
+  tm_year int  годы с 1900
+  tm_wday  —   количество дней с воскресенья   0-6
+  tm_yday  —   количество дней с 1 января      0-365
+  tm_isdst —   флаг перехода на летнее время 
+  
+  function strftime() - format time as string:
+  https://cplusplus.com/reference/ctime/strftime/
+*/
+String TQueMessage::ExtractTime() 
+{
+  time_t rawtime;
+  char buffer[20];
+  time(&rawtime);
+  strftime(buffer,20,"%Y-%m-%d,%H:%M:%S",localtime(&rawtime));
+  return String(buffer);
+}
 // ****************************************************************************
 // *            Извлечь сообщение по источнику и номеру сообщения             *
 // ****************************************************************************
-String ExtractMess(String Source, int Number, String fmess32, String smess32) 
+String TQueMessage::ExtractMess(String Source, int Number, String fmess32, String smess32) 
 {
    String Line="Неопределенное сообщение";
    // Пример по обработке очередей   
-   //if (Source == tmk_QHM) Line = messQueueHandlMulti(Number, fmess32, smess32);   
-   //if (Source == tmk_QHM) Line = messQueueHandlMulti(Number, fmess32, smess32);   
+   if (Source == tmk_QHM) Line = messQueueHandlMulti(tBuffer, Number, fmess32, smess32);   
    return Line;
 }
-
 
 // ****************************************************************************
 // *                              Принять сообщение                           *
 // ****************************************************************************
-//void TQueMessage::Receive(QueueHandle_t tQueue, tStruMessage xMessage, int t_MessFormat=MessFormat)
-String TQueMessage::Receive()
+String TQueMessage::Receive(int t_MessFormat)
 {
-   String inMess;
-   // inMess=EmptyMessage;
+   // Инициируем пустое сообщение
+   String inMess=EmptyMessage;
 
-   String Source="gg";
-   if (Source == tmk_ISR) inMess=messISR(tBuffer,isr_QueueNotCreated, " ", " ");
-   if (Source == tmk_QHM) inMess=messQueueHandlMulti(tBuffer,isr_QueueNotCreated, " ", " ");
-   
-   Serial.print("TQueMessage::Send: ");
-   Serial.println(inMess);
-
-   /*
    if (tQueue != NULL)
    {
       int Space = int(uxQueueSpacesAvailable(tQueue));
@@ -119,7 +123,7 @@ String TQueMessage::Receive()
       // Получаем сообщение из созданной очереди для хранения сложного
       // структурного сообщения. Блокировка на 10 тиков, если сообщение
       // недоступно немедленно.
-      if (xQueueReceive(tQueue,&xMessage,8) != pdPASS)
+      if (xQueueReceive(tQueue,&receiveStruMess,8) != pdPASS)
       {
          Serial.println("LOOP: Не удалось принять структуру даже после 8 тиков!");
       }
@@ -139,127 +143,36 @@ String TQueMessage::Receive()
          // tfm_NOTIME, 2 Без даты и времени  - WARNING-ISR[2], Управление передаётся планировщику
 
          // Формируем фрагменты текста сообщения
-         String Type=String(xMessage.Type);
-         String Source=String(xMessage.Source);
-         String Number=String(xMessage.Number);
+         String Type=String(receiveStruMess.Type);
+         String Source=String(receiveStruMess.Source);
+         String Number=String(receiveStruMess.Number);
          String Line = Type+"-"+Source+"["+Number+"]";
 
-         int Space = int(uxQueueSpacesAvailable(tQueue));
-
-         // Если заказан вывод кратких сообщений, то выводим сообщение
-         if (t_MessFormat==tfm_BRIEF) Serial.println(Line);
+         // Если заказан вывод кратких сообщений, то возвращаем сообщение
+         if (t_MessFormat==tfm_BRIEF) inMess=Line;
          // Иначе, формируем сообщение дальше
          else
          {
             // По источнику и номеру сообщения извлекаем текст
-            String Text=ExtractMess(Source,xMessage.Number,String(xMessage.fmess32),String(xMessage.smess32));
-            Line=Line+", "+Text;
+            String Text=ExtractMess(Source,receiveStruMess.Number,String(receiveStruMess.fmess32),String(receiveStruMess.smess32));
+            Line=Line+" "+Text;
             // Если заказан вывод сообщений без даты и времени, то выводим сообщение
-            if (t_MessFormat==tfm_NOTIME) Serial.println(Line);
+            if (t_MessFormat==tfm_NOTIME) inMess=Line;
             // Иначе, формируем полное сообщение
             else
             {
                String DTime=ExtractTime();
                Line=DTime+" "+Line;
-               Serial.println(Line);
+               inMess=Line;
             }
          }
-         Space = int(uxQueueSpacesAvailable(tQueue));
-         Serial.print("После печати: ");  Serial.println(Space);
       }
    }
    else
    {
       Serial.println("LOOP: Нет очереди!");
    }
-   */
    return inMess;
 }
-
-/*
-
-// Определяем параметры очереди сообщений
-#define tmk_APP      "QHM"       // источник сообщения (по умолчанию) 
-#define MessFormat   tfm_FULL    // формат вывода сообщений (по умолчанию)
-#define QueueSize    4           // размер очереди 
-char tBuffer[256];               // буфер текстов сообщений
-// Определяем структуру передаваемого сообщения
-struct tStruMessage
-{
-   char Type[7];       // Тип сообщения
-   char Source[7];     // Источник сообщения
-   int  Number;        // Номер сообщения
-   char fmess32[32];   // Первое уточнение сообщения
-   char smess32[32];   // Второе уточнение сообщения
-};
-QueueHandle_t tQueue;  // очередь будущих сообщений из структур tStruMessage   
-String cNULL="";       // отсутствие текста - заполнитель массивов char
-
-#include <Arduino.h>
-#include <QueMessa.hpp>
-
-// Существуют три формата вывода сообщений в приложениях: краткий, полный, без даты и времени.
-// В полном сообщении указывается дата и время извлечения сообщения из очереди, 
-// тип сообщения, источник сообщения, номер сообщения источника, текст сообщения
-typedef enum {
-   tfm_BRIEF,   // 0 Краткий             - WARNING-ISR[2]
-   tfm_FULL,    // 1 Полный              - 2024-11-29,19:36:18 WARNING-ISR[2], Управление передаётся планировщику
-   tfm_NOTIME,  // 2 Без даты и времени  - WARNING-ISR[2], Управление передаётся планировщику
-} tFMess;
-
-// Некоторые примеры полных сообщений:
-
-// 2024-11-29,19:36:18 WARNING-ISR[2], Управление передаётся планировщику   
-// 2024-11-29,19:38:45 ERROR-EUE[0], Очередь не была создана и не может использоваться  
-// 2024-11-30,08:11:54 NOTICE-KVIZZY[2], Передано 124 сообщение из задачи   
-
-// Типы сообщений
-#define tmt_NOTICE  "NOTICE"     // информационное сообщение приложения 
-#define tmt_TRACE   "TRACE"      // трассировочное сообщение при отладке
-#define tmt_WARNING "WARNING"    // предупреждение, позволяющие работать задаче дальше 
-#define tmt_ERROR   "ERROR"      // ошибка, не дающие возможность правильно выполнить задачу
-#define tmt_FATAL   "FATAL"      // ошибка, вызывающие перезагрузку контроллера 
-
-// Уровни вывода сообщений
-typedef enum {
-   tml_VERBOSE,         // 0 выводятся все типы сообщений 
-   tml_ERROR,           // 1 выводятся все типы сообщений, кроме трассировочных 
-   tml_NOTICE,          // 2 выводятся только информационные сообщения 
-   tml_SILENT,          // 3 сообщения не выводятся 
-} tMessageOutputLevel;
-
-// ****************************************************************************
-// *          Извлечь информацию о текущем времени в отформатированном        *
-// *                виде с помощью struct tm структуры данных:                *
-// *                               https://cplusplus.com/reference/ctime/tm/  *
-// ****************************************************************************
-/ *
- "%A, %B %d %Y %H:%M:%S" - это спецификаторы формата,  которые определяют,  как
- в struct tm timeinfo; будет отформатирован текст, а члены tm struct следующие:
-  
-  Тип элемента Значение                        Диапазон
-  -----------------------------------------------------
-  tm_sec  int  секунды после минуты            0-61*
-  tm_min  int  минуты после часа               0-59
-  tm_hour int  часы с полуночи                 0-23
-  tm_mday int  день месяца                     1-31
-  tm_mon  int  месяцы с января                 0-11
-  tm_year int  годы с 1900
-  tm_wday  —   количество дней с воскресенья   0-6
-  tm_yday  —   количество дней с 1 января      0-365
-  tm_isdst —   флаг перехода на летнее время 
-  
-  function strftime() - format time as string:
-  https://cplusplus.com/reference/ctime/strftime/
-* /
-String ExtractTime() 
-{
-  time_t rawtime;
-  char buffer[20];
-  time(&rawtime);
-  strftime(buffer,20,"%Y-%m-%d,%H:%M:%S",localtime(&rawtime));
-  return String(buffer);
-}
-*/
 
 // ********************************************************* QueMessage.cpp ***
