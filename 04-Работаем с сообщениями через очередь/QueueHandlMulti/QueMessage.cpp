@@ -9,10 +9,13 @@
 
 #include "Arduino.h"
 #include "QueMessage.h"
+#include "CommonMessage.h"
+#include "QHM_Message.h"
+
 
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
-#include "QueMessage.hpp"       // общий реестр сообщений
-#include "QueueHandlMulti.hpp"  // сообщения примера по обработке очередей
+//#include "QueMessage.hpp"       // общий реестр сообщений
+//#include "QueueHandlMulti.hpp"  // сообщения примера по обработке очередей
 
 // Конструктор класса
 TQueMessage::TQueMessage()
@@ -76,6 +79,21 @@ bool TQueMessage::Send(tStruMessage xMessage, String Type, String Source, int Nu
    Result=true;
    return Result; 
 }
+
+
+// ****************************************************************************
+// *            Извлечь сообщение по источнику и номеру сообщения             *
+// ****************************************************************************
+String ExtractMess(String Source, int Number, String fmess32, String smess32) 
+{
+   String Line="Неопределенное сообщение";
+   // Пример по обработке очередей   
+   //if (Source == tmk_QHM) Line = messQueueHandlMulti(Number, fmess32, smess32);   
+   //if (Source == tmk_QHM) Line = messQueueHandlMulti(Number, fmess32, smess32);   
+   return Line;
+}
+
+
 // ****************************************************************************
 // *                              Принять сообщение                           *
 // ****************************************************************************
@@ -83,8 +101,12 @@ bool TQueMessage::Send(tStruMessage xMessage, String Type, String Source, int Nu
 String TQueMessage::Receive()
 {
    String inMess;
-   inMess=EmptyMessage;
-   inMess=messISR(tBuffer,isr_QueueNotCreated, " ", " ");
+   // inMess=EmptyMessage;
+
+   String Source="gg";
+   if (Source == tmk_ISR) inMess=messISR(tBuffer,isr_QueueNotCreated, " ", " ");
+   if (Source == tmk_QHM) inMess=messQueueHandlMulti(tBuffer,isr_QueueNotCreated, " ", " ");
+   
    Serial.print("TQueMessage::Send: ");
    Serial.println(inMess);
 
@@ -205,17 +227,6 @@ typedef enum {
    tml_NOTICE,          // 2 выводятся только информационные сообщения 
    tml_SILENT,          // 3 сообщения не выводятся 
 } tMessageOutputLevel;
-
-// ****************************************************************************
-// *            Извлечь сообщение по источнику и номеру сообщения             *
-// ****************************************************************************
-String ExtractMess(String Source, int Number, String fmess32, String smess32) 
-{
-   String Line="Неопределенное сообщение";
-   // Пример по обработке очередей   
-   if (Source == tmk_QHM) Line = messQueueHandlMulti(Number, fmess32, smess32);   
-   return Line;
-}
 
 // ****************************************************************************
 // *          Извлечь информацию о текущем времени в отформатированном        *

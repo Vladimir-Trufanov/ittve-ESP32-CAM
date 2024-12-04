@@ -1,4 +1,4 @@
-/** Arduino, Esp32 ***************************************** QueMessage.hpp ***
+/** Arduino, Esp32 ***************************************** CommonMessage.h ***
  * 
  *                                     Общий реестр перечислений всех сообщений 
  *                       функции заполнения буфера соответствующими сообщениями  
@@ -6,6 +6,11 @@
  * v2.1, 02.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
+
+
+#ifndef Common_Message
+#define Common_Message
+#pragma once     
 
 // Сообщения о причинах перезагрузки ESP32
 /*
@@ -29,14 +34,14 @@ typedef enum {
 } esp_reset_reason_t;
 */
 
-#ifdef tmk_ISR
+//#ifdef tmk_ISR
 // Сообщения из прерываний ------------------------------------------------ ISR
 typedef enum {
    isr_StruMessNotSend, // 0 "Не удалось отправить структуру сообщения"        - message structure could not be sent
    isr_QueueNotCreated, // 1 "Очередь для структур не создана"                 - queue has not been created for structures
    isr_CtrlToScheduler, // 2 "Управление передаётся планировщику"              - control is transferred to the scheduler
 }tISR;
-String messISR(char tBuffer[], int mode, String fmess32, String smess32) 
+inline String messISR(char tBuffer[], int mode, String fmess32, String smess32) 
 {
    switch (mode) {
    case isr_StruMessNotSend:
@@ -56,7 +61,7 @@ String messISR(char tBuffer[], int mode, String fmess32, String smess32)
    */
    return String(tBuffer);
 }
-#endif
+//#endif
 
 #ifdef tmk_EUE
 // Обработка очередей ------------------------------------- QueueHandling [EUE]
@@ -65,7 +70,7 @@ typedef enum {
    tqh_Beformed,      // 1 "Очередь сформирована"                              - queue has been formed
    tqh_SendFailed,    // 2 "Не удалось отправить структуру из задачи"          - failed to send structure from task
 } tQueueHandling;
-String messQueueHandling(char tBuffer[], int mode, String fmess32, String smess32) 
+inline String messQueueHandling(char tBuffer[], int mode, String fmess32, String smess32) 
 {
    switch (mode) {
    case tqh_NotCreate:
@@ -131,7 +136,7 @@ void schastr()
 */
 
 
-//#endif
+#endif
 
 
-// ********************************************************* QueMessage.hpp ***
+// ********************************************************* CommonMessage.h ***

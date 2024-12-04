@@ -11,6 +11,12 @@
 TQueMessage queMessa;      // объект работы с сообщениями через очередь
 unsigned long nLoop=0UL;   // счётчик циклов задачи отправки сообщений 
 
+// Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
+//#include "QueMessage.hpp"       // общий реестр сообщений
+//#include "QueueHandlMulti.hpp"  // сообщения примера по обработке очередей
+#include "CommonMessage.h"
+#include "QHM_Message.h"
+
 // ****************************************************************************
 // *  Сформировать сообщение о прошедшем времени с начала запуска приложения  *
 // *                        И ПЕРЕДАТЬ ЧЕРЕЗ ПРЕРЫВАНИЕ                       *
@@ -83,6 +89,9 @@ void setup()
    if (!bRet) Serial.println("SETUP: Очередь не была создана и не может использоваться!");
    else Serial.println("SETUP: Очередь сформирована!");
 
+   //char tBuffer[128];
+   //messISR(tBuffer,7,"fmess32","smess32"); 
+
    // Определяем дополнительную задачу по отправке сообщений
    xTaskCreatePinnedToCore (
       vATask,               // название функции, которая будет запускаться, как параллельная задача
@@ -126,8 +135,8 @@ void vATask (void *pvParameters)
       nLoop++;
       // Отправляем информационное сообщение "Передано %s сообщение из задачи"
       //bool bRet=queMessa.Send();
-      //bool bRet=queMessa.Send(taskStruMess,tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
-      //Serial.println("vATask: Сообщение отправлено!");
+      bool bRet=queMessa.Send(taskStruMess,tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
+      Serial.println("vATask: Сообщение отправлено!");
       delay (1601); 
    }
 }

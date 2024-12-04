@@ -11,7 +11,6 @@
 #define que_messa
 #pragma once     
 
-#include "Arduino.h"
 
 // Источники сообщений. При необходимости уменьшить память, занимаемую приложением,
 // следует закомментировать не нужные приложению определения. Таким образом 
@@ -22,6 +21,8 @@
 // #define tmk_KVIZZY  "KVIZZY"  // сообщения приложения KVIZZY 
 // #define tmk_KRUTJAK "KRUTJAK" // сообщения приложения KVIZZY 
    #define tmk_QHM     "QHM"     // пример по обработке очередей
+
+#include "Arduino.h"
 
 // Существуют три формата вывода сообщений в приложениях: краткий, полный, без даты и времени.
 // В полном сообщении указывается дата и время извлечения сообщения из очереди, 
@@ -66,7 +67,6 @@ struct tStruMessage
    char smess32[32];     // Второе уточнение сообщения
 };
 // Определяем пустое сообщение
-//inline String EmptyMessage="";
 static String EmptyMessage="";
 
 class TQueMessage
@@ -85,9 +85,6 @@ class TQueMessage
   QueueHandle_t tQueue;  // очередь (дескриптор) будущих сообщений из структур tStruMessage   
   int QueueSize;         // размер очереди 
   char tBuffer[256];     // буфер текстов сообщений на 255 символов и завершающий ноль
-         
-
-
 };
 
 
@@ -246,6 +243,30 @@ void ReceiveMess(QueueHandle_t tQueue, tStruMessage xMessage, int t_MessFormat=M
    {
       Serial.println("LOOP: Нет очереди!");
    }
+}
+*/
+
+
+/*
+// Сообщения из прерываний ------------------------------------------------ ISR
+typedef enum {
+   isr_StruMessNotSend, // 0 "Не удалось отправить структуру сообщения"        - message structure could not be sent
+   isr_QueueNotCreated, // 1 "Очередь для структур не создана"                 - queue has not been created for structures
+   isr_CtrlToScheduler, // 2 "Управление передаётся планировщику"              - control is transferred to the scheduler
+}tISR;
+String messISR(char tBuffer[], int mode, String fmess32, String smess32) 
+{
+   switch (mode) {
+   case isr_StruMessNotSend:
+      sprintf(tBuffer,"Не удалось отправить структуру сообщения"); break;
+   case isr_QueueNotCreated:
+      sprintf(tBuffer,"Очередь для структур не создана"); break;
+   case isr_CtrlToScheduler:
+      sprintf(tBuffer,"Управление передаётся планировщику"); break;
+   default:
+      sprintf(tBuffer,"Неопределенное сообщение из прерывания"); break;
+   }
+   return String(tBuffer);
 }
 */
 

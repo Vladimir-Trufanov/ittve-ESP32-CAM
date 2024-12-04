@@ -1,4 +1,4 @@
-/** Arduino, Esp32-CAM ******************************** QueueHandlMulti.hpp ***
+/** Arduino, Esp32-CAM ******************************** QHM_Message.h ***
  * 
  *                         Перечисление сообщений примера по обработке очередей
  *                                       и функция заполнения буфера сообщением  
@@ -7,7 +7,9 @@
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
-#include "QueMessage.h"
+#ifndef _QHM_Message
+#define _QHM_Message
+#pragma once     
 
 #ifdef tmk_QHM
 // Определяем перечисления примера обработки очередей --- QueueHandlMulti [QHM]
@@ -18,7 +20,7 @@ typedef enum {
    tqhm_TaskNoQueue,    // 3 "Очереди структур нет в задаче"                   - there is no queue of structures in the task
 } tQueueHandlMulti;
 
-String messQueueHandlMulti(char tBuffer[], int mode, String fmess32, String smess32) 
+inline String messQueueHandlMulti(char tBuffer[], int mode, String fmess32, String smess32) 
 {
    switch (mode) {
    case tqhm_ItsBeenMS:
@@ -38,4 +40,6 @@ String messQueueHandlMulti(char tBuffer[], int mode, String fmess32, String smes
 }
 #endif
 
-// **************************************************** QueueHandlMulti.hpp ***
+#endif
+
+// **************************************************** QHM_Message.h ***
