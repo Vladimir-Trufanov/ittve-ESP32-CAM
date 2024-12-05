@@ -40,19 +40,18 @@ typedef enum {
    isr_QueueNotCreated, // 1 "Очередь для структур не создана"                 - queue has not been created for structures
    isr_CtrlToScheduler, // 2 "Управление передаётся планировщику"              - control is transferred to the scheduler
 }tISR;
-inline String messISR(char tBuffer[], int mode, String fmess32, String smess32) 
+inline void messISR(char tMess[], int Number, String fmess32, String smess32) 
 {
-   switch (mode) {
+   switch (Number) {
    case isr_StruMessNotSend:
-      sprintf(tBuffer,"Не удалось отправить структуру сообщения"); break;
+      sprintf(tMess,"Не удалось отправить структуру сообщения"); break;
    case isr_QueueNotCreated:
-      sprintf(tBuffer,"Очередь для структур не создана"); break;
+      sprintf(tMess,"Очередь для структур не создана"); break;
    case isr_CtrlToScheduler:
-      sprintf(tBuffer,"Управление передаётся планировщику"); break;
+      sprintf(tMess,"Управление передаётся планировщику"); break;
    default:
-      sprintf(tBuffer,"Неопределенное сообщение из прерывания"); break;
+      sprintf(tMess,"Неопределенное сообщение из прерывания"); break;
    }
-   return String(tBuffer);
 }
 #endif
 

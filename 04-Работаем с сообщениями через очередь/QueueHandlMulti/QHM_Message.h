@@ -20,22 +20,21 @@ typedef enum {
    tqhm_TaskNoQueue,    // 3 "Очереди структур нет в задаче"                   - there is no queue of structures in the task
    tqhm_SendLongMess,   // 4 "Максимально длинное сообщение из 255 байт ..."  
 } tQueueHandlMulti;  
-
-inline String messQueueHandlMulti(char tBuffer[], int mode, String fmess32, String smess32) 
+// Формируем контекст сообщения по номеру перечисления
+inline void messQueueHandlMulti(char tMess[], int Number, String fmess32, String smess32) 
 {
-   switch (mode) {
+   switch (Number) {
    case tqhm_ItsBeenMS:
-      sprintf(tBuffer,"Прошло %s миллисекунд",fmess32); break;
+      sprintf(tMess,"Прошло %s миллисекунд",fmess32); break;
    case tqhm_SendFromTask:
-      sprintf(tBuffer,"Передано %s сообщение из задачи",fmess32); break;
+      sprintf(tMess,"Передано %s сообщение из задачи",fmess32); break;
    case tqhm_StructNoSend:
-      sprintf(tBuffer,"Не удалось отправить структуру после %s тиков",fmess32); break;
+      sprintf(tMess,"Не удалось отправить структуру после %s тиков",fmess32); break;
    case tqhm_SendLongMess:
-      sprintf(tBuffer,"Максимально длинное сообщение из 255 байт [буфер текстов сообщений максимально может содержать 255 байт и завершающий ноль 1234567890 1234567890 1234567890]",fmess32); break;
+      sprintf(tMess,"Максимально длинное сообщение из 255 байт [буфер текстов сообщений максимально может содержать 255 байт и завершающий ноль 1234567890 1234567890 1234567890]"); break;
    default:
-      sprintf(tBuffer,"Неопределенное сообщение примера очередей"); break;
+      sprintf(tMess,"Неопределенное сообщение примера очередей"); break;
    }
-   return String(tBuffer);
 }
 #endif
 

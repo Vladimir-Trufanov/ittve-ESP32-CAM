@@ -15,6 +15,18 @@
 TQueMessage queMessa;       // объект работы с сообщениями через очередь
 unsigned long nLoop=0UL;    // счётчик циклов задачи отправки сообщений 
 
+// Режимы приема сообщений (Message reception modes)
+typedef enum {
+   tmr_ONEATIME,        // 0 по одному               - one at a time
+   tmr_QUEUERELEASE,    // 1 до освобождения очереди - before the queue is released
+} tModeReceive;
+// Задаём текущий режим приема сообщений
+int t_ModeReceive=tmr_QUEUERELEASE;
+// Определяем формат сообщения
+int MessFormat=tfm_FULL;
+// Резервируем буфер сообщений на 255 символов и завершающий ноль
+char inMess[256];                   
+
 // ****************************************************************************
 // *  Сформировать сообщение о прошедшем времени с начала запуска приложения  *
 // *                        И ПЕРЕДАТЬ ЧЕРЕЗ ПРЕРЫВАНИЕ                       *
@@ -145,10 +157,14 @@ void vATask (void *pvParameters)
 // ****************************************************************************
 void vReceiveMess (void *pvParameters) 
 {
-   int MessFormat=tfm_FULL;
    // Готовим цикл задачи
    while (1) 
    {
+      // Если требуется выбрать все сообщения из очереди
+      //if (t_ModeReceive==tmr_QUEUERELEASE);
+      // Иначе выбираем одно сообщение
+      //else 
+      
       String inMess = queMessa.Receive(MessFormat);
       if (inMess==EmptyMessage) Serial.println("Пустое сообщение"); 
       else Serial.println(inMess);

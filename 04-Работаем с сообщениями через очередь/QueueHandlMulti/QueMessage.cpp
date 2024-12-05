@@ -58,6 +58,7 @@ String TQueMessage::Send(String Type, String Source, int Number, int fmess32)
       }
       Space = int(uxQueueSpacesAvailable(tQueue));
       Serial.print("После отправки: ");  Serial.println(Space);
+      Serial.println("Отправлено сообщение!");
    }
    // Отмечаем "Отправка сообщения: очередь структур не создана!" 
    else inMess=tQueueNotSend;
@@ -87,32 +88,27 @@ String TQueMessage::Send(String Type, String Source, int Number, int fmess32)
   function strftime() - format time as string:
   https://cplusplus.com/reference/ctime/strftime/
 */
-String TQueMessage::ExtractTime() 
+void TQueMessage::ExtractTime() 
 {
-  time_t rawtime;
-  char buffer[20];
-  time(&rawtime);
-  strftime(buffer,20,"%Y-%m-%d,%H:%M:%S",localtime(&rawtime));
-  return String(buffer);
+   // Выбираем дату и время
+   time_t rawtime;
+   time(&rawtime);
+   // Заполняем буфер
+   strftime(dtime,20,"%Y-%m-%d,%H:%M:%S",localtime(&rawtime));
 }
 // ****************************************************************************
 // *            Извлечь сообщение по источнику и номеру сообщения             *
 // ****************************************************************************
-String TQueMessage::ExtractMess(String Source, int Number, String fmess32, String smess32) 
+void TQueMessage::ExtractMess(String Source, int Number, String fmess32, String smess32) 
 {
-   String Line="Неопределенное сообщение";
-   // Пример по обработке очередей   
-   if (Source == tmk_QHM) Line = messQueueHandlMulti(tBuffer, Number, fmess32, smess32);   
-   return Line;
+   // Выбираем сообщение из примера по обработке очередей   
+   if (Source == tmk_QHM) messQueueHandlMulti(tMess, Number, fmess32, smess32);   
 }
 // ****************************************************************************
 // *                              Собрать сообщение                           *
 // ****************************************************************************
-String TQueMessage::CollectMessage(int t_MessFormat)
+void TQueMessage::CollectMessage(int t_MessFormat)
 {
-   // Инициируем пустое сообщение
-   String inMess=EmptyMessage;
-
    // char Type[7];                     - Тип сообщения
    // char Source[7];                   - Источник сообщения
    // int  Number;                      - Номер сообщения
@@ -120,41 +116,47 @@ String TQueMessage::CollectMessage(int t_MessFormat)
    // char smess32[32];                 - Второе уточнение сообщения
 
    // tfm_BRIEF,  0 Краткий             - WARNING-ISR[2]
-   // tfm_FULL,   1 Полный              - 2024-11-29,19:36:18 WARNING-ISR[2], Управление передаётся планировщику
-   // tfm_NOTIME, 2 Без даты и времени  - WARNING-ISR[2], Управление передаётся планировщику
+   // tfm_NOTIME, 1 Без даты и времени  - WARNING-ISR[2] Управление передаётся планировщику
+   // tfm_FULL,   2 Полный              - 2024-11-29,19:36:18 WARNING-ISR[2] Управление передаётся планировщику
 
-   // Формируем фрагменты текста сообщения
-   String Type=String(receiveStruMess.Type);
-   String Source=String(receiveStruMess.Source);
-   String Number=String(receiveStruMess.Number);
-   String Line = Type+"-"+Source+"["+Number+"]";
+   // Чистим буфер сообщения
+   sprintf(tBuffer,""); 
+   // Формируем краткое сообщение
+   sprintf(tMess,""); 
+   strcat(tMess, receiveStruMess.Type);
+   strcat(tMess, "-");
+   strcat(tMess, receiveStruMess.Source);
+   strcat(tMess, "[");
+   strcat(tMess, String(receiveStruMess.Number).c_str());
+   strcat(tMess, "]");
    // Если заказан вывод кратких сообщений, то возвращаем сообщение
-   if (t_MessFormat==tfm_BRIEF) inMess=Line;
-   // Иначе, формируем сообщение дальше
-   else
+   if (t_MessFormat==tfm_BRIEF) strcat(tBuffer,tMess);
+   else 
    {
-      // По источнику и номеру сообщения извлекаем текст
-      String Text=ExtractMess(Source,receiveStruMess.Number,String(receiveStruMess.fmess32),String(receiveStruMess.smess32));
-      Line=Line+" "+Text;
-      // Если заказан вывод сообщений без даты и времени, то выводим сообщение
-      if (t_MessFormat==tfm_NOTIME) inMess=Line;
-      // Иначе, формируем полное сообщение
-      else
+      // Переделываем начало полного сообщения
+      if (t_MessFormat!=tfm_FULL)
       {
-         String DTime=ExtractTime();
-         Line=DTime+" "+Line;
-         inMess=Line;
+         // Вытаскиваем дату и время  
+         ExtractTime();
+         sprintf(tBuffer,""); 
+         strcat(tBuffer,dtime);
+         strcat(tBuffer," ");
+         strcat(tBuffer,tMess);
       }
+      // По источнику и номеру сообщения извлекаем контекст сообщения
+      ExtractMess(String(receiveStruMess.Source),receiveStruMess.Number,String(receiveStruMess.fmess32),String(receiveStruMess.smess32));
+      strcat(tBuffer, " ");
+      strcat(tBuffer, tMess);
    }
-   return inMess; 
+   Serial.println(tBuffer);
 }
 // ****************************************************************************
 // *                              Принять сообщение                           *
 // ****************************************************************************
 String TQueMessage::Receive(int t_MessFormat)
 {
-   // Инициируем переменную возврата сообщений
-   String inMess;
+   // Инициируем пустое сообщение, отмечая, что очередь пуста
+   String inMess=EmptyMessage;
    // Принимаем сообщение
    if (tQueue != NULL)
    {
@@ -171,12 +173,11 @@ String TQueMessage::Receive(int t_MessFormat)
             // Отмечаем, что "Не удалось принять структуру после всех тиков!"  
             inMess=tNotAfterTicks;
          }
-         else inMess=CollectMessage(t_MessFormat);
+         CollectMessage(t_MessFormat);
+         inMess=String(tBuffer);
          Space = int(uxQueueSpacesAvailable(tQueue));
          Serial.print("После приёма: ");  Serial.println(Space);
       }
-      // Инициируем пустое сообщение, отмечая, что очередь пуста
-      else inMess=EmptyMessage;
    }
    // Отмечаем "Прием сообщения: очередь для структур не создана!"
    else inMess=tQueueNotReceive;

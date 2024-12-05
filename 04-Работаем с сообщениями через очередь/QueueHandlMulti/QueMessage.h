@@ -16,7 +16,6 @@
 // исключатся лишние перечисления и их обрабатывающие функции.
    #define tmk_WDT     "WDT"     // общие сообщения сторожевого таймера
    #define tmk_ISR     "ISR"     // общие сообщения из обработчиков прерываний
-   #define tmk_EUE     "EUE"     // общие сообщения в работе с очередями
 // #define tmk_KVIZZY  "KVIZZY"  // сообщения приложения KVIZZY 
 // #define tmk_KRUTJAK "KRUTJAK" // сообщения приложения KVIZZY 
    #define tmk_QHM     "QHM"     // пример по обработке очередей
@@ -28,8 +27,8 @@
 // тип сообщения, источник сообщения, номер сообщения источника, текст сообщения
 typedef enum {
    tfm_BRIEF,   // 0 Краткий             - WARNING-ISR[2]
-   tfm_FULL,    // 1 Полный              - 2024-11-29,19:36:18 WARNING-ISR[2] Управление передаётся планировщику
-   tfm_NOTIME,  // 2 Без даты и времени  - WARNING-ISR[2] Управление передаётся планировщику
+   tfm_NOTIME,  // 1 Без даты и времени  - WARNING-ISR[2] Управление передаётся планировщику
+   tfm_FULL,    // 2 Полный              - 2024-11-29,19:36:18 WARNING-ISR[2] Управление передаётся планировщику
 } tFMess;
 
 // Некоторые примеры полных сообщений:
@@ -79,7 +78,6 @@ class TQueMessage
   
   // Конструктор класса
   TQueMessage();
-  // Извлечь сообщение по источнику и номеру сообщения  
   String Create(int iQueueSize=4);
   String Send(String Type,String Source,int Number,int fmess32); 
   String Receive(int t_MessFormat=tfm_FULL);
@@ -91,10 +89,13 @@ class TQueMessage
   QueueHandle_t tQueue;                // очередь (дескриптор) будущих сообщений из структур tStruMessage   
   int QueueSize;                       // размер очереди 
   int TicksIsBusy=8;                   // число тактов блокировки задач при занятой очереди
-  char tBuffer[256];                   // буфер текстов сообщений на 255 символов и завершающий ноль
-  String ExtractMess(String Source,int Number,String fmess32,String smess32);
-  String ExtractTime();
-  String CollectMessage(int t_MessFormat);
+  char tBuffer[256];                   // буфер сообщения на 255 символов и завершающий ноль
+  char tMess[256];                     // буфер предварительного размещения контекста сообщения
+  char dtime[20];                      // буфер даты и времени
+  void ExtractMess(String Source,int Number,String fmess32,String smess32);
+  void ExtractTime();
+  void CollectMessage(int t_MessFormat);
+
 };
 
 #endif
