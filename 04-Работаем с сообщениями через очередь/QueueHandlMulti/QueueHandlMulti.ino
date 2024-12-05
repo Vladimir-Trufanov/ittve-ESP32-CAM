@@ -82,10 +82,16 @@ void ARDUINO_ISR_ATTR onTimer()
 // ****************************************************************************
 void setup() 
 {
+   // Готовим последовательный порт для сообщений
    Serial.begin(115200);
-   bool bRet=queMessa.Create();
-   if (!bRet) Serial.println("SETUP: Очередь не была создана и не может использоваться!");
-   else Serial.println("SETUP: Очередь сформирована!");
+   while (!Serial) continue;
+   Serial.println("Последовательный порт работает!");
+   // Создаём очередь
+   String inMess=queMessa.Create();
+   // Если не получилось, сообщаем "Очередь не была создана и не может использоваться" 
+   if (inMess==tQueueNotCreate) Serial.println(tQueueNotCreate);
+   // Если очередь получилась, то отмечаем  "Очередь сформирована" 
+   else Serial.println(tQueueBeformed);
 
    // Определяем дополнительную задачу по отправке сообщений
    xTaskCreatePinnedToCore (
@@ -127,8 +133,10 @@ void vATask (void *pvParameters)
    {
       nLoop++;
       // Отправляем информационное сообщение "Передано %s сообщение из задачи"
-      bool bRet=queMessa.Send(tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
-      delay (1601); 
+      String inMess=queMessa.Send(tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
+      // Если невозможно отправить сообщение, то сообщаем
+      if (inMess!=EmptyMessage) Serial.println(inMess);
+      delay (1201); 
    }
 }
 // ****************************************************************************
@@ -138,16 +146,13 @@ void vATask (void *pvParameters)
 void vReceiveMess (void *pvParameters) 
 {
    int MessFormat=tfm_FULL;
-   // Привязываем структуру для для приема сообщения 
-   //struct tStruMessage ReceiveStruMess;
    // Готовим цикл задачи
    while (1) 
    {
       String inMess = queMessa.Receive(MessFormat);
-      Serial.print("Получено: ");
       if (inMess==EmptyMessage) Serial.println("Пустое сообщение"); 
       else Serial.println(inMess);
-      delay (1303); 
+      delay (1703); 
    }
 }
 // ****************************************************************************

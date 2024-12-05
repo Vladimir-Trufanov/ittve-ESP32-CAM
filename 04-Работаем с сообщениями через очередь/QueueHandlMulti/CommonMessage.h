@@ -56,30 +56,6 @@ inline String messISR(char tBuffer[], int mode, String fmess32, String smess32)
 }
 #endif
 
-#ifdef tmk_EUE
-// Обработка очередей ------------------------------------- QueueHandling [EUE]
-typedef enum {
-   tqh_NotCreate,     // 0 "Очередь не была создана и не может использоваться" - queue has not been created and cannot be used
-   tqh_Beformed,      // 1 "Очередь сформирована"                              - queue has been formed
-   tqh_SendFailed,    // 2 "Не удалось отправить структуру из задачи"          - failed to send structure from task
-} tQueueHandling;
-inline String messQueueHandling(char tBuffer[], int mode, String fmess32, String smess32) 
-{
-   switch (mode) {
-   case tqh_NotCreate:
-      sprintf(tBuffer,"Очередь не была создана и не может использоваться"); break;
-   case tqh_Beformed:
-      sprintf(tBuffer,"Очередь сформирована"); break;
-   case tqh_SendFailed:
-      sprintf(tBuffer,"Не удалось отправить структуру из задачи"); break;
-   default:
-      sprintf(tBuffer,"Неопределенное сообщение обработки очередей"); break;
-   }
-   String result=String(tBuffer);
-   return result;
-}
-#endif
-
 /*
 // Может пригодится!!!
 

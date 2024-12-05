@@ -3,7 +3,7 @@
  *                          Обеспечить передачу и приём сообщений через очередь 
  *                                                   в задачах и из прерываниях
  * 
- * v2.1, 03.12.2024                                   Автор:      Труфанов В.Е.
+ * v2.2, 05.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
@@ -36,7 +36,15 @@ typedef enum {
 
 // 2024-11-29,19:36:18 WARNING-ISR[2] Управление передаётся планировщику   
 // 2024-11-29,19:38:45 ERROR-EUE[0] Очередь не была создана и не может использоваться  
-// 2024-11-30,08:11:54 NOTICE-KVIZZY[2] Передано 124 сообщение из задачи   
+// 2024-11-30,08:11:54 NOTICE-KVIZZY[2] Передано 124 сообщение из задачи  
+
+// Сообщения вне формата в стандартный последовательный порт или в прочие периферии
+#define tQueueNotCreate  "Очередь не была создана и не может использоваться!" // queue has not been created and cannot be used
+#define tQueueBeformed   "Очередь сформирована!"                              // queue has been formed
+#define tQueueNotSend    "Отправка сообщения: очередь структур не создана!"   // queue has not been created for structures
+// TQueMessage::Send     "Не удалось отправить структуру после %d тиков!"
+#define tQueueNotReceive "Прием сообщения: очередь для структур не создана!"            
+#define tNotAfterTicks   "Не удалось принять структуру после всех тиков!"     // not possible to accept the structure even after all the ticks
 
 // Типы сообщений
 #define tmt_NOTICE  "NOTICE"     // информационное сообщение приложения 
@@ -72,8 +80,8 @@ class TQueMessage
   // Конструктор класса
   TQueMessage();
   // Извлечь сообщение по источнику и номеру сообщения  
-  bool Create(int iQueueSize=4);
-  bool Send(String Type,String Source,int Number,int fmess32); 
+  String Create(int iQueueSize=4);
+  String Send(String Type,String Source,int Number,int fmess32); 
   String Receive(int t_MessFormat=tfm_FULL);
 
   private:
@@ -82,9 +90,11 @@ class TQueMessage
   struct tStruMessage receiveStruMess; // структура для для приема сообщения 
   QueueHandle_t tQueue;                // очередь (дескриптор) будущих сообщений из структур tStruMessage   
   int QueueSize;                       // размер очереди 
+  int TicksIsBusy=8;                   // число тактов блокировки задач при занятой очереди
   char tBuffer[256];                   // буфер текстов сообщений на 255 символов и завершающий ноль
   String ExtractMess(String Source,int Number,String fmess32,String smess32);
   String ExtractTime();
+  String CollectMessage(int t_MessFormat);
 };
 
 #endif
