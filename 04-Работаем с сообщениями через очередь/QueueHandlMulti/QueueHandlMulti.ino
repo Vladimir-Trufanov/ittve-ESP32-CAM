@@ -146,7 +146,8 @@ void vATask (void *pvParameters)
       String inMess=queMessa.Send(tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
       // Если невозможно отправить сообщение, то сообщаем
       if (inMess!=EmptyMessage) Serial.println(inMess);
-      delay (1201); 
+      //delay (1201); 
+      vTaskDelay(1201/portTICK_PERIOD_MS);
    }
 }
 // ****************************************************************************
@@ -161,21 +162,52 @@ void vReceiveMess (void *pvParameters)
       // Если требуется выбрать все сообщения из очереди
       if (t_ModeReceive==tmr_QUEUERELEASE)
       {
-        while(queMessa.How_many_mess() > 0)
+        int Space=queMessa.How_many_mess();
+        for (int i=Space; i>0; i--) 
         {
+           Serial.print("Space="); Serial.println(i);
+           Serial.println(queMessa.Receive(MessFormat));
+           int Space2;
+           do 
+           {
+              vTaskDelay(100/portTICK_PERIOD_MS);
+              Space2=queMessa.How_many_mess();
+           } 
+           while(Space2==i);
+
+           /*
+           Serial.print("Space="); Serial.println(i);
+           Serial.println(queMessa.Receive(MessFormat));
+           /*
+           while(queMessa.How_many_mess()==i);
+           {
+              vTaskDelay(100/portTICK_PERIOD_MS);
+           }
+           */
+        }
+        
+        /*
+        int Space=queMessa.How_many_mess();
+        for (int i=Space; i>0; i--) 
+        {
+           do 
+           {
+              Space=queMessa.How_many_mess();
+              vTaskDelay(100/portTICK_PERIOD_MS);
+           } 
+           while(Space==i);
            Serial.println(queMessa.Receive(MessFormat));
         }
- 
-         //int Space=queMessa.How_many_mess();
-         //Serial.print("Space=");  Serial.println(Space);
-         //Serial.println(queMessa.Receive(MessFormat));
+        */
       }
       // Иначе выбираем одно сообщение
       else
-      { 
+      {
          Serial.println(queMessa.Receive(MessFormat));
       }
-      delay (1703); 
+      //delay (1703); 
+      vTaskDelay(1703/portTICK_PERIOD_MS);
+
    }
 }
 // ****************************************************************************
