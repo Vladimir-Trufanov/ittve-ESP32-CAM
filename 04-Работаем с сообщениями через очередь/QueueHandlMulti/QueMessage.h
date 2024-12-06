@@ -3,7 +3,7 @@
  *                          Обеспечить передачу и приём сообщений через очередь 
  *                                                   в задачах и из прерываниях
  * 
- * v2.2, 05.12.2024                                   Автор:      Труфанов В.Е.
+ * v3.0, 06.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
@@ -80,7 +80,8 @@ class TQueMessage
   TQueMessage();
   String Create(int iQueueSize=4);
   String Send(String Type,String Source,int Number,int fmess32); 
-  String Receive(int t_MessFormat=tfm_FULL);
+  char *Receive(int t_MessFormat=tfm_FULL);
+  int How_many_mess();                 // Какое количество сообщение в очереди? - How many messages are in the queue?
 
   private:
   

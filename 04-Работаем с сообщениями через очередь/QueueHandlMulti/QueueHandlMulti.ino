@@ -3,7 +3,7 @@
  *                        Пример передачи сообщения из задачи и из прерывания с
  *                                                     приемом в основном цикле
  * 
- * v2.1, 03.12.2024                                   Автор:      Труфанов В.Е.
+ * v3.0, 06.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
 
@@ -24,8 +24,6 @@ typedef enum {
 int t_ModeReceive=tmr_QUEUERELEASE;
 // Определяем формат сообщения
 int MessFormat=tfm_FULL;
-// Резервируем буфер сообщений на 255 символов и завершающий ноль
-char inMess[256];                   
 
 // ****************************************************************************
 // *  Сформировать сообщение о прошедшем времени с начала запуска приложения  *
@@ -161,13 +159,22 @@ void vReceiveMess (void *pvParameters)
    while (1) 
    {
       // Если требуется выбрать все сообщения из очереди
-      //if (t_ModeReceive==tmr_QUEUERELEASE);
+      if (t_ModeReceive==tmr_QUEUERELEASE)
+      {
+        while(queMessa.How_many_mess() > 0)
+        {
+           Serial.println(queMessa.Receive(MessFormat));
+        }
+ 
+         //int Space=queMessa.How_many_mess();
+         //Serial.print("Space=");  Serial.println(Space);
+         //Serial.println(queMessa.Receive(MessFormat));
+      }
       // Иначе выбираем одно сообщение
-      //else 
-      
-      String inMess = queMessa.Receive(MessFormat);
-      if (inMess==EmptyMessage) Serial.println("Пустое сообщение"); 
-      else Serial.println(inMess);
+      else
+      { 
+         Serial.println(queMessa.Receive(MessFormat));
+      }
       delay (1703); 
    }
 }

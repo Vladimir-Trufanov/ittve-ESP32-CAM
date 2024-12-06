@@ -42,8 +42,8 @@ String TQueMessage::Send(String Type, String Source, int Number, int fmess32)
    // Если очередь создана, то отправляем сообщение в очередь
    if (tQueue!=0)
    {
-      int Space = int(uxQueueSpacesAvailable(tQueue));
-      Serial.print("До отправки: ");  Serial.println(Space);
+      //int Space = int(uxQueueSpacesAvailable(tQueue));
+      //Serial.print("До отправки: ");  Serial.println(Space);
       // Формируем сообщение для передачи в очередь
       strcpy(taskStruMess.Type, Type.c_str());  
       strcpy(taskStruMess.Source, Source.c_str());  
@@ -56,9 +56,9 @@ String TQueMessage::Send(String Type, String Source, int Number, int fmess32)
          sprintf(tBuffer,"Не удалось отправить структуру после %d тиков!",TicksIsBusy); 
          inMess=String(tBuffer);
       }
-      Space = int(uxQueueSpacesAvailable(tQueue));
-      Serial.print("После отправки: ");  Serial.println(Space);
-      Serial.println("Отправлено сообщение!");
+      //Space = int(uxQueueSpacesAvailable(tQueue));
+      //Serial.print("После отправки: ");  Serial.println(Space);
+      //Serial.println("Отправлено сообщение!");
    }
    // Отмечаем "Отправка сообщения: очередь структур не создана!" 
    else inMess=tQueueNotSend;
@@ -119,6 +119,10 @@ void TQueMessage::CollectMessage(int t_MessFormat)
    // tfm_NOTIME, 1 Без даты и времени  - WARNING-ISR[2] Управление передаётся планировщику
    // tfm_FULL,   2 Полный              - 2024-11-29,19:36:18 WARNING-ISR[2] Управление передаётся планировщику
 
+  //Serial.print("t_MessFormat=");
+  //Serial.println(t_MessFormat);
+
+
    // Чистим буфер сообщения
    sprintf(tBuffer,""); 
    // Формируем краткое сообщение
@@ -134,54 +138,61 @@ void TQueMessage::CollectMessage(int t_MessFormat)
    else 
    {
       // Переделываем начало полного сообщения
-      if (t_MessFormat!=tfm_FULL)
+      if (t_MessFormat==tfm_FULL)
       {
-         // Вытаскиваем дату и время  
+         // Если заказан вывод полных сообщений, то вытаскиваем дату и время  
          ExtractTime();
          sprintf(tBuffer,""); 
          strcat(tBuffer,dtime);
          strcat(tBuffer," ");
          strcat(tBuffer,tMess);
+         //Serial.print("tBuffer=");
+         //Serial.println(tBuffer);
+
       }
       // По источнику и номеру сообщения извлекаем контекст сообщения
       ExtractMess(String(receiveStruMess.Source),receiveStruMess.Number,String(receiveStruMess.fmess32),String(receiveStruMess.smess32));
       strcat(tBuffer, " ");
       strcat(tBuffer, tMess);
    }
-   Serial.println(tBuffer);
+   //Serial.println(tBuffer);
 }
+
+int TQueMessage::How_many_mess()                 // Какое количество сообщение в очереди? - How many messages are in the queue?
+{
+  int Space = int(uxQueueSpacesAvailable(tQueue)); //-QueueSize;
+  return Space;     
+}
+
 // ****************************************************************************
 // *                              Принять сообщение                           *
 // ****************************************************************************
-String TQueMessage::Receive(int t_MessFormat)
+char *TQueMessage::Receive(int t_MessFormat)
 {
-   // Инициируем пустое сообщение, отмечая, что очередь пуста
-   String inMess=EmptyMessage;
    // Принимаем сообщение
    if (tQueue != NULL)
    {
       // Определяем количество свободных мест в очереди
       int Space = int(uxQueueSpacesAvailable(tQueue));
-      Serial.print("До приёма: ");  Serial.println(Space);
-      // Получаем сообщение из созданной очереди для хранения сложного
-      // структурного сообщения. Блокировка на TicksIsBusy тиков, если 
-      // сообщение недоступно немедленно.
+      //Serial.print("До приёма: ");  Serial.println(Space);
+
+      // Выбираем сообщение из очереди с блокировкой на TicksIsBusy тактов, 
+      // если сообщение недоступно
       if (Space<QueueSize)
       {
          if (xQueueReceive(tQueue,&receiveStruMess,TicksIsBusy) != pdPASS)
          {
             // Отмечаем, что "Не удалось принять структуру после всех тиков!"  
-            inMess=tNotAfterTicks;
+            sprintf(tBuffer,tNotAfterTicks); 
          }
          CollectMessage(t_MessFormat);
-         inMess=String(tBuffer);
-         Space = int(uxQueueSpacesAvailable(tQueue));
-         Serial.print("После приёма: ");  Serial.println(Space);
+         //Space = int(uxQueueSpacesAvailable(tQueue));
+         //Serial.print("После приёма: ");  Serial.println(Space);
       }
    }
    // Отмечаем "Прием сообщения: очередь для структур не создана!"
-   else inMess=tQueueNotReceive;
-   return inMess; 
+   else sprintf(tBuffer,tQueueNotReceive); 
+   return tBuffer; 
 }
 
 // ********************************************************* QueMessage.cpp ***

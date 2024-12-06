@@ -347,17 +347,17 @@ ittve-ESP32-CAM
 Main=
 Selected=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueueHandlMulti.ino
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueueHandlMulti.ino]
-TopLine=135
-Caret=41,23
+TopLine=140
+Caret=1,27
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QHM_Message.h]
-TopLine=4
+TopLine=3
 Caret=1,33
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.h]
-TopLine=56
-Caret=43,84
+TopLine=42
+Caret=12,6
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.cpp]
-TopLine=1
-Caret=45,154
+TopLine=143
+Caret=1,181
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\CommonMessage.h]
-TopLine=25
+TopLine=49
 Caret=1,41
