@@ -21,7 +21,7 @@ typedef enum {
    tmr_QUEUERELEASE,    // 1 до освобождения очереди - before the queue is released
 } tModeReceive;
 // Задаём текущий режим приема сообщений
-int t_ModeReceive=tmr_QUEUERELEASE;
+int t_ModeReceive=tmr_ONEATIME;
 // Определяем формат сообщения
 int MessFormat=tfm_FULL;
 
@@ -97,11 +97,22 @@ void setup()
    while (!Serial) continue;
    Serial.println("Последовательный порт работает!");
    // Создаём очередь
+   queMessa.proba();
+   /*
+   String inMess=queMessa.CreateStatic();
+   // Если не получилось, сообщаем "Очередь не была создана и не может использоваться" 
+   if (inMess==tQueueNotCreate) Serial.println(tQueueNotCreate);
+   // Если очередь получилась, то отмечаем  "Очередь сформирована" 
+   else Serial.println(tQueueBeformed);
+   */
+   
+   
    String inMess=queMessa.Create();
    // Если не получилось, сообщаем "Очередь не была создана и не может использоваться" 
    if (inMess==tQueueNotCreate) Serial.println(tQueueNotCreate);
    // Если очередь получилась, то отмечаем  "Очередь сформирована" 
    else Serial.println(tQueueBeformed);
+   
 
    // Определяем дополнительную задачу по отправке сообщений
    xTaskCreatePinnedToCore (
@@ -141,6 +152,8 @@ void vATask (void *pvParameters)
    // Готовим цикл задачи
    while (1) 
    {
+
+     
       nLoop++;
       // Отправляем информационное сообщение "Передано %s сообщение из задачи"
       String inMess=queMessa.Send(tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
@@ -162,52 +175,25 @@ void vReceiveMess (void *pvParameters)
       // Если требуется выбрать все сообщения из очереди
       if (t_ModeReceive==tmr_QUEUERELEASE)
       {
-        int Space=queMessa.How_many_mess();
-        for (int i=Space; i>0; i--) 
-        {
-           Serial.print("Space="); Serial.println(i);
-           Serial.println(queMessa.Receive(MessFormat));
-           int Space2;
-           do 
-           {
-              vTaskDelay(100/portTICK_PERIOD_MS);
-              Space2=queMessa.How_many_mess();
-           } 
-           while(Space2==i);
-
-           /*
-           Serial.print("Space="); Serial.println(i);
-           Serial.println(queMessa.Receive(MessFormat));
-           /*
-           while(queMessa.How_many_mess()==i);
-           {
-              vTaskDelay(100/portTICK_PERIOD_MS);
-           }
-           */
-        }
-        
-        /*
-        int Space=queMessa.How_many_mess();
-        for (int i=Space; i>0; i--) 
-        {
-           do 
-           {
-              Space=queMessa.How_many_mess();
-              vTaskDelay(100/portTICK_PERIOD_MS);
-           } 
-           while(Space==i);
-           Serial.println(queMessa.Receive(MessFormat));
-        }
-        */
+         int iwait=queMessa.How_many_wait();
+         while(iwait>0)
+         {
+            //Serial.print("iwait = ");
+            //Serial.println(iwait);
+            Serial.println(queMessa.Receive(MessFormat));
+            vTaskDelay(100/portTICK_PERIOD_MS);
+            iwait=queMessa.How_many_wait();
+         }
       }
       // Иначе выбираем одно сообщение
       else
       {
-         Serial.println(queMessa.Receive(MessFormat));
+         int iwait=queMessa.How_many_wait();
+         //Serial.print("iwait = ");
+         //Serial.println(iwait);
+         if (iwait>0) Serial.println(queMessa.Receive(MessFormat));
       }
-      //delay (1703); 
       vTaskDelay(1703/portTICK_PERIOD_MS);
-
    }
 }
 // ****************************************************************************

@@ -32,6 +32,75 @@ String TQueMessage::Create(int iQueueSize)
    if (tQueue==NULL) inMess=tQueueNotCreate; 
    return inMess;
 };
+void TQueMessage::proba()
+{
+   /* Будем создавать очередь для хранения одновременно до 10 элементов с типом uint64_t. */
+   #define QUEUE_LENGTH    10
+   #define ITEM_SIZE       sizeof( uint64_t )
+   /* Переменная, используемая для хранения структуры данных очереди. */
+   static StaticQueue_t    xStaticQueue;
+   /* Массив, используемый для хранения элементов очереди (область хранения очереди).
+   Он должен содержать не менее (uxQueueLength * uxItemSize) байт. */
+   uint8_t ucQueueStorageArea[ QUEUE_LENGTH * ITEM_SIZE ];
+
+   Serial.println("Создаём очередь!");
+   // Создаём очередь
+   /* Хэндлер очереди. */
+   QueueHandle_t xQueue;
+   /* Создаём очередь, которая может содержать до 10 элементов с типом uint64_t. */
+   xQueue = xQueueCreateStatic(QUEUE_LENGTH,ITEM_SIZE,ucQueueStorageArea,&xStaticQueue );
+   /* pxQueueBuffer был не NULL, поэтому и xQueue не должен быть NULL. */
+   configASSERT(xQueue);
+};
+String TQueMessage::CreateStatic(int iQueueSize)
+{
+/*
+typedef struct {
+  ext_data_service_t kind;
+  uint32_t uid;
+  char* data;
+  time_t timestamp;
+} dataSendQueueItem_t;  
+
+#define CONFIG_DATASEND_QUEUE_SIZE 16
+#define DATASEND_QUEUE_ITEM_SIZE sizeof(dataSendQueueItem_t)
+
+StaticQueue_t _dataSendQueueBuffer;
+uint8_t _dataSendQueueStorage[CONFIG_DATASEND_QUEUE_SIZE * DATASEND_QUEUE_ITEM_SIZE];
+
+QueueHandle_t _dataSendQueue = 
+xQueueCreateStatic(CONFIG_DATASEND_QUEUE_SIZE, DATASEND_QUEUE_ITEM_SIZE, &_dataSendQueueStorage[0], &_dataSendQueueBuffer);
+*/
+
+
+
+
+   //StaticQueue_t _dataSendQueueBuffer;
+   //uint8_t _dataSendQueueStorage[QueueSize * sizeof(struct tStruMessage)];
+
+   // Назначаем переменную - указатель на на массив uint8_t для хранения очереди
+   //static StaticQueue_t xStaticQueue;
+   // Выделяем массив, который будет использоваться в качестве хранилища очереди. 
+   // Его размер должен вмещать всю очередь структур
+   //uint8_t ucQueueStorageArea[QueueSize * sizeof(struct tStruMessage)];
+
+
+  
+   // Инициируем пустое сообщение
+   String inMess=EmptyMessage;
+   
+   /*
+   // Создаем очередь из структур в количестве QueueSize 
+   QueueSize=iQueueSize;
+   //tQueue = xQueueCreate      (QueueSize, sizeof(struct tStruMessage));
+   tQueue = xQueueCreateStatic(QueueSize, sizeof(struct tStruMessage), &_dataSendQueueStorage[0], &_dataSendQueueBuffer);
+   //tQueue = xQueueCreateStatic(QueueSize, sizeof(struct tStruMessage), &ucQueueStorageArea,        &xStaticQueue);
+   */
+
+   // Ошибка "Очередь не была создана и не может использоваться" 
+   if (tQueue==NULL) inMess=tQueueNotCreate; 
+   return inMess;
+};
 // ****************************************************************************
 // *            Отправить сообщение с первым уточнением целого типа           *
 // ****************************************************************************
@@ -157,13 +226,23 @@ void TQueMessage::CollectMessage(int t_MessFormat)
    }
    //Serial.println(tBuffer);
 }
-
-int TQueMessage::How_many_mess()                 // Какое количество сообщение в очереди? - How many messages are in the queue?
+// ****************************************************************************
+// *            Определить, сколько сообщений накопилось в очереди            *
+// *                            и их можно выгрузить                          *
+// ****************************************************************************
+int TQueMessage::How_many_wait()                 
 {
-  int Space = int(uxQueueSpacesAvailable(tQueue)); //-QueueSize;
+  int nMess = int(uxQueueMessagesWaiting(tQueue)); 
+  return nMess;     
+}
+// ****************************************************************************
+// *              Определить количество свободных мест в очереди              *
+// ****************************************************************************
+int TQueMessage::How_many_free() 
+{               
+  int Space = int(uxQueueSpacesAvailable(tQueue)); 
   return Space;     
 }
-
 // ****************************************************************************
 // *                              Принять сообщение                           *
 // ****************************************************************************

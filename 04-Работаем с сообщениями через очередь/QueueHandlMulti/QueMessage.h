@@ -79,11 +79,20 @@ class TQueMessage
   // Конструктор класса
   TQueMessage();
   String Create(int iQueueSize=4);
+  String CreateStatic(int iQueueSize=4);
+
   String Send(String Type,String Source,int Number,int fmess32); 
   char *Receive(int t_MessFormat=tfm_FULL);
-  int How_many_mess();                 // Какое количество сообщение в очереди? - How many messages are in the queue?
+  // Определить количество свободных мест в очереди
+  int How_many_free();                
+  // Определить, сколько сообщений накопилось в очереди и их можно выгрузить 
+  int How_many_wait(); 
+
+  void proba();
 
   private:
+
+
   
   struct tStruMessage taskStruMess;    // структура для для отправки сообщения 
   struct tStruMessage receiveStruMess; // структура для для приема сообщения 
@@ -93,6 +102,14 @@ class TQueMessage
   char tBuffer[256];                   // буфер сообщения на 255 символов и завершающий ноль
   char tMess[256];                     // буфер предварительного размещения контекста сообщения
   char dtime[20];                      // буфер даты и времени
+
+  
+  //StaticQueue_t _dataSendQueueBuffer;
+  //static uint8_t _dataSendQueueStorage[QueueSize * sizeof(struct tStruMessage)];
+  
+  
+  
+  
   void ExtractMess(String Source,int Number,String fmess32,String smess32);
   void ExtractTime();
   void CollectMessage(int t_MessFormat);
