@@ -7,6 +7,7 @@
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
 
+
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
 #include "QueMessage.h"     // заголовочный файл класса TQueMessage 
 #include "CommonMessage.h"  // общий реестр сообщений
@@ -14,14 +15,13 @@
 
 TQueMessage queMessa;       // объект работы с сообщениями через очередь
 unsigned long nLoop=0UL;    // счётчик циклов задачи отправки сообщений 
-
 // Режимы приема сообщений (Message reception modes)
 typedef enum {
    tmr_ONEATIME,        // 0 по одному               - one at a time
    tmr_QUEUERELEASE,    // 1 до освобождения очереди - before the queue is released
 } tModeReceive;
 // Задаём текущий режим приема сообщений
-int t_ModeReceive=tmr_QUEUERELEASE;
+int t_ModeReceive=tmr_ONEATIME;
 // Определяем формат сообщения
 int MessFormat=tfm_FULL;
 
@@ -88,10 +88,9 @@ void ARDUINO_ISR_ATTR onTimer()
    */
 }
 
-void printKek(String s) 
+void printKek(char asi[]) 
 {
-   Serial.println(s);
-   Serial.println("kek");
+   Serial.println(asi);
 }
 
 // ****************************************************************************
@@ -106,8 +105,6 @@ void setup()
 
    // подключили функцию printKek
    queMessa.attachFunction(printKek);
-   // вызвали подключенную функцию
-   queMessa.callFunction("String s");
 
    // Создаем очередь
    String inMess="";
@@ -167,6 +164,13 @@ void vATask (void *pvParameters)
 // *             Обеспечить приём всех сообщений и передачу их                *
 // *                          в последовательный порт                         *
 // ****************************************************************************
+
+char stri[] = "HellpMe";
+char* massive(char *istr)
+{
+   return istr;
+}
+
 void vReceiveMess (void *pvParameters) 
 {
    // Готовим цикл задачи
@@ -191,9 +195,18 @@ void vReceiveMess (void *pvParameters)
          int iwait=queMessa.How_many_wait();
          Serial.print("iwait = ");
          Serial.println(iwait);
-         if (iwait>0) Serial.println(queMessa.Receive(MessFormat));
+         if (iwait>0) 
+         {
+            Serial.println(queMessa.Receive(MessFormat));
+         }
       }
-      vTaskDelay(1703/portTICK_PERIOD_MS);
+      // вызвали подключенную функцию
+      static char str[] = "Hello";
+      queMessa.Post(str);
+
+      Serial.println(massive(stri));
+
+      vTaskDelay(703/portTICK_PERIOD_MS);
    }
 }
 

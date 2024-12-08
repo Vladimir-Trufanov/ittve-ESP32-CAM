@@ -72,13 +72,14 @@ struct tStruMessage
 
 // Определяем пустое сообщение
 static String EmptyMessage="";
+static char tBuffer[256];                   // буфер сообщения на 255 символов и завершающий ноль
 
 class TQueMessage
 {
    public:
 
-   void attachFunction(void (*function)(String s));
-   void callFunction(String s);
+   void attachFunction(void (*function)(char asi[]));
+   void Post(char asi[]);
   
    // Построить объект (конструктор класса)
    TQueMessage(int iQueueSize=4);
@@ -94,14 +95,14 @@ class TQueMessage
 
    private:
 
-   void (*atatchedF)(String s);
+   void (*atatchedF)(char asi[]);
   
    struct tStruMessage taskStruMess;    // структура для для отправки сообщения 
    struct tStruMessage receiveStruMess; // структура для для приема сообщения 
    QueueHandle_t tQueue;                // очередь (дескриптор) будущих сообщений из структур tStruMessage   
    int QueueSize;                       // размер очереди 
    int TicksIsBusy=8;                   // число тактов блокировки задач при занятой очереди
-   char tBuffer[256];                   // буфер сообщения на 255 символов и завершающий ноль
+   // char tBuffer[256];                   // буфер сообщения на 255 символов и завершающий ноль
    char tMess[256];                     // буфер предварительного размещения контекста сообщения
    char dtime[20];                      // буфер даты и времени
   
