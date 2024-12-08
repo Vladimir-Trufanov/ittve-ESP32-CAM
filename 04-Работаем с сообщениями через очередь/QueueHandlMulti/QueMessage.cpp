@@ -212,6 +212,7 @@ char *TQueMessage::Receive(int t_MessFormat)
    }
    // Отмечаем "Прием сообщения: очередь для структур не создана!"
    else sprintf(tBuffer,tQueueNotReceive); 
+   delay(450);
    return tBuffer; 
 }
 

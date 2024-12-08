@@ -171,6 +171,17 @@ char* massive(char *istr)
    return istr;
 }
 
+void square(int* val) 
+{
+  *val = *val * *val;
+}
+
+void lli(char* chval) 
+{
+  Serial.print("chval=");
+  Serial.println(chval);
+}
+
 void vReceiveMess (void *pvParameters) 
 {
    // Готовим цикл задачи
@@ -197,7 +208,8 @@ void vReceiveMess (void *pvParameters)
          Serial.println(iwait);
          if (iwait>0) 
          {
-            Serial.println(queMessa.Receive(MessFormat));
+            //Serial.println(queMessa.Receive(MessFormat));
+            lli(queMessa.Receive(MessFormat));
          }
       }
       // вызвали подключенную функцию
@@ -205,6 +217,14 @@ void vReceiveMess (void *pvParameters)
       queMessa.Post(str);
 
       Serial.println(massive(stri));
+
+      int value;
+      value = 7;  // создали переменную
+      square(&value); // передали её адрес в функцию
+      Serial.println(value);
+
+      //static char chval[]="Хорошо!";
+      lli(&chval[0]); 
 
       vTaskDelay(703/portTICK_PERIOD_MS);
    }
