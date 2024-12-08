@@ -3,7 +3,7 @@
  *                          Обеспечить передачу и приём сообщений через очередь 
  *                                                   в задачах и из прерываниях
  * 
- * v3.1, 08.12.2024                                   Автор:      Труфанов В.Е.
+ * v2.2, 05.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
@@ -14,36 +14,38 @@
 #include "CommonMessage.h"  // общий реестр сообщений
 #include "QHM_Message.h"    // сообщения примера по обработке очередей
 
-void TQueMessage::attachFunction(void (*function)(String s)) 
+// Конструктор класса
+TQueMessage::TQueMessage()
 {
-   atatchedF = *function;  
 }
 
-void TQueMessage::callFunction(String s) 
-{
-   (*atatchedF)(s);
-}
-
-// ****************************************************************************
-// *                Построить объект (конструктор класса)                     *
-// ****************************************************************************
-TQueMessage::TQueMessage(int iQueueSize)
-{
-   // Определяем размер очереди из структур 
-   QueueSize=iQueueSize;
-}
 // ****************************************************************************
 // *                        Создать очередь сообщений                         *
 // ****************************************************************************
-String TQueMessage::Create()
+String TQueMessage::Create(int iQueueSize)
 {
    // Инициируем пустое сообщение
    String inMess=EmptyMessage;
+   // Создаем очередь из структур в количестве QueueSize 
+   QueueSize=iQueueSize;
    tQueue = xQueueCreate(QueueSize, sizeof(struct tStruMessage));
-   // Возвращаем ошибку "Очередь не была создана и не может использоваться" 
+   // Ошибка "Очередь не была создана и не может использоваться" 
    if (tQueue==NULL) inMess=tQueueNotCreate; 
    return inMess;
 };
+/*
+String TQueMessage::CreateStatic()
+{
+   // Инициируем пустое сообщение
+   String inMess=EmptyMessage;
+   // Создаем очередь из структур в количестве QueueSize 
+   //tQueue = xQueueCreate(QueueSize, sizeof(struct tStruMessage));
+   tQueue = xQueueCreateStatic(tQUEUE_LENGTH, sizeof(tStruMessage), _QueueStorage, &_QueuePointer);
+   // Ошибка "Очередь не была создана и не может использоваться" 
+   if (tQueue==NULL) inMess=tQueueNotCreate; 
+   return inMess;
+};
+*/
 // ****************************************************************************
 // *            Отправить сообщение с первым уточнением целого типа           *
 // ****************************************************************************
@@ -154,12 +156,16 @@ void TQueMessage::CollectMessage(int t_MessFormat)
          strcat(tBuffer,dtime);
          strcat(tBuffer," ");
          strcat(tBuffer,tMess);
+         //Serial.print("tBuffer=");
+         //Serial.println(tBuffer);
+
       }
       // По источнику и номеру сообщения извлекаем контекст сообщения
       ExtractMess(String(receiveStruMess.Source),receiveStruMess.Number,String(receiveStruMess.fmess32),String(receiveStruMess.smess32));
       strcat(tBuffer, " ");
       strcat(tBuffer, tMess);
    }
+   //Serial.println(tBuffer);
 }
 // ****************************************************************************
 // *            Определить, сколько сообщений накопилось в очереди            *
@@ -167,22 +173,16 @@ void TQueMessage::CollectMessage(int t_MessFormat)
 // ****************************************************************************
 int TQueMessage::How_many_wait()                 
 {
-   // Инициируем отсутствие массива очереди
-   int nMess = -1; 
-   // Если очередь создана, то возвращаем количество сообщений в очереди
-   if (tQueue!=0) nMess = int(uxQueueMessagesWaiting(tQueue)); 
-   return nMess;     
+  int nMess = int(uxQueueMessagesWaiting(tQueue)); 
+  return nMess;     
 }
 // ****************************************************************************
 // *              Определить количество свободных мест в очереди              *
 // ****************************************************************************
 int TQueMessage::How_many_free() 
 {               
-   // Инициируем отсутствие массива очереди
-   int Space = -1; 
-   // Если очередь создана, то возвращаем количество свободных мест в очереди
-   if (tQueue!=0) Space = int(uxQueueSpacesAvailable(tQueue)); 
-   return Space;     
+  int Space = int(uxQueueSpacesAvailable(tQueue)); 
+  return Space;     
 }
 // ****************************************************************************
 // *                              Принять сообщение                           *

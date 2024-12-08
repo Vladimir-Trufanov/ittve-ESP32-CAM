@@ -3,14 +3,27 @@
  *                        Пример передачи сообщения из задачи и из прерывания с
  *                                                     приемом в основном цикле
  * 
- * v1.2, 02.12.2024                                   Автор:      Труфанов В.Е.
+ * v3.0, 06.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
 
-#include "QueMessa.h"    // подключили передачу и приём сообщений через очередь
+// Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
+#include "QueMessage.h"     // заголовочный файл класса TQueMessage 
+#include "CommonMessage.h"  // общий реестр сообщений
+#include "QHM_Message.h"    // сообщения примера по обработке очередей
 
-// Инициируем счетчик циклов дополнительной задачи отправки сообщений
-unsigned long nLoop = 0UL;
+TQueMessage queMessa;       // объект работы с сообщениями через очередь
+unsigned long nLoop=0UL;    // счётчик циклов задачи отправки сообщений 
+
+// Режимы приема сообщений (Message reception modes)
+typedef enum {
+   tmr_ONEATIME,        // 0 по одному               - one at a time
+   tmr_QUEUERELEASE,    // 1 до освобождения очереди - before the queue is released
+} tModeReceive;
+// Задаём текущий режим приема сообщений
+int t_ModeReceive=tmr_QUEUERELEASE;
+// Определяем формат сообщения
+int MessFormat=tfm_FULL;
 
 // ****************************************************************************
 // *  Сформировать сообщение о прошедшем времени с начала запуска приложения  *
@@ -79,15 +92,17 @@ void ARDUINO_ISR_ATTR onTimer()
 // ****************************************************************************
 void setup() 
 {
+   // Готовим последовательный порт для сообщений
    Serial.begin(115200);
-
-   // Создаем очередь из структур в количестве QueueSize 
-   tQueue = xQueueCreate(QueueSize, sizeof(struct tStruMessage));
-   if(tQueue==NULL)
-   {
-      Serial.println("SETUP: Очередь не была создана и не может использоваться!");
-   }
-   Serial.println("SETUP: Очередь сформирована!");
+   while (!Serial) continue;
+   Serial.println("Последовательный порт работает!");
+   
+   String inMess=queMessa.Create();
+   //String inMess=queMessa.CreateStatic();
+   // Если не получилось, сообщаем "Очередь не была создана и не может использоваться" 
+   if (inMess==tQueueNotCreate) Serial.println(tQueueNotCreate);
+   // Если очередь получилась, то отмечаем  "Очередь сформирована" 
+   else Serial.println(tQueueBeformed);
 
    // Определяем дополнительную задачу по отправке сообщений
    xTaskCreatePinnedToCore (
@@ -124,15 +139,17 @@ void setup()
 // ****************************************************************************
 void vATask (void *pvParameters) 
 {
-   // Привязываем структуру для для отправки сообщения 
-   struct tStruMessage taskStruMess;
    // Готовим цикл задачи
    while (1) 
    {
       nLoop++;
+      Serial.print("nLoop="); Serial.println(nLoop);
       // Отправляем информационное сообщение "Передано %s сообщение из задачи"
-      SendMess(tQueue,taskStruMess,tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
-      delay (1601); 
+      String inMess=queMessa.Send(tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
+      // Если невозможно отправить сообщение, то сообщаем
+      if (inMess!=EmptyMessage) Serial.println(inMess); 
+      else Serial.println("отправили"); 
+      vTaskDelay(1201/portTICK_PERIOD_MS);
    }
 }
 // ****************************************************************************
@@ -141,13 +158,31 @@ void vATask (void *pvParameters)
 // ****************************************************************************
 void vReceiveMess (void *pvParameters) 
 {
-   // Привязываем структуру для для приема сообщения 
-   struct tStruMessage ReceiveStruMess;
    // Готовим цикл задачи
    while (1) 
    {
-      ReceiveMess(tQueue, ReceiveStruMess, MessFormat);  
-      delay (1300); 
+      // Если требуется выбрать все сообщения из очереди
+      if (t_ModeReceive==tmr_QUEUERELEASE)
+      {
+         int iwait=queMessa.How_many_wait();
+         while(iwait>0)
+         {
+            Serial.print("iwait = ");
+            Serial.println(iwait);
+            Serial.println(queMessa.Receive(MessFormat));
+            vTaskDelay(100/portTICK_PERIOD_MS);
+            iwait=queMessa.How_many_wait();
+         }
+      }
+      // Иначе выбираем одно сообщение
+      else
+      {
+         int iwait=queMessa.How_many_wait();
+         Serial.print("iwait = ");
+         Serial.println(iwait);
+         if (iwait>0) Serial.println(queMessa.Receive(MessFormat));
+      }
+      vTaskDelay(1703/portTICK_PERIOD_MS);
    }
 }
 // ****************************************************************************
@@ -156,7 +191,7 @@ void vReceiveMess (void *pvParameters)
 void loop() 
 {
    int i=7;
-   delay(1300);
+   delay(905);
 }
 
 // **************************************************** QueueHandlMulti.ino ***

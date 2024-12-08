@@ -66,14 +66,9 @@ ittve-ESP32-CAM
 				04-–аботаем с сообщени€ми через очередь\old\simplelib.cpp
 				04-–аботаем с сообщени€ми через очередь\old\simplelib.h
 			+QueueHandlMulti
-				-fil
-					04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\ArduinoANNtve.cpp
-					04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\ArduinoANNtve.h
-					04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\RedesNeurais.ino
-					04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\simplelib.cpp
-					04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\fil\simplelib.h
-				-fil2
 				04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\CommonMessage.h
+				04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\Proba.cpp
+				04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\Proba.h
 				04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QHM_Message.h
 				04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.cpp
 				04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.h
@@ -343,21 +338,29 @@ ittve-ESP32-CAM
 2=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.h
 3=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.cpp
 4=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\CommonMessage.h
+5=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\Proba.cpp
+6=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\Proba.h
 [Selected Project Files]
 Main=
 Selected=04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueueHandlMulti.ino
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueueHandlMulti.ino]
-TopLine=140
-Caret=1,27
+TopLine=117
+Caret=1,109
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QHM_Message.h]
 TopLine=3
 Caret=1,33
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.h]
-TopLine=42
+TopLine=6
 Caret=12,6
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\QueMessage.cpp]
 TopLine=143
 Caret=1,181
 [04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\CommonMessage.h]
-TopLine=49
+TopLine=41
 Caret=1,41
+[04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\Proba.cpp]
+TopLine=1
+Caret=1,7
+[04-–аботаем с сообщени€ми через очередь\QueueHandlMulti\Proba.h]
+TopLine=1
+Caret=1,12

@@ -3,7 +3,7 @@
  *                          Обеспечить передачу и приём сообщений через очередь 
  *                                                   в задачах и из прерываниях
  * 
- * v3.1, 08.12.2024                                   Автор:      Труфанов В.Е.
+ * v3.0, 06.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
@@ -12,6 +12,21 @@
 #pragma once     
 
 #include "Arduino.h"
+
+// Определяем структуру передаваемого сообщения
+struct tStruMessage
+{
+   char Type[7];         // Тип сообщения
+   char Source[7];       // Источник сообщения
+   int  Number;          // Номер сообщения
+   char fmess32[32];     // Первое уточнение сообщения
+   char smess32[32];     // Второе уточнение сообщения
+};
+
+// Количество сообщений в очереди
+// #define tQUEUE_LENGTH 4
+// static StaticQueue_t _QueuePointer;
+// static uint8_t _QueueStorage[tQUEUE_LENGTH * sizeof(tStruMessage)];
 
 // Источники сообщений. При необходимости уменьшить память, занимаемую приложением,
 // следует закомментировать не нужные приложению определения. Таким образом 
@@ -60,30 +75,18 @@ typedef enum {
    tml_SILENT,          // 3 сообщения не выводятся 
 } tMessageOutputLevel;
 
-// Определяем структуру передаваемого сообщения
-struct tStruMessage
-{
-   char Type[7];         // Тип сообщения
-   char Source[7];       // Источник сообщения
-   int  Number;          // Номер сообщения
-   char fmess32[32];     // Первое уточнение сообщения
-   char smess32[32];     // Второе уточнение сообщения
-};
-
 // Определяем пустое сообщение
 static String EmptyMessage="";
 
 class TQueMessage
 {
    public:
-
-   void attachFunction(void (*function)(String s));
-   void callFunction(String s);
   
-   // Построить объект (конструктор класса)
-   TQueMessage(int iQueueSize=4);
-   // Создать очередь
-   String Create();
+   // Конструктор класса
+   TQueMessage();
+   
+   String Create(int iQueueSize=4);
+   //String CreateStatic();
 
    String Send(String Type,String Source,int Number,int fmess32); 
    char *Receive(int t_MessFormat=tfm_FULL);
@@ -93,8 +96,6 @@ class TQueMessage
    int How_many_wait(); 
 
    private:
-
-   void (*atatchedF)(String s);
   
    struct tStruMessage taskStruMess;    // структура для для отправки сообщения 
    struct tStruMessage receiveStruMess; // структура для для приема сообщения 
