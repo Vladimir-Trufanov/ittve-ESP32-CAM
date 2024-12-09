@@ -12,8 +12,8 @@
 #include "QueMessage.h"     // заголовочный файл класса TQueMessage 
 #include "CommonMessage.h"  // общий реестр сообщений
 #include "QHM_Message.h"    // сообщения примера по обработке очередей
-
 TQueMessage queMessa;       // объект работы с сообщениями через очередь
+
 unsigned long nLoop=0UL;    // счётчик циклов задачи отправки сообщений 
 // Режимы приема сообщений (Message reception modes)
 typedef enum {
@@ -88,12 +88,6 @@ void ARDUINO_ISR_ATTR onTimer()
    */
 }
 
-void printKek(char asi[], char* chval) 
-{
-   Serial.print(asi);
-   Serial.println(chval);
-}
-
 void lli(char* chval) 
 {
   Serial.print("chval=");
@@ -110,10 +104,10 @@ void setup()
    while (!Serial) continue;
    Serial.println("Последовательный порт работает!");
 
-   // подключили функцию printKek
-   queMessa.attachFunction(printKek);
 
    // Создаем очередь
+   // подключили функцию transmess
+   queMessa.attachFunction(transmess);
    String inMess="";
    inMess=queMessa.Create();
    // Если не получилось, сообщаем "Очередь не была создана и не может использоваться" 
@@ -213,8 +207,8 @@ void vReceiveMess (void *pvParameters)
          {
             //Serial.println(queMessa.Receive(MessFormat));
             //lli(queMessa.Receive(MessFormat));
-            static char str[] = "Hello: ";
-            queMessa.Post(str,queMessa.Receive(MessFormat));
+            //static char str[] = "Hello: ";
+            queMessa.Post(queMessa.Receive(MessFormat));
          }
       }
       // вызвали подключенную функцию

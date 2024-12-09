@@ -13,6 +13,18 @@
 
 #include "Arduino.h"
 
+// Передатчик сообщения на периферию с возможным префиксом:
+// static char str[] = "Hello: ";
+// queMessa.Post(queMessa.Receive(MessFormat),str);
+
+//inline void transmess(char* mess, char prefix[]="") 
+inline void transmess(char *mess, char *prefix="") 
+{
+   // Выводим массивы символов с 0-вым окончанием
+   Serial.print(prefix);  // передали префикс (по умолчанию отсутствует)
+   Serial.println(mess);  // передали сообщение
+}
+
 // Источники сообщений. При необходимости уменьшить память, занимаемую приложением,
 // следует закомментировать не нужные приложению определения. Таким образом 
 // исключатся лишние перечисления и их обрабатывающие функции.
@@ -73,15 +85,18 @@ struct tStruMessage
 // Определяем пустое сообщение
 static String EmptyMessage="";
 //static char tBuffer[256];                   // буфер сообщения на 255 символов и завершающий ноль
-static char chval[]="Horosho!";
+//static char chval[]="Horosho!";
 
 
 class TQueMessage
 {
    public:
 
-   void attachFunction(void (*function)(char asi[], char* chval));
-   void Post(char asi[], char* chval);
+   //void attachFunction(void (*function)(char* mess, char prefix[]));
+   //void Post(char* mess, char prefix[]="");
+   
+   void attachFunction(void (*function)(char *mess, char *prefix));
+   void Post(char *mess, char *prefix="");
   
    // Построить объект (конструктор класса)
    TQueMessage(int iQueueSize=4);
@@ -97,7 +112,8 @@ class TQueMessage
 
    private:
 
-   void (*atatchedF)(char asi[], char* chval);
+   //void (*atatchedF)(char* mess, char prefix[]);
+   void (*atatchedF)(char *mess, char *prefix);
   
    struct tStruMessage taskStruMess;    // структура для для отправки сообщения 
    struct tStruMessage receiveStruMess; // структура для для приема сообщения 
