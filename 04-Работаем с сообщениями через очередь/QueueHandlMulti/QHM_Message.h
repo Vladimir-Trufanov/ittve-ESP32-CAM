@@ -14,8 +14,8 @@
 #ifdef tmk_QHM
 // Определяем перечисления примера обработки очередей --- QueueHandlMulti [QHM]
 typedef enum {
-   tqhm_ItsBeenMS,      // 0 "Прошло %s миллисекунд"                           - it's been %s milliseconds
-   tqhm_SendFromTask,   // 1 "Передано %s сообщение из задачи"                 - %s message from the task has been sent
+   tqhm_ItsBeenMS,      // 0 "Прошло %d миллисекунд"                           - it's been %s milliseconds
+   tqhm_SendFromTask,   // 1 "Передано %d сообщение из задачи"                 - %s message from the task has been sent
    tqhm_StructNoSend,   // 2 "Не удалось отправить структуру после %s тиков"   - structure could not be sent after %s ticks
    tqhm_TaskNoQueue,    // 3 "Очереди структур нет в задаче"                   - there is no queue of structures in the task
    tqhm_SendLongMess,   // 4 "Максимально длинное сообщение из 255 байт ..."  

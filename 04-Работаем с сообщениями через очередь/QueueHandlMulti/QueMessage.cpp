@@ -49,7 +49,39 @@ String TQueMessage::Create()
    return inMess;
 };
 // ****************************************************************************
-// *            Отправить сообщение с первым уточнением целого типа           *
+// * 1 группа сообщений:            Отправить просто сообщение, без уточнений *
+// ****************************************************************************
+String TQueMessage::SendISR(String Type, String Source, int Number) 
+{
+   // Инициируем пустое сообщение
+   String inMess=EmptyMessage;
+   // Если очередь создана, то отправляем сообщение в очередь
+   if (tQueue!=0)
+   {
+      // Формируем сообщение для передачи в очередь
+      strcpy(taskStruMess.Type, Type.c_str());  
+      strcpy(taskStruMess.Source, Source.c_str());  
+      taskStruMess.Number=Number;
+      strcpy(taskStruMess.fmess32, EmptyMessage.c_str());
+      strcpy(taskStruMess.smess32, EmptyMessage.c_str()); 
+      // Отправляем сообщение
+      // Сбрасываем признак переключения на более приоритетную задачу
+      // после прерывания 
+      xHigherPriorityTaskWoken = pdFALSE;
+      // Отправляем сообщение в структуре AMessage 
+      if (xQueueSendFromISR(tQueue,&taskStruMess,&xHigherPriorityTaskWoken) != pdPASS)
+      {
+         // если "Не удалось отправить структуру из прерывания!" 
+         sprintf(tBuffer,tFailSendInrupt); 
+         inMess=String(tBuffer);
+      }
+   }
+   // Отмечаем "Отправка сообщения: очередь структур не создана!" 
+   else inMess=tQueueNotSend;
+   return inMess; 
+}
+// ****************************************************************************
+// *  2 группа:           Отправить сообщение с первым уточнением целого типа *
 // ****************************************************************************
 String TQueMessage::Send(String Type, String Source, int Number, int fmess32) 
 {
@@ -68,6 +100,36 @@ String TQueMessage::Send(String Type, String Source, int Number, int fmess32)
       if (xQueueSend(tQueue,&taskStruMess,TicksIsBusy) != pdPASS)
       {
          sprintf(tBuffer,"Не удалось отправить структуру после %d тиков!",TicksIsBusy); 
+         inMess=String(tBuffer);
+      }
+   }
+   // Отмечаем "Отправка сообщения: очередь структур не создана!" 
+   else inMess=tQueueNotSend;
+   return inMess; 
+}
+
+String TQueMessage::SendISR(String Type, String Source, int Number, int fmess32) 
+{
+   // Инициируем пустое сообщение
+   String inMess=EmptyMessage;
+   // Если очередь создана, то отправляем сообщение в очередь
+   if (tQueue!=0)
+   {
+      // Формируем сообщение для передачи в очередь
+      strcpy(taskStruMess.Type, Type.c_str());  
+      strcpy(taskStruMess.Source, Source.c_str());  
+      taskStruMess.Number=Number;
+      sprintf(taskStruMess.fmess32, "%d", fmess32);
+      strcpy(taskStruMess.smess32, EmptyMessage.c_str()); 
+      // Отправляем сообщение
+      // Сбрасываем признак переключения на более приоритетную задачу
+      // после прерывания 
+      xHigherPriorityTaskWoken = pdFALSE;
+      // Отправляем сообщение в структуре AMessage 
+      if (xQueueSendFromISR(tQueue,&taskStruMess,&xHigherPriorityTaskWoken) != pdPASS)
+      {
+         // если "Не удалось отправить структуру из прерывания!" 
+         sprintf(tBuffer,tFailSendInrupt); 
          inMess=String(tBuffer);
       }
    }

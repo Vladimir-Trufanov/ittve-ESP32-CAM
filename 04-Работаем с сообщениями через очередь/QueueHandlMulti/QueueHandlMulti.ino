@@ -19,7 +19,7 @@ typedef enum {
    tmr_QUEUERELEASE,    // 1 до освобождения очереди - before the queue is released
 } tModeReceive;
 // Задаём текущий режим приема сообщений
-int t_ModeReceive=tmr_ONEATIME;
+int t_ModeReceive=tmr_QUEUERELEASE;
 // Определяем формат сообщения
 int MessFormat=tfm_FULL;
 
@@ -34,56 +34,20 @@ int lastMillis = millis();
 
 void ARDUINO_ISR_ATTR onTimer() 
 {
-   // Размещаем структуру для сообщения в статической памяти для того,
-   // чтобы уменьшить фрагментацию кучи 
-   // static DRAM_ATTR struct AMessage xiMessage;
-   // Выделяем переменную планировщикe задач FreeRTOS для указания
-   // необходимости переключения после прерывания на более приоритетную 
-   // задачу, связанную с очередью
-   static DRAM_ATTR BaseType_t xHigherPriorityTaskWoken;
-   // Выделяем переменную для текущего момента времени
-   static DRAM_ATTR int currMillis;
-   // Выделяем переменную для прошедшего времени с начала запуска приложения
-   static DRAM_ATTR int timeMillis;
-   
-   int i=15;
-   
-   /* 
-   // Если в очереди есть место, будем размещать сообщение
-   if (xQueue!=0)
-   {
-      // Сбрасываем признак переключения на более приоритетную задачу
-      // после прерывания 
-      xHigherPriorityTaskWoken = pdFALSE;
-      // Определяем время, прошедшее с начала запуска приложения
-      currMillis = millis(); 
-      if (currMillis < lastMillis) lastMillis=0;
-      timeMillis=currMillis-lastMillis;
-      // Формируем сообщение для передачи в очередь
-      sprintf(xiMessage.ucData, "Прошло %d миллисекунд",timeMillis);
-      xiMessage.ucSize = 0;
-      while (xiMessage.ucData[xiMessage.ucSize]>0) 
-      {
-         xiMessage.ucSize++;
-      }
-      // Отправляем сообщение в структуре AMessage 
-      if (xQueueSendFromISR(xQueue, &xiMessage, &xHigherPriorityTaskWoken) != pdPASS)
-      {
-         Serial.println("ISR: Не удалось отправить структуру!");
-      }
-   }
-   else 
-   {
-      Serial.println("ISR: Очередь для структур не создана!");
-   }
-   // Если требуется отдать управление планировщику на переключение 
-   // после прерывания на более приоритетную задачу, делаем это 
-   if (xHigherPriorityTaskWoken)
-   {
-      Serial.println("ISR: Управление передаётся планировщику!");
-      portYIELD_FROM_ISR();
-   }
-   */
+   // Размещаем переменные времени для сообщений в статической памяти 
+   // для того, чтобы уменьшить фрагментацию кучи
+   static DRAM_ATTR int currMillis;  // переменная для текущего момента времени
+   static DRAM_ATTR int timeMillis;  // для прошедшего времени с начала запуска приложения
+
+   // Определяем время, прошедшее с начала запуска приложения
+   currMillis = millis(); 
+   if (currMillis < lastMillis) lastMillis=0;
+   timeMillis=currMillis-lastMillis;
+
+   // Отправляем информационное сообщение "Прошло %d миллисекунд"
+   String inMess=queMessa.SendISR(tmt_NOTICE,tmk_QHM,tqhm_ItsBeenMS,timeMillis);
+   // Если невозможно отправить сообщение, то сообщаем
+   if (inMess!=EmptyMessage) Serial.println(inMess); 
 }
 // ****************************************************************************
 // *                          Инициировать приложение                         *
@@ -130,10 +94,10 @@ void setup()
    timer = timerBegin(1000000);
    // Подключаем функцию обработчика прерывания от таймера - onTimer
    timerAttachInterrupt(timer, &onTimer);
-   // Настраиваем таймер: интервал перезапуска - 1 секунда (1000000 микросекунд),
+   // Настраиваем таймер: интервал перезапуска - почти 1 секунда (997000 микросекунд),
    // всегда повторяем перезапуск (третий параметр = true), неограниченное число 
    // раз (четвертый параметр = 0) 
-   timerAlarm(timer, 1400000, true, 0);
+   timerAlarm(timer, 997000, true, 0);
 }
 // ****************************************************************************
 // *           Выполнять ПЕРЕДАЧУ СООБЩЕНИЯ ИЗ ЗАДАЧИ в бесконечном цикле     *
@@ -149,7 +113,7 @@ void vATask (void *pvParameters)
       String inMess=queMessa.Send(tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
       // Если невозможно отправить сообщение, то сообщаем
       if (inMess!=EmptyMessage) Serial.println(inMess); 
-      vTaskDelay(1201/portTICK_PERIOD_MS);
+      vTaskDelay(1301/portTICK_PERIOD_MS);
    }
 }
 // ****************************************************************************
@@ -185,7 +149,7 @@ void vReceiveMess (void *pvParameters)
             queMessa.Post(queMessa.Receive(MessFormat));
          }
       }
-      vTaskDelay(703/portTICK_PERIOD_MS);
+      vTaskDelay(503/portTICK_PERIOD_MS);
    }
 }
 
@@ -195,7 +159,7 @@ void vReceiveMess (void *pvParameters)
 void loop() 
 {
    int i=7;
-   delay(905);
+   delay(2905);
 }
 
 // **************************************************** QueueHandlMulti.ino ***

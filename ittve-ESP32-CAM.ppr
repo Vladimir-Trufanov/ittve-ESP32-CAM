@@ -56,25 +56,20 @@ ittve-ESP32-CAM
 			03-Пробуем ноты на ардуино\Arduino Pro Mini.doc
 			03-Пробуем ноты на ардуино\Пробуем ноты на ардуино.md
 		+04-Работаем с сообщениями через очередь
-			-old
-				04-Работаем с сообщениями через очередь\old\ArduinoANNtve.cpp
-				04-Работаем с сообщениями через очередь\old\ArduinoANNtve.h
-				04-Работаем с сообщениями через очередь\old\QueMessa.h
-				04-Работаем с сообщениями через очередь\old\QueMessa.hpp
-				04-Работаем с сообщениями через очередь\old\QueueHandlMulti.ino
-				04-Работаем с сообщениями через очередь\old\RedesNeurais.ino
-				04-Работаем с сообщениями через очередь\old\simplelib.cpp
-				04-Работаем с сообщениями через очередь\old\simplelib.h
 			+QueueHandlMulti
 				04-Работаем с сообщениями через очередь\QueueHandlMulti\CommonMessage.h
-				04-Работаем с сообщениями через очередь\QueueHandlMulti\Proba.cpp
-				04-Работаем с сообщениями через очередь\QueueHandlMulti\Proba.h
 				04-Работаем с сообщениями через очередь\QueueHandlMulti\QHM_Message.h
 				04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.cpp
 				04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.h
 				04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino
 			-ResetReason2
 				04-Работаем с сообщениями через очередь\ResetReason2\ResetReason2.ino
+			-Незавершённая попытка xQueueCreateStatic в классе
+				04-Работаем с сообщениями через очередь\Незавершённая попытка xQueueCreateStatic в классе\CommonMessage.h
+				04-Работаем с сообщениями через очередь\Незавершённая попытка xQueueCreateStatic в классе\QHM_Message.h
+				04-Работаем с сообщениями через очередь\Незавершённая попытка xQueueCreateStatic в классе\QueMessage.cpp
+				04-Работаем с сообщениями через очередь\Незавершённая попытка xQueueCreateStatic в классе\QueMessage.h
+				04-Работаем с сообщениями через очередь\Незавершённая попытка xQueueCreateStatic в классе\QueueHandlMulti.ino
 			04-Работаем с сообщениями через очередь\04-Работаем с сообщениями через очередь.md
 		-05-zastavlyaem-esp32-cam-migat-lampochkami
 			-BlinkOnCam32
@@ -333,34 +328,18 @@ ittve-ESP32-CAM
 		LICENSE
 		README.md
 [Open project files]
-0=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino
-1=04-Работаем с сообщениями через очередь\QueueHandlMulti\QHM_Message.h
+0=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.cpp
+1=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino
 2=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.h
-3=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.cpp
-4=04-Работаем с сообщениями через очередь\QueueHandlMulti\CommonMessage.h
-5=04-Работаем с сообщениями через очередь\QueueHandlMulti\Proba.cpp
-6=04-Работаем с сообщениями через очередь\QueueHandlMulti\Proba.h
 [Selected Project Files]
 Main=
-Selected=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino
-[04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino]
-TopLine=117
-Caret=1,109
-[04-Работаем с сообщениями через очередь\QueueHandlMulti\QHM_Message.h]
-TopLine=3
-Caret=1,33
-[04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.h]
-TopLine=6
-Caret=12,6
+Selected=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.cpp
 [04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.cpp]
-TopLine=143
-Caret=1,181
-[04-Работаем с сообщениями через очередь\QueueHandlMulti\CommonMessage.h]
-TopLine=41
-Caret=1,41
-[04-Работаем с сообщениями через очередь\QueueHandlMulti\Proba.cpp]
-TopLine=1
-Caret=1,7
-[04-Работаем с сообщениями через очередь\QueueHandlMulti\Proba.h]
-TopLine=1
-Caret=1,12
+TopLine=68
+Caret=65,98
+[04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino]
+TopLine=32
+Caret=6,43
+[04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.h]
+TopLine=39
+Caret=24,57

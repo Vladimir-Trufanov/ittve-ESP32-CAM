@@ -54,6 +54,7 @@ typedef enum {
 // TQueMessage::Send     "Не удалось отправить структуру после %d тиков!"
 #define tQueueNotReceive "Прием сообщения: очередь для структур не создана!"            
 #define tNotAfterTicks   "Не удалось принять структуру после всех тиков!"     // not possible to accept the structure even after all the ticks
+#define tFailSendInrupt  "Не удалось отправить структуру из прерывания!"      // failed to send structure from interrupt
 
 // Типы сообщений
 #define tmt_NOTICE  "NOTICE"     // информационное сообщение приложения 
@@ -91,8 +92,11 @@ class TQueMessage
    TQueMessage(int iQueueSize=4);
    // Создать очередь
    String Create();
-   // Отправить сообщение в очередь
+   // 1 группа сообщений: "Отправить просто сообщение, без уточнений"
+   String SendISR(String Type,String Source,int Number);
+   // 2 группа: "Отправить сообщение с первым уточнением целого типа"
    String Send(String Type,String Source,int Number,int fmess32); 
+   String SendISR(String Type,String Source,int Number,int fmess32); 
    // Выбрать сообщение из очереди
    char *Receive(int t_MessFormat=tfm_FULL);
    // Определить количество свободных мест в очереди
@@ -115,6 +119,11 @@ class TQueMessage
    char tBuffer[256];                           // буфер сообщения на 255 символов и завершающий ноль
    char tMess[256];                             // буфер предварительного размещения контекста сообщения
    char dtime[20];                              // буфер даты и времени
+   
+   // Выделяем переменную планировщику задач FreeRTOS для указания
+   // необходимости переключения после прерывания на более приоритетную 
+   // задачу, связанную с очередью
+   BaseType_t xHigherPriorityTaskWoken;
   
    // Извлечь сообщение по источнику перечисления и номеру сообщения
    void ExtractMess(String Source,int Number,String fmess32,String smess32);
