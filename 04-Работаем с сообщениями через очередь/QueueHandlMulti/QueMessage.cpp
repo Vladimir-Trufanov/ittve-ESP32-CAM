@@ -3,7 +3,7 @@
  *                          Обеспечить передачу и приём сообщений через очередь 
  *                                                   в задачах и из прерываниях
  * 
- * v3.1, 08.12.2024                                   Автор:      Труфанов В.Е.
+ * v3.2, 09.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
@@ -14,25 +14,27 @@
 #include "CommonMessage.h"  // общий реестр сообщений
 #include "QHM_Message.h"    // сообщения примера по обработке очередей
 
-//void TQueMessage::attachFunction(void (*function)(char* mess, char prefix[])) 
-void TQueMessage::attachFunction(void (*function)(char *mess, char *prefix)) 
-{
-   atatchedF = *function;  
-}
-
-//void TQueMessage::Post(char* mess, char prefix[]) 
-void TQueMessage::Post(char *mess, char *prefix) 
-{
-   (*atatchedF)(mess,prefix);
-}
-
 // ****************************************************************************
-// *                Построить объект (конструктор класса)                     *
+// *                  Построить объект (конструктор класса)                   *
 // ****************************************************************************
 TQueMessage::TQueMessage(int iQueueSize)
 {
    // Определяем размер очереди из структур 
    QueueSize=iQueueSize;
+}
+// ****************************************************************************
+// *                 Прикрепить внешнюю функцию по параметрам                 *
+// ****************************************************************************
+void TQueMessage::attachFunction(void (*function)(char *mess, char *prefix)) 
+{
+   atatchedF = *function;  
+}
+// ****************************************************************************
+// *                     Отправить сообщение на периферию                     *
+// ****************************************************************************
+void TQueMessage::Post(char *mess, char *prefix) 
+{
+   (*atatchedF)(mess,prefix);
 }
 // ****************************************************************************
 // *                        Создать очередь сообщений                         *
@@ -56,8 +58,6 @@ String TQueMessage::Send(String Type, String Source, int Number, int fmess32)
    // Если очередь создана, то отправляем сообщение в очередь
    if (tQueue!=0)
    {
-      //int Space = int(uxQueueSpacesAvailable(tQueue));
-      //Serial.print("До отправки: ");  Serial.println(Space);
       // Формируем сообщение для передачи в очередь
       strcpy(taskStruMess.Type, Type.c_str());  
       strcpy(taskStruMess.Source, Source.c_str());  
@@ -70,9 +70,6 @@ String TQueMessage::Send(String Type, String Source, int Number, int fmess32)
          sprintf(tBuffer,"Не удалось отправить структуру после %d тиков!",TicksIsBusy); 
          inMess=String(tBuffer);
       }
-      //Space = int(uxQueueSpacesAvailable(tQueue));
-      //Serial.print("После отправки: ");  Serial.println(Space);
-      //Serial.println("Отправлено сообщение!");
    }
    // Отмечаем "Отправка сообщения: очередь структур не создана!" 
    else inMess=tQueueNotSend;
@@ -111,7 +108,7 @@ void TQueMessage::ExtractTime()
    strftime(dtime,20,"%Y-%m-%d,%H:%M:%S",localtime(&rawtime));
 }
 // ****************************************************************************
-// *            Извлечь сообщение по источнику и номеру сообщения             *
+// *       Извлечь сообщение по источнику перечисления и номеру сообщения     *
 // ****************************************************************************
 void TQueMessage::ExtractMess(String Source, int Number, String fmess32, String smess32) 
 {
@@ -196,7 +193,6 @@ char *TQueMessage::Receive(int t_MessFormat)
    {
       // Определяем количество свободных мест в очереди
       int Space = int(uxQueueSpacesAvailable(tQueue));
-      //Serial.print("До приёма: ");  Serial.println(Space);
 
       // Выбираем сообщение из очереди с блокировкой на TicksIsBusy тактов, 
       // если сообщение недоступно
@@ -208,8 +204,6 @@ char *TQueMessage::Receive(int t_MessFormat)
             sprintf(tBuffer,tNotAfterTicks); 
          }
          CollectMessage(t_MessFormat);
-         //Space = int(uxQueueSpacesAvailable(tQueue));
-         //Serial.print("После приёма: ");  Serial.println(Space);
       }
    }
    // Отмечаем "Прием сообщения: очередь для структур не создана!"

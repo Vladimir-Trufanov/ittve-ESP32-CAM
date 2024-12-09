@@ -3,19 +3,17 @@
  *                        Пример передачи сообщения из задачи и из прерывания с
  *                                                     приемом в основном цикле
  * 
- * v3.1, 08.12.2024                                   Автор:      Труфанов В.Е.
+ * v3.2, 09.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
-
 
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
 #include "QueMessage.h"     // заголовочный файл класса TQueMessage 
 #include "CommonMessage.h"  // общий реестр сообщений
 #include "QHM_Message.h"    // сообщения примера по обработке очередей
 TQueMessage queMessa;       // объект работы с сообщениями через очередь
-
 unsigned long nLoop=0UL;    // счётчик циклов задачи отправки сообщений 
-// Режимы приема сообщений (Message reception modes)
+// Перечисляем режимы приема сообщений (Message reception modes)
 typedef enum {
    tmr_ONEATIME,        // 0 по одному               - one at a time
    tmr_QUEUERELEASE,    // 1 до освобождения очереди - before the queue is released
@@ -87,13 +85,6 @@ void ARDUINO_ISR_ATTR onTimer()
    }
    */
 }
-
-void lli(char* chval) 
-{
-  Serial.print("chval=");
-  Serial.println(chval);
-}
-
 // ****************************************************************************
 // *                          Инициировать приложение                         *
 // ****************************************************************************
@@ -103,17 +94,17 @@ void setup()
    Serial.begin(115200);
    while (!Serial) continue;
    Serial.println("Последовательный порт работает!");
-
-
    // Создаем очередь
-   // подключили функцию transmess
-   queMessa.attachFunction(transmess);
    String inMess="";
    inMess=queMessa.Create();
    // Если не получилось, сообщаем "Очередь не была создана и не может использоваться" 
    if (inMess==tQueueNotCreate) Serial.println(tQueueNotCreate);
    // Если очередь получилась, то отмечаем  "Очередь сформирована" 
    else Serial.println(tQueueBeformed);
+   // Подключаем функцию передачи сообщения на периферию - transmess
+   // (функция может быть заменена на любую другую,
+   // но с соответствующим контекстом входящих параметров)
+   queMessa.attachFunction(transmess);
 
    // Определяем дополнительную задачу по отправке сообщений
    xTaskCreatePinnedToCore (
@@ -165,34 +156,21 @@ void vATask (void *pvParameters)
 // *             Обеспечить приём всех сообщений и передачу их                *
 // *                          в последовательный порт                         *
 // ****************************************************************************
-
-/*
-char stri[] = "HellpMe";
-char* massive(char *istr)
-{
-   return istr;
-}
-
-void square(int* val) 
-{
-  *val = *val * *val;
-}
-*/
-
 void vReceiveMess (void *pvParameters) 
 {
+   // Определяем переменную для числа сообщений, ожидающих выгрузку из очереди 
+   int iwait;
    // Готовим цикл задачи
    while (1) 
    {
       // Если требуется выбрать все сообщения из очереди
       if (t_ModeReceive==tmr_QUEUERELEASE)
       {
-         int iwait=queMessa.How_many_wait();
+         iwait=queMessa.How_many_wait();
          while(iwait>0)
          {
-            Serial.print("iwait = ");
-            Serial.println(iwait);
-            Serial.println(queMessa.Receive(MessFormat));
+            // Выбираем из очереди и отправляем сообщение на периферию
+            queMessa.Post(queMessa.Receive(MessFormat));
             vTaskDelay(100/portTICK_PERIOD_MS);
             iwait=queMessa.How_many_wait();
          }
@@ -200,30 +178,13 @@ void vReceiveMess (void *pvParameters)
       // Иначе выбираем одно сообщение
       else
       {
-         int iwait=queMessa.How_many_wait();
-         Serial.print("iwait = ");
-         Serial.println(iwait);
+         iwait=queMessa.How_many_wait();
          if (iwait>0) 
          {
-            //Serial.println(queMessa.Receive(MessFormat));
-            //lli(queMessa.Receive(MessFormat));
-            //static char str[] = "Hello: ";
+            // Выбираем из очереди и отправляем сообщение на периферию
             queMessa.Post(queMessa.Receive(MessFormat));
          }
       }
-      // вызвали подключенную функцию
-      
-      //static char str[] = "Hello!";
-      //queMessa.Post(str);
-
-      //Serial.println(massive(stri));
-      //int value;
-      //value = 7;  // создали переменную
-      //square(&value); // передали её адрес в функцию
-      //Serial.println(value);
-      //static char chval[]="Хорошо!";
-      //lli(&chval[0]); 
-      
       vTaskDelay(703/portTICK_PERIOD_MS);
    }
 }

@@ -3,7 +3,7 @@
  *                          Обеспечить передачу и приём сообщений через очередь 
  *                                                   в задачах и из прерываниях
  * 
- * v3.1, 08.12.2024                                   Автор:      Труфанов В.Е.
+ * v3.2, 09.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
@@ -16,8 +16,6 @@
 // Передатчик сообщения на периферию с возможным префиксом:
 // static char str[] = "Hello: ";
 // queMessa.Post(queMessa.Receive(MessFormat),str);
-
-//inline void transmess(char* mess, char prefix[]="") 
 inline void transmess(char *mess, char *prefix="") 
 {
    // Выводим массивы символов с 0-вым окончанием
@@ -84,48 +82,45 @@ struct tStruMessage
 
 // Определяем пустое сообщение
 static String EmptyMessage="";
-//static char tBuffer[256];                   // буфер сообщения на 255 символов и завершающий ноль
-//static char chval[]="Horosho!";
-
 
 class TQueMessage
 {
    public:
 
-   //void attachFunction(void (*function)(char* mess, char prefix[]));
-   //void Post(char* mess, char prefix[]="");
-   
-   void attachFunction(void (*function)(char *mess, char *prefix));
-   void Post(char *mess, char *prefix="");
-  
    // Построить объект (конструктор класса)
    TQueMessage(int iQueueSize=4);
    // Создать очередь
    String Create();
-
+   // Отправить сообщение в очередь
    String Send(String Type,String Source,int Number,int fmess32); 
+   // Выбрать сообщение из очереди
    char *Receive(int t_MessFormat=tfm_FULL);
    // Определить количество свободных мест в очереди
    int How_many_free();                
    // Определить, сколько сообщений накопилось в очереди и их можно выгрузить 
    int How_many_wait(); 
+   // Прикрепить внешнюю функцию по параметрам
+   void attachFunction(void (*function)(char *mess, char *prefix));
+   // Отправить сообщение на периферию
+   void Post(char *mess, char *prefix="");
 
    private:
 
-   //void (*atatchedF)(char* mess, char prefix[]);
-   void (*atatchedF)(char *mess, char *prefix);
+   void (*atatchedF)(char *mess, char *prefix); // прикреплённая функция
+   struct tStruMessage taskStruMess;            // структура для для отправки сообщения 
+   struct tStruMessage receiveStruMess;         // структура для для приема сообщения 
+   QueueHandle_t tQueue;                        // очередь (дескриптор) сообщений из структур tStruMessage   
+   int QueueSize;                               // размер очереди 
+   int TicksIsBusy=8;                           // число тактов блокировки задачи при занятой очереди
+   char tBuffer[256];                           // буфер сообщения на 255 символов и завершающий ноль
+   char tMess[256];                             // буфер предварительного размещения контекста сообщения
+   char dtime[20];                              // буфер даты и времени
   
-   struct tStruMessage taskStruMess;    // структура для для отправки сообщения 
-   struct tStruMessage receiveStruMess; // структура для для приема сообщения 
-   QueueHandle_t tQueue;                // очередь (дескриптор) будущих сообщений из структур tStruMessage   
-   int QueueSize;                       // размер очереди 
-   int TicksIsBusy=8;                   // число тактов блокировки задач при занятой очереди
-   char tBuffer[256];                   // буфер сообщения на 255 символов и завершающий ноль
-   char tMess[256];                     // буфер предварительного размещения контекста сообщения
-   char dtime[20];                      // буфер даты и времени
-  
+   // Извлечь сообщение по источнику перечисления и номеру сообщения
    void ExtractMess(String Source,int Number,String fmess32,String smess32);
+   // Извлечь информацию о текущем времени в отформатированном виде 
    void ExtractTime();
+   // Собрать сообщение
    void CollectMessage(int t_MessFormat);
 };
 
