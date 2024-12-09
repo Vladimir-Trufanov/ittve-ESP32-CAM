@@ -14,14 +14,14 @@
 #include "CommonMessage.h"  // общий реестр сообщений
 #include "QHM_Message.h"    // сообщения примера по обработке очередей
 
-void TQueMessage::attachFunction(void (*function)(char asi[])) 
+void TQueMessage::attachFunction(void (*function)(char asi[], char* chval)) 
 {
    atatchedF = *function;  
 }
 
-void TQueMessage::Post(char asi[]) 
+void TQueMessage::Post(char asi[], char* chval) 
 {
-   (*atatchedF)(asi);
+   (*atatchedF)(asi, chval);
 }
 
 // ****************************************************************************

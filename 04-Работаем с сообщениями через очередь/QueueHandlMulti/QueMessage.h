@@ -80,8 +80,8 @@ class TQueMessage
 {
    public:
 
-   void attachFunction(void (*function)(char asi[]));
-   void Post(char asi[]);
+   void attachFunction(void (*function)(char asi[], char* chval));
+   void Post(char asi[], char* chval);
   
    // Построить объект (конструктор класса)
    TQueMessage(int iQueueSize=4);
@@ -97,7 +97,7 @@ class TQueMessage
 
    private:
 
-   void (*atatchedF)(char asi[]);
+   void (*atatchedF)(char asi[], char* chval);
   
    struct tStruMessage taskStruMess;    // структура для для отправки сообщения 
    struct tStruMessage receiveStruMess; // структура для для приема сообщения 
