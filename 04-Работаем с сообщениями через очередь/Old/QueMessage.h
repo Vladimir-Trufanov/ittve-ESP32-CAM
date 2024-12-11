@@ -3,7 +3,7 @@
  *                          Обеспечить передачу и приём сообщений через очередь 
  *                                                   в задачах и из прерываниях
  * 
- * v3.2.1, 11.12.2024                                 Автор:      Труфанов В.Е.
+ * v3.2, 09.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
@@ -13,7 +13,9 @@
 
 #include "Arduino.h"
 
-// Передатчик сообщения на периферию с возможным префиксом (по умолчанию):
+// Передатчик сообщения на периферию с возможным префиксом:
+// static char str[] = "Hello: ";
+// queMessa.Post(queMessa.Receive(MessFormat),str);
 inline void transmess(char *mess, char *prefix="") 
 {
    // Выводим массивы символов с 0-вым окончанием
@@ -21,18 +23,16 @@ inline void transmess(char *mess, char *prefix="")
    Serial.println(mess);  // передали сообщение
 }
 
-// Пример передачи сообщения из очереди через передатчик на периферию:
-//    static char str[] = "Hello: ";
-//    queMessa.Post(queMessa.Receive(MessFormat),str);
+// Источники сообщений. При необходимости уменьшить память, занимаемую приложением,
+// следует закомментировать не нужные приложению определения. Таким образом 
+// исключатся лишние перечисления и их обрабатывающие функции.
+   #define tmk_WDT     "WDT"     // общие сообщения сторожевого таймера
+   #define tmk_ISR     "ISR"     // общие сообщения из обработчиков прерываний
+// #define tmk_KVIZZY  "KVIZZY"  // сообщения приложения KVIZZY 
+// #define tmk_KRUTJAK "KRUTJAK" // сообщения приложения KVIZZY 
+   #define tmk_QHM     "QHM"     // пример по обработке очередей
 
-// Типы сообщений
-#define tmt_NOTICE  "NOTICE"     // информационное сообщение приложения 
-#define tmt_TRACE   "TRACE"      // трассировочное сообщение при отладке
-#define tmt_WARNING "WARNING"    // предупреждение, позволяющие работать задаче дальше 
-#define tmt_ERROR   "ERROR"      // ошибка, не дающие возможность правильно выполнить задачу
-#define tmt_FATAL   "FATAL"      // ошибка, вызывающие перезагрузку контроллера 
-
-// Форматы вывода сообщений в приложениях: краткий, полный, без даты и времени.
+// Существуют три формата вывода сообщений в приложениях: краткий, полный, без даты и времени.
 // В полном сообщении указывается дата и время извлечения сообщения из очереди, 
 // тип сообщения, источник сообщения, номер сообщения источника, текст сообщения
 typedef enum {
@@ -55,6 +55,21 @@ typedef enum {
 #define tQueueNotReceive "Прием сообщения: очередь для структур не создана!"            
 #define tNotAfterTicks   "Не удалось принять структуру после всех тиков!"     // not possible to accept the structure even after all the ticks
 #define tFailSendInrupt  "Не удалось отправить структуру из прерывания!"      // failed to send structure from interrupt
+
+// Типы сообщений
+#define tmt_NOTICE  "NOTICE"     // информационное сообщение приложения 
+#define tmt_TRACE   "TRACE"      // трассировочное сообщение при отладке
+#define tmt_WARNING "WARNING"    // предупреждение, позволяющие работать задаче дальше 
+#define tmt_ERROR   "ERROR"      // ошибка, не дающие возможность правильно выполнить задачу
+#define tmt_FATAL   "FATAL"      // ошибка, вызывающие перезагрузку контроллера 
+
+// Уровни вывода сообщений
+typedef enum {
+   tml_VERBOSE,         // 0 выводятся все типы сообщений 
+   tml_ERROR,           // 1 выводятся все типы сообщений, кроме трассировочных 
+   tml_NOTICE,          // 2 выводятся только информационные сообщения 
+   tml_SILENT,          // 3 сообщения не выводятся 
+} tMessageOutputLevel;
 
 // Определяем структуру передаваемого сообщения
 struct tStruMessage
@@ -117,42 +132,6 @@ class TQueMessage
    // Собрать сообщение
    void CollectMessage(int t_MessFormat);
 };
-
-// Источники сообщений. При необходимости уменьшить память, занимаемую приложением,
-// следует закомментировать не нужные приложению определения. Таким образом 
-// исключатся лишние перечисления и их обрабатывающие функции.
-#define tmk_WDT     "WDT"     // общие сообщения сторожевого таймера
-#define tmk_ISR     "ISR"     // общие сообщения из обработчиков прерываний
-// #define tmk_APP  "APP"     // сообщения приложения
-
-// Макросы отправки контекста сообщения
-/*
-inline void messAPP(char tMess[], int Number, String fmess32, String smess32) 
-{
-   switch (Number) 
-   {
-      case tqhm_ItsBeenMS:
-         sprintf(tMess,"Прошло %s миллисекунд",fmess32); break;
-      case tqhm_SendFromTask:
-         sprintf(tMess,"Передано %s сообщение из задачи",fmess32); break;
-      default:
-         sprintf(tMess,"Неопределенное сообщение примера очередей"); break;
-   }
-}
-*/
-#define mbeg inline void messAPP(char tMess[], int Number, String fmess32, String smess32) { switch (Number) {
-#define messb(num,mess)   case num: sprintf(tMess,mess); break;
-#define messf32(num,mess) case num: sprintf(tMess,mess,fmess32); break;
-#define messd(mess)       default:  sprintf(tMess,mess); break;
-#define mend } }
-
-// Уровни вывода сообщений
-typedef enum {
-   tml_VERBOSE,         // 0 выводятся все типы сообщений 
-   tml_ERROR,           // 1 выводятся все типы сообщений, кроме трассировочных 
-   tml_NOTICE,          // 2 выводятся только информационные сообщения 
-   tml_SILENT,          // 3 сообщения не выводятся 
-} tMessageOutputLevel;
 
 #endif
 

@@ -3,23 +3,16 @@
  *                        Пример передачи сообщения из задачи и из прерывания с
  *                                                     приемом в основном цикле
  * 
- * v3.2.1, 11.12.2024                                 Автор:      Труфанов В.Е.
+ * v3.2.0, 09.12.2024                                 Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
 
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
 #include "QueMessage.h"     // заголовочный файл класса TQueMessage 
 #include "CommonMessage.h"  // общий реестр сообщений
-#include "QHM_Message.h"    // сообщения приложения (примера по обработке очередей)
-// Определяем формат сообщения
-int MessFormat=tfm_FULL;
-// Определяем источник сообщений  
-#define tmk_APP "QHM"       // пример по обработке очередей
-// Назначаем объект работы с сообщениями через очередь
-TQueMessage queMessa;
-// Выделяем счётчик циклов задачи отправки сообщений       
-unsigned long nLoop=0UL;     
-
+#include "QHM_Message.h"    // сообщения примера по обработке очередей
+TQueMessage queMessa;       // объект работы с сообщениями через очередь
+unsigned long nLoop=0UL;    // счётчик циклов задачи отправки сообщений 
 // Перечисляем режимы приема сообщений (Message reception modes)
 typedef enum {
    tmr_ONEATIME,        // 0 по одному               - one at a time
@@ -27,6 +20,8 @@ typedef enum {
 } tModeReceive;
 // Задаём текущий режим приема сообщений
 int t_ModeReceive=tmr_QUEUERELEASE;
+// Определяем формат сообщения
+int MessFormat=tfm_FULL;
 
 // ****************************************************************************
 // *  Сформировать сообщение о прошедшем времени с начала запуска приложения  *
@@ -50,7 +45,7 @@ void ARDUINO_ISR_ATTR onTimer()
    timeMillis=currMillis-lastMillis;
 
    // Отправляем информационное сообщение "Прошло %d миллисекунд"
-   String inMess=queMessa.SendISR(tmt_NOTICE,tmk_APP,ItsBeenMS,timeMillis);
+   String inMess=queMessa.SendISR(tmt_NOTICE,tmk_QHM,tqhm_ItsBeenMS,timeMillis);
    // Если невозможно отправить сообщение, то сообщаем
    if (inMess!=EmptyMessage) Serial.println(inMess); 
 }
@@ -115,7 +110,7 @@ void vATask (void *pvParameters)
    {
       nLoop++;
       // Отправляем информационное сообщение "Передано %s сообщение из задачи"
-      String inMess=queMessa.Send(tmt_NOTICE,tmk_APP,SendFromTask,nLoop);
+      String inMess=queMessa.Send(tmt_NOTICE,tmk_QHM,tqhm_SendFromTask,nLoop);
       // Если невозможно отправить сообщение, то сообщаем
       if (inMess!=EmptyMessage) Serial.println(inMess); 
       vTaskDelay(1301/portTICK_PERIOD_MS);

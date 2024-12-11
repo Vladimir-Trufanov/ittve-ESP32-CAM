@@ -3,7 +3,7 @@
  *                          Обеспечить передачу и приём сообщений через очередь 
  *                                                   в задачах и из прерываниях
  * 
- * v3.2.1, 11.12.2024                                 Автор:      Труфанов В.Е.
+ * v3.2, 09.12.2024                                   Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
@@ -174,16 +174,8 @@ void TQueMessage::ExtractTime()
 // ****************************************************************************
 void TQueMessage::ExtractMess(String Source, int Number, String fmess32, String smess32) 
 {
-   // Выбираем сообщение из примера по обработке очередей 
-   #ifndef que_messa
-   // Выдать ошибку на отсутствие определения псевдонима приложения
-   #endif  
-   // if (Source == tmk_WDT)      messWDT(tMess,Number,fmess32,smess32);   
-   // else if (Source == tmk_ISR) messISR(tMess,Number,fmess32,smess32);
-   // else
-   
-   // В завершение цепочки запускаем сообщения приложения
-   messAPP(tMess,Number,fmess32,smess32);   
+   // Выбираем сообщение из примера по обработке очередей   
+   if (Source == tmk_QHM) messQueueHandlMulti(tMess, Number, fmess32, smess32);   
 }
 // ****************************************************************************
 // *                              Собрать сообщение                           *
