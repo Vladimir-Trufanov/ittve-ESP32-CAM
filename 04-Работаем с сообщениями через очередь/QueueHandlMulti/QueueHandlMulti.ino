@@ -7,19 +7,32 @@
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
 
-// Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
-#include "QueMessage.h"     // заголовочный файл класса TQueMessage 
-#include "CommonMessage.h"  // общий реестр сообщений
-#include "QHM_Message.h"    // сообщения приложения (примера по обработке очередей)
-// Определяем формат сообщения
-int MessFormat=tfm_FULL;
-// Определяем источник сообщений  
-#define tmk_APP "QHM"       // пример по обработке очередей
-// Назначаем объект работы с сообщениями через очередь
-TQueMessage queMessa;
+// ============================================= 1. Инициирование использования очереди ===
+// Подключаем файлы обеспечения передачи и приёма сообщений через очередь                //
+#include "QueMessage.h"     // заголовочный файл класса TQueMessage                      //
+#include "CommonMessage.h"  // общий реестр сообщений                                    //
+#include "QHM_Message.h"    // сообщения приложения (примера по обработке очередей)      //
+                                                                                         //
+// Готовим для прикрепления свою функцию - передатчик сообщения в последовательный порт  //
+// вместо установленного в классе передатчика по умолчанию "transmess"                   //
+void transmess2(char *mess, char *prefix="")                                             //
+{                                                                                        //
+   // Выводим массивы символов с 0-вым окончанием                                        //
+   Serial.print(prefix);  // передали префикс                                            //
+   Serial.println(mess);  // передали сообщение                                          //
+}                                                                                        //                                                                      
+                                                                                         //
+// Определяем формат сообщения                                                           //
+int MessFormat=tfm_FULL;                                                                 //
+                                                                                         //
+// Определяем источник сообщений                                                         //
+#define tmk_APP "QHM"       // пример по обработке очередей                              //
+// Назначаем объект работы с сообщениями через очередь                                   //
+TQueMessage queMessa;                                                                    //
+// ========================================================================================                                                                                         
+
 // Выделяем счётчик циклов задачи отправки сообщений       
 unsigned long nLoop=0UL;     
-
 // Перечисляем режимы приема сообщений (Message reception modes)
 typedef enum {
    tmr_ONEATIME,        // 0 по одному               - one at a time
@@ -52,7 +65,7 @@ void ARDUINO_ISR_ATTR onTimer()
    // Отправляем информационное сообщение "Прошло %d миллисекунд"
    String inMess=queMessa.SendISR(tmt_NOTICE,tmk_APP,ItsBeenMS,timeMillis);
    // Если невозможно отправить сообщение, то сообщаем
-   if (inMess!=EmptyMessage) Serial.println(inMess); 
+   if (inMess!=isOk) Serial.println(inMess); 
 }
 // ****************************************************************************
 // *                          Инициировать приложение                         *
@@ -63,17 +76,17 @@ void setup()
    Serial.begin(115200);
    while (!Serial) continue;
    Serial.println("Последовательный порт работает!");
-   // Создаем очередь
-   String inMess="";
-   inMess=queMessa.Create();
-   // Если не получилось, сообщаем "Очередь не была создана и не может использоваться" 
-   if (inMess==tQueueNotCreate) Serial.println(tQueueNotCreate);
-   // Если очередь получилась, то отмечаем  "Очередь сформирована" 
-   else Serial.println(tQueueBeformed);
-   // Подключаем функцию передачи сообщения на периферию - transmess
-   // (функция может быть заменена на любую другую,
-   // но с соответствующим контекстом входящих параметров)
-   queMessa.attachFunction(transmess);
+
+   // =================================== 2. Создание очереди и подключение передатчика ===
+   // Создаем очередь                                                                    //
+   String inMess=queMessa.Create();                                                      //
+   // Если очередь получилась, то отмечаем  "Очередь сформирована"                       //
+   if (inMess==isOk) Serial.println(tQueueBeformed);                                     //
+   // Если не получилось, сообщаем "Очередь не была создана и не может использоваться"   //
+   else Serial.println(tQueueNotCreate);                                                 //
+   // Прикрепляем функцию - передатчик сообщения в последовательный порт                 //
+   queMessa.attachFunction(transmess2);                                                  //
+   // ===================================================================================== 
 
    // Определяем дополнительную задачу по отправке сообщений
    xTaskCreatePinnedToCore (
@@ -117,7 +130,7 @@ void vATask (void *pvParameters)
       // Отправляем информационное сообщение "Передано %s сообщение из задачи"
       String inMess=queMessa.Send(tmt_NOTICE,tmk_APP,SendFromTask,nLoop);
       // Если невозможно отправить сообщение, то сообщаем
-      if (inMess!=EmptyMessage) Serial.println(inMess); 
+      if (inMess!=isOk) Serial.println(inMess); 
       vTaskDelay(1301/portTICK_PERIOD_MS);
    }
 }
@@ -139,7 +152,8 @@ void vReceiveMess (void *pvParameters)
          while(iwait>0)
          {
             // Выбираем из очереди и отправляем сообщение на периферию
-            queMessa.Post(queMessa.Receive(MessFormat));
+            // с префиксом "Hello ";
+            queMessa.Post(queMessa.Receive(MessFormat),"Hello ");
             vTaskDelay(100/portTICK_PERIOD_MS);
             iwait=queMessa.How_many_wait();
          }

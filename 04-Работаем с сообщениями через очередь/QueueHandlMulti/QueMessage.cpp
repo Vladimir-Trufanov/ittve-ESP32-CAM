@@ -42,7 +42,7 @@ void TQueMessage::Post(char *mess, char *prefix)
 String TQueMessage::Create()
 {
    // Инициируем пустое сообщение
-   String inMess=EmptyMessage;
+   String inMess=isOk;
    tQueue = xQueueCreate(QueueSize, sizeof(struct tStruMessage));
    // Возвращаем ошибку "Очередь не была создана и не может использоваться" 
    if (tQueue==NULL) inMess=tQueueNotCreate; 
@@ -54,7 +54,7 @@ String TQueMessage::Create()
 String TQueMessage::SendISR(String Type, String Source, int Number) 
 {
    // Инициируем пустое сообщение
-   String inMess=EmptyMessage;
+   String inMess=isOk;
    // Если очередь создана, то отправляем сообщение в очередь
    if (tQueue!=0)
    {
@@ -86,7 +86,7 @@ String TQueMessage::SendISR(String Type, String Source, int Number)
 String TQueMessage::Send(String Type, String Source, int Number, int fmess32) 
 {
    // Инициируем пустое сообщение
-   String inMess=EmptyMessage;
+   String inMess=isOk;
    // Если очередь создана, то отправляем сообщение в очередь
    if (tQueue!=0)
    {
@@ -111,7 +111,7 @@ String TQueMessage::Send(String Type, String Source, int Number, int fmess32)
 String TQueMessage::SendISR(String Type, String Source, int Number, int fmess32) 
 {
    // Инициируем пустое сообщение
-   String inMess=EmptyMessage;
+   String inMess=isOk;
    // Если очередь создана, то отправляем сообщение в очередь
    if (tQueue!=0)
    {
