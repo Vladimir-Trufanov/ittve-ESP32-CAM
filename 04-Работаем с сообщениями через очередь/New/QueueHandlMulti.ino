@@ -7,10 +7,11 @@
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
 
+#include "Proba.h"    
+
 // ============================================= 1. Инициирование использования очереди ===
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь                //
 #include <QueMessage.h>     // заголовочный файл класса TQueMessage                      //
-//#include <CommonMessage.h>  // общий реестр сообщений                                    //
 #include "QHM_Message.h"    // сообщения приложения (примера по обработке очередей)      //
                                                                                          //
 // Готовим для прикрепления свою функцию - передатчик сообщения в последовательный порт  //
@@ -28,99 +29,11 @@ int MessFormat=tfm_FULL;                                                        
 // Определяем источник сообщений                                                         //
 #define tmk_APP "QHM"       // пример по обработке очередей                              //
 // Назначаем объект работы с сообщениями через очередь                                   //
-TQueMessage queMessa(tAPPi);                                                                    //
-// ========================================================================================    
+TQueMessage queMessa(mess);                                                                    //
+// ========================================================================================                                                                                         
 
-
-
-
-
-struct mes
-{
-  int num;
-  char *mmess;
-};
-
-/*
-mes mess[] = {
-    {1, "Первый"},
-    {2, "Вот второй"},
-    {3, "И третий"}
-};
-*/
-
-mes mess[] = 
-{
-    {ItsBeenMS,    "Первый"},
-    {SendFromTask, "Вот второй"},
-    {SendLongMess, "И третий"}
-};
-static int nmess=sizeof(mess)/sizeof(mess[0]);
-
-char tMess[256];  
-
-/*
-inline void messAPP(char tMess[], int Number, String fmess32, String smess32) 
-{
-   switch (Number) 
-   {
-      case tqhm_ItsBeenMS:
-         sprintf(tMess,"Прошло %s миллисекунд",fmess32); break;
-      case tqhm_SendFromTask:
-         sprintf(tMess,"Передано %s сообщение из задачи",fmess32); break;
-      default:
-         sprintf(tMess,"Неопределенное сообщение примера очередей"); break;
-   }
-}
-*/
-
-/*
-void messAPP(int *pMess, int nMess) 
-{
-   for(int i=0; i<nMess; i++) 
-   {
-      mes cmess=*pMess[i];
-      //Serial.print(cmess.num);
-      //Serial.println(cmess.mmess);
-   }
-}
-*/
-
-void messAPP(char tMess[], int Number, String fmess32, String smess32) 
-{
-   //mes cmess=mess[0];
-}
-
-
-struct myStruct {
-  byte myByte;
-  int myInt;
-};
-// создадим структуру someStruct
-myStruct someStruct;
-// указатель типа myStruct* на структуру someStruct
-myStruct *p = &someStruct;
-// пишем по адресу в someStruct.myInt
-//(*p).myInt = -666; 
-
-void thr(enum tAPP relayState)
-{
-   if (relayState == RELAY_OFF) 
-   {
-    Serial.println("RELAY_OFF");
-   } 
-   else 
-   
-   if (relayState == RELAY_ON) 
-   {
-    Serial.println("RELAY_ON");
-   }
-   else
-   {
-     Serial.println("ПРОЧЕЕ");
-   }
-}
-                                                                               
+// Разрешаем трассировать память контроллера
+// #define trace_memory
 
 // Выделяем счётчик циклов задачи отправки сообщений       
 unsigned long nLoop=0UL;     
@@ -168,23 +81,19 @@ void setup()
    while (!Serial) continue;
    Serial.println("Последовательный порт работает!");
 
-   
+   /*   
    for(int i=0; i<nmess; i++) 
    {
-      mes cmess=mess[i];
+      tmessAPP cmess=mess[i];
+      Serial.print("setup");
       Serial.print(cmess.num);
-      Serial.println(cmess.mmess);
+      Serial.print(cmess.vmess);
+      Serial.println(cmess.cmess);
    }
-
-   enum tAPPi Proba;
-   Proba=SendFromTask;
-   thr(Proba);
-   
-   //messAPP(char tMess[], int Number, String fmess32, String smess32) 
-   //messAPP(&mess,nmess);
+   */
+   //queMessa.fproba();
 
    
-
    // =================================== 2. Создание очереди и подключение передатчика ===
    // Создаем очередь                                                                    //
    String inMess=queMessa.Create();                                                      //
@@ -234,8 +143,26 @@ void vATask (void *pvParameters)
    // Готовим цикл задачи
    while (1) 
    {
-      nLoop++;
+      // Если разрешено, трассируем память контроллера
+      #ifdef trace_memory
+         // Получаем полный размер кучи в памяти
+         printf("Общий размер ВСТРОЕННОЙ памяти:     %u\n", ESP.getHeapSize());
+         // Количество доступной кучи в памяти
+         printf("Оставшаяся доступная память в куче: %u\n", ESP.getFreeHeap());
+         // Самый низкий уровень свободной кучи с момента загрузки
+         printf("Минимальная свободная с загрузки:   %u\n", ESP.getMinFreeHeap());
+         // Размер общей кучи SPI PSRAM
+         printf("Общий размер SPI PSRAM:             %u\n", ESP.getPsramSize());
+         // Количество свободной PSRAM
+         printf("Количество свободной PSRAM:         %d\n", ESP.getFreePsram());
+         // Минимальный размер свободной памяти в SPI RAM
+         printf("Минимум свободной SPI PSRAM:        %d\n", ESP.getMinFreePsram());
+         // Размер самого большого блока PSRAM, который может быть выделен
+         printf("Самый большой блок для выделения:   %d\n", ESP.getMaxAllocPsram());
+      #endif
+
       // Отправляем информационное сообщение "Передано %s сообщение из задачи"
+      nLoop++;
       String inMess=queMessa.Send(tmt_NOTICE,tmk_APP,SendFromTask,nLoop);
       // Если невозможно отправить сообщение, то сообщаем
       if (inMess!=isOk) Serial.println(inMess); 
@@ -285,10 +212,11 @@ void vReceiveMess (void *pvParameters)
 void loop() 
 {
    delay(2905);
+   //queMessa.fproba();
    // Отправляем максимально длинное сообщение
-   String inMess=queMessa.Send(tmt_NOTICE,tmk_APP,SendLongMess);
+   //String inMess=queMessa.Send(tmt_NOTICE,tmk_APP,SendLongMess);
    // Если невозможно отправить сообщение, то сообщаем
-   if (inMess!=isOk) Serial.println(inMess); 
+   //if (inMess!=isOk) Serial.println(inMess); 
 }
 
 // **************************************************** QueueHandlMulti.ino ***

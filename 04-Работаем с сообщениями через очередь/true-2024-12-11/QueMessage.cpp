@@ -11,6 +11,7 @@
 
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
 #include "QueMessage.h"
+#include "CommonMessage.h"  // общий реестр сообщений
 #include "QHM_Message.h"    // сообщения примера по обработке очередей
 
 // ****************************************************************************
@@ -50,31 +51,6 @@ String TQueMessage::Create()
 // ****************************************************************************
 // * 1 группа сообщений:            Отправить просто сообщение, без уточнений *
 // ****************************************************************************
-String TQueMessage::Send(String Type, String Source, int Number) 
-{
-   // Инициируем пустое сообщение
-   String inMess=EmptyMessage;
-   // Если очередь создана, то отправляем сообщение в очередь
-   if (tQueue!=0)
-   {
-      // Формируем сообщение для передачи в очередь
-      strcpy(taskStruMess.Type, Type.c_str());  
-      strcpy(taskStruMess.Source, Source.c_str());  
-      taskStruMess.Number=Number;
-      strcpy(taskStruMess.fmess32, EmptyMessage.c_str());
-      strcpy(taskStruMess.smess32, EmptyMessage.c_str()); 
-      // Отправляем сообщение
-      if (xQueueSend(tQueue,&taskStruMess,TicksIsBusy) != pdPASS)
-      {
-         sprintf(tBuffer,"Не удалось отправить структуру после %d тиков!",TicksIsBusy); 
-         inMess=String(tBuffer);
-      }
-   }
-   // Отмечаем "Отправка сообщения: очередь структур не создана!" 
-   else inMess=tQueueNotSend;
-   return inMess; 
-}
-
 String TQueMessage::SendISR(String Type, String Source, int Number) 
 {
    // Инициируем пустое сообщение

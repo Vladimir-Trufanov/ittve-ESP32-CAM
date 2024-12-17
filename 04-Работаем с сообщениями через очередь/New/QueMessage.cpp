@@ -11,17 +11,31 @@
 
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
 #include "QueMessage.h"
-#include "CommonMessage.h"  // общий реестр сообщений
 #include "QHM_Message.h"    // сообщения примера по обработке очередей
 
 // ****************************************************************************
 // *                  Построить объект (конструктор класса)                   *
 // ****************************************************************************
-TQueMessage::TQueMessage(enum tAPP, int iQueueSize)
+TQueMessage::TQueMessage(tmessAPP *amessAPP, int iQueueSize)
 {
+   //pmessAPP=amessAPP;
    // Определяем размер очереди из структур 
    QueueSize=iQueueSize;
 }
+
+void TQueMessage::fproba()
+{
+   int nmess=sizeof(pmessAPP)/sizeof(pmessAPP[0]);
+   for(int i=0; i<nmess; i++) 
+   {
+      tmessAPP messAPPi=pmessAPP[i];
+      Serial.print("fproba");
+      Serial.print(messAPPi.num);
+      Serial.print(messAPPi.vmess);
+      Serial.println(messAPPi.cmess);
+   }
+}
+
 // ****************************************************************************
 // *                 Прикрепить внешнюю функцию по параметрам                 *
 // ****************************************************************************
@@ -203,7 +217,7 @@ void TQueMessage::ExtractMess(String Source, int Number, String fmess32, String 
    // else if (Source == tmk_ISR) messISR(tMess,Number,fmess32,smess32);
    // else
    // В завершение цепочки запускаем сообщения приложения
-   // messAPP(tMess,Number,fmess32,smess32);   
+   messAPP(tMess,Number,fmess32,smess32);   
 }
 // ****************************************************************************
 // *                              Собрать сообщение                           *

@@ -33,13 +33,14 @@ struct mes
 
 tmessAPP mess[] = 
 {
-    {iItsBeenMS,    tvm_2intmes, "Первый"},
-    {iSendFromTask, tvm_1intmes, "Вот второй"},
-    {iSendLongMess, tvm_simpmes, "И третий"}
+    {iItsBeenMS,    tvm_1intmes, "Прошло %d миллисекунд"},
+    {iSendFromTask, tvm_1intmes, "Передано %d сообщение из задачи"},
+    {iStructNoSend, tvm_1intmes, "Не удалось отправить структуру после %d тиков"},
+    {iTaskNoQueue,  tvm_simpmes, "Очереди структур нет в задаче"},
+    {iSendLongMess, tvm_simpmes, "Максимально длинное сообщение из 255 байт [буфер текстов сообщений максимально может содержать 255 байт и завершающий ноль 1234567890 1234567890 1234567890]"},
+    //messd("Неопределенное сообщение примера очередей")  
 };
 static int nmess=sizeof(mess)/sizeof(mess[0]);
-
-
 
 // Формируем контексты сообщений по номеру перечисления
 /*

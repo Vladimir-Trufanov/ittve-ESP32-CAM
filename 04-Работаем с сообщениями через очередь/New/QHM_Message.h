@@ -11,9 +11,6 @@
 #define _QHM_Message
 #pragma once     
 
-
-//enum tAPPi {RELAY_OFF, RELAY_ON};
-
 // Определяем перечисления примера обработки очередей 
 typedef enum {
    ItsBeenMS,            // 0 it's been %d milliseconds
@@ -21,10 +18,9 @@ typedef enum {
    StructNoSend,         // 2 structure could not be sent after %d ticks
    TaskNoQueue,          // 3 there is no queue of structures in the task
    SendLongMess,         // 4 maxi=255+0
-} tAPPi; 
+}; 
 
 // Формируем контексты сообщений по номеру перечисления
-/*
 mbeg
    messf32(ItsBeenMS,    "Прошло %d миллисекунд")
    messf32(SendFromTask, "Передано %d сообщение из задачи")
@@ -32,8 +28,7 @@ mbeg
    messb(  TaskNoQueue,  "Очереди структур нет в задаче")   
    messb(  SendLongMess, "Максимально длинное сообщение из 255 байт [буфер текстов сообщений максимально может содержать 255 байт и завершающий ноль 1234567890 1234567890 1234567890]")   
    messd(                "Неопределенное сообщение примера очередей")  
-mend  
-*/                
+mend                  
 
 #endif
 

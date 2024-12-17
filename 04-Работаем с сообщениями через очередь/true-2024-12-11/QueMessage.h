@@ -78,7 +78,6 @@ class TQueMessage
    // Создать очередь
    String Create();
    // 1 группа сообщений: "Отправить просто сообщение, без уточнений"
-   String Send(String Type, String Source, int Number); 
    String SendISR(String Type,String Source,int Number);
    // 2 группа: "Отправить сообщение с первым уточнением целого типа"
    String Send(String Type,String Source,int Number,int fmess32); 
@@ -118,6 +117,13 @@ class TQueMessage
    // Собрать сообщение
    void CollectMessage(int t_MessFormat);
 };
+
+// Источники сообщений. При необходимости уменьшить память, занимаемую приложением,
+// следует закомментировать не нужные приложению определения. Таким образом 
+// исключатся лишние перечисления и их обрабатывающие функции.
+#define tmk_WDT     "WDT"     // общие сообщения сторожевого таймера
+#define tmk_ISR     "ISR"     // общие сообщения из обработчиков прерываний
+// #define tmk_APP  "APP"     // сообщения приложения
 
 // Макросы отправки контекста сообщения
 /*
