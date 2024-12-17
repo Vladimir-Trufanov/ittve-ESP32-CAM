@@ -13,6 +13,14 @@
 
 #include <Arduino.h>
 
+
+struct mes
+{
+  int num;
+  char *mmess;
+};
+
+
 // Передатчик сообщения на периферию с возможным префиксом (по умолчанию):
 inline void transmess(char *mess, char *prefix="") 
 {
@@ -73,7 +81,9 @@ class TQueMessage
    public:
 
    // Построить объект (конструктор класса)
-   TQueMessage(int iQueueSize=4);
+   TQueMessage(mes *mArray, int iQueueSize=4);
+
+   void fproba(mes *mArray);
    // Создать очередь
    String Create();
    // 1 группа сообщений: "Отправить просто сообщение, без уточнений"

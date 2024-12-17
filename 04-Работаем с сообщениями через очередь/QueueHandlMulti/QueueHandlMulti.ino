@@ -7,6 +7,8 @@
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
 
+#include "Proba.h"    
+
 // ============================================= 1. Инициирование использования очереди ===
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь                //
 #include <QueMessage.h>     // заголовочный файл класса TQueMessage                      //
@@ -28,8 +30,11 @@ int MessFormat=tfm_FULL;                                                        
 // Определяем источник сообщений                                                         //
 #define tmk_APP "QHM"       // пример по обработке очередей                              //
 // Назначаем объект работы с сообщениями через очередь                                   //
-TQueMessage queMessa;                                                                    //
+TQueMessage queMessa(mess);                                                                    //
 // ========================================================================================                                                                                         
+
+
+
 
 // Выделяем счётчик циклов задачи отправки сообщений       
 unsigned long nLoop=0UL;     
@@ -77,6 +82,18 @@ void setup()
    while (!Serial) continue;
    Serial.println("Последовательный порт работает!");
 
+      
+   for(int i=0; i<nmess; i++) 
+   {
+      mes cmess=mess[i];
+      Serial.print("setup");
+      Serial.print(cmess.num);
+      Serial.println(cmess.mmess);
+   }
+
+   queMessa.fproba(mess);
+
+   
    // =================================== 2. Создание очереди и подключение передатчика ===
    // Создаем очередь                                                                    //
    String inMess=queMessa.Create();                                                      //
