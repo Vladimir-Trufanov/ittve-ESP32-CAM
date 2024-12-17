@@ -17,20 +17,34 @@
 // ****************************************************************************
 // *                  Построить объект (конструктор класса)                   *
 // ****************************************************************************
-TQueMessage::TQueMessage(mes *mArray, int iQueueSize)
+TQueMessage::TQueMessage(tmessAPP *amessAPP, int iQueueSize)
 {
+   pmessAPP=amessAPP;
    // Определяем размер очереди из структур 
    QueueSize=iQueueSize;
 }
 
-void TQueMessage::fproba(mes *mArray)
+//void TQueMessage::fproba(tmessAPP *amessAPP)
+void TQueMessage::fproba()
 {
+   /*
    for(int i=0; i<3; i++) 
    {
-      mes cmess=mArray[i];
+      tmessAPP messAPP=amessAPP[i];
       Serial.print("fproba");
-      Serial.print(cmess.num);
-      Serial.println(cmess.mmess);
+      Serial.print(messAPP.num);
+      Serial.print(messAPP.vmess);
+      Serial.println(messAPP.cmess);
+   }
+   */
+   
+   for(int i=0; i<3; i++) 
+   {
+      tmessAPP messAPPi=pmessAPP[i];
+      Serial.print("fproba");
+      Serial.print(messAPPi.num);
+      Serial.print(messAPPi.vmess);
+      Serial.println(messAPPi.cmess);
    }
 }
 

@@ -13,14 +13,6 @@
 
 #include <Arduino.h>
 
-
-struct mes
-{
-  int num;
-  char *mmess;
-};
-
-
 // Передатчик сообщения на периферию с возможным префиксом (по умолчанию):
 inline void transmess(char *mess, char *prefix="") 
 {
@@ -28,18 +20,29 @@ inline void transmess(char *mess, char *prefix="")
    Serial.print(prefix);  // передали префикс (по умолчанию отсутствует)
    Serial.println(mess);  // передали сообщение
 }
-
 // Пример передачи сообщения из очереди через передатчик на периферию:
-//    static char str[] = "Hello: ";
-//    queMessa.Post(queMessa.Receive(MessFormat),str);
+// static char str[] = "Hello: ";
+// queMessa.Post(queMessa.Receive(MessFormat),str);
 
+// Перечисление видов сообщений
+enum {
+   tvm_simpmes,   // 0 простое сообщение, без уточнений
+   tvm_1intmes,   // 1 сообщение c одним уточнением целого типа
+   tvm_2intmes,   // 2 сообщение c двумя уточнениями целого типа
+};
+// Структуру элемента массива сообщений приложения
+struct tmessAPP
+{
+  int num;        // номер сообщения
+  int vmess;      // вид сообщения
+  char *cmess;    // текст сообщения
+};
 // Типы сообщений
 #define tmt_NOTICE  "NOTICE"     // информационное сообщение приложения 
 #define tmt_TRACE   "TRACE"      // трассировочное сообщение при отладке
 #define tmt_WARNING "WARNING"    // предупреждение, позволяющие работать задаче дальше 
 #define tmt_ERROR   "ERROR"      // ошибка, не дающие возможность правильно выполнить задачу
 #define tmt_FATAL   "FATAL"      // ошибка, вызывающие перезагрузку контроллера 
-
 // Форматы вывода сообщений в приложениях: краткий, полный, без даты и времени.
 // В полном сообщении указывается дата и время извлечения сообщения из очереди, 
 // тип сообщения, источник сообщения, номер сообщения источника, текст сообщения
@@ -64,7 +67,7 @@ typedef enum {
 #define tNotAfterTicks   "Не удалось принять структуру после всех тиков!"     // not possible to accept the structure even after all the ticks
 #define tFailSendInrupt  "Не удалось отправить структуру из прерывания!"      // failed to send structure from interrupt
 
-// Определяем структуру передаваемого сообщения
+// Структура проходящего через очередь сообщения
 struct tStruMessage
 {
    char Type[7];         // Тип сообщения
@@ -81,9 +84,10 @@ class TQueMessage
    public:
 
    // Построить объект (конструктор класса)
-   TQueMessage(mes *mArray, int iQueueSize=4);
+   TQueMessage(tmessAPP *amessAPP, int iQueueSize=4);
 
-   void fproba(mes *mArray);
+   //void fproba(tmessAPP *amessAPP);
+   void fproba();
    // Создать очередь
    String Create();
    // 1 группа сообщений: "Отправить просто сообщение, без уточнений"
@@ -115,6 +119,7 @@ class TQueMessage
    char tMess[256];                             // буфер предварительного размещения контекста сообщения
    char dtime[20];                              // буфер даты и времени
    String EmptyMessage="";                      // пустое сообщение
+   tmessAPP *pmessAPP;                          // указатель на массив сообщений
 
    
    // Выделяем переменную планировщику задач FreeRTOS для указания

@@ -31,11 +31,11 @@ struct mes
 };
 */
 
-mes mess[] = 
+tmessAPP mess[] = 
 {
-    {iItsBeenMS,    "Первый"},
-    {iSendFromTask, "Вот второй"},
-    {iSendLongMess, "И третий"}
+    {iItsBeenMS,    tvm_2intmes, "Первый"},
+    {iSendFromTask, tvm_1intmes, "Вот второй"},
+    {iSendLongMess, tvm_simpmes, "И третий"}
 };
 static int nmess=sizeof(mess)/sizeof(mess[0]);
 

@@ -85,13 +85,15 @@ void setup()
       
    for(int i=0; i<nmess; i++) 
    {
-      mes cmess=mess[i];
+      tmessAPP cmess=mess[i];
       Serial.print("setup");
       Serial.print(cmess.num);
-      Serial.println(cmess.mmess);
+      Serial.print(cmess.vmess);
+      Serial.println(cmess.cmess);
    }
 
-   queMessa.fproba(mess);
+   //queMessa.fproba(mess);
+   queMessa.fproba();
 
    
    // =================================== 2. Создание очереди и подключение передатчика ===
@@ -143,8 +145,15 @@ void vATask (void *pvParameters)
    // Готовим цикл задачи
    while (1) 
    {
-      nLoop++;
+      // Получаем полный размер кучи в памяти
+      printf("Общий размер ВСТРОЕННОЙ памяти:     %u\n", ESP.getHeapSize());
+      // Количество доступной кучи в памяти
+      printf("Оставшаяся доступная память в куче: %u\n", ESP.getFreeHeap());
+      // Самый низкий уровень свободной кучи с момента загрузки
+      printf("Минимальная свободная с загрузки:   %u\n", ESP.getMinFreeHeap());
+
       // Отправляем информационное сообщение "Передано %s сообщение из задачи"
+      nLoop++;
       String inMess=queMessa.Send(tmt_NOTICE,tmk_APP,SendFromTask,nLoop);
       // Если невозможно отправить сообщение, то сообщаем
       if (inMess!=isOk) Serial.println(inMess); 
@@ -194,6 +203,7 @@ void vReceiveMess (void *pvParameters)
 void loop() 
 {
    delay(2905);
+   queMessa.fproba();
    // Отправляем максимально длинное сообщение
    String inMess=queMessa.Send(tmt_NOTICE,tmk_APP,SendLongMess);
    // Если невозможно отправить сообщение, то сообщаем
