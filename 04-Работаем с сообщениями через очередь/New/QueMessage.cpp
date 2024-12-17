@@ -17,7 +17,7 @@
 // ****************************************************************************
 // *                  Построить объект (конструктор класса)                   *
 // ****************************************************************************
-TQueMessage::TQueMessage(int iQueueSize)
+TQueMessage::TQueMessage(enum tAPP, int iQueueSize)
 {
    // Определяем размер очереди из структур 
    QueueSize=iQueueSize;
@@ -203,7 +203,7 @@ void TQueMessage::ExtractMess(String Source, int Number, String fmess32, String 
    // else if (Source == tmk_ISR) messISR(tMess,Number,fmess32,smess32);
    // else
    // В завершение цепочки запускаем сообщения приложения
-   messAPP(tMess,Number,fmess32,smess32);   
+   // messAPP(tMess,Number,fmess32,smess32);   
 }
 // ****************************************************************************
 // *                              Собрать сообщение                           *

@@ -28,8 +28,99 @@ int MessFormat=tfm_FULL;                                                        
 // Определяем источник сообщений                                                         //
 #define tmk_APP "QHM"       // пример по обработке очередей                              //
 // Назначаем объект работы с сообщениями через очередь                                   //
-TQueMessage queMessa;                                                                    //
-// ========================================================================================                                                                                         
+TQueMessage queMessa(tAPPi);                                                                    //
+// ========================================================================================    
+
+
+
+
+
+struct mes
+{
+  int num;
+  char *mmess;
+};
+
+/*
+mes mess[] = {
+    {1, "Первый"},
+    {2, "Вот второй"},
+    {3, "И третий"}
+};
+*/
+
+mes mess[] = 
+{
+    {ItsBeenMS,    "Первый"},
+    {SendFromTask, "Вот второй"},
+    {SendLongMess, "И третий"}
+};
+static int nmess=sizeof(mess)/sizeof(mess[0]);
+
+char tMess[256];  
+
+/*
+inline void messAPP(char tMess[], int Number, String fmess32, String smess32) 
+{
+   switch (Number) 
+   {
+      case tqhm_ItsBeenMS:
+         sprintf(tMess,"Прошло %s миллисекунд",fmess32); break;
+      case tqhm_SendFromTask:
+         sprintf(tMess,"Передано %s сообщение из задачи",fmess32); break;
+      default:
+         sprintf(tMess,"Неопределенное сообщение примера очередей"); break;
+   }
+}
+*/
+
+/*
+void messAPP(int *pMess, int nMess) 
+{
+   for(int i=0; i<nMess; i++) 
+   {
+      mes cmess=*pMess[i];
+      //Serial.print(cmess.num);
+      //Serial.println(cmess.mmess);
+   }
+}
+*/
+
+void messAPP(char tMess[], int Number, String fmess32, String smess32) 
+{
+   //mes cmess=mess[0];
+}
+
+
+struct myStruct {
+  byte myByte;
+  int myInt;
+};
+// создадим структуру someStruct
+myStruct someStruct;
+// указатель типа myStruct* на структуру someStruct
+myStruct *p = &someStruct;
+// пишем по адресу в someStruct.myInt
+//(*p).myInt = -666; 
+
+void thr(enum tAPP relayState)
+{
+   if (relayState == RELAY_OFF) 
+   {
+    Serial.println("RELAY_OFF");
+   } 
+   else 
+   
+   if (relayState == RELAY_ON) 
+   {
+    Serial.println("RELAY_ON");
+   }
+   else
+   {
+     Serial.println("ПРОЧЕЕ");
+   }
+}
+                                                                               
 
 // Выделяем счётчик циклов задачи отправки сообщений       
 unsigned long nLoop=0UL;     
@@ -76,6 +167,23 @@ void setup()
    Serial.begin(115200);
    while (!Serial) continue;
    Serial.println("Последовательный порт работает!");
+
+   
+   for(int i=0; i<nmess; i++) 
+   {
+      mes cmess=mess[i];
+      Serial.print(cmess.num);
+      Serial.println(cmess.mmess);
+   }
+
+   enum tAPPi Proba;
+   Proba=SendFromTask;
+   thr(Proba);
+   
+   //messAPP(char tMess[], int Number, String fmess32, String smess32) 
+   //messAPP(&mess,nmess);
+
+   
 
    // =================================== 2. Создание очереди и подключение передатчика ===
    // Создаем очередь                                                                    //

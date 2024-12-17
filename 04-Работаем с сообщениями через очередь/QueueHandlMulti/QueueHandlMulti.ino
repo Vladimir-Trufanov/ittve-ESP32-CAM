@@ -3,14 +3,14 @@
  *                        Пример передачи сообщения из задачи и из прерывания с
  *                                                     приемом в основном цикле
  * 
- * v3.2.1, 11.12.2024                                 Автор:      Труфанов В.Е.
+ * v3.2.1, 16.12.2024                                 Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
 
 // ============================================= 1. Инициирование использования очереди ===
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь                //
-#include "QueMessage.h"     // заголовочный файл класса TQueMessage                      //
-#include "CommonMessage.h"  // общий реестр сообщений                                    //
+#include <QueMessage.h>     // заголовочный файл класса TQueMessage                      //
+//#include <CommonMessage.h>  // общий реестр сообщений                                    //
 #include "QHM_Message.h"    // сообщения приложения (примера по обработке очередей)      //
                                                                                          //
 // Готовим для прикрепления свою функцию - передатчик сообщения в последовательный порт  //
@@ -152,8 +152,8 @@ void vReceiveMess (void *pvParameters)
          while(iwait>0)
          {
             // Выбираем из очереди и отправляем сообщение на периферию
-            // с префиксом "Hello ";
-            queMessa.Post(queMessa.Receive(MessFormat),"Hello ");
+            // с префиксом "Hello! ";
+            queMessa.Post(queMessa.Receive(MessFormat),"Hello! ");
             vTaskDelay(100/portTICK_PERIOD_MS);
             iwait=queMessa.How_many_wait();
          }
@@ -171,14 +171,16 @@ void vReceiveMess (void *pvParameters)
       vTaskDelay(503/portTICK_PERIOD_MS);
    }
 }
-
 // ****************************************************************************
 // *                    Выполнить основной цикл приложения                    *
 // ****************************************************************************
 void loop() 
 {
-   int i=7;
    delay(2905);
+   // Отправляем максимально длинное сообщение
+   String inMess=queMessa.Send(tmt_NOTICE,tmk_APP,SendLongMess);
+   // Если невозможно отправить сообщение, то сообщаем
+   if (inMess!=isOk) Serial.println(inMess); 
 }
 
 // **************************************************** QueueHandlMulti.ino ***

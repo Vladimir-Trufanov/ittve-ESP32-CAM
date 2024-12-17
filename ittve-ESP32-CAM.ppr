@@ -17,7 +17,7 @@ HTServer=localhost
 Extensions=*.*
 [Project tree]
 ittve-ESP32-CAM
-	+ittve-ESP32-CAM
+	-ittve-ESP32-CAM
 		-00-Купили Arduino Pro Mini
 			00-Купили Arduino Pro Mini\Как определить Arduino Mini Pro 5v против 3v.doc
 			00-Купили Arduino Pro Mini\Мы купили Arduino Pro Mini.doc
@@ -55,8 +55,14 @@ ittve-ESP32-CAM
 			03-Пробуем ноты на ардуино\Arduino Pro Mini – обзор.doc
 			03-Пробуем ноты на ардуино\Arduino Pro Mini.doc
 			03-Пробуем ноты на ардуино\Пробуем ноты на ардуино.md
-		+04-Работаем с сообщениями через очередь
-			+QueueHandlMulti
+		-04-Работаем с сообщениями через очередь
+			-Old
+				04-Работаем с сообщениями через очередь\Old\CommonMessage.h
+				04-Работаем с сообщениями через очередь\Old\QHM_Message.h
+				04-Работаем с сообщениями через очередь\Old\QueMessage.cpp
+				04-Работаем с сообщениями через очередь\Old\QueMessage.h
+				04-Работаем с сообщениями через очередь\Old\QueueHandlMulti.ino
+			-QueueHandlMulti
 				04-Работаем с сообщениями через очередь\QueueHandlMulti\CommonMessage.h
 				04-Работаем с сообщениями через очередь\QueueHandlMulti\QHM_Message.h
 				04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.cpp
@@ -331,15 +337,19 @@ ittve-ESP32-CAM
 0=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.cpp
 1=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino
 2=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.h
+3=04-Работаем с сообщениями через очередь\QueueHandlMulti\QHM_Message.h
 [Selected Project Files]
 Main=
-Selected=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.cpp
+Selected=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.h
 [04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.cpp]
-TopLine=68
-Caret=65,98
+TopLine=188
+Caret=12,199
 [04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino]
-TopLine=32
-Caret=6,43
+TopLine=147
+Caret=63,182
 [04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.h]
-TopLine=39
-Caret=24,57
+TopLine=1
+Caret=9,10
+[04-Работаем с сообщениями через очередь\QueueHandlMulti\QHM_Message.h]
+TopLine=1
+Caret=24,29

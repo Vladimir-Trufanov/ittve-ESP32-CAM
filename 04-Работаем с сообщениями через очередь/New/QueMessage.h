@@ -13,6 +13,8 @@
 
 #include <Arduino.h>
 
+enum tAPP {aRELAY_OFF, aRELAY_ON};
+
 // Передатчик сообщения на периферию с возможным префиксом (по умолчанию):
 inline void transmess(char *mess, char *prefix="") 
 {
@@ -73,7 +75,7 @@ class TQueMessage
    public:
 
    // Построить объект (конструктор класса)
-   TQueMessage(int iQueueSize=4);
+   TQueMessage(enum tAPP, int iQueueSize=4);
    // Создать очередь
    String Create();
    // 1 группа сообщений: "Отправить просто сообщение, без уточнений"
@@ -142,11 +144,14 @@ inline void messAPP(char tMess[], int Number, String fmess32, String smess32)
    }
 }
 */
+
+/*
 #define mbeg inline void messAPP(char tMess[], int Number, String fmess32, String smess32) { switch (Number) {
 #define messb(num,mess)   case num: sprintf(tMess,mess); break;
 #define messf32(num,mess) case num: sprintf(tMess,mess,fmess32); break;
 #define messd(mess)       default:  sprintf(tMess,mess); break;
 #define mend } }
+*/
 
 // Уровни вывода сообщений
 typedef enum {
