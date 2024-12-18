@@ -3,9 +3,19 @@
  *                          Обеспечить передачу и приём сообщений через очередь 
  *                                                   в задачах и из прерываниях
  * 
- * v3.2.1, 11.12.2024                                 Автор:      Труфанов В.Е.
+ * v3.2.3, 18.12.2024                                 Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
+
+// Неизменяемые особенности класса и рекомендации:
+//
+// 1. Основной цикл работает с приоритетом 1.
+// 2. Методы выборки сообщений из очереди Receive, Post и PostAll следует помещать
+//    в задачи с наибольшим приоритетом. Это позволит вернуть управление этой задаче
+//    и продолжить выборку сообщений с опустошением очереди в случае прерывания нормальной 
+//    работы задачи функцией обработки какого-либо прерывания.
+// 3. Методы выборки сообщений из очереди Receive, Post и PostAll работают без блокировки 
+//    задачи при пустой очереди.
 
 #ifndef que_messa
 #define que_messa
@@ -87,15 +97,17 @@ class TQueMessage
    String Send(String Type,String Source,int Number,int fmess32); 
    String SendISR(String Type,String Source,int Number,int fmess32); 
    // Выбрать сообщение из очереди
-   char *Receive(int t_MessFormat=tfm_FULL);
+   char* Receive(int t_MessFormat=tfm_FULL);
+   // Выбрать сообщение из очереди и отправить на периферию 
+   char* Post(int t_MessFormat=tfm_FULL,char *prefix="");
+   // Выбрать все сообщения разом из очереди и отправить на периферию
+   void PostAll(int t_MessFormat=tfm_FULL,char *prefix="");
    // Определить количество свободных мест в очереди
    int How_many_free();                
    // Определить, сколько сообщений накопилось в очереди и их можно выгрузить 
    int How_many_wait(); 
    // Прикрепить внешнюю функцию по параметрам
    void attachFunction(void (*function)(char *mess, char *prefix));
-   // Отправить сообщение на периферию
-   void Post(char *mess, char *prefix="");
 
    private:
 

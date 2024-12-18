@@ -3,9 +3,30 @@
  *                        Пример передачи сообщения из задачи и из прерывания с
  *                                                     приемом в основном цикле
  * 
- * v3.2.1, 11.12.2024                                 Автор:      Труфанов В.Е.
+ * v3.2.3, 18.12.2024                                 Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
+
+// Порядок работы приложения:
+// - основной цикл имеет самый низкий приоритет и перезапускается с интервалом
+//   2100 миллисекунд. В основном цикле отправляется в очередь длинное сообщение, 
+//   которое обрезается до 255 символов с завершающим нулем;
+// - прерывание перезапускается с интервалом в 2000 миллисекунд и отправляет 
+//   "сообщение с первым уточнением целого типа" - номером сообщения из прерывания;
+// - задача vSendMess имеет приоритет 5, перезапускается с интервалом 1900 миллисекунд
+//   и отправляет "сообщение с двумя уточнениями целого типа" - номером сообщения
+//   из задачи и прошедшим числом миллисекунд с начала загрузки приложения;
+// - задача vReceiveMess имеет приоритет 10, перезапускается с интервалом в 500 
+//   миллисекунд и принимает сообщения (выбирает из очереди) одним из двух
+//   способов: либо "одно сообщение за раз", либо "все сообщения до опустошения 
+//   очереди".
+// 
+
+// Режимы демонстрации приложения:
+//#define tmr_ONEATIME        // по одному               
+//#define tmr_QUEUERELEASE    // до освобождения очереди 
+//#define tmr_SHOWQUEUESIZE   // показывать размер очереди до и после приёма сообщения
+//#define tmr_TASKPRIORITY    // показывать текущие приоритеты задач
 
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
 #include "QueMessage.h"     // заголовочный файл класса TQueMessage 
@@ -17,15 +38,7 @@ int MessFormat=tfm_FULL;
 // Назначаем объект работы с сообщениями через очередь
 TQueMessage queMessa;
 // Выделяем счётчик циклов задачи отправки сообщений       
-unsigned long nLoop=0UL;     
-
-// Перечисляем режимы приема сообщений (Message reception modes)
-//typedef enum {
-//   tmr_ONEATIME,        // 0 по одному               - one at a time
-//   tmr_QUEUERELEASE,    // 1 до освобождения очереди - before the queue is released
-//} tModeReceive;
-// Задаём текущий режим приема сообщений
-//int t_ModeReceive=tmr_ONEATIME;
+unsigned long nLoop=0UL;  
 
 // ****************************************************************************
 // *  Сформировать сообщение о прошедшем времени с начала запуска приложения  *
@@ -52,6 +65,10 @@ void ARDUINO_ISR_ATTR onTimer()
    String inMess=queMessa.SendISR(tmt_NOTICE,tmk_APP,ItsBeenMS,timeMillis);
    // Если невозможно отправить сообщение, то сообщаем
    if (inMess!=EmptyMessage) Serial.println(inMess); 
+
+   #ifdef tmr_TASKPRIORITY
+       Serial.print("ISR: "); Serial.println(uxTaskPriorityGet(NULL));     
+   #endif
 }
 // ****************************************************************************
 // *                          Инициировать приложение                         *
@@ -62,6 +79,7 @@ void setup()
    Serial.begin(115200);
    while (!Serial) continue;
    Serial.println("Последовательный порт работает!");
+
    // Создаем очередь
    String inMess="";
    inMess=queMessa.Create();
@@ -102,6 +120,11 @@ void setup()
    // всегда повторяем перезапуск (третий параметр = true), неограниченное число 
    // раз (четвертый параметр = 0) 
    timerAlarm(timer, 2000000, true, 0);
+
+   #ifdef tmr_TASKPRIORITY
+      Serial.print("Setup: "); Serial.println(uxTaskPriorityGet(NULL));     
+      Serial.print("Max:   "); Serial.println(configMAX_PRIORITIES);     
+   #endif
 }
 // ****************************************************************************
 // *           Выполнять ПЕРЕДАЧУ СООБЩЕНИЯ ИЗ ЗАДАЧИ в бесконечном цикле     *
@@ -109,6 +132,9 @@ void setup()
 // ****************************************************************************
 void vSendMess (void *pvParameters) 
 {
+   #ifdef tmr_TASKPRIORITY
+       Serial.print("vSendMess: "); Serial.println(uxTaskPriorityGet(NULL));     
+   #endif
    // Готовим цикл задачи
    while (1) 
    {
@@ -127,38 +153,26 @@ void vSendMess (void *pvParameters)
 // ****************************************************************************
 void vReceiveMess (void *pvParameters) 
 {
-   // Определяем переменную для числа сообщений, ожидающих выгрузку из очереди 
-   int iwait;
+   #ifdef tmr_TASKPRIORITY
+      Serial.print("vReceiveMess: "); Serial.println(uxTaskPriorityGet(NULL));     
+   #endif
    // Готовим цикл задачи
    while (1) 
    {
-      /*
-      // Если требуется выбрать все сообщения из очереди
-      if (t_ModeReceive==tmr_QUEUERELEASE)
-      {
-         iwait=queMessa.How_many_wait();
-         while(iwait>0)
-         {
-            // Выбираем из очереди и отправляем сообщение на периферию
-            queMessa.Post(queMessa.Receive(MessFormat));
-            vTaskDelay(100/portTICK_PERIOD_MS);
-            iwait=queMessa.How_many_wait();
-         }
-      }
-      // Иначе выбираем одно сообщение
-      else
-      {
-      */
-         //iwait=queMessa.How_many_wait();
-         //if (iwait>0) 
-         //{
-            // Выбираем из очереди и отправляем сообщение на периферию
-            //queMessa.Post(queMessa.Receive(MessFormat));
-         //}
-      //}
-      
+      #ifdef tmr_SHOWQUEUESIZE
+         Serial.print("   До "); Serial.println(queMessa.How_many_wait());     
+      #endif
+
       // Выбираем из очереди и отправляем сообщение на периферию
-      queMessa.Post(queMessa.Receive(MessFormat));
+      #ifdef tmr_QUEUERELEASE
+         queMessa.PostAll();
+      #else
+         queMessa.Post(tfm_NOTIME,"Hello: ");
+      #endif
+
+      #ifdef tmr_SHOWQUEUESIZE
+         Serial.print("После "); Serial.println(queMessa.How_many_wait());     
+      #endif
       vTaskDelay(500/portTICK_PERIOD_MS);
    }
 }
@@ -168,7 +182,9 @@ void vReceiveMess (void *pvParameters)
 // ****************************************************************************
 void loop() 
 {
-   //Serial.print("Loop: "); Serial.println(uxTaskPriorityGet(NULL)); 
+   #ifdef tmr_TASKPRIORITY
+      Serial.print("Loop: "); Serial.println(uxTaskPriorityGet(NULL));     
+   #endif
    delay(2100);
 }
 

@@ -3,7 +3,7 @@
  *                          Обеспечить передачу и приём сообщений через очередь 
  *                                                   в задачах и из прерываниях
  * 
- * v3.2.1, 11.12.2024                                 Автор:      Труфанов В.Е.
+ * v3.2.3, 18.12.2024                                 Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
@@ -27,13 +27,6 @@ TQueMessage::TQueMessage(int iQueueSize)
 void TQueMessage::attachFunction(void (*function)(char *mess, char *prefix)) 
 {
    atatchedF = *function;  
-}
-// ****************************************************************************
-// *                     Отправить сообщение на периферию                     *
-// ****************************************************************************
-void TQueMessage::Post(char *mess, char *prefix) 
-{
-   if (String(mess)!=QueueEmptyReceive) (*atatchedF)(mess,prefix);
 }
 // ****************************************************************************
 // *                        Создать очередь сообщений                         *
@@ -255,7 +248,7 @@ int TQueMessage::How_many_free()
 // ****************************************************************************
 // *                              Принять сообщение                           *
 // ****************************************************************************
-char *TQueMessage::Receive(int t_MessFormat)
+char* TQueMessage::Receive(int t_MessFormat)
 {
    // Принимаем сообщение
    if (tQueue!=NULL)
@@ -263,6 +256,7 @@ char *TQueMessage::Receive(int t_MessFormat)
       // Определяем сколько сообщений накопилось в очереди и их можно выгрузить              
       int nMess = How_many_wait();
       // Если есть сообщение в очереди, то выбираем одно сообщение
+      // (без блокировки задачи при пустой очереди)
       if (nMess>0)
       {
          // Если сообщение выбралось из очереди успешно, то собираем его в буфер
@@ -281,6 +275,28 @@ char *TQueMessage::Receive(int t_MessFormat)
    // Отмечаем "Прием сообщения: очередь структур не создана"
    else sprintf(tBuffer,NoQueueReceive); 
    return tBuffer; 
+}
+// ****************************************************************************
+// *          Выбрать сообщение из очереди и отправить на периферию           *
+// ****************************************************************************
+char* TQueMessage::Post(int t_MessFormat,char *prefix)
+{
+   Receive(t_MessFormat); 
+   if (String(tBuffer)!=QueueEmptyReceive) (*atatchedF)(tBuffer,prefix); 
+   return tBuffer; 
+}
+// ****************************************************************************
+// *      Выбрать все сообщения разом из очереди и отправить на периферию     *
+// ****************************************************************************
+void TQueMessage::PostAll(int t_MessFormat,char *prefix)
+{
+   int iwait=How_many_wait();
+   while(iwait>0)
+   {
+      Receive(t_MessFormat); 
+      if (String(tBuffer)!=QueueEmptyReceive) (*atatchedF)(tBuffer,prefix); 
+      iwait=How_many_wait();
+   }
 }
 
 // ********************************************************* QueMessage.cpp ***
