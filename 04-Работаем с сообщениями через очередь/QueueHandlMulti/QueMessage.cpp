@@ -33,7 +33,7 @@ void TQueMessage::attachFunction(void (*function)(char *mess, char *prefix))
 // ****************************************************************************
 void TQueMessage::Post(char *mess, char *prefix) 
 {
-   (*atatchedF)(mess,prefix);
+   if (String(mess)!=QueueEmptyReceive) (*atatchedF)(mess,prefix);
 }
 // ****************************************************************************
 // *                        Создать очередь сообщений                         *
@@ -44,37 +44,12 @@ String TQueMessage::Create()
    String inMess=EmptyMessage;
    tQueue = xQueueCreate(QueueSize, sizeof(struct tStruMessage));
    // Возвращаем ошибку "Очередь не была создана и не может использоваться" 
-   if (tQueue==NULL) inMess=tQueueNotCreate; 
+   if (tQueue==NULL) inMess=QueueNotCreate; 
    return inMess;
 };
 // ****************************************************************************
 // * 1 группа сообщений:            Отправить просто сообщение, без уточнений *
 // ****************************************************************************
-String TQueMessage::Send(String Type, String Source, int Number) 
-{
-   // Инициируем пустое сообщение
-   String inMess=EmptyMessage;
-   // Если очередь создана, то отправляем сообщение в очередь
-   if (tQueue!=0)
-   {
-      // Формируем сообщение для передачи в очередь
-      strcpy(taskStruMess.Type, Type.c_str());  
-      strcpy(taskStruMess.Source, Source.c_str());  
-      taskStruMess.Number=Number;
-      strcpy(taskStruMess.fmess32, EmptyMessage.c_str());
-      strcpy(taskStruMess.smess32, EmptyMessage.c_str()); 
-      // Отправляем сообщение
-      if (xQueueSend(tQueue,&taskStruMess,TicksIsBusy) != pdPASS)
-      {
-         sprintf(tBuffer,"Не удалось отправить структуру после %d тиков!",TicksIsBusy); 
-         inMess=String(tBuffer);
-      }
-   }
-   // Отмечаем "Отправка сообщения: очередь структур не создана!" 
-   else inMess=tQueueNotSend;
-   return inMess; 
-}
-
 String TQueMessage::SendISR(String Type, String Source, int Number) 
 {
    // Инициируем пустое сообщение
@@ -96,12 +71,12 @@ String TQueMessage::SendISR(String Type, String Source, int Number)
       if (xQueueSendFromISR(tQueue,&taskStruMess,&xHigherPriorityTaskWoken) != pdPASS)
       {
          // если "Не удалось отправить структуру из прерывания!" 
-         sprintf(tBuffer,tFailSendInrupt); 
+         sprintf(tBuffer,FailSendInrupt); 
          inMess=String(tBuffer);
       }
    }
    // Отмечаем "Отправка сообщения: очередь структур не создана!" 
-   else inMess=tQueueNotSend;
+   else inMess=QueueNotSend;
    return inMess; 
 }
 // ****************************************************************************
@@ -128,7 +103,7 @@ String TQueMessage::Send(String Type, String Source, int Number, int fmess32)
       }
    }
    // Отмечаем "Отправка сообщения: очередь структур не создана!" 
-   else inMess=tQueueNotSend;
+   else inMess=QueueNotSend;
    return inMess; 
 }
 
@@ -153,12 +128,12 @@ String TQueMessage::SendISR(String Type, String Source, int Number, int fmess32)
       if (xQueueSendFromISR(tQueue,&taskStruMess,&xHigherPriorityTaskWoken) != pdPASS)
       {
          // если "Не удалось отправить структуру из прерывания!" 
-         sprintf(tBuffer,tFailSendInrupt); 
+         sprintf(tBuffer,FailSendInrupt); 
          inMess=String(tBuffer);
       }
    }
    // Отмечаем "Отправка сообщения: очередь структур не создана!" 
-   else inMess=tQueueNotSend;
+   else inMess=QueueNotSend;
    return inMess; 
 }
 // ****************************************************************************
@@ -263,7 +238,7 @@ int TQueMessage::How_many_wait()
    // Инициируем отсутствие массива очереди
    int nMess = -1; 
    // Если очередь создана, то возвращаем количество сообщений в очереди
-   if (tQueue!=0) nMess = int(uxQueueMessagesWaiting(tQueue)); 
+   if (tQueue!=NULL) nMess = int(uxQueueMessagesWaiting(tQueue)); 
    return nMess;     
 }
 // ****************************************************************************
@@ -274,7 +249,7 @@ int TQueMessage::How_many_free()
    // Инициируем отсутствие массива очереди
    int Space = -1; 
    // Если очередь создана, то возвращаем количество свободных мест в очереди
-   if (tQueue!=0) Space = int(uxQueueSpacesAvailable(tQueue)); 
+   if (tQueue!=NULL) Space = int(uxQueueSpacesAvailable(tQueue)); 
    return Space;     
 }
 // ****************************************************************************
@@ -283,26 +258,28 @@ int TQueMessage::How_many_free()
 char *TQueMessage::Receive(int t_MessFormat)
 {
    // Принимаем сообщение
-   if (tQueue != NULL)
+   if (tQueue!=NULL)
    {
-      // Определяем количество свободных мест в очереди
-      int Space = int(uxQueueSpacesAvailable(tQueue));
-
-      // Выбираем сообщение из очереди с блокировкой на TicksIsBusy тактов, 
-      // если сообщение недоступно
-      if (Space<QueueSize)
+      // Определяем сколько сообщений накопилось в очереди и их можно выгрузить              
+      int nMess = How_many_wait();
+      // Если есть сообщение в очереди, то выбираем одно сообщение
+      if (nMess>0)
       {
-         if (xQueueReceive(tQueue,&receiveStruMess,TicksIsBusy) != pdPASS)
-         {
-            // Отмечаем, что "Не удалось принять структуру после всех тиков!"  
-            sprintf(tBuffer,tNotAfterTicks); 
+         // Если сообщение выбралось из очереди успешно, то собираем его в буфер
+         if (xQueueReceive(tQueue,&receiveStruMess,(TickType_t )0)==pdPASS) 
+         {        
+            CollectMessage(t_MessFormat);
          }
-         CollectMessage(t_MessFormat);
+         // Иначе отмечаем, что "Ошибка при приёме сообщения из очереди"  
+         else sprintf(tBuffer,ErrorReceiving); 
       }
+      // Отмечаем, что "Очередь пуста при приёме сообщения" 
+      else if (nMess==0) sprintf(tBuffer,QueueEmptyReceive); 
+      // "Не может быть!"
+      else sprintf(tBuffer,"Не может быть: TQueMessage::Receive!");
    }
-   // Отмечаем "Прием сообщения: очередь для структур не создана!"
-   else sprintf(tBuffer,tQueueNotReceive); 
-   delay(450);
+   // Отмечаем "Прием сообщения: очередь структур не создана"
+   else sprintf(tBuffer,NoQueueReceive); 
    return tBuffer; 
 }
 

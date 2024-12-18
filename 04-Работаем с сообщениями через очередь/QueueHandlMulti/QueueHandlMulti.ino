@@ -15,18 +15,17 @@ int MessFormat=tfm_FULL;
 // Определяем источник сообщений  
 #define tmk_APP "QHM"       // пример по обработке очередей
 // Назначаем объект работы с сообщениями через очередь
-TQueMessage queMessa(8);
+TQueMessage queMessa;
 // Выделяем счётчик циклов задачи отправки сообщений       
 unsigned long nLoop=0UL;     
 
 // Перечисляем режимы приема сообщений (Message reception modes)
-typedef enum {
-   tmr_ONEATIME,        // 0 по одному               - one at a time
-   tmr_QUEUERELEASE,    // 1 до освобождения очереди - before the queue is released
-} tModeReceive;
+//typedef enum {
+//   tmr_ONEATIME,        // 0 по одному               - one at a time
+//   tmr_QUEUERELEASE,    // 1 до освобождения очереди - before the queue is released
+//} tModeReceive;
 // Задаём текущий режим приема сообщений
-//int t_ModeReceive=tmr_QUEUERELEASE;
-int t_ModeReceive=tmr_ONEATIME;
+//int t_ModeReceive=tmr_ONEATIME;
 
 // ****************************************************************************
 // *  Сформировать сообщение о прошедшем времени с начала запуска приложения  *
@@ -67,9 +66,9 @@ void setup()
    String inMess="";
    inMess=queMessa.Create();
    // Если не получилось, сообщаем "Очередь не была создана и не может использоваться" 
-   if (inMess==tQueueNotCreate) Serial.println(tQueueNotCreate);
+   if (inMess==QueueNotCreate) Serial.println(QueueNotCreate);
    // Если очередь получилась, то отмечаем  "Очередь сформирована" 
-   else Serial.println(tQueueBeformed);
+   else Serial.println(QueueBeformed);
    // Подключаем функцию передачи сообщения на периферию - transmess
    // (функция может быть заменена на любую другую,
    // но с соответствующим контекстом входящих параметров)
@@ -77,11 +76,11 @@ void setup()
 
    // Определяем дополнительную задачу по отправке сообщений
    xTaskCreatePinnedToCore (
-      vATask,               // название функции, которая будет запускаться, как параллельная задача
+      vSendMess,            // название функции, которая будет запускаться, как параллельная задача
       "Отправка из задачи", // название задачи
       2048,                 // размер стека в байтах
       NULL,                 // указатель параметра, который будет передан задаче (NULL, если параметр не передаётся)
-      10,                   // приоритет задачи
+      5,                    // приоритет задачи
       NULL,                 // дескриптор или указатель на задачу
       1                     // ядро процессора, на котором требуется запустить задачу 
    );
@@ -91,7 +90,7 @@ void setup()
       "Приём сообщений",    // название задачи
       2048,                 // размер стека в байтах
       NULL,                 // указатель параметра, который будет передан задаче (NULL, если параметр не передаётся)
-      9,                    // приоритет задачи
+      10,                   // приоритет задачи
       NULL,                 // дескриптор или указатель на задачу
       1                     // ядро процессора, на котором требуется запустить задачу 
    );
@@ -99,26 +98,27 @@ void setup()
    timer = timerBegin(1000000);
    // Подключаем функцию обработчика прерывания от таймера - onTimer
    timerAttachInterrupt(timer, &onTimer);
-   // Настраиваем таймер: интервал перезапуска - почти 1 секунда (997000 микросекунд),
+   // Настраиваем таймер: интервал перезапуска - 2 секунды (2000000 микросекунд),
    // всегда повторяем перезапуск (третий параметр = true), неограниченное число 
    // раз (четвертый параметр = 0) 
-   timerAlarm(timer, 1997000, true, 0);
+   timerAlarm(timer, 2000000, true, 0);
 }
 // ****************************************************************************
 // *           Выполнять ПЕРЕДАЧУ СООБЩЕНИЯ ИЗ ЗАДАЧИ в бесконечном цикле     *
 //  (если задача завершится - не будет циклится, то контроллер перезагрузится)
 // ****************************************************************************
-void vATask (void *pvParameters) 
+void vSendMess (void *pvParameters) 
 {
    // Готовим цикл задачи
    while (1) 
    {
       nLoop++;
       // Отправляем информационное сообщение "Передано %s сообщение из задачи"
-      //String inMess=queMessa.Send(tmt_NOTICE,tmk_APP,SendFromTask,nLoop);
+      String inMess=queMessa.Send(tmt_NOTICE,tmk_APP,SendFromTask,nLoop);
       // Если невозможно отправить сообщение, то сообщаем
-      //if (inMess!=EmptyMessage) Serial.println(inMess); 
-      //vTaskDelay(1301/portTICK_PERIOD_MS);
+      if (inMess!=EmptyMessage) Serial.println(inMess); 
+      //Serial.print("vSendMess: "); Serial.println(uxTaskPriorityGet(NULL)); 
+      vTaskDelay(1900/portTICK_PERIOD_MS);
    }
 }
 // ****************************************************************************
@@ -132,7 +132,7 @@ void vReceiveMess (void *pvParameters)
    // Готовим цикл задачи
    while (1) 
    {
-      Serial.print("---До: "); Serial.println(queMessa.How_many_wait());  
+      /*
       // Если требуется выбрать все сообщения из очереди
       if (t_ModeReceive==tmr_QUEUERELEASE)
       {
@@ -141,7 +141,6 @@ void vReceiveMess (void *pvParameters)
          {
             // Выбираем из очереди и отправляем сообщение на периферию
             queMessa.Post(queMessa.Receive(MessFormat));
-            //queMessa.Receive(MessFormat);
             vTaskDelay(100/portTICK_PERIOD_MS);
             iwait=queMessa.How_many_wait();
          }
@@ -149,15 +148,18 @@ void vReceiveMess (void *pvParameters)
       // Иначе выбираем одно сообщение
       else
       {
-         iwait=queMessa.How_many_wait();
-         if (iwait>0) 
-         {
+      */
+         //iwait=queMessa.How_many_wait();
+         //if (iwait>0) 
+         //{
             // Выбираем из очереди и отправляем сообщение на периферию
-            queMessa.Post(queMessa.Receive(MessFormat));
-         }
-      }
-      Serial.print("После: "); Serial.println(queMessa.How_many_wait());  
-      vTaskDelay(503/portTICK_PERIOD_MS);
+            //queMessa.Post(queMessa.Receive(MessFormat));
+         //}
+      //}
+      
+      // Выбираем из очереди и отправляем сообщение на периферию
+      queMessa.Post(queMessa.Receive(MessFormat));
+      vTaskDelay(500/portTICK_PERIOD_MS);
    }
 }
 
@@ -166,11 +168,8 @@ void vReceiveMess (void *pvParameters)
 // ****************************************************************************
 void loop() 
 {
-   delay(2905);
-   // Отправляем информационное сообщение "Максимально длинное сообщение из 255 байт ..."
-   //String inMess=queMessa.Send(tmt_NOTICE,tmk_APP,SendLongMess);
-   // Если невозможно отправить сообщение, то сообщаем
-   //if (inMess!=EmptyMessage) Serial.println(inMess); 
+   //Serial.print("Loop: "); Serial.println(uxTaskPriorityGet(NULL)); 
+   delay(2100);
 }
 
 // **************************************************** QueueHandlMulti.ino ***

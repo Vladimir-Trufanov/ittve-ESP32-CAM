@@ -47,14 +47,17 @@ typedef enum {
 // 2024-11-29,19:38:45 ERROR-EUE[0] Очередь не была создана и не может использоваться  
 // 2024-11-30,08:11:54 NOTICE-KVIZZY[2] Передано 124 сообщение из задачи  
 
-// Сообщения вне формата в стандартный последовательный порт или в прочие периферии
-#define tQueueNotCreate  "Очередь не была создана и не может использоваться!" // queue has not been created and cannot be used
-#define tQueueBeformed   "Очередь сформирована!"                              // queue has been formed
-#define tQueueNotSend    "Отправка сообщения: очередь структур не создана!"   // queue has not been created for structures
-// TQueMessage::Send     "Не удалось отправить структуру после %d тиков!"
-#define tQueueNotReceive "Прием сообщения: очередь для структур не создана!"            
-#define tNotAfterTicks   "Не удалось принять структуру после всех тиков!"     // not possible to accept the structure even after all the ticks
-#define tFailSendInrupt  "Не удалось отправить структуру из прерывания!"      // failed to send structure from interrupt
+// Сообщения из методов по обслуживанию очередей вне формата 
+// (в стандартный последовательный порт или в прочие периферии)
+#define isOk               "Всё хорошо" 
+#define NoQueueReceive     "Прием сообщения: очередь структур не создана"            
+#define QueueEmptyReceive  "Очередь пуста при приёме сообщения"                 // queue is empty when receiving a message
+#define ErrorReceiving     "Ошибка при приёме сообщения из очереди"             // error when receiving a message from the queue
+#define QueueNotCreate     "Очередь не была создана и не может использоваться!" // queue has not been created and cannot be used
+#define QueueBeformed      "Очередь сформирована!"                              // queue has been formed
+#define FailSendInrupt     "Не удалось отправить структуру из прерывания!"      // failed to send structure from interrupt
+#define QueueNotSend       "Отправка сообщения: очередь структур не создана!"   // queue has not been created for structures
+// TQueMessage::Send       "Не удалось отправить структуру после %d тиков!"
 
 // Определяем структуру передаваемого сообщения
 struct tStruMessage
@@ -65,6 +68,7 @@ struct tStruMessage
    char fmess32[32];     // Первое уточнение сообщения
    char smess32[32];     // Второе уточнение сообщения
 };
+
 
 // Определяем пустое сообщение
 static String EmptyMessage="";
@@ -78,7 +82,6 @@ class TQueMessage
    // Создать очередь
    String Create();
    // 1 группа сообщений: "Отправить просто сообщение, без уточнений"
-   String Send(String Type, String Source, int Number); 
    String SendISR(String Type,String Source,int Number);
    // 2 группа: "Отправить сообщение с первым уточнением целого типа"
    String Send(String Type,String Source,int Number,int fmess32); 
@@ -101,7 +104,7 @@ class TQueMessage
    struct tStruMessage receiveStruMess;         // структура для для приема сообщения 
    QueueHandle_t tQueue;                        // очередь (дескриптор) сообщений из структур tStruMessage   
    int QueueSize;                               // размер очереди 
-   int TicksIsBusy=8;                           // число тактов блокировки задачи при занятой очереди
+   int TicksIsBusy=0;                           // число тактов блокировки задачи при занятой очереди
    char tBuffer[256];                           // буфер сообщения на 255 символов и завершающий ноль
    char tMess[256];                             // буфер предварительного размещения контекста сообщения
    char dtime[20];                              // буфер даты и времени
@@ -118,6 +121,13 @@ class TQueMessage
    // Собрать сообщение
    void CollectMessage(int t_MessFormat);
 };
+
+// Источники сообщений. При необходимости уменьшить память, занимаемую приложением,
+// следует закомментировать не нужные приложению определения. Таким образом 
+// исключатся лишние перечисления и их обрабатывающие функции.
+#define tmk_WDT     "WDT"     // общие сообщения сторожевого таймера
+#define tmk_ISR     "ISR"     // общие сообщения из обработчиков прерываний
+// #define tmk_APP  "APP"     // сообщения приложения
 
 // Макросы отправки контекста сообщения
 /*

@@ -118,6 +118,7 @@ void vATask (void *pvParameters)
       String inMess=queMessa.Send(tmt_NOTICE,tmk_APP,SendFromTask,nLoop);
       // Если невозможно отправить сообщение, то сообщаем
       if (inMess!=EmptyMessage) Serial.println(inMess); 
+      //Serial.print("vATask: "); Serial.println(uxTaskPriorityGet(NULL)); 
       vTaskDelay(1301/portTICK_PERIOD_MS);
    }
 }
@@ -163,7 +164,7 @@ void vReceiveMess (void *pvParameters)
 // ****************************************************************************
 void loop() 
 {
-   int i=7;
+   Serial.print("Loop: "); Serial.println(uxTaskPriorityGet(NULL)); 
    delay(2905);
 }
 
