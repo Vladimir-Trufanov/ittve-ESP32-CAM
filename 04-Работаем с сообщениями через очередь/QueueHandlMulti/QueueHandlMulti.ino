@@ -24,19 +24,20 @@
 
 // Режимы демонстрации приложения:
 //#define tmr_ONEATIME        // по одному               
-//#define tmr_QUEUERELEASE    // до освобождения очереди 
+#define tmr_QUEUERELEASE    // до освобождения очереди 
 //#define tmr_SHOWQUEUESIZE   // показывать размер очереди до и после приёма сообщения
 //#define tmr_TASKPRIORITY    // показывать текущие приоритеты задач
 
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
 #include "QueMessage.h"     // заголовочный файл класса TQueMessage 
 #include "QHM_Message.h"    // сообщения приложения (примера по обработке очередей)
-// Определяем формат сообщения
-int MessFormat=tfm_FULL;
 // Назначаем объект работы с сообщениями через очередь
 TQueMessage queMessa(tmk_APP);
+
 // Выделяем счётчик циклов задачи отправки сообщений       
 unsigned long nLoop=0UL;  
+// Выделяем и инициируем переменную для прошлого момента времени
+unsigned long lastMillis = millis(); 
 
 // ****************************************************************************
 // *  Сформировать сообщение о прошедшем времени с начала запуска приложения  *
@@ -44,25 +45,16 @@ unsigned long nLoop=0UL;
 // ****************************************************************************
 // Определяем заголовок для объекта таймера
 hw_timer_t *timer = NULL;
-// Выделяем и инициируем переменную для прошлого момента времени
-int lastMillis = millis(); 
+// Выделяем счётчик прерываний       
+unsigned long nLoopISR=0UL;  
 
 void ARDUINO_ISR_ATTR onTimer() 
 {
-   // Размещаем переменные времени для сообщений в статической памяти 
-   // для того, чтобы уменьшить фрагментацию кучи
-   static DRAM_ATTR int currMillis;  // переменная для текущего момента времени
-   static DRAM_ATTR int timeMillis;  // для прошедшего времени с начала запуска приложения
-
-   // Определяем время, прошедшее с начала запуска приложения
-   currMillis = millis(); 
-   if (currMillis < lastMillis) lastMillis=0;
-   timeMillis=currMillis-lastMillis;
-
-   // Отправляем информационное сообщение "Прошло %d миллисекунд"
-   String inMess=queMessa.SendISR(tmt_NOTICE,ItsBeenMS,timeMillis,"ШТЫК");
+   // Отправляем информационное сообщение "Передано %s сообщение из прерывания"
+   nLoopISR++;
+   String inMess=queMessa.SendISR(tmt_NOTICE,SendFromISR,nLoopISR,"ISR");
    // Если невозможно отправить сообщение, то сообщаем
-   if (inMess!=EmptyMessage) Serial.println(inMess); 
+   if (inMess!=isOk) Serial.println(inMess); 
 
    #ifdef tmr_TASKPRIORITY
        Serial.print("ISR: "); Serial.println(uxTaskPriorityGet(NULL));     
@@ -79,8 +71,7 @@ void setup()
    Serial.println("Последовательный порт работает!");
 
    // Создаем очередь
-   String inMess="";
-   inMess=queMessa.Create();
+   String inMess=queMessa.Create();
    // Если не получилось, сообщаем "Очередь не была создана и не может использоваться" 
    if (inMess==QueueNotCreate) Serial.println(QueueNotCreate);
    // Если очередь получилась, то отмечаем  "Очередь сформирована" 
@@ -125,23 +116,31 @@ void setup()
    #endif
 }
 // ****************************************************************************
-// *           Выполнять ПЕРЕДАЧУ СООБЩЕНИЯ ИЗ ЗАДАЧИ в бесконечном цикле     *
-//  (если задача завершится - не будет циклится, то контроллер перезагрузится)
+// *         Выполнять ПЕРЕДАЧУ СООБЩЕНИЯ о количестве запусков задачи и      *
+// *               о прошедшем времени с начала запуска приложения            *
 // ****************************************************************************
 void vSendMess (void *pvParameters) 
 {
+   // Размещаем переменные времени для сообщений в статической памяти 
+   // для того, чтобы уменьшить фрагментацию кучи
+   static DRAM_ATTR unsigned long currMillis;  // переменная для текущего момента времени
+   static DRAM_ATTR unsigned long timeMillis;  // для прошедшего времени с начала запуска приложения
+
    #ifdef tmr_TASKPRIORITY
        Serial.print("vSendMess: "); Serial.println(uxTaskPriorityGet(NULL));     
    #endif
    // Готовим цикл задачи
    while (1) 
    {
+      // Изменяем счетчик перезапусков
       nLoop++;
-      // Отправляем информационное сообщение "Передано %s сообщение из задачи"
-      String inMess=queMessa.Send(tmt_NOTICE,SendFromTask,nLoop);
-      // Если невозможно отправить сообщение, то сообщаем
-      if (inMess!=EmptyMessage) Serial.println(inMess); 
-      //Serial.print("vSendMess: "); Serial.println(uxTaskPriorityGet(NULL)); 
+      // Определяем время, прошедшее с начала запуска приложения
+      currMillis = millis(); 
+      if (currMillis < lastMillis) lastMillis=0;
+      timeMillis=currMillis-lastMillis;
+      // Отправляем информационное сообщение  "Передано %s сообщение из задачи на %s миллисекунде")
+      String inMess=queMessa.Send(tmt_NOTICE,SendFromTask,nLoop,timeMillis);
+      if (inMess!=isOk) Serial.println(inMess); 
       vTaskDelay(1900/portTICK_PERIOD_MS);
    }
 }

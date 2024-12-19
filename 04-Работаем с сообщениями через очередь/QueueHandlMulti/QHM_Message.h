@@ -16,17 +16,17 @@
 
 // Определяем перечисления примера обработки очередей 
 typedef enum {
-   ItsBeenMS,            // 0 it's been %s milliseconds
-   SendFromTask,         // 1 %s message from the task has been sent
-   StructNoSend,         // 2 structure could not be sent after %s ticks
-   TaskNoQueue,          // 3 there is no queue of structures in the task
+   SendFromISR,          // 0 
+   SendFromTask,         // 1 
+   StructNoSend,         // 2 
+   TaskNoQueue,          // 3
    SendLongMess,         // 4 maxi=255+0
 }; 
 
 // Формируем контексты сообщений по номеру перечисления
 mbeg
-   messf32(ItsBeenMS,    "Прошло %s миллисекунд")
-   messf32(SendFromTask, "Передано %s сообщение из задачи")
+   messf32(SendFromISR,  "Передано %s сообщение из прерывания")
+   messs32(SendFromTask, "Передано %s сообщение из задачи на %s миллисекунде")
    messf32(StructNoSend, "Не удалось отправить структуру после %s тиков")
    messb(  TaskNoQueue,  "Очереди структур нет в задаче")   
    messb(  SendLongMess, "Максимально длинное сообщение из 255 байт [буфер текстов сообщений максимально может содержать 255 байт и завершающий ноль 1234567890 1234567890 1234567890]")   

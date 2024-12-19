@@ -68,11 +68,11 @@ typedef enum {
 #define NoQueueReceive     "Прием сообщения: очередь структур не создана"            
 #define QueueEmptyReceive  "Очередь пуста при приёме сообщения"                 // queue is empty when receiving a message
 #define ErrorReceiving     "Ошибка при приёме сообщения из очереди"             // error when receiving a message from the queue
-#define QueueNotCreate     "Очередь не была создана и не может использоваться!" // queue has not been created and cannot be used
-#define QueueBeformed      "Очередь сформирована!"                              // queue has been formed
-#define FailSendInrupt     "Не удалось отправить структуру из прерывания!"      // failed to send structure from interrupt
-#define QueueNotSend       "Отправка сообщения: очередь структур не создана!"   // queue has not been created for structures
-// TQueMessage::Send       "Не удалось отправить структуру после %d тиков!"
+#define QueueNotCreate     "Очередь не была создана и не может использоваться"  // queue has not been created and cannot be used
+#define QueueBeformed      "Очередь сформирована"                               // queue has been formed
+#define FailSendInrupt     "Не удалось отправить структуру из прерывания"       // failed to send structure from interrupt
+#define QueueNotSend       "Отправка сообщения: очередь структур не создана"    // queue has not been created for structures
+#define FailSend           "Очередь занята, не удалось отправить сообщение"   
 
 // Определяем структуру передаваемого сообщения
 struct tStruMessage
@@ -83,10 +83,6 @@ struct tStruMessage
    char fmess32[32];     // Первое уточнение сообщения
    char smess32[32];     // Второе уточнение сообщения
 };
-
-
-// Определяем пустое сообщение
-static String EmptyMessage="";
 
 #define isOk "Всё хорошо" 
 
@@ -99,11 +95,14 @@ class TQueMessage
    // Создать очередь
    String Create();
    // 1 группа сообщений: "Отправить просто сообщение, без уточнений"
-   String Send(String Type,int Number,String Source=isOk); 
+   String    Send(String Type,int Number,String Source=isOk); 
    String SendISR(String Type,int Number,String Source=isOk);
    // 2 группа: "Отправить сообщение с первым уточнением целого типа"
-   String Send(String Type,int Number,int fmess32,String Source=isOk); 
+   String    Send(String Type,int Number,int fmess32,String Source=isOk); 
    String SendISR(String Type,int Number,int fmess32,String Source=isOk); 
+   // 3 группа: "Отправить сообщение с двумя уточнениями целого типа"
+   String    Send(String Type,int Number,int fmess32,int smess32,String Source=isOk);
+
    // Выбрать сообщение из очереди
    char* Receive(int t_MessFormat=tfm_FULL);
    // Выбрать сообщение из очереди и отправить на периферию 
@@ -129,6 +128,8 @@ class TQueMessage
    char tMess[256];                             // буфер предварительного размещения контекста сообщения
    char dtime[20];                              // буфер даты и времени
    String SourceMessage;                        // источник сообщения
+   String EmptyMessage="";                      // пустое сообщение
+
    
    // Выделяем переменную планировщику задач FreeRTOS для указания
    // необходимости переключения после прерывания на более приоритетную 
@@ -161,6 +162,7 @@ inline void messAPP(char tMess[], int Number, String fmess32, String smess32)
 #define mbeg inline void messAPP(char tMess[], int Number, String fmess32, String smess32) { switch (Number) {
 #define messb(num,mess)   case num: sprintf(tMess,mess); break;
 #define messf32(num,mess) case num: sprintf(tMess,mess,fmess32); break;
+#define messs32(num,mess) case num: sprintf(tMess,mess,fmess32,smess32); break;
 #define messd(mess)       default:  sprintf(tMess,mess); break;
 #define mend } }
 
