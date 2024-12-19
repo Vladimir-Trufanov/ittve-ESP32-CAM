@@ -3,7 +3,7 @@
  *                        Пример передачи сообщения из задачи и из прерывания с
  *                                                     приемом в основном цикле
  * 
- * v3.2.3, 18.12.2024                                 Автор:      Труфанов В.Е.
+ * v3.2.4, 19.12.2024                                 Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
 
@@ -33,10 +33,8 @@
 #include "QHM_Message.h"    // сообщения приложения (примера по обработке очередей)
 // Определяем формат сообщения
 int MessFormat=tfm_FULL;
-// Определяем источник сообщений  
-#define tmk_APP "QHM"       // пример по обработке очередей
 // Назначаем объект работы с сообщениями через очередь
-TQueMessage queMessa;
+TQueMessage queMessa(tmk_APP);
 // Выделяем счётчик циклов задачи отправки сообщений       
 unsigned long nLoop=0UL;  
 
@@ -62,7 +60,7 @@ void ARDUINO_ISR_ATTR onTimer()
    timeMillis=currMillis-lastMillis;
 
    // Отправляем информационное сообщение "Прошло %d миллисекунд"
-   String inMess=queMessa.SendISR(tmt_NOTICE,tmk_APP,ItsBeenMS,timeMillis);
+   String inMess=queMessa.SendISR(tmt_NOTICE,ItsBeenMS,timeMillis,"ШТЫК");
    // Если невозможно отправить сообщение, то сообщаем
    if (inMess!=EmptyMessage) Serial.println(inMess); 
 
@@ -140,7 +138,7 @@ void vSendMess (void *pvParameters)
    {
       nLoop++;
       // Отправляем информационное сообщение "Передано %s сообщение из задачи"
-      String inMess=queMessa.Send(tmt_NOTICE,tmk_APP,SendFromTask,nLoop);
+      String inMess=queMessa.Send(tmt_NOTICE,SendFromTask,nLoop);
       // Если невозможно отправить сообщение, то сообщаем
       if (inMess!=EmptyMessage) Serial.println(inMess); 
       //Serial.print("vSendMess: "); Serial.println(uxTaskPriorityGet(NULL)); 

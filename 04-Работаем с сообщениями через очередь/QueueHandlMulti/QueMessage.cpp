@@ -3,7 +3,7 @@
  *                          Обеспечить передачу и приём сообщений через очередь 
  *                                                   в задачах и из прерываниях
  * 
- * v3.2.3, 18.12.2024                                 Автор:      Труфанов В.Е.
+ * v3.2.4, 19.12.2024                                 Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
@@ -16,10 +16,12 @@
 // ****************************************************************************
 // *                  Построить объект (конструктор класса)                   *
 // ****************************************************************************
-TQueMessage::TQueMessage(int iQueueSize)
+TQueMessage::TQueMessage(String iSourceMessage, int iQueueSize)
 {
    // Определяем размер очереди из структур 
    QueueSize=iQueueSize;
+   // Определяем источник сообщения
+   SourceMessage=iSourceMessage;
 }
 // ****************************************************************************
 // *                 Прикрепить внешнюю функцию по параметрам                 *
@@ -43,7 +45,7 @@ String TQueMessage::Create()
 // ****************************************************************************
 // * 1 группа сообщений:            Отправить просто сообщение, без уточнений *
 // ****************************************************************************
-String TQueMessage::SendISR(String Type, String Source, int Number) 
+String TQueMessage::Send(String Type, int Number, String Source)
 {
    // Инициируем пустое сообщение
    String inMess=EmptyMessage;
@@ -52,7 +54,34 @@ String TQueMessage::SendISR(String Type, String Source, int Number)
    {
       // Формируем сообщение для передачи в очередь
       strcpy(taskStruMess.Type, Type.c_str());  
-      strcpy(taskStruMess.Source, Source.c_str());  
+      if (Source==isOk) strcpy(taskStruMess.Source, SourceMessage.c_str());  
+      else strcpy(taskStruMess.Source, Source.c_str());  
+      taskStruMess.Number=Number;
+      strcpy(taskStruMess.smess32, EmptyMessage.c_str()); 
+      strcpy(taskStruMess.smess32, EmptyMessage.c_str()); 
+      // Отправляем сообщение
+      if (xQueueSend(tQueue,&taskStruMess,TicksIsBusy) != pdPASS)
+      {
+         sprintf(tBuffer,"Не удалось отправить структуру после %d тиков!",TicksIsBusy); 
+         inMess=String(tBuffer);
+      }
+   }
+   // Отмечаем "Отправка сообщения: очередь структур не создана!" 
+   else inMess=QueueNotSend;
+   return inMess; 
+}
+
+String TQueMessage::SendISR(String Type,int Number,String Source) 
+{
+   // Инициируем пустое сообщение
+   String inMess=EmptyMessage;
+   // Если очередь создана, то отправляем сообщение в очередь
+   if (tQueue!=0)
+   {
+      // Формируем сообщение для передачи в очередь
+      strcpy(taskStruMess.Type, Type.c_str());  
+      if (Source==isOk) strcpy(taskStruMess.Source, SourceMessage.c_str());  
+      else strcpy(taskStruMess.Source, Source.c_str());  
       taskStruMess.Number=Number;
       strcpy(taskStruMess.fmess32, EmptyMessage.c_str());
       strcpy(taskStruMess.smess32, EmptyMessage.c_str()); 
@@ -75,7 +104,7 @@ String TQueMessage::SendISR(String Type, String Source, int Number)
 // ****************************************************************************
 // *  2 группа:           Отправить сообщение с первым уточнением целого типа *
 // ****************************************************************************
-String TQueMessage::Send(String Type, String Source, int Number, int fmess32) 
+String TQueMessage::Send(String Type, int Number, int fmess32, String Source)
 {
    // Инициируем пустое сообщение
    String inMess=EmptyMessage;
@@ -84,7 +113,8 @@ String TQueMessage::Send(String Type, String Source, int Number, int fmess32)
    {
       // Формируем сообщение для передачи в очередь
       strcpy(taskStruMess.Type, Type.c_str());  
-      strcpy(taskStruMess.Source, Source.c_str());  
+      if (Source==isOk) strcpy(taskStruMess.Source, SourceMessage.c_str());  
+      else strcpy(taskStruMess.Source, Source.c_str());  
       taskStruMess.Number=Number;
       sprintf(taskStruMess.fmess32, "%d", fmess32);
       strcpy(taskStruMess.smess32, EmptyMessage.c_str()); 
@@ -100,7 +130,7 @@ String TQueMessage::Send(String Type, String Source, int Number, int fmess32)
    return inMess; 
 }
 
-String TQueMessage::SendISR(String Type, String Source, int Number, int fmess32) 
+String TQueMessage::SendISR(String Type, int Number, int fmess32, String Source) 
 {
    // Инициируем пустое сообщение
    String inMess=EmptyMessage;
@@ -109,7 +139,8 @@ String TQueMessage::SendISR(String Type, String Source, int Number, int fmess32)
    {
       // Формируем сообщение для передачи в очередь
       strcpy(taskStruMess.Type, Type.c_str());  
-      strcpy(taskStruMess.Source, Source.c_str());  
+      if (Source==isOk) strcpy(taskStruMess.Source, SourceMessage.c_str());  
+      else strcpy(taskStruMess.Source, Source.c_str());  
       taskStruMess.Number=Number;
       sprintf(taskStruMess.fmess32, "%d", fmess32);
       strcpy(taskStruMess.smess32, EmptyMessage.c_str()); 
