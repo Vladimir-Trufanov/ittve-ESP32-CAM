@@ -29,10 +29,16 @@
 //#define tmr_TASKPRIORITY    // показывать текущие приоритеты задач
 //#define tmr_TRACEMEMORY     // трассировать память контроллера
 
+
+//#include "Proba.h"    
+
+
+
+
 // ============================================== 1. Инициировать использование очереди ===
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь                //
-#include <QueMessage.h>     // заголовочный файл класса TQueMessage                      //
 #include "QHM_Message.h"    // сообщения приложения (примера по обработке очередей)      //
+#include <QueMessage.h>     // заголовочный файл класса TQueMessage                      //
 // Готовим для прикрепления свою функцию - передатчик сообщения в последовательный порт  //
 // вместо установленного в классе передатчика по умолчанию "transmess"                   //
 void transmess2(char *mess, char *prefix="")                                             //
@@ -42,7 +48,7 @@ void transmess2(char *mess, char *prefix="")                                    
    Serial.println(mess);  // передали сообщение                                          //
 }                                                                                        //                                                                      
 // Назначаем объект работы с сообщениями через очередь                                   //
-TQueMessage queMessa(tmk_APP);                                                           //
+TQueMessage queMessa(amessAPP,SizeMess,tmk_APP);                                                           //
 // ========================================================================================                                                                                         
 
 // Выделяем счётчик циклов задачи отправки сообщений       
@@ -83,7 +89,7 @@ void setup()
 
    // ====================================== 2. Создать очередь и подключить передатчик ===
    // Создаем очередь                                                                    //
-   String inMess=queMessa.Create();                                                      //
+   String inMess=queMessa.Create(amessAPP);                                                      //
    // Если не получилось, сообщаем "Очередь не была создана и не может использоваться"   // 
    if (inMess==QueueNotCreate) Serial.println(QueueNotCreate);                           //
    // Если очередь получилась, то отмечаем  "Очередь сформирована"                       //
@@ -125,6 +131,12 @@ void setup()
       Serial.print("Setup: "); Serial.println(uxTaskPriorityGet(NULL));     
       Serial.print("Max:   "); Serial.println(configMAX_PRIORITIES);     
    #endif
+
+   fproba();
+   fproba1(amessAPP);
+   queMessa.fproba();
+
+   
 }
 // ****************************************************************************
 // *         Выполнять ПЕРЕДАЧУ СООБЩЕНИЯ о количестве запусков задачи и      *
@@ -191,7 +203,7 @@ void vReceiveMess (void *pvParameters)
 
       // Выбираем из очереди и отправляем сообщение на периферию
       #ifdef tmr_QUEUERELEASE
-         queMessa.PostAll();
+         //queMessa.PostAll();
       #else
          queMessa.Post(tfm_NOTIME,"Hello: ");
       #endif

@@ -23,6 +23,24 @@
 
 #include "Arduino.h"
 
+
+
+// Перечисление видов сообщений
+enum {
+   tvm_simpmes,   // 0 простое сообщение, без уточнений
+   tvm_1intmes,   // 1 сообщение c одним уточнением целого типа
+   tvm_2intmes,   // 2 сообщение c двумя уточнениями целого типа
+};
+// Структуру элемента массива сообщений приложения
+struct tmessAPP
+{
+  int num;        // номер сообщения
+  int vmess;      // вид сообщения
+  char *cmess;    // текст сообщения
+};
+
+
+
 // Передатчик сообщения на периферию с возможным префиксом (по умолчанию):
 inline void transmess(char *mess, char *prefix="") 
 {
@@ -90,10 +108,13 @@ class TQueMessage
 {
    public:
 
+   void fproba();
+
    // Построить объект (конструктор класса)
-   TQueMessage(String iSourceMessage="APP", int iQueueSize=4);
+   TQueMessage(tmessAPP *aimessAPP, int iSizeMess, String iSourceMessage="APP", int iQueueSize=4);
+
    // Создать очередь
-   String Create();
+   String Create(tmessAPP *aimessAPP);
    // 1 группа сообщений: "Отправить просто сообщение, без уточнений"
    String    Send(String Type,int Number,String Source=isOk); 
    String SendISR(String Type,int Number,String Source=isOk);
@@ -131,6 +152,9 @@ class TQueMessage
    char dtime[20];                              // буфер даты и времени
    String SourceMessage;                        // источник сообщения
    String EmptyMessage="";                      // пустое сообщение
+   //tmessAPP* amessAPP;                          // 
+   tmessAPP* amessAPP; 
+   int SizeMess;
 
    
    // Выделяем переменную планировщику задач FreeRTOS для указания

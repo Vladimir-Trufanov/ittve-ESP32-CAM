@@ -18,7 +18,7 @@
 // ****************************************************************************
 TQueMessage::TQueMessage(tmessAPP *amessAPP, int iQueueSize)
 {
-   //pmessAPP=amessAPP;
+   pmessAPP=amessAPP;
    // Определяем размер очереди из структур 
    QueueSize=iQueueSize;
 }

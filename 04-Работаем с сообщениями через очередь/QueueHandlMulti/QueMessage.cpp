@@ -11,18 +11,71 @@
 
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
 #include "QueMessage.h"
-#include "QHM_Message.h"    // сообщения примера по обработке очередей
+//#include "QHM_Message.h"    // сообщения примера по обработке очередей
 
 // ****************************************************************************
 // *                  Построить объект (конструктор класса)                   *
 // ****************************************************************************
-TQueMessage::TQueMessage(String iSourceMessage, int iQueueSize)
+TQueMessage::TQueMessage(tmessAPP *aimessAPP, int iSizeMess, String iSourceMessage, int iQueueSize)
 {
+   amessAPP = aimessAPP;
+   SizeMess = iSizeMess;
    // Определяем размер очереди из структур 
    QueueSize=iQueueSize;
    // Определяем источник сообщения
    SourceMessage=iSourceMessage;
 }
+
+
+void TQueMessage::fproba()
+{
+
+  
+   //int nmess=sizeof(amessAPP)/sizeof(amessAPP[0]);
+   //int nmess=sizeof(amessAPP)/sizeof(amessAPP[0]);
+   //Serial.print("nmes4: "); Serial.println(nmess);
+
+   Serial.print("SizeMess: "); Serial.println(SizeMess);
+   /*
+   Serial.print("fprob4");
+   Serial.print(amessAPP[0].num);
+   Serial.print(amessAPP[0].vmess);
+   Serial.println(amessAPP[0].cmess);
+
+
+   */   
+   for(int i=0; i<SizeMess; i++) 
+   {
+      Serial.print("TQueMessage::fproba(): ");
+      Serial.print(amessAPP[i].num);
+      Serial.print(amessAPP[i].vmess);
+      Serial.println(amessAPP[i].cmess);
+   }
+
+  
+   /*
+   Serial.print("fprob3");
+   Serial.print(amessAPP[0].num);
+   Serial.print(amessAPP[0].vmess);
+   Serial.println(amessAPP[0].cmess);
+   */
+   
+   /*
+   int nmess=sizeof(apmessAPP)/sizeof(apmessAPP[0]);
+   Serial.println("nmess: )"); Serial.println(nmess);
+   
+   for(int i=0; i<nmess; i++) 
+   {
+      tmessAPP messAPPi=apmessAPP[i];
+      Serial.print("fproba");
+      Serial.print(messAPPi.num);
+      Serial.print(messAPPi.vmess);
+      Serial.println(messAPPi.cmess);
+   }
+   */
+}
+
+
 // ****************************************************************************
 // *                 Прикрепить внешнюю функцию по параметрам                 *
 // ****************************************************************************
@@ -33,8 +86,16 @@ void TQueMessage::attachFunction(void (*function)(char *mess, char *prefix))
 // ****************************************************************************
 // *                        Создать очередь сообщений                         *
 // ****************************************************************************
-String TQueMessage::Create()
+String TQueMessage::Create(tmessAPP *aimessAPP)
 {
+
+   /*
+   Serial.print("fprob3");
+   Serial.print(aimessAPP[0].num);
+   Serial.print(aimessAPP[0].vmess);
+   Serial.println(aimessAPP[0].cmess);
+   */
+  
    // Инициируем пустое сообщение
    String inMess=isOk;
    tQueue = xQueueCreate(QueueSize, sizeof(struct tStruMessage));
@@ -230,7 +291,7 @@ void TQueMessage::ExtractMess(String Source, int Number, String fmess32, String 
    // else
    
    // В завершение цепочки запускаем сообщения приложения
-   messAPP(tMess,Number,fmess32,smess32);   
+   //messAPP(tMess,Number,fmess32,smess32);   
 }
 // ****************************************************************************
 // *                              Собрать сообщение                           *

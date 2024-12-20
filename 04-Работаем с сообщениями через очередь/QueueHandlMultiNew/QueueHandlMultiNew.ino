@@ -91,7 +91,7 @@ void setup()
       Serial.println(cmess.cmess);
    }
    */
-   //queMessa.fproba();
+   queMessa.fproba();
 
    
    // =================================== 2. Создание очереди и подключение передатчика ===
