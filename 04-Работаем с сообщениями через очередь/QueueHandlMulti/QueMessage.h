@@ -17,8 +17,6 @@
 // 3. Методы выборки сообщений из очереди Receive, Post и PostAll работают без блокировки 
 //    задачи при пустой очереди.
 
-#ifndef que_messa
-#define que_messa
 #pragma once     
 
 #include "Arduino.h"
@@ -102,8 +100,6 @@ class TQueMessage
 {
    public:
 
-   void fproba();
-
    // Построить объект (конструктор класса)
    TQueMessage(tmessAPP *aimessAPP, int iSizeMess, String iSourceMessage="APP", int iQueueSize=4);
 
@@ -162,28 +158,6 @@ class TQueMessage
    void CollectMessage(int t_MessFormat);
 };
 
-// Макросы отправки контекста сообщения
-/*
-inline void messAPP(char tMess[], int Number, String fmess32, String smess32) 
-{
-   switch (Number) 
-   {
-      case tqhm_ItsBeenMS:
-         sprintf(tMess,"Прошло %s миллисекунд",fmess32); break;
-      case tqhm_SendFromTask:
-         sprintf(tMess,"Передано %s сообщение из задачи",fmess32); break;
-      default:
-         sprintf(tMess,"Неопределенное сообщение примера очередей"); break;
-   }
-}
-*/
-#define mbeg inline void messAPP(char tMess[], int Number, String fmess32, String smess32) { switch (Number) {
-#define messb(num,mess)   case num: sprintf(tMess,mess); break;
-#define messf32(num,mess) case num: sprintf(tMess,mess,fmess32); break;
-#define messs32(num,mess) case num: sprintf(tMess,mess,fmess32,smess32); break;
-#define messd(mess)       default:  sprintf(tMess,mess); break;
-#define mend } }
-
 // Уровни вывода сообщений
 typedef enum {
    tml_VERBOSE,         // 0 выводятся все типы сообщений 
@@ -191,7 +165,5 @@ typedef enum {
    tml_NOTICE,          // 2 выводятся только информационные сообщения 
    tml_SILENT,          // 3 сообщения не выводятся 
 } tMessageOutputLevel;
-
-#endif
 
 // *********************************************************** QueMessage.h ***

@@ -11,7 +11,6 @@
 
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
 #include "QueMessage.h"
-//#include "QHM_Message.h"    // сообщения примера по обработке очередей
 
 // ****************************************************************************
 // *                  Построить объект (конструктор класса)                   *
@@ -25,26 +24,6 @@ TQueMessage::TQueMessage(tmessAPP *aimessAPP, int iSizeMess, String iSourceMessa
    QueueSize=iQueueSize;
    // Определяем источник сообщения
    SourceMessage=iSourceMessage;
-}
-
-
-void TQueMessage::fproba()
-{
-   /*
-   Serial.print("fprob4");
-   Serial.print(amessAPP[0].num);
-   Serial.print(amessAPP[0].vmess);
-   Serial.println(amessAPP[0].cmess);
-   */   
-
-   Serial.print("SizeMess: "); Serial.println(SizeMess);
-   for(int i=0; i<SizeMess; i++) 
-   {
-      Serial.print("TQueMessage::fproba(): ");
-      Serial.print(amessAPP[i].num);
-      Serial.print(amessAPP[i].vmess);
-      Serial.println(amessAPP[i].cmess);
-   }
 }
 // ****************************************************************************
 // *                 Прикрепить внешнюю функцию по параметрам                 *
@@ -121,7 +100,6 @@ String TQueMessage::Send(String Type, int Number, String Source)
    else inMess=QueueNotSend;
    return inMess; 
 }
-
 String TQueMessage::SendISR(String Type,int Number,String Source) 
 {
    // Инициируем пустое сообщение
@@ -164,7 +142,6 @@ String TQueMessage::Send(String Type, int Number, int fmess32, String Source)
    else inMess=QueueNotSend;
    return inMess; 
 }
-
 String TQueMessage::SendISR(String Type, int Number, int fmess32, String Source) 
 {
    // Инициируем пустое сообщение
@@ -240,21 +217,10 @@ void TQueMessage::ExtractTime()
    strftime(dtime,20,"%Y-%m-%d,%H:%M:%S",localtime(&rawtime));
 }
 // ****************************************************************************
-// *       Извлечь сообщение по источнику перечисления и номеру сообщения     *
+// *      Извлечь сообщение из массива по номеру и заполнить уточнениями      *
 // ****************************************************************************
 void TQueMessage::ExtractMess(String Source, int Number, String fmess32, String smess32) 
 {
-   // Выбираем сообщение из примера по обработке очередей 
-   //#ifndef que_messa
-   // Выдать ошибку на отсутствие определения псевдонима приложения
-   //#endif  
-   // if (Source == tmk_WDT)      messWDT(tMess,Number,fmess32,smess32);   
-   // else if (Source == tmk_ISR) messISR(tMess,Number,fmess32,smess32);
-   // else
-   
-   // В завершение цепочки запускаем сообщения приложения
-   //messAPP(tMess,Number,fmess32,smess32);  
-
    sprintf(tMess,"Неопределенное сообщение примера очередей");
    for(int i=0; i<SizeMess; i++) 
    {
@@ -275,17 +241,12 @@ void TQueMessage::ExtractMess(String Source, int Number, String fmess32, String 
          {
             sprintf(tMess,amessAPP[i].cmess,fmess32,smess32); break;
          }
-         //Serial.print(amessAPP[i].num);
-         //Serial.print(amessAPP[i].vmess);
-         //Serial.println(amessAPP[i].cmess);
-        
       }
    }
 }
 // ****************************************************************************
 // *                              Собрать сообщение                           *
 // ****************************************************************************
-
 // Определить сколько символов без нуля в массиве char 
 int TQueMessage::CharSize(char mess[])
 {
@@ -296,7 +257,6 @@ int TQueMessage::CharSize(char mess[])
    }
    return nSize;
 }
-
 void TQueMessage::CollectMessage(int t_MessFormat)
 {
    // char Type[7];                     - Тип сообщения
@@ -319,8 +279,6 @@ void TQueMessage::CollectMessage(int t_MessFormat)
    strcat(tMess, "[");
    strcat(tMess, String(receiveStruMess.Number).c_str());
    strcat(tMess, "]");
-
-   
    // Если заказан вывод кратких сообщений, то возвращаем сообщение
    if (t_MessFormat==tfm_BRIEF) strcat(tBuffer,tMess);
    else 
