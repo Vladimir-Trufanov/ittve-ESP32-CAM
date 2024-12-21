@@ -3,7 +3,7 @@
  *                          Обеспечить передачу и приём сообщений через очередь 
  *                                                   в задачах и из прерываниях
  * 
- * v3.2.5, 20.12.2024                                 Автор:      Труфанов В.Е.
+ * v3.2.6, 21.12.2024                                 Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
@@ -23,8 +23,6 @@
 
 #include "Arduino.h"
 
-
-
 // Перечисление видов сообщений
 enum {
    tvm_simpmes,   // 0 простое сообщение, без уточнений
@@ -38,8 +36,6 @@ struct tmessAPP
   int vmess;      // вид сообщения
   char *cmess;    // текст сообщения
 };
-
-
 
 // Передатчик сообщения на периферию с возможным префиксом (по умолчанию):
 inline void transmess(char *mess, char *prefix="") 
@@ -102,8 +98,6 @@ struct tStruMessage
    char smess32[32];     // Второе уточнение сообщения
 };
 
-#define isOk "Всё хорошо" 
-
 class TQueMessage
 {
    public:
@@ -114,7 +108,7 @@ class TQueMessage
    TQueMessage(tmessAPP *aimessAPP, int iSizeMess, String iSourceMessage="APP", int iQueueSize=4);
 
    // Создать очередь
-   String Create(tmessAPP *aimessAPP);
+   String Create();
    // 1 группа сообщений: "Отправить просто сообщение, без уточнений"
    String    Send(String Type,int Number,String Source=isOk); 
    String SendISR(String Type,int Number,String Source=isOk);
@@ -152,10 +146,8 @@ class TQueMessage
    char dtime[20];                              // буфер даты и времени
    String SourceMessage;                        // источник сообщения
    String EmptyMessage="";                      // пустое сообщение
-   //tmessAPP* amessAPP;                          // 
-   tmessAPP* amessAPP; 
-   int SizeMess;
-
+   tmessAPP* amessAPP;                          // указатель на массив сообщений
+   int SizeMess;                                // размер массива сообщений
    
    // Выделяем переменную планировщику задач FreeRTOS для указания
    // необходимости переключения после прерывания на более приоритетную 

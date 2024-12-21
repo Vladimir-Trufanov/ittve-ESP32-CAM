@@ -3,7 +3,7 @@
  *                         Перечисление сообщений примера по обработке очередей
  *                                       и функция заполнения буфера сообщением  
  * 
- * v2.0.2, 19.12.2024                                 Автор:      Труфанов В.Е.
+ * v2.1.0, 21.12.2024                                 Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
@@ -12,30 +12,6 @@
 #pragma once 
 
 #include <QueMessage.h>     // заголовочный файл класса TQueMessage                      //
-
-/*
-// Определяем перечисления примера обработки очередей 
-typedef enum {
-   iItsBeenMS,            // 0 it's been %d milliseconds
-   iSendFromTask,         // 1 %d message from the task has been sent
-   iStructNoSend,         // 2 structure could not be sent after %d ticks
-   iTaskNoQueue,          // 3 there is no queue of structures in the task
-   iSendLongMess,         // 4 maxi=255+0
-}; 
-*/
-
-/*
-tmessAPP amessAPP[] = 
-{
-    {iItsBeenMS,    tvm_1intmes, "Прошло %d миллисекунд"},
-    {iSendFromTask, tvm_1intmes, "Передано %d сообщение из задачи"},
-    {iStructNoSend, tvm_1intmes, "Не удалось отправить структуру после %d тиков"},
-    {iTaskNoQueue,  tvm_simpmes, "Очереди структур нет в задаче"},
-    {iSendLongMess, tvm_simpmes, "Максимально длинное сообщение из 255 байт [буфер текстов сообщений максимально может содержать 255 байт и завершающий ноль 1234567890 1234567890 1234567890]"},
-    //messd("Неопределенное сообщение примера очередей")  
-};
-static int nmess=sizeof(amessAPP)/sizeof(amessAPP[0]);
-*/
 
 // Определяем источник сообщений  
 #define tmk_APP "QHM"   // пример по обработке очередей
@@ -71,7 +47,7 @@ tmessAPP amessAPP[] =
 };
 static int SizeMess=sizeof(amessAPP)/sizeof(amessAPP[0]);
 
-
+/*
 void fproba()
 {
 
@@ -120,7 +96,6 @@ void fproba1(tmessAPP *aimessAPP)
    //int nmess=sizeof(amessAPP)/sizeof(amessAPP[0]);
    //Serial.println("nmess: "); Serial.println(nmess);
 
-   /*
    for(int i=0; i<nmess; i++) 
    {
       tmessAPP messAPPi=apmessAPP[i];
@@ -129,9 +104,8 @@ void fproba1(tmessAPP *aimessAPP)
       Serial.print(messAPPi.vmess);
       Serial.println(messAPPi.cmess);
    }
-   */
 }
-
+*/
 
 #endif
 

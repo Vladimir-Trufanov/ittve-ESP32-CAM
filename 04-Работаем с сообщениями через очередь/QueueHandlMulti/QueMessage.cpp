@@ -3,7 +3,7 @@
  *                          Обеспечить передачу и приём сообщений через очередь 
  *                                                   в задачах и из прерываниях
  * 
- * v3.2.5, 20.12.2024                                 Автор:      Труфанов В.Е.
+ * v3.2.6, 21.12.2024                                 Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 29.11.2024
 **/
 
@@ -18,6 +18,7 @@
 // ****************************************************************************
 TQueMessage::TQueMessage(tmessAPP *aimessAPP, int iSizeMess, String iSourceMessage, int iQueueSize)
 {
+   // Считывем указатель массива сообщений и размер массива
    amessAPP = aimessAPP;
    SizeMess = iSizeMess;
    // Определяем размер очереди из структур 
@@ -29,21 +30,14 @@ TQueMessage::TQueMessage(tmessAPP *aimessAPP, int iSizeMess, String iSourceMessa
 
 void TQueMessage::fproba()
 {
-
-  
-   //int nmess=sizeof(amessAPP)/sizeof(amessAPP[0]);
-   //int nmess=sizeof(amessAPP)/sizeof(amessAPP[0]);
-   //Serial.print("nmes4: "); Serial.println(nmess);
-
-   Serial.print("SizeMess: "); Serial.println(SizeMess);
    /*
    Serial.print("fprob4");
    Serial.print(amessAPP[0].num);
    Serial.print(amessAPP[0].vmess);
    Serial.println(amessAPP[0].cmess);
-
-
    */   
+
+   Serial.print("SizeMess: "); Serial.println(SizeMess);
    for(int i=0; i<SizeMess; i++) 
    {
       Serial.print("TQueMessage::fproba(): ");
@@ -51,31 +45,7 @@ void TQueMessage::fproba()
       Serial.print(amessAPP[i].vmess);
       Serial.println(amessAPP[i].cmess);
    }
-
-  
-   /*
-   Serial.print("fprob3");
-   Serial.print(amessAPP[0].num);
-   Serial.print(amessAPP[0].vmess);
-   Serial.println(amessAPP[0].cmess);
-   */
-   
-   /*
-   int nmess=sizeof(apmessAPP)/sizeof(apmessAPP[0]);
-   Serial.println("nmess: )"); Serial.println(nmess);
-   
-   for(int i=0; i<nmess; i++) 
-   {
-      tmessAPP messAPPi=apmessAPP[i];
-      Serial.print("fproba");
-      Serial.print(messAPPi.num);
-      Serial.print(messAPPi.vmess);
-      Serial.println(messAPPi.cmess);
-   }
-   */
 }
-
-
 // ****************************************************************************
 // *                 Прикрепить внешнюю функцию по параметрам                 *
 // ****************************************************************************
@@ -86,16 +56,8 @@ void TQueMessage::attachFunction(void (*function)(char *mess, char *prefix))
 // ****************************************************************************
 // *                        Создать очередь сообщений                         *
 // ****************************************************************************
-String TQueMessage::Create(tmessAPP *aimessAPP)
+String TQueMessage::Create()
 {
-
-   /*
-   Serial.print("fprob3");
-   Serial.print(aimessAPP[0].num);
-   Serial.print(aimessAPP[0].vmess);
-   Serial.println(aimessAPP[0].cmess);
-   */
-  
    // Инициируем пустое сообщение
    String inMess=isOk;
    tQueue = xQueueCreate(QueueSize, sizeof(struct tStruMessage));
@@ -283,15 +245,42 @@ void TQueMessage::ExtractTime()
 void TQueMessage::ExtractMess(String Source, int Number, String fmess32, String smess32) 
 {
    // Выбираем сообщение из примера по обработке очередей 
-   #ifndef que_messa
+   //#ifndef que_messa
    // Выдать ошибку на отсутствие определения псевдонима приложения
-   #endif  
+   //#endif  
    // if (Source == tmk_WDT)      messWDT(tMess,Number,fmess32,smess32);   
    // else if (Source == tmk_ISR) messISR(tMess,Number,fmess32,smess32);
    // else
    
    // В завершение цепочки запускаем сообщения приложения
-   //messAPP(tMess,Number,fmess32,smess32);   
+   //messAPP(tMess,Number,fmess32,smess32);  
+
+   sprintf(tMess,"Неопределенное сообщение примера очередей");
+   for(int i=0; i<SizeMess; i++) 
+   {
+      if (i==Number)
+      {
+         // Выводим "простое сообщение, без уточнений"
+         if (amessAPP[i].vmess==tvm_simpmes)
+         { 
+            sprintf(tMess,amessAPP[i].cmess); break;
+         }
+         // Выводим "сообщение c одним уточнением целого типа"
+         if (amessAPP[i].vmess==tvm_1intmes) 
+         {
+            sprintf(tMess,amessAPP[i].cmess,fmess32); break;
+         }
+         // Выводим "сообщение c одним уточнением целого типа"
+         if (amessAPP[i].vmess==tvm_2intmes) 
+         {
+            sprintf(tMess,amessAPP[i].cmess,fmess32,smess32); break;
+         }
+         //Serial.print(amessAPP[i].num);
+         //Serial.print(amessAPP[i].vmess);
+         //Serial.println(amessAPP[i].cmess);
+        
+      }
+   }
 }
 // ****************************************************************************
 // *                              Собрать сообщение                           *

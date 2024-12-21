@@ -3,7 +3,7 @@
  *                        Пример передачи сообщения из задачи и из прерывания с
  *                                                     приемом в основном цикле
  * 
- * v3.2.5, 20.12.2024                                 Автор:      Труфанов В.Е.
+ * v3.2.6, 21.12.2024                                 Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 21.11.2024
 **/
 
@@ -28,12 +28,6 @@
 //#define tmr_SHOWQUEUESIZE   // показывать размер очереди до и после приёма сообщения
 //#define tmr_TASKPRIORITY    // показывать текущие приоритеты задач
 //#define tmr_TRACEMEMORY     // трассировать память контроллера
-
-
-//#include "Proba.h"    
-
-
-
 
 // ============================================== 1. Инициировать использование очереди ===
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь                //
@@ -89,7 +83,7 @@ void setup()
 
    // ====================================== 2. Создать очередь и подключить передатчик ===
    // Создаем очередь                                                                    //
-   String inMess=queMessa.Create(amessAPP);                                                      //
+   String inMess=queMessa.Create();                                                      //
    // Если не получилось, сообщаем "Очередь не была создана и не может использоваться"   // 
    if (inMess==QueueNotCreate) Serial.println(QueueNotCreate);                           //
    // Если очередь получилась, то отмечаем  "Очередь сформирована"                       //
@@ -132,9 +126,9 @@ void setup()
       Serial.print("Max:   "); Serial.println(configMAX_PRIORITIES);     
    #endif
 
-   fproba();
-   fproba1(amessAPP);
-   queMessa.fproba();
+   //fproba();
+   //fproba1(amessAPP);
+   //queMessa.fproba();
 
    
 }
@@ -203,7 +197,7 @@ void vReceiveMess (void *pvParameters)
 
       // Выбираем из очереди и отправляем сообщение на периферию
       #ifdef tmr_QUEUERELEASE
-         //queMessa.PostAll();
+         queMessa.PostAll();
       #else
          queMessa.Post(tfm_NOTIME,"Hello: ");
       #endif
