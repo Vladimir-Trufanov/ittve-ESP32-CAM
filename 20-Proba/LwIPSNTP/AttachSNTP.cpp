@@ -3,7 +3,7 @@
  *         Подключится к пулу серверов точного времени и синхронизировать время 
  *                                                контроллера по протоколу SNTP
  * 
- * v1.0.0, 27.12.2024                                 Автор:      Труфанов В.Е.
+ * v1.0.1, 28.12.2024                                 Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 27.12.2024
 **/
 
@@ -13,8 +13,9 @@
 // ****************************************************************************
 // *                  Построить объект (конструктор класса)                   *
 // ****************************************************************************
-TAttachSNTP::TAttachSNTP()
+TAttachSNTP::TAttachSNTP(const char *server)
 {
+   ServerName=server;
 }
 // ****************************************************************************
 // *                 Построить объект синхронизации времени                   *
@@ -26,27 +27,20 @@ void TAttachSNTP::Create()
    // Переносим время в структуру времени
    localtime_r(&now, &timeinfo);
 
-   printf("Прошло с 'начала эпохи = 1900 года' %d\n", timeinfo.tm_year);
+   printf("Прошло лет с 'начала эпохи = 1900 года': %d\n", timeinfo.tm_year);
 
    // Если правильное время ещё не установлено, то настраиваем интервал синхронизации, 
    // имя сервера, режим работы, часовой пояс и получаем время с сервера SNTP 
    if (timeinfo.tm_year < (2023 - 1900)) 
    {
-      //ViewLocalTime();
-      // Показываем начальные заграничное и местное время
-      setTimezone();
-      //printTime();
       Serial.println("Время еще не установлено. Подключаемся к Wi-Fi и получаем время по протоколу SNTP");
       // Инициируем SNTP
       initSNTP();
       wait4SNTP();
-      // Показываем установленные дату и время
       time(&now);
-      //ViewLocalTime();
    }
-   // Показываем местные дату и время
+   // Настраиваем часовой пояс            
    setTimezone();
-   //printTime();
 };
 // ****************************************************************************
 // *                  Отметить момент синхронизации времени                   *
@@ -68,9 +62,7 @@ void TAttachSNTP::initSNTP()
    // Устанавливаем режим работы: ESP_SNTP_OPMODE_POLL — просто опрашивать
    esp_sntp_setoperatingmode(ESP_SNTP_OPMODE_POLL);
    // Указываем пул NTP-серверов 
-   //esp_sntp_setservername(0, "pool.ntp.org");
-   //esp_sntp_setservername(0, "ntp.msk-ix.ru");
-   esp_sntp_setservername(0, "ru.pool.ntp.org");
+   esp_sntp_setservername(0, ServerName);
    // Запускаем службу SNTP с указанными выше параметрами
    esp_sntp_init();
    // Устанавливаем часовой пояс
@@ -134,40 +126,19 @@ String TAttachSNTP::strTime()
    zfil2(timeinfo.tm_hour), zfil2(timeinfo.tm_min), zfil2(timeinfo.tm_sec));
    return String(strftime_buf);
 }
-
+// ****************************************************************************
+// *           Извлечь и сформировать строку о текущей дате и времени         *
+// *                в указанной временной зоне (часовом поясе)                *
+// ****************************************************************************
 String TAttachSNTP::strLocalTime(const char* value)
 {
    setenv("TZ", value, 1);
    tzset();
    localtime_r(&now, &timeinfo);
    String cStr=strTime(); 
-   /*
-   strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
-   printf("Текущие дата и время: %s\n", strftime_buf);
-   */
    setTimezone();
    return cStr;
-
-
-   /*
-   // Устанавливаем часовой пояс на восточное стандартное время 
-   // и выводим местное время
-
-   setenv("TZ", "EST5EDT,M3.2.0/2,M11.1.0", 1);
-   tzset();
-   localtime_r(&now, &timeinfo);
-   strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
-   printf("Текущие дата и время в Нью-Йорке: %s\n", strftime_buf);
-  
-   // Устанавливаем часовой пояс на Шанхайское стандартное время
-   setenv("TZ", "CST-8", 1);
-   tzset();
-   localtime_r(&now, &timeinfo);
-   strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
-   printf("Текущие дата и время в Шанхае: %s\n", strftime_buf);
-   */
 }
-
 // ****************************************************************************
 // *                 Двузначное число представить в виде строки,              *
 // *              в том числе, однозначное число дополнить слева нулем        *
@@ -178,6 +149,13 @@ String TAttachSNTP::zfil2(int n)
    if (n>9) cRet=String(n);
    else cRet="0"+String(n);
    return cRet;
+}
+// ****************************************************************************
+// *             Узнать подключенный пул серверов точного времени             *
+// ****************************************************************************
+String TAttachSNTP::getservername()
+{
+   return String(ServerName);
 }
 
 // ********************************************************* AttachSNTP.cpp ***
