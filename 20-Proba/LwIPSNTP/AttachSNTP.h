@@ -3,14 +3,34 @@
  *         Подключится к пулу серверов точного времени и синхронизировать время 
  *                                                контроллера по протоколу SNTP
  * 
- * v1.0.0, 27.12.2024                                 Автор:      Труфанов В.Е.
+ * v1.0.1, 28.12.2024                                 Автор:      Труфанов В.Е.
  * Copyright © 2024 tve                               Дата создания: 27.12.2024
 **/
 
 #pragma once     
 #include "Arduino.h"
-#include "nvs_flash.h"
-#include "nvs.h"
+
+// Некоторые временные зоны (часовые пояса):
+// https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
+
+//   1 Africa/Abidjan     GMT0
+//   2 Africa/Accra       GMT0
+//  13 Africa/Cairo       EET-2EEST,M4.5.5/0,M10.5.4/24
+//  14 Africa/Casablanca  <+01>-1
+//  54 America/Anchorage  AKST9AKDT,M3.2.0,M11.1.0
+//  85 America/Caracas    <-04>4
+// 154 America/New_York   EST5EDT,M3.2.0,M11.1.0
+// 350 Europe/Moscow      MSK-3
+// 430 Etc/GMT-2          <+02>-2
+// 431 Etc/GMT-3          <+03>-3
+
+// Некоторые пулы серверов точного времени
+
+// ru.pool.ntp.org   - Российская Федерация
+// ntp.msk-ix.ru     - Москва, Столица Российской Федерации
+// pool.ntp.org      - основной мировой пул точного времени
+// time.google.com   - сервера Google: Google Public NTP [AS15169]
+// time.windows.com  - сервера Microsoft NTP server [AS8075]
 
 // Подключаем библиотеку для связи с сервером SNTP:
 
@@ -63,66 +83,35 @@
 
 #include "esp_sntp.h"
 
-
-
 class TAttachSNTP
 {
    public:
 
-   // Построить объект (конструктор класса)
+   // Определить объект (конструктор класса)
    TAttachSNTP();
-   // ----Создать очередь сообщений                         
+   // Построить объект синхронизации времени                         
    void Create();
-   /*
-   // Создать очередь
-   String Create();
-   // Отправить сообщение из задачи
-   String Send(String Source); 
-   // Отправить сообщение из прерывания
-   String SendISR(String Source);
-   // Подключить внешнюю функцию передачи сообщения на периферию       
-   void attachFunction(void (*function)(char *mess, char *prefix));
-   // Определить количество свободных мест в очереди
-   int How_many_free();                
-   // Определить, сколько сообщений накопилось в очереди и их можно выгрузить 
-   int How_many_wait(); 
-   // Выбрать сообщение из очереди
-   char* Receive();
-   // Выбрать сообщение из очереди и отправить на периферию 
-   char* Post(char *prefix="");
-   // Выбрать все сообщения разом из очереди и отправить на периферию
-   void PostAll(char *prefix="");
-   */
+   String strLocalTime(const char* value="MSK-3");
+   // Извлечь и сформировать строку локальной информации о текущей дате и 
+   // времени в типизированном виде: "2024-12-28 13:29:07"     
+   String strTime(); 
    
    private:
 
-   // Создаем переменную локального времени (секунды с начала эпохи)
+   // Переменная локального времени (секунды с начала эпохи)
    time_t now;
-   // Создаем структуру времени timeinfo в которую будем вкладывать
+   // Структура времени timeinfo в которую будем вкладывать
    // выбранное и преобразованное время в секундах с начала эпохи
    struct tm timeinfo;
 
-   //void Synchron(struct timeval* t); 
+   char strftime_buf[64];
+
    void initSNTP(); 
    void setTimezone(); 
    void wait4SNTP(); 
-   void ViewLocalTime();
-   void printTime(); 
-
-   /*
-   void (*atatchedF)(char *mess, char *prefix); // прикреплённая функция
-   int QueueSize;                               // размер очереди 
-   struct tStruMess taskStruMess;               // структура для для отправки сообщения 
-   struct tStruMess receiveStruMess;            // структура для для приема сообщения 
-   char tBuffer[1024];                          // буфер сообщения на 1023 символа и завершающий ноль
-   QueueHandle_t tQueue;                        // очередь (дескриптор) сообщений из структур tStruMess1024   
-   // Выделить переменную планировщику задач FreeRTOS для указания
-   // необходимости переключения после прерывания на более приоритетную 
-   // задачу, связанную с очередью
-   BaseType_t xHigherPriorityTaskWoken;
-   // Скопировать не более 1023 символов сообщения в буфер и завершить нулем
-   void strcopy1024(String Source);
-   */            
+   // Двузначное число представить в виде строки, 
+   // в том числе, однозначное число дополнить слева нулем      
+   String zfil2(int n); 
 };
 
 // *********************************************************** AttachSNTP.h ***

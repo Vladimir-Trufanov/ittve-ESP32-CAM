@@ -17,7 +17,7 @@ TAttachSNTP::TAttachSNTP()
 {
 }
 // ****************************************************************************
-// *                        ----Создать очередь сообщений                         *
+// *                 Построить объект синхронизации времени                   *
 // ****************************************************************************
 void TAttachSNTP::Create()
 {
@@ -28,46 +28,36 @@ void TAttachSNTP::Create()
 
    printf("Прошло с 'начала эпохи = 1900 года' %d\n", timeinfo.tm_year);
 
-   /*
    // Если правильное время ещё не установлено, то настраиваем интервал синхронизации, 
    // имя сервера, режим работы, часовой пояс и получаем время с сервера SNTP 
    if (timeinfo.tm_year < (2023 - 1900)) 
    {
-      // Инициируем SNTP
-      initSNTP();
-      wait4SNTP();
-   }
-   */
-   // Если правильное время ещё не установлено, то настраиваем интервал синхронизации, 
-   // имя сервера, режим работы, часовой пояс и получаем время с сервера SNTP 
-   if (timeinfo.tm_year < (2023 - 1900)) 
-   {
-      ViewLocalTime();
+      //ViewLocalTime();
       // Показываем начальные заграничное и местное время
       setTimezone();
-      printTime();
+      //printTime();
       Serial.println("Время еще не установлено. Подключаемся к Wi-Fi и получаем время по протоколу SNTP");
       // Инициируем SNTP
       initSNTP();
       wait4SNTP();
       // Показываем установленные дату и время
       time(&now);
-      ViewLocalTime();
+      //ViewLocalTime();
    }
    // Показываем местные дату и время
    setTimezone();
-   printTime();
+   //printTime();
 };
-
 // ****************************************************************************
-// * Настроить интервал синхронизации, имя сервера, режим работы и часовой пояс
+// *                  Отметить момент синхронизации времени                   *
 // ****************************************************************************
 void Synchron(struct timeval* t) 
 {
    Serial.println("Синхронизировано!");
 }
-
-
+// ****************************************************************************
+// * Настроить интервал синхронизации, имя сервера, режим работы и часовой пояс
+// ****************************************************************************
 void TAttachSNTP::initSNTP() 
 { 
    // Определяем синхронизирацию внутренних часов ESP32 с сервером 
@@ -78,7 +68,9 @@ void TAttachSNTP::initSNTP()
    // Устанавливаем режим работы: ESP_SNTP_OPMODE_POLL — просто опрашивать
    esp_sntp_setoperatingmode(ESP_SNTP_OPMODE_POLL);
    // Указываем пул NTP-серверов 
-   esp_sntp_setservername(0, "pool.ntp.org");
+   //esp_sntp_setservername(0, "pool.ntp.org");
+   //esp_sntp_setservername(0, "ntp.msk-ix.ru");
+   esp_sntp_setservername(0, "ru.pool.ntp.org");
    // Запускаем службу SNTP с указанными выше параметрами
    esp_sntp_init();
    // Устанавливаем часовой пояс
@@ -104,28 +96,9 @@ void TAttachSNTP::wait4SNTP()
       Serial.println("ожидание синхронизации ...");
    }
 }
-
-void TAttachSNTP::ViewLocalTime()
-{
-   // Устанавливаем часовой пояс на восточное стандартное время 
-   // и выводим местное время
-   char strftime_buf[64];
-   setenv("TZ", "EST5EDT,M3.2.0/2,M11.1.0", 1);
-   tzset();
-   localtime_r(&now, &timeinfo);
-   strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
-   printf("Текущие дата и время в Нью-Йорке: %s\n", strftime_buf);
-   // Устанавливаем часовой пояс на Шанхайское стандартное время
-   setenv("TZ", "CST-8", 1);
-   tzset();
-   localtime_r(&now, &timeinfo);
-   strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
-   printf("Текущие дата и время в Шанхае: %s\n", strftime_buf);
-}
-
 // ****************************************************************************
-// *   Извлечь информацию о текущем времени и вывести ее в отформатированном  *
-// *   виде с помощью struct tm структуры данных:                             *
+// *    Извлечь и сформировать строку локальной информации о текущей дате и   *
+// *           времени в типизированном виде: "2024-12-28 13:29:07"           *
 // *                               https://cplusplus.com/reference/ctime/tm/  *
 // ****************************************************************************
 /*
@@ -147,15 +120,64 @@ void TAttachSNTP::ViewLocalTime()
   function strftime() - format time as string:
   https://cplusplus.com/reference/ctime/strftime/
 */
-void TAttachSNTP::printTime() 
+// ****************************************************************************
+// *    Извлечь и сформировать строку локальной информации о текущей дате и   *
+// *           времени в типизированном виде: "2024-12-28 13:29:07"           *
+// *                               https://cplusplus.com/reference/ctime/tm/  *
+// ****************************************************************************
+String TAttachSNTP::strTime() 
 {
    struct tm timeinfo;
    getLocalTime(&timeinfo);
-   printf("%d-%d-%d %d:%d:%d\n", 
-   timeinfo.tm_year+1900, timeinfo.tm_mon+1, timeinfo.tm_mday,
-   timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec);
+   sprintf(strftime_buf,"%d-%s-%s %s:%s:%s", 
+   timeinfo.tm_year+1900, zfil2(timeinfo.tm_mon+1), zfil2(timeinfo.tm_mday),
+   zfil2(timeinfo.tm_hour), zfil2(timeinfo.tm_min), zfil2(timeinfo.tm_sec));
+   return String(strftime_buf);
 }
 
+String TAttachSNTP::strLocalTime(const char* value)
+{
+   setenv("TZ", value, 1);
+   tzset();
+   localtime_r(&now, &timeinfo);
+   String cStr=strTime(); 
+   /*
+   strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
+   printf("Текущие дата и время: %s\n", strftime_buf);
+   */
+   setTimezone();
+   return cStr;
 
+
+   /*
+   // Устанавливаем часовой пояс на восточное стандартное время 
+   // и выводим местное время
+
+   setenv("TZ", "EST5EDT,M3.2.0/2,M11.1.0", 1);
+   tzset();
+   localtime_r(&now, &timeinfo);
+   strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
+   printf("Текущие дата и время в Нью-Йорке: %s\n", strftime_buf);
+  
+   // Устанавливаем часовой пояс на Шанхайское стандартное время
+   setenv("TZ", "CST-8", 1);
+   tzset();
+   localtime_r(&now, &timeinfo);
+   strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
+   printf("Текущие дата и время в Шанхае: %s\n", strftime_buf);
+   */
+}
+
+// ****************************************************************************
+// *                 Двузначное число представить в виде строки,              *
+// *              в том числе, однозначное число дополнить слева нулем        *
+// ****************************************************************************
+String TAttachSNTP::zfil2(int n) 
+{
+   String cRet;
+   if (n>9) cRet=String(n);
+   else cRet="0"+String(n);
+   return cRet;
+}
 
 // ********************************************************* AttachSNTP.cpp ***
