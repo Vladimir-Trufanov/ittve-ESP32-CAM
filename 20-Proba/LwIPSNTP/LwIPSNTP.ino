@@ -31,7 +31,7 @@ const char* ssid     = "OPPO A9 2020";
 const char* password = "b277a4ee84e8";
 
 // Определяем объект для синхронизации времени 
-TAttachSNTP oSNTP("ru.pool.ntp.org");
+TAttachSNTP oSNTP;
 
 // Объявляем переменную, которая содержит количество перезагрузок ESP32. 
 // RTC_DATA_ATTR указывает на хранение этой статической переменной типа int 
@@ -68,9 +68,11 @@ void setup()
    Serial.print("Текущие дата и время в Шанхае:          "); Serial.println(oSNTP.strLocalTime("CST-8"));   
    Serial.print("Местное время и дата в Петрозаводске:   "); Serial.println(oSNTP.strTime());   
 
-   oSNTP.Create();
+   oSNTP.Create(4);
    
    Serial.print("Название пула серверов точного времени: "); Serial.println(oSNTP.getservername());   
+   Serial.print("Установленная временная зона(час.пояс): "); Serial.println(oSNTP.gettimezone());   
+   Serial.print("Число минут (интервал) синхронизации:   "); Serial.println(oSNTP.getsynchromin());   
    Serial.print("Текущие дата и время в Нью-Йорке:       "); Serial.println(oSNTP.strLocalTime("EST5EDT,M3.2.0/2,M11.1.0"));   
    Serial.print("Текущие дата и время в Шанхае:          "); Serial.println(oSNTP.strLocalTime("CST-8"));   
    Serial.print("Местное время и дата в Петрозаводске:   "); Serial.println(oSNTP.strTime());   
@@ -79,7 +81,7 @@ void setup()
    // Переводим систему в глубокий сон на 10 секунд
    const int deep_sleep_sec = 10;
    printf("Переход в глубокий сон на %d секунд!\n", deep_sleep_sec);
-   esp_deep_sleep(1000000LL * deep_sleep_sec);
+   //esp_deep_sleep(1000000LL * deep_sleep_sec);
 }
 
 void loop() 
