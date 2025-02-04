@@ -55,33 +55,32 @@ ittve-ESP32-CAM
 			03-Пробуем ноты на ардуино\Arduino Pro Mini – обзор.doc
 			03-Пробуем ноты на ардуино\Arduino Pro Mini.doc
 			03-Пробуем ноты на ардуино\Пробуем ноты на ардуино.md
-		+04-Работаем с сообщениями через очередь
-			+QueueHandlMulti
-				04-Работаем с сообщениями через очередь\QueueHandlMulti\QHM_Message.h
-				04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.cpp
-				04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.h
-				04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino
-			-QueueHandlMultiNew
-				04-Работаем с сообщениями через очередь\QueueHandlMultiNew\Proba.h
-				04-Работаем с сообщениями через очередь\QueueHandlMultiNew\QHM_Message.h
-				04-Работаем с сообщениями через очередь\QueueHandlMultiNew\QueMessage.cpp
-				04-Работаем с сообщениями через очередь\QueueHandlMultiNew\QueMessage.h
-				04-Работаем с сообщениями через очередь\QueueHandlMultiNew\QueueHandlMultiNew.ino
+		-04-Перезагрузки ESP32
+			-ESP32_Watchdog_example
+				04-Перезагрузки ESP32\ESP32_Watchdog_example\ESP32_Watchdog_example.ino
+			-ESP32_Watchdog-main
+				-docx
+					04-Перезагрузки ESP32\ESP32_Watchdog-main\docx\1.jpg
+					04-Перезагрузки ESP32\ESP32_Watchdog-main\docx\2.jpg
+					04-Перезагрузки ESP32\ESP32_Watchdog-main\docx\3.jpg
+					04-Перезагрузки ESP32\ESP32_Watchdog-main\docx\4.jpg
+					04-Перезагрузки ESP32\ESP32_Watchdog-main\docx\ArchitectureandOperationofaWatchdogTimer.pdf
+				-example
+					-Listing1_BasicWDT
+						04-Перезагрузки ESP32\ESP32_Watchdog-main\example\Listing1_BasicWDT\Listing1_BasicWDT.ino
+					-Listing2_DeadLockWDT
+						04-Перезагрузки ESP32\ESP32_Watchdog-main\example\Listing2_DeadLockWDT\Listing2_DeadLockWDT.ino
+					-Listing3_SanityCheckSingleLoop
+						04-Перезагрузки ESP32\ESP32_Watchdog-main\example\Listing3_SanityCheckSingleLoop\Listing3_SanityCheckSingleLoop.ino
+					-Listing4_SanityCheckRTOS
+						04-Перезагрузки ESP32\ESP32_Watchdog-main\example\Listing4_SanityCheckRTOS\Listing4_SanityCheckRTOS.ino
+					-Listing5_GreatWDT
+						04-Перезагрузки ESP32\ESP32_Watchdog-main\example\Listing5_GreatWDT\Listing5_GreatWDT.ino
+				04-Перезагрузки ESP32\ESP32_Watchdog-main\LICENSE
+				04-Перезагрузки ESP32\ESP32_Watchdog-main\README.md
 			-ResetReason2
-				04-Работаем с сообщениями через очередь\ResetReason2\ResetReason2.ino
-			-true-2024-12-11
-				04-Работаем с сообщениями через очередь\true-2024-12-11\CommonMessage.h
-				04-Работаем с сообщениями через очередь\true-2024-12-11\QHM_Message.h
-				04-Работаем с сообщениями через очередь\true-2024-12-11\QueMessage.cpp
-				04-Работаем с сообщениями через очередь\true-2024-12-11\QueMessage.h
-				04-Работаем с сообщениями через очередь\true-2024-12-11\true-2024-12-11.ino
-			-Незавершённая попытка xQueueCreateStatic в классе
-				04-Работаем с сообщениями через очередь\Незавершённая попытка xQueueCreateStatic в классе\CommonMessage.h
-				04-Работаем с сообщениями через очередь\Незавершённая попытка xQueueCreateStatic в классе\QHM_Message.h
-				04-Работаем с сообщениями через очередь\Незавершённая попытка xQueueCreateStatic в классе\QueMessage.cpp
-				04-Работаем с сообщениями через очередь\Незавершённая попытка xQueueCreateStatic в классе\QueMessage.h
-				04-Работаем с сообщениями через очередь\Незавершённая попытка xQueueCreateStatic в классе\QueueHandlMulti.ino
-			04-Работаем с сообщениями через очередь\04-Работаем с сообщениями через очередь.md
+				04-Перезагрузки ESP32\ResetReason2\ResetReason2.ino
+			04-Перезагрузки ESP32\04-Перезагрузки ESP32.md
 		-05-zastavlyaem-esp32-cam-migat-lampochkami
 			-BlinkOnCam32
 				05-zastavlyaem-esp32-cam-migat-lampochkami\BlinkOnCam32\BlinkOnCam32.ino
@@ -90,7 +89,6 @@ ittve-ESP32-CAM
 			05-zastavlyaem-esp32-cam-migat-lampochkami\05-zastavlyaem-esp32-cam-migat-lampochkami.md
 		-06-Программное тестирование Esp32
 			06-Программное тестирование Esp32\06-Программное тестирование Esp32.md
-			06-Программное тестирование Esp32\06-Программное тестирование Esp32.md.backup
 		-07-rabota-s-sajtami-v-seti-wifi
 			-esp32-http-server-v-rezhime-wifi-station-sta
 				07-rabota-s-sajtami-v-seti-wifi\esp32-http-server-v-rezhime-wifi-station-sta\esp32-http-server-v-rezhime-wifi-station-sta.ino
@@ -102,12 +100,146 @@ ittve-ESP32-CAM
 			07-rabota-s-sajtami-v-seti-wifi\rezhim-stancii.png
 			07-rabota-s-sajtami-v-seti-wifi\rezhim-tochki-dostupa.png
 		-08-camerawebserver
+			-1
+				-43_ESP32-CAMVR
+					-TimeLapseAviA1x
+						08-camerawebserver\1\43_ESP32-CAMVR\TimeLapseAviA1x\CRC32.cpp
+						08-camerawebserver\1\43_ESP32-CAMVR\TimeLapseAviA1x\CRC32.h
+						08-camerawebserver\1\43_ESP32-CAMVR\TimeLapseAviA1x\ESPxWebFlMgr.cpp
+						08-camerawebserver\1\43_ESP32-CAMVR\TimeLapseAviA1x\ESPxWebFlMgr.h
+						08-camerawebserver\1\43_ESP32-CAMVR\TimeLapseAviA1x\ESPxWebFlMgrWp.h
+						08-camerawebserver\1\43_ESP32-CAMVR\TimeLapseAviA1x\ESPxWebFlMgrWpF.h
+						08-camerawebserver\1\43_ESP32-CAMVR\TimeLapseAviA1x\README.md
+						08-camerawebserver\1\43_ESP32-CAMVR\TimeLapseAviA1x\settings.h
+						08-camerawebserver\1\43_ESP32-CAMVR\TimeLapseAviA1x\TimeLapseAviA1x.ino
+						08-camerawebserver\1\43_ESP32-CAMVR\TimeLapseAviA1x\UniversalTelegramBot.cpp
+						08-camerawebserver\1\43_ESP32-CAMVR\TimeLapseAviA1x\UniversalTelegramBot.h
+				08-camerawebserver\1\43_ESP32-CAMVR.zip
+			-2
+				-ESP32-CAM-Video-Recorder-master
+					-ESP32-CAM-Video-Recorder-master
+						-old
+							-v23
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v23\ESP32FtpServer.cpp
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v23\ESP32FtpServer.h
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v23\README.md
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v23\TimeLapseAvi23x.ino
+							-v39
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v39\ESP32FtpServer.cpp
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v39\ESP32FtpServer.h
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v39\README.md
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v39\TimeLapseAvi39x.ino
+							-v60
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v60\ESP32FtpServer.cpp
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v60\ESP32FtpServer.h
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v60\README.MD
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v60\TimeLapseAvi60x.ino
+							-v86
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v86\ESP32FtpServer.cpp
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v86\ESP32FtpServer.h
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v86\readme.md
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v86\rtc_cntl.h
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v86\settings.h
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v86\TimeLapseAvi86x.ino
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v86\UniversalTelegramBot.cpp
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v86\UniversalTelegramBot.h
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v86\v86.jpg
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v86\v86-status.jpg
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v86\v86-stop.jpg
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v86\v86-Telegram.jpg
+							-v89
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v89\ESP32FtpServer.cpp
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v89\ESP32FtpServer.h
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v89\readme.md
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v89\rtc_cntl.h
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v89\settings.h
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v89\TimeLapseAvi89x.ino
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v89\UniversalTelegramBot.cpp
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v89\UniversalTelegramBot.h
+							-v94
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v94\ESP32FtpServer.cpp
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v94\ESP32FtpServer.h
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v94\readme
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v94\rtc_cntl.h
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v94\settings.h
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v94\TimeLapseAvi94x.ino
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v94\UniversalTelegramBot.cpp
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v94\UniversalTelegramBot.h
+								08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\v94\web_v94.jpg
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\old\README.md
+						-sample
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\sample\samples.txt
+						-sample-output
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\sample-output\readme.txt
+						-TimeLapseAviA1x
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\TimeLapseAviA1x\CRC32.cpp
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\TimeLapseAviA1x\CRC32.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\TimeLapseAviA1x\ESPxWebFlMgr.cpp
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\TimeLapseAviA1x\ESPxWebFlMgr.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\TimeLapseAviA1x\ESPxWebFlMgrWp.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\TimeLapseAviA1x\ESPxWebFlMgrWpF.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\TimeLapseAviA1x\README.md
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\TimeLapseAviA1x\settings.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\TimeLapseAviA1x\TimeLapseAviA1x.ino
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\TimeLapseAviA1x\UniversalTelegramBot.cpp
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\TimeLapseAviA1x\UniversalTelegramBot.h
+						-v98
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98\ESP32FtpServer.cpp
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98\ESP32FtpServer.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98\readme.md
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98\rtc_cntl.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98\settings.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98\TimeLapseAvi98x.ino
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98\UniversalTelegramBot.cpp
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98\UniversalTelegramBot.h
+						-v98-WiFiMan
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98-WiFiMan\ESP32FtpServer.cpp
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98-WiFiMan\ESP32FtpServer.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98-WiFiMan\readme.md
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98-WiFiMan\rtc_cntl.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98-WiFiMan\settings.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98-WiFiMan\TimeLapseAvi98x-WiFiMan.ino
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98-WiFiMan\UniversalTelegramBot.cpp
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v98-WiFiMan\UniversalTelegramBot.h
+						-v99
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v99\ESP32FtpServer.cpp
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v99\ESP32FtpServer.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v99\README.md
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v99\rtc_cntl.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v99\settings.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v99\TimeLapseAvi99x.ino
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v99\UniversalTelegramBot.cpp
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v99\UniversalTelegramBot.h
+							08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\v99\v99.jpg
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\demo_fritz.jpg
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\demo_fritz2.jpg
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\demo_fritz3.jpg
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\demo1.jpg
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\demo2.jpg
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\demo3.jpg
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\demo4.jpg
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\deom5.jpg
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\de-solder.png
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\de-solder3.png
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\LICENSE
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\newfm.jpg
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\README.md
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\telegram1.jpg
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\telegram2.jpg
+						08-camerawebserver\2\ESP32-CAM-Video-Recorder-master\ESP32-CAM-Video-Recorder-master\telegram3.jpg
+				08-camerawebserver\2\ESP32-CAM-Video-Recorder-master.zip
+			-3
+				08-camerawebserver\3\ESP32-CAM-Video-Recorder-master.zip
+			-AdvancedWebServer
+				08-camerawebserver\AdvancedWebServer\AdvancedWebServer.ino
 			-CameraWebServer
 				08-camerawebserver\CameraWebServer\app_httpd.cpp
 				08-camerawebserver\CameraWebServer\camera_index.h
 				08-camerawebserver\CameraWebServer\camera_pins.h
 				08-camerawebserver\CameraWebServer\CameraWebServer.ino
 			08-camerawebserver\Capture_2022-03-25.jpg
+			08-camerawebserver\Как записать видео с esp32 cam на sd карту.md
+			08-camerawebserver\Как записать видео с esp32 cam на sd карту.md.backup
 		-09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii
 			-sohranyaem-fotografii-na-flehshku-pri-dvizhenii
 				09-sohranyaem-fotografii-na-flehshku-pri-dvizhenii\sohranyaem-fotografii-na-flehshku-pri-dvizhenii\sohranyaem-fotografii-na-flehshku-pri-dvizhenii.ino
@@ -153,8 +285,8 @@ ittve-ESP32-CAM
 			11-dostup-i-kontrol-dachi-cherez-telegram\seans-v-bote.jpg
 			11-dostup-i-kontrol-dachi-cherez-telegram\tveEsp_bot.jpg
 			11-dostup-i-kontrol-dachi-cherez-telegram\vpajka-peremychki-kusok-provoda.png
-		-12-MJPEG2SD
-			-ESP32-CAM_MJPEG2SD-v98
+		+12-MJPEG2SD
+			+ESP32-CAM_MJPEG2SD-v98
 				-data
 					12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\data\common.js
 					12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\data\MJPEG2SD.htm
@@ -202,6 +334,7 @@ ittve-ESP32-CAM
 				12-MJPEG2SD\kak-svoimi-rukami-sdelat-wifi-kameru-slezheniya\verhnjaja-chast-zagruzki.jpg
 				12-MJPEG2SD\kak-svoimi-rukami-sdelat-wifi-kameru-slezheniya\vremya-obnaruzheniya-v-ms.jpg
 			12-MJPEG2SD\12-MJPEG2SD-2024-08-02.md
+			12-MJPEG2SD\12-MJPEG2SD-2024-08-02.md.backup
 		-13-zagruzit-fajly-v-fajlovuyu-sistemu-esp32
 			-ESP32_Testing_LittleFS
 				-data
@@ -233,7 +366,6 @@ ittve-ESP32-CAM
 			-udalit-prostranstvo-imen
 				15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek\udalit-prostranstvo-imen\udalit-prostranstvo-imen.ino
 			15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek\15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek.md
-			15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek\15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek.md.backup
 			15-postoyannoe-hranenie-dannyh-s-pomoshchyu-biblioteki-nastroek\ESP32-Preferences-StartCounter-Example-Serial-Monitor.webp
 		-16-otpravit-ehlektronnoe-pismo-s-pomoshchyu-smtp-servera
 			-ESP_Email_Attachments
@@ -273,9 +405,113 @@ ittve-ESP32-CAM
 				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\SimStreamer.cpp
 				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\SimStreamer.h
 				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-devcam-tve\wifikeys.h
+			-ESP32-RTSP
+				-.vscode
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\.vscode\extensions.json
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\.vscode\settings.json
+				-3D
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\3D\Case+Stand.PNG
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\3D\ESP32-CAM-Back.stl
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\3D\ESP32-CAM-Case.f3z
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\3D\ESP32-CAM-Foot.stl
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\3D\ESP32-CAM-Front.stl
+				-ArduinoIDE
+					-Micro-RTSP_ID6071
+						-examples
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\examples\ESP32-devcam.ino
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\examples\platformio.ini
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\examples\wifikeys_template.h
+						-src
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\CRtspSession.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\CRtspSession.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\CStreamer.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\CStreamer.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\JPEGSamples.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\JPEGSamples.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\OV2640.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\OV2640.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\OV2640Streamer.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\OV2640Streamer.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\platglue.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\platglue-esp32.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\platglue-posix.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\SimStreamer.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\src\SimStreamer.h
+						-test
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\test\devvlc.sh
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\test\Makefile
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\test\README.md
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\test\rfccode.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\test\RTSPTestServer.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\test\runvlc.sh
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\.library.json
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\library.json
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\library.properties
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\LICENSE
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\README.md
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\ArduinoIDE\Micro-RTSP_ID6071\TODO.md
+				-Docs
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\Docs\20200309_131750.mp4
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\Docs\Breadboard.jpg
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\Docs\Breadboard-s.jpg
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\Docs\ESP32-CAM.avi
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\Docs\ESP32-CAM.mkv
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\Docs\ESP32-CAM.mp4
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\Docs\esp32-cam-development-board.jpg
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\Docs\VLC-Windows.PNG
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\Docs\VLC-Windows-1.PNG
+				-HW
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\HW\ESP32-CAM-Breadboard.fzz
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\HW\ESP32-CAM-schematic.png
+				-lib
+					-Micro-RTSP
+						-examples
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\examples\ESP32-devcam.ino
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\examples\platformio.ini
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\examples\wifikeys_template.h
+						-src
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\CRtspSession.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\CRtspSession.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\CStreamer.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\CStreamer.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\JPEGSamples.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\JPEGSamples.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\OV2640.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\OV2640.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\OV2640Streamer.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\OV2640Streamer.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\platglue.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\platglue-esp32.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\platglue-posix.h
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\SimStreamer.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\src\SimStreamer.h
+						-test
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\test\devvlc.sh
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\test\Makefile
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\test\README.md
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\test\rfccode.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\test\RTSPTestServer.cpp
+							18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\test\runvlc.sh
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\.library.json
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\library.json
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\library.properties
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\LICENSE
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\README.md
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\lib\Micro-RTSP\TODO.md
+				-src
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\src\main.cpp
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\src\main.h
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\src\ota.cpp
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\src\rtsp.cpp
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\src\src.ino
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\src\webstream.cpp
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\src\wifikeys.h
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\.travis.yml
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\customparts.csv
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\platformio.ini
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32-RTSP\README.md
 			-MicroRTSP
 				-examples
-					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\.gitignore
 					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\ESP32-devcam.ino
 					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\platformio.ini
 					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\examples\wifikeys_template.h
@@ -309,13 +545,48 @@ ittve-ESP32-CAM
 				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\LICENSE
 				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\README.md
 				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\MicroRTSP\TODO.md
+			-OneButton
+				-examples
+					-BlinkMachine
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\examples\BlinkMachine\BlinkMachine.ino
+					-FunctionalButton
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\examples\FunctionalButton\FunctionalButton.ino
+					-InterruptOneButton
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\examples\InterruptOneButton\InterruptOneButton.ino
+					-LongPressEvents
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\examples\LongPressEvents\LongPressEvents.ino
+					-SimpleOneButton
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\examples\SimpleOneButton\SimpleOneButton.ino
+					-SpecialInput
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\examples\SpecialInput\SpecialInput.ino
+					-TwoButtons
+						18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\examples\TwoButtons\TwoButtons.ino
+				-src
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\src\OneButton.cpp
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\src\OneButton.h
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\src\OneButtonTiny.cpp
+					18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\src\OneButtonTiny.h
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\.clang-format
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\.gitignore
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\.markdownlint.json
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\CHANGELOG.md
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\keywords.txt
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\library.json
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\library.properties
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\LICENSE
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\README.md
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\run_cppcheck.sh
+				18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\OneButton\suppressions.txt
 			18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp.md
+			18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\Micro-RTSP.zip
 			18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\nastroiki-scetcha.jpeg
+			18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\Scheme-in-Fritzing.png
 		-19-kak-ustroena-pamyat-esp32-cam
 			19-kak-ustroena-pamyat-esp32-cam\19-kak-ustroena-pamyat-esp32-cam.md
 			19-kak-ustroena-pamyat-esp32-cam\19-kak-ustroena-pamyat-esp32-cam.xls
 			19-kak-ustroena-pamyat-esp32-cam\ArduinoNvs-master.zip
 			19-kak-ustroena-pamyat-esp32-cam\esp32_technical_reference_manual_en.pdf
+		-20-Proba
 		-98-Seeeduino ESP32-S3
 			98-Seeeduino ESP32-S3\98-Seeeduino ESP32-S3.md
 			98-Seeeduino ESP32-S3\ustanovka-arduino-esp32.jpg
@@ -337,27 +608,18 @@ ittve-ESP32-CAM
 			Рабочие материалы\How to Check the Revision Level of Your ESP32.doc
 			Рабочие материалы\ov2640_ds_1.8_.pdf
 			Рабочие материалы\ДЕТАЛЬНЫЙ ОБЗОР ESP32-CAM.doc
-		fil.txt
 		ittve-ESP32-CAM.ppr
 		LICENSE
 		README.md
 [Open project files]
-0=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino
-1=04-Работаем с сообщениями через очередь\QueueHandlMulti\QHM_Message.h
-2=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.h
-3=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.cpp
+0=12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\ESP32-CAM_MJPEG2SD-v98.ino
+1=12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\utils.cpp
 [Selected Project Files]
 Main=
-Selected=04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.cpp
-[04-Работаем с сообщениями через очередь\QueueHandlMulti\QueueHandlMulti.ino]
-TopLine=11
-Caret=1,32
-[04-Работаем с сообщениями через очередь\QueueHandlMulti\QHM_Message.h]
+Selected=12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\utils.cpp
+[12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\ESP32-CAM_MJPEG2SD-v98.ino]
 TopLine=1
-Caret=3,108
-[04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.h]
-TopLine=150
-Caret=1,151
-[04-Работаем с сообщениями через очередь\QueueHandlMulti\QueMessage.cpp]
-TopLine=367
-Caret=1,49
+Caret=1,1
+[12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\utils.cpp]
+TopLine=862
+Caret=78,871
