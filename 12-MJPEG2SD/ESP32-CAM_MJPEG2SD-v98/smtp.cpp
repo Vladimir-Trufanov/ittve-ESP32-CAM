@@ -1,7 +1,7 @@
 
-// Simple SMTP client for sending email message with attachment
+// Простой SMTP-клиент для отправки электронного сообщения с вложением
 //
-// Only tested with Gmail sender account 
+// Тестировался только с учетной записью отправителя Gmail
 //
 // Prereqs for Gmail sender account:
 // - recommended to create a dedicated email account

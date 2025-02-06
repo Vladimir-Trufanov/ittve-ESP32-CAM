@@ -1,5 +1,5 @@
 
-// contributed by gemi254 and genehand
+// Подготовлено gemi254 and genehand
 
 #include "appGlobals.h"
 

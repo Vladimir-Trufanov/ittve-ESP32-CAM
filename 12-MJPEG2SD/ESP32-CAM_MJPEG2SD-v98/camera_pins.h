@@ -1,4 +1,4 @@
-// definition of camera pins for different boards
+// Определение контактов камеры для различных плат
 
 #if defined(CAMERA_MODEL_WROVER_KIT)
 #define CAM_BOARD "CAMERA_MODEL_WROVER_KIT"

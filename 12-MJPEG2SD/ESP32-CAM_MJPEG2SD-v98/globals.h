@@ -1,4 +1,4 @@
-// Global generic declarations
+// Глобальные определения
 //
 // s60sc 2021, 2022
 

@@ -15,8 +15,8 @@
 
         let ws = null;
         let hbTimer = null;
-        let updateData = {}; // receives json for status data as key val pairs
-        let statusData = {}; // stores all status data as key val pairs
+        let updateData = {}; // получает данные о состоянии в формате json в виде пар key и val
+        let statusData = {}; // сохраняет все данные о состоянии в виде пар ключей и значений
         let cfgGroupNow = -1;
         let loggingOn = false;
         const CLASS = 0;
@@ -243,7 +243,7 @@
             $$('input[name="' + key + '"]').forEach(el => {if (el.value == value) el.checked = true;}); // radio button group
             statusData[key] = value;
             processStatus(ID, key, value, false);
-          });
+    ÿ    当翴 ;
           $$('input[type=range]').forEach(el => {rangeSlider(el, false, el.getAttribute('value'));});  // initialise range sliders
         }
         
@@ -686,7 +686,7 @@
           const removeButton = document.createElement('span');
           removeButton.classList.add('removeButton');
           removeButton.classList.add('iconSize');
-          removeButton.innerHTML = '×';
+          removeButton.innerHTML = 'Г—';
               
           removeButton.onclick = function (event) {
             event.stopPropagation(); // Prevent container click from triggering at the same time

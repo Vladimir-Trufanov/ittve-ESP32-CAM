@@ -1,6 +1,6 @@
 
 /* 
-Generate AVI format for recorded videos
+Создание формата AVI для записанных видео
 
 s60sc 2020, 2022
 */

@@ -1,11 +1,13 @@
-//
-// Telemetry data recorded to storage during camera recording
-// Formatted as CSV file for presentation in spreadsheet
-// and as a SRT file to provide video subtitles when used with a media player
-// Sensor data obtained from user supplied libraries and code
-// Need to check 'Use telemetry recording' under Peripherals button on Edit Config web page
-// and have downloaded relevant device libraries.
-// Best used on ESP32S3, not tested on ESP32
+// Запись данных телеметрии в память во время записи с камеры.
+// Данные формируются в виде файла CSV для представления в электронной таблице
+// и в виде файла SRT для обеспечения субтитров к видео при использовании с медиаплеером.
+
+// Данные датчиков получены из предоставленных пользователем библиотек и кода.
+// Необходимо установить флажок "Использовать запись телеметрии" в разделе 
+// "Периферийные устройства" на веб-странице редактирования конфигурации
+// и загрузить соответствующие библиотеки устройств.
+
+// Лучше всего использовать на ESP32S3, не тестировался на ESP32
 
 // s60sc 2023
 

@@ -1,4 +1,4 @@
-// General purpose SD card and flash storage utilities
+// Утилиты для работы с SD-картами общего назначения и флэш-накопителями
 //
 // s60sc 2021, 2022 
 

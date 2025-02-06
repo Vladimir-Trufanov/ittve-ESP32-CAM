@@ -1,9 +1,8 @@
 //
-// Handle microphone input, and speaker output via amp.
-// The microphone input, and the output to amplifier, each make use of a
-// separate I2S peripheral in the ESP32 or ESP32S3.
-// I2S and PDM microphones are supported.
-// I2S amplifiers are supported.
+// Управление микрофонным входом и выходом на динамик осуществляется через усилитель.
+// Для микрофонного входа и выхода на усилитель в ESP32 или ESP32S3 используется 
+// отдельное периферийное устройство I2C.
+// Поддерживаются микрофоны I2S и PCM. Поддерживаются усилители I2S.
 //
 // If using I2S mic and I2S amp, then the following pins should be set to same values:
 // - micSckPin = mampBckIo

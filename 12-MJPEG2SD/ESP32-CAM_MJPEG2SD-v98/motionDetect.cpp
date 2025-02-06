@@ -1,11 +1,11 @@
 
 /* 
- Detect movement in sequential images using background subtraction.
+ Обнаружение движения на последовательных изображениях с помощью вычитания фона.
  
- Very small (98x98) bitmaps are used both to provide image smoothing to reduce spurious motion changes 
- and to enable rapid processing
- Bitmaps can either be color or grayscale. Color requires triple memory
- of grayscale and more processing.
+ Очень маленькие (98x98) растровые изображения используются как для сглаживания 
+ изображения (чтобы уменьшить ложные изменения движения), так и для быстрой обработки.
+ Растровые изображения могут быть цветными или в оттенках серого. Цвет требует 
+ утроенной памяти оттенков серого и дополнительной обработки.
 
  The amount of change between images will depend on the frame rate.
  A faster frame rate will need a higher sensitivity

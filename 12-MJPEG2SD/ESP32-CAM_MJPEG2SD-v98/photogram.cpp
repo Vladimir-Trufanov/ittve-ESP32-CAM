@@ -1,11 +1,12 @@
-// 
-// Photogrammetry uses photographs taken from various angles to collect data about a 3D object
-// that can converted by software to create a 3D image, eg for 3D printing a replica.
-// To enable photographs to be taken from different angles a turntable hosting the object can be rotated at intervals
-// in front of a static camera.
+// Фотограмметрия - использование фотографий, сделанных под разными углами, для 
+// сбора данных о 3D-объекте, которые могут быть преобразованы с помощью программного 
+// обеспечения для создания 3D-изображения, например, для 3D-печати точной копии.
+// Чтобы можно было делать фотографии под разными углами, поворотный стол, 
+// на котором размещен объект, нужно периодически поворачивать перед неподвижной камерой.
 //
-// The ESP can be used to control the turntable using a stepper motor, and take photograps either using its built in camera, 
-// or by remotely controlling the shutter of a DSLR camera.
+// ESP можно использовать для управления поворотным столом с помощью шагового 
+// двигателя и для съемки фотографий либо с помощью встроенной камеры,
+// либо дистанционно управляя затвором цифровой зеркальной камеры. 
 
 // A turntable can be 3D printed and driven by a 28BYJ-48 stepper motor with ULN2003 Motor Driver.
 // 

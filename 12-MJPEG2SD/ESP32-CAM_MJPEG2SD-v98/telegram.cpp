@@ -1,8 +1,12 @@
 
-// Simple generic Telegram bot supporting:
-// - message interaction
-// - photo upload
-// - file upload (avoid using simultaneously with file upload via ftp, smtp, or browser)
+// Простой универсальный Telegram-бот, поддерживающий:
+// - взаимодействие с сообщениями
+// - загрузку фотографий
+// - загрузку файлов.
+
+// !!! Следует избегат одновременного использования с загрузкой файлов через 
+// ftp, smtp или браузер
+
 // Add custom processing to appSetupTelegram() in appSpecific.cpp
 //
 // Using ideas from:

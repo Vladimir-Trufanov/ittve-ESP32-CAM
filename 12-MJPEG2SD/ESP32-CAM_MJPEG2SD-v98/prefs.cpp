@@ -1,7 +1,8 @@
 
 /* 
-  Management and storage of application configuration state.
-  Configuration file stored on flash or SD, except passwords which are stored in NVS
+  Управление и хранение состояния конфигурации приложения.
+  Файл конфигурации хранится на флэш-памяти или SD-карте, за исключением паролей, 
+  которые хранятся в NVS
    
   Workflow:
   loadConfig:

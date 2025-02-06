@@ -1,5 +1,5 @@
 
-// Contributed by alojzjakob
+// Выполнено alojzjakob
 
 #include "appGlobals.h"
 

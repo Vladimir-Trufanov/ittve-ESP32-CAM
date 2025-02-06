@@ -1,7 +1,8 @@
 /*
-* Capture ESP32 Cam JPEG images into a AVI file and store on SD
-* matches file writes to the SD card sector size.
-* AVI files stored on the SD card can also be selected and streamed to a browser.
+* Преобразование изображения ESP32-CAM из формата JPEG в AVI-файл и сохранение
+* на SD-карте, в том числе сопоставление размера записываемого файла с размером 
+* сектора SD-карты, а так же выборка и передача в потоковом режиме в браузер 
+* файлов AVI, сохраненных на SD-карте
 *
 * s60sc 2020, 2022, 2024
 */

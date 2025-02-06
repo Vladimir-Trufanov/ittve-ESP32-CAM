@@ -1,4 +1,4 @@
-// Upload SD card or SPIFFS content to a remote server using FTP or HTTPS
+// Загрузка содержимое SD-карты или SPIFFS на удаленный сервер с помощью FTP или HTTPS
 // 
 // s60sc 2022, 2023
 

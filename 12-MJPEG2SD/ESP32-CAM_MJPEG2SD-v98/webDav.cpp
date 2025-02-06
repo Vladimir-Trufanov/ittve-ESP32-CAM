@@ -1,12 +1,12 @@
 
 /*  
-  Using the WebDAV server:
+   Использование сервера WebDAV:
     Windows:
-    - Windows file explorer, in address bar enter: <ip_address>/webdav
-    - Map Network Drive, connect to: \\<ip_address>\webdav
+    - Проводник Windows, в адресной строке введите: <ip_address>/webdav
+    - Сопоставьте сетевой диск, подключитесь к: \\<ip_address>\webdav
 
-    Android:
-    - Solid Explorer, enter <ip_address> for Remote host name, webdav for Path
+    Андроид:
+    - Solid Explorer, введите <ip_address> в качестве имени удаленного хоста, webdav в качестве пути
 
   Not tested:
     MacOS:

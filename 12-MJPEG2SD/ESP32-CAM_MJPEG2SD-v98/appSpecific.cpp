@@ -1,4 +1,4 @@
-// mjpeg2sd app specific functions
+// Специальные функции приложения mjpeg2sd 
 //
 // Direct access URLs for NVR:
 // - Video streaming: app_ip/sustain?video=1 

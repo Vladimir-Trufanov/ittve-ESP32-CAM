@@ -1,9 +1,9 @@
-// streamServer handles streaming, playback, file downloads
-// each sustained activity uses a separate task if available
-// - web streaming, playback, file downloads use task 0
-// - video streaming uses task 1
-// - audio streaming uses task 2
-// - subtitle streaming uses task 3
+// Обработка сервером потоковой передачи, воспроизведения и загрузки файлов.
+// Для каждого непрерывного действия используется отдельная задача, если она доступна
+// - для веб-трансляции, воспроизведения и загрузки файлов используется задача 0
+// - для потоковой передачи видео используется задача 1
+// - для потоковой передачи аудио используется задача 2
+// - для потоковой передачи субтитров используется задача 3
 //
 // s60sc 2022 - 2024
 //

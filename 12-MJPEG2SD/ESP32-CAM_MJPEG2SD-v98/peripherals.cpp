@@ -1,14 +1,13 @@
-
-// Optional peripherals, to support:
-// - pin sensors eg PIR / radar
-// - servos, eg camera pan / tilt / steer
-// - DS18B20 temperature sensor
-// - battery voltage measurement
-// - lamp LED driver (PWM or WS2812)
-// - H-bridge motor controller (MCPWM)
-// - 3 pin joystick 
-// - MY9221 based LED Bar, eg 10 segment Grove LED Bar
-// - 4 pin 28BYJ-48 Stepper Motor with ULN2003 Motor Driver
+// Поддержка дополнительных периферийных устройств:
+// - контактные датчики, например, PIR/радар
+// - сервоприводы, например, камеры поворота / наклона / рулевого управления
+// - датчик температуры DS18B20
+// - измерение напряжения батареи
+// - драйвер светодиодной лампы (PWM или WS2812)
+// - контроллер двигателя H-bridge (MCPWM)
+// - 3-контактный джойстик 
+// - светодиодная панель на базе MY9221, например, 10-сегментная светодиодная панель Grove
+// - 4-контактный шаговый двигатель 28BYJ-48 с драйвером ULN2003
 //
 // Peripherals can be hosted directly on the client ESP, or on
 // a separate IO Extender ESP if the client ESP has limited free 

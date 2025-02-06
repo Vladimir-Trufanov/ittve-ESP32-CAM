@@ -1,6 +1,6 @@
 
-// Assist setup for new app installations
-// original provided by gemi254
+// Помощь в настройке при установке новых приложений,
+// оригинал предоставлен gemi254
 // 
 // s60sc 2023
 

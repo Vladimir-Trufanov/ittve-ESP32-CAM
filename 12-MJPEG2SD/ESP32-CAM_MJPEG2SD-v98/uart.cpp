@@ -1,7 +1,8 @@
 
-// Use Uart interface to communicate between client ESP and IO extender ESP
-// to allow IO extender to provide additional pins to client
-// to support peripherals defined in peripherals.cpp
+// Использование интерфейса Uart для связи между клиентским ESP и расширением 
+// ввода-вывода ESP. Чтобы разрешить расширению ввода-вывода предоставление
+// дополнительных контактов клиенту в целях поддержки периферийных устройств, 
+// определенных в peripherals.cpp
 //
 // Connect extender UART_TXD_PIN pin to client UART_RXD_PIN pin
 // Connect extender UART_RXD_PIN pin to client UART_TXD_PIN pin
