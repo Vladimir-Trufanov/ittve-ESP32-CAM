@@ -1,0 +1,45 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-ESP32-CAM\08-camerawebserver\CameraWebServer307
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+HTServer=localhost
+Extensions=*.*
+[Project tree]
+CameraWebServer307
+	+CameraWebServer307
+		app_httpd.cpp
+		camera_index.h
+		camera_pins.h
+		CameraWebServer307.ino
+		CameraWebServer307.ppr
+		ci.json
+		esp_camera.h
+		partitions.csv
+		sensor.h
+[Open project files]
+0=CameraWebServer307.ino
+1=sensor.h
+2=esp_camera.h
+[Selected Project Files]
+Main=
+Selected=esp_camera.h
+[CameraWebServer307.ino]
+TopLine=95
+Caret=34,107
+[sensor.h]
+TopLine=1
+Caret=1,1
+[esp_camera.h]
+TopLine=34
+Caret=16,46
