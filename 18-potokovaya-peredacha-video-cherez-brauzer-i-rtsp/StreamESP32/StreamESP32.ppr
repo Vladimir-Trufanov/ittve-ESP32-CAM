@@ -1,0 +1,49 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-ESP32-CAM\18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\StreamESP32
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+HTServer=localhost
+Extensions=*.*
+[Project tree]
+StreamESP32
+	+StreamESP32
+		CRtspSession.cpp
+		CRtspSession.h
+		CStreamer.cpp
+		CStreamer.h
+		JPEGSamples.cpp
+		JPEGSamples.h
+		OLED SSD1306.jpg
+		OV2640.cpp
+		OV2640.h
+		OV2640Streamer.cpp
+		OV2640Streamer.h
+		platglue.h
+		platglue-esp32.h
+		platglue-posix.h
+		SimStreamer.cpp
+		SimStreamer.h
+		StreamESP32.ino
+		StreamESP32.md
+		StreamESP32.md.backup
+		StreamESP32.ppr
+		wifikeys.h
+[Open project files]
+0=StreamESP32.ino
+[Selected Project Files]
+Main=
+Selected=StreamESP32.ino
+[StreamESP32.ino]
+TopLine=15
+Caret=72,21
