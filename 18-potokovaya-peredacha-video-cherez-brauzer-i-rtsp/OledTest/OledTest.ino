@@ -57,7 +57,8 @@
 #define OLED_ADDRESS 0x3c
 #define I2C_SDA 14
 #define I2C_SCL 13
-SSD1306Wire display(OLED_ADDRESS, I2C_SDA, I2C_SCL, GEOMETRY_128_32);
+//SSD1306Wire display(OLED_ADDRESS, I2C_SDA, I2C_SCL, GEOMETRY_128_32);
+SSD1306Wire display(OLED_ADDRESS, I2C_SDA, I2C_SCL);
 
 
 
@@ -101,6 +102,8 @@ void setup() {
 
   display.flipScreenVertically();
   display.setFont(ArialMT_Plain_10);
+
+  //drawFontFaceDemo();
 
 }
 
@@ -189,7 +192,9 @@ Demo demos[] = {drawFontFaceDemo, drawTextFlowDemo, drawTextAlignmentDemo, drawR
 int demoLength = (sizeof(demos) / sizeof(Demo));
 long timeSinceLastModeSwitch = 0;
 
-void loop() {
+void loop() 
+{
+  
   // clear the display
   display.clear();
   // draw the current demo method
@@ -207,4 +212,5 @@ void loop() {
   }
   counter++;
   delay(10);
+  
 }
