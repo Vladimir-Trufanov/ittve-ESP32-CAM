@@ -236,6 +236,10 @@ GPIO, которые направляются в подсистему RTC с н�
 
 #### [Источник пробуждения ESP32-CAM, Таймер](https://lastminuteengineers.com/esp32-deep-sleep-wakeup-sources/)
 
+#### [ThingPulse OLED SSD1306 (ESP8266/ESP32/Mbed-OS)](https://github.com/ThingPulse/esp8266-oled-ssd1306/tree/master)
+
+
+
 
 
 

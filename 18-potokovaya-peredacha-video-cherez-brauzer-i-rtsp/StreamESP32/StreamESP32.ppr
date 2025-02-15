@@ -45,5 +45,5 @@ StreamESP32
 Main=
 Selected=StreamESP32.ino
 [StreamESP32.ino]
-TopLine=15
-Caret=72,21
+TopLine=188
+Caret=1,117
