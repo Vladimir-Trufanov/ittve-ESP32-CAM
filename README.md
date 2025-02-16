@@ -89,8 +89,6 @@
 
 ### [ESP32 – How To Use PSRAM](https://thingpulse.com/esp32-how-to-use-psram/)
 
-### [Esp32 Cam Factory Reset Recipes](https://besteasycooking.com/esp32-cam-factory-reset/)
-
 ### [Программирование ESP32 на MicroPython с помощью Thonny IDE](https://microkontroller.ru/esp32-projects/programmirovanie-esp32-na-micropython-s-pomoshhyu-thonny-ide/)
 
 ### [Getting Started with Thonny MicroPython (Python) IDE for ESP32 and ESP8266](https://randomnerdtutorials.com/getting-started-thonny-micropython-python-ide-esp32-esp8266/)

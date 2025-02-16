@@ -19,6 +19,24 @@ TwoWire I2Cbus = TwoWire(0);
 #define SCREEN_ADDRESS  0x3C
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &I2Cbus, OLED_RESET);
 
+
+
+void displine(String iline, int point=0)
+{
+  //display.clearDisplay();
+  display.setCursor(0, point);
+  //display.println(utf8rus("012345678901\nпривет\n012345678901\nмир"));
+  String line=utf8rus(iline);
+  line=line.substring(0,10);
+  display.println("          ");
+ display.setCursor(0, point);
+  display.println(line);
+  display.display();
+  //delay(2000);
+}
+
+
+
 void setup()
 {
   Serial.begin(115200);
@@ -43,14 +61,48 @@ void setup()
   display.setCursor(0, 0);
   display.setTextSize(2);
   display.setTextColor(SSD1306_WHITE);
-  //display.print("Hello\nDear\nWorld!");
-  display.println(utf8rus("Привет\nДорогой\nМИР!\n"));
+
+
+  /*
+  display.println(utf8rus("старт"));
   display.display();
+  delay(2000);
+
+  //display.clearDisplay();
+  display.setCursor(0, 16);
+  //display.println(utf8rus("012345678901\nпривет\n012345678901\nмир"));
+  display.println(utf8rus("01234567890"));
+  display.display();
+  delay(2000);
+
+  //display.clearDisplay();
+  display.setCursor(0, 32);
+  //display.println(utf8rus("012345678901\nпривет\n012345678901\nмир"));
+  display.println(utf8rus("01234567890"));
+  display.display();
+  delay(2000);
+
+  //display.clearDisplay();
+  display.setCursor(0, 48);
+  //display.println(utf8rus("012345678901\nпривет\n012345678901\nмир"));
+  display.println(utf8rus("01234567890"));
+  display.display();
+  //delay(2000);
+*/
+
+  displine("01234567890",0);
+  displine("вторая",16);
+  displine("ЫВАПдесять",32);
+  displine("одиннадцать",48);
+  
+
 }
 
 void loop()
 {
 }
+
+
 
 /* Функция перекодировки русских букв из UTF-8 в Win-1251 */
 String utf8rus(String source)
