@@ -1,10 +1,19 @@
-// A simple Arduino project to show how to use a SSD1306 OLED display with ESP32-CAM.
-// The reason why this is interesting is that the SSD1306 uses I2C, not SPI.
-// Since the ESP32-CAM doesn't have I2C pins, we have to use the Wire lib to define our own I2C pins.
+/** Arduino-Esp32-CAM                                   *** Rus32CAMExt.ino ***
+ * 
+ *        Тестовая программа работы с OLED-дисплеем SSD1306 128x64 на ESP32-CAM
+ *                 с помощью класса Echo и назначением собственных выводов I2С.
+ * Используются:     #include <Adafruit_GFX.h> (с руссифицированным glcdfont.c)
+ *                   #include <Adafruit_SSD1306.h>
+ * 
+ * v1.0.1, 16.02.2025                                 Автор:      Труфанов В.Е.
+ * Copyright © 2025 tve                               Дата создания: 15.02.2025
+**/
 
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+
+#include "Echo.h"   
 
 // ESP32-CAM doesn't have dedicated i2c pins, so we define our own. Let's choose 15 and 14
 #define I2C_SDA 14
@@ -135,6 +144,8 @@ String utf8rus(String source)
 return target;
 }
 
+
+// ******************************************************** Rus32CAMExt.ino ***
 
 
 

@@ -17,14 +17,19 @@ HTServer=localhost
 Extensions=*.*
 [Project tree]
 StreamESP32
-	+StreamESP32
+	-StreamESP32
+		-Rus32CAMExt
+			Rus32CAMExt\Echo.cpp
+			Rus32CAMExt\Echo.h
+			Rus32CAMExt\QHM_Message.h
+			Rus32CAMExt\QueueHandlMulti.ino
+			Rus32CAMExt\Rus32CAMExt.ino
 		CRtspSession.cpp
 		CRtspSession.h
 		CStreamer.cpp
 		CStreamer.h
 		JPEGSamples.cpp
 		JPEGSamples.h
-		OLED SSD1306.jpg
 		OV2640.cpp
 		OV2640.h
 		OV2640Streamer.cpp
@@ -36,14 +41,26 @@ StreamESP32
 		SimStreamer.h
 		StreamESP32.ino
 		StreamESP32.md
-		StreamESP32.md.backup
 		StreamESP32.ppr
 		wifikeys.h
+		Новый1.txt
 [Open project files]
-0=StreamESP32.ino
+0=Rus32CAMExt\Echo.h
+1=Rus32CAMExt\Echo.cpp
+2=Rus32CAMExt\QueueHandlMulti.ino
+3=Rus32CAMExt\Rus32CAMExt.ino
 [Selected Project Files]
 Main=
-Selected=StreamESP32.ino
-[StreamESP32.ino]
-TopLine=188
-Caret=1,117
+Selected=Rus32CAMExt\Echo.cpp
+[Rus32CAMExt\Echo.h]
+TopLine=18
+Caret=49,32
+[Rus32CAMExt\Echo.cpp]
+TopLine=3
+Caret=139,12
+[Rus32CAMExt\QueueHandlMulti.ino]
+TopLine=3
+Caret=1,37
+[Rus32CAMExt\Rus32CAMExt.ino]
+TopLine=3
+Caret=1,29
