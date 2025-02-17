@@ -18,6 +18,9 @@
 #include <Adafruit_SSD1306.h>
 
 
+   //Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &I2Cbus, OLED_RESET);
+   //Adafruit_SSD1306 dispi;
+
 // ****************************************************************************
 // *                  Построить объект (конструктор класса)                   *
 // ****************************************************************************
@@ -37,6 +40,25 @@ TEcho::TEcho(int iI2C_SDA, int iI2C_SCL, int iSCREEN_ADDRESS)
 // *                 Инициировать ведение журнала на Oled-дисплее             *
 // *   (по умолчанию: частота шины I2C=100 кбит/с, частота COM-порта 115200)  *
 // ****************************************************************************
+
+Adafruit_SSD1306 TEcho::isi() 
+{
+  Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &I2Cbus, OLED_RESET);
+  if  (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS))
+   {
+      Serial.printf("Не удалось инициализировать дисплей SSD1306 OLED.\nПроверьте подключение SDA к контакту %d и SCL к контакту %d\n",I2C_SDA,I2C_SCL);
+      // while (true);
+      isSuccess=false;  // НЕ удалось инициализировать Oled-дисплей
+   }
+   // Обеспечиваем использовании новых версий библиотеки Adafruit-GFX,
+   // включая руссификацию
+   ///delay(2000);
+   display.cp437(true);
+   display.setTextSize(2);
+   display.setTextColor(SSD1306_WHITE);
+return display;
+}
+
 bool TEcho::Init(int modeI2C, int modeSerial)
 {
    isSuccess=true;  // инициализирован Oled-дисплей
@@ -47,6 +69,7 @@ bool TEcho::Init(int modeI2C, int modeSerial)
   // Определение объекта дисплея с параметрами экрана, пином сброса для дисплея
    // и по заданному адресу на шине I2C
    Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &I2Cbus, OLED_RESET);
+   //proba(display);
    // Инициализируем дисплей: выделяем память для буфера изображения, инициализируем выводы платы 
     if  (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS))
    {
@@ -56,35 +79,60 @@ bool TEcho::Init(int modeI2C, int modeSerial)
    }
    // Обеспечиваем использовании новых версий библиотеки Adafruit-GFX,
    // включая руссификацию
-   delay(2000);
+   ///delay(2000);
    display.cp437(true);
+   display.setTextSize(2);
+   display.setTextColor(SSD1306_WHITE);
 
   // Serial.println("Show 'Hello World!' on display");
   display.clearDisplay();
   display.setCursor(0, 0);
-  display.setTextSize(2);
-  display.setTextColor(SSD1306_WHITE);
+  display.println("привет  мир");
+  display.setCursor(0, 16);
+  display.println("0123456789");
+  display.display();
 
   //display.println(utf8rus("старт"));
-  display.println("init");
+  //delay(2000);
+
+  display.clearDisplay();
+  String str="werty";
+  display.setCursor(0, 0);
+  display.println(str);
+  display.setCursor(0, 16);
+  display.println("0123456789");
   display.display();
-  delay(2000);
+
+  Adafruit_SSD1306 idin=isi(); 
+  idin.clearDisplay();
+ idin.setCursor(0, 16);
+  idin.println("asdfgh0123");
+  idin.display();
+
+  //proba(display);
+ //delay(2000);
+
   Serial.println("OLED SSD1306 инициализирован");
-
-
-   return isSuccess;
+  return isSuccess;
 }
+// ****************************************************************************
+// *                           Вывести строку журнала                         *
+// ****************************************************************************
+void TEcho::out(String str)
+{
+}
+
+void TEcho::proba(Adafruit_SSD1306 display)
+{
+  Serial.println("1OLED SSD1306 инициализирован");
+ //display.clearDisplay();
+     Serial.println("2OLED SSD1306 инициализирован");
+
+}
+  
 
 /*
-// Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
-#include "QueMessage.h"
-// ****************************************************************************
-// *        Подключить внешнюю функцию передачи сообщения на периферию        *
-// ****************************************************************************
-void TQueMessage::attachFunction(void (*function)(char *mess, char *prefix)) 
-{
-   atatchedF = *function;  
-}
+
 // ****************************************************************************
 // *                        Создать очередь сообщений                         *
 // ****************************************************************************

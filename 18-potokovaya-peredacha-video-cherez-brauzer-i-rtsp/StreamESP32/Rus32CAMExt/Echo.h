@@ -36,6 +36,11 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
+  // Определение объекта дисплея с параметрами экрана, пином сброса для дисплея
+   // и по заданному адресу на шине I2C
+
+//      Adafruit_SSD1306 display;     // объект OLED-дисплея
+
 
 class TEcho
 {
@@ -46,7 +51,14 @@ class TEcho
    TEcho(int iI2C_SDA=14, int iI2C_SCL=13, int iSCREEN_ADDRESS=0x3C);
    // Инициировать ведение журнала на Oled-дисплее
    bool Init(int modeI2C=100000, int modeSerial=115200);
-   
+   // Вывести строку журнала
+   void out(String str);
+   // Вывести строку журнала
+   void proba(Adafruit_SSD1306 display);
+  
+   Adafruit_SSD1306 isi(); 
+
+ 
    
    /*
   
@@ -82,7 +94,6 @@ class TEcho
    int SCREEN_HEIGHT = 64;       // размер дисплея в пикселах по высоте
    int OLED_RESET = -1;          // вывод сброса дисплея
    int SCREEN_ADDRESS;           // адрес дисплея на шине I2C
-   Adafruit_SSD1306 display;     // объект OLED-дисплея
 
    bool isSuccess;               // true - удалось инициализировать Oled-дисплей
 

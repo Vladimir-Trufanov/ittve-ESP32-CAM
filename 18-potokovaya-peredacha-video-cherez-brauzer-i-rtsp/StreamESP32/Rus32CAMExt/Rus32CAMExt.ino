@@ -61,7 +61,7 @@ void setup()
   Serial.println("Initialize display1");
   bool OledSuccess = echo.Init();
   Serial.println("Initialize display2");
-
+  echo.out("Init!");
   /*
 
   // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
