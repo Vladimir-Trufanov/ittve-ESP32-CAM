@@ -255,6 +255,10 @@ GPIO, которые направляются в подсистему RTC с н�
 
 #### [Файлы и библиотеки и другое для Arduino](https://iarduino.ru/file/)
 
+#### [Русификация библиотеки Adafruit-GFX и вывод русских букв на дисплей в кодировке UTF-8 из Arduino IDE](https://arduino.ru/forum/programmirovanie/rusifikatsiya-biblioteki-adafruit-gfx-i-vyvod-russkikh-bukv-na-displei-v-kodi)
+
+
+
 
 
 

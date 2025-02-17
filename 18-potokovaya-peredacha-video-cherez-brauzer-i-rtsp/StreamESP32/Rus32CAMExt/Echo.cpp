@@ -1,65 +1,83 @@
-/** Arduino, Esp32 ***************************************** QueMessage.cpp ***
+/** Arduino-Esp32-CAM                                          *** Echo.cpp ***
  * 
- *                          Обеспечить передачу и приём сообщений через очередь 
- *                                                    в задачах и из прерываний
+ *                   Обеспечить руссифицированное ведение журнала приложения на 
+ *                             ОLED-дисплее SSD1306 128x64 на ESP32 (ESP32-CAM) 
+ *                                  c программным переопределением выводов I2С.
+ *                                  
+ * Используются:     #include <Adafruit_GFX.h> (с руссифицированным glcdfont.c)
+ *                   #include <Adafruit_SSD1306.h>
  * 
- * v3.2.8, 26.12.2024                                 Автор:      Труфанов В.Е.
- * Copyright © 2024 tve                               Дата создания: 29.11.2024
+ * v1.0.2, 17.02.2025                                 Автор:      Труфанов В.Е.
+ * Copyright © 2025 tve                               Дата создания: 15.02.2025
 **/
 
 #include "Arduino.h"
-#include <Wire.h>
+#include "Echo.h"   
+
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-
-#include "Echo.h"   
 
 
 // ****************************************************************************
 // *                  Построить объект (конструктор класса)                   *
 // ****************************************************************************
-   // Построить объект (конструктор класса)
-TEcho::TEcho(int iI2C_SDA, int iI2C_SCL, int iSCREEN_ADDRESS);
+TEcho::TEcho(int iI2C_SDA, int iI2C_SCL, int iSCREEN_ADDRESS)
 {
-   // Считывем указатель массива сообщений и размер массива
-   amessAPP = aimessAPP;
-   SizeMess = iSizeMess;
-// ESP32-CAM doesn't have dedicated i2c pins, so we define our own. Let's choose 15 and 14
-#define I2C_SDA 14
-#define I2C_SCL 13
 
-TwoWire I2Cbus = TwoWire(0);
+   // Определяем номер линии SDA - линии последовательных данных
+   I2C_SDA = iI2C_SDA;
+   // Определяем номер линии SCL - линии последовательного тактирования
+   I2C_SCL = iI2C_SCL;
+   // Определяем адрес дисплея на шине I2C
+   SCREEN_ADDRESS = iSCREEN_ADDRESS;  
+}
 
-// Display defines
-#define SCREEN_WIDTH    128
-#define SCREEN_HEIGHT   64
-#define OLED_RESET      -1
-#define SCREEN_ADDRESS  0x3C
-   // Определяем размер очереди из структур 
-   QueueSize=iQueueSize;
-   // Определяем источник сообщения
-   if (itmk_APP.length()>7) SourceMessage=itmk_APP.substring(0,7);
-   else SourceMessage=itmk_APP;
+
+// ****************************************************************************
+// *                 Инициировать ведение журнала на Oled-дисплее             *
+// *   (по умолчанию: частота шины I2C=100 кбит/с, частота COM-порта 115200)  *
+// ****************************************************************************
+bool TEcho::Init(int modeI2C, int modeSerial)
+{
+   isSuccess=true;  // инициализирован Oled-дисплей
+   Serial.begin(modeSerial);
+   Serial.println("Инициализация OLED");
+   // Инициализируем I2C на заданных пинах
+   I2Cbus.begin(I2C_SDA,I2C_SCL,modeI2C);
+  // Определение объекта дисплея с параметрами экрана, пином сброса для дисплея
+   // и по заданному адресу на шине I2C
+   Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &I2Cbus, OLED_RESET);
+   // Инициализируем дисплей: выделяем память для буфера изображения, инициализируем выводы платы 
+    if  (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS))
+   {
+      Serial.printf("Не удалось инициализировать дисплей SSD1306 OLED.\nПроверьте подключение SDA к контакту %d и SCL к контакту %d\n",I2C_SDA,I2C_SCL);
+      // while (true);
+      isSuccess=false;  // НЕ удалось инициализировать Oled-дисплей
+   }
+   // Обеспечиваем использовании новых версий библиотеки Adafruit-GFX,
+   // включая руссификацию
+   delay(2000);
+   display.cp437(true);
+
+  // Serial.println("Show 'Hello World!' on display");
+  display.clearDisplay();
+  display.setCursor(0, 0);
+  display.setTextSize(2);
+  display.setTextColor(SSD1306_WHITE);
+
+  //display.println(utf8rus("старт"));
+  display.println("init");
+  display.display();
+  delay(2000);
+  Serial.println("OLED SSD1306 инициализирован");
+
+
+   return isSuccess;
 }
 
 /*
 // Подключаем файлы обеспечения передачи и приёма сообщений через очередь 
 #include "QueMessage.h"
-
-// ****************************************************************************
-// *                  Построить объект (конструктор класса)                   *
-// ****************************************************************************
-TQueMessage::TQueMessage(tmessAPP *aimessAPP, int iSizeMess, String itmk_APP, int iQueueSize)
-{
-   // Считывем указатель массива сообщений и размер массива
-   amessAPP = aimessAPP;
-   SizeMess = iSizeMess;
-   // Определяем размер очереди из структур 
-   QueueSize=iQueueSize;
-   // Определяем источник сообщения
-   if (itmk_APP.length()>7) SourceMessage=itmk_APP.substring(0,7);
-   else SourceMessage=itmk_APP;
-}
 // ****************************************************************************
 // *        Подключить внешнюю функцию передачи сообщения на периферию        *
 // ****************************************************************************
@@ -456,4 +474,4 @@ void TQueMessage::PostAll(int t_MessFormat,char *prefix)
    }
 }
 */
-// ********************************************************* QueMessage.cpp ***
+// *************************************************************** Echo.cpp ***

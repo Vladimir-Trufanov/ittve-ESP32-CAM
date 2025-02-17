@@ -17,8 +17,8 @@ HTServer=localhost
 Extensions=*.*
 [Project tree]
 StreamESP32
-	-StreamESP32
-		-Rus32CAMExt
+	+StreamESP32
+		+Rus32CAMExt
 			Rus32CAMExt\Echo.cpp
 			Rus32CAMExt\Echo.h
 			Rus32CAMExt\QHM_Message.h
@@ -47,20 +47,20 @@ StreamESP32
 [Open project files]
 0=Rus32CAMExt\Echo.h
 1=Rus32CAMExt\Echo.cpp
-2=Rus32CAMExt\QueueHandlMulti.ino
-3=Rus32CAMExt\Rus32CAMExt.ino
+2=Rus32CAMExt\Rus32CAMExt.ino
+3=Новый1.txt
 [Selected Project Files]
 Main=
 Selected=Rus32CAMExt\Echo.cpp
 [Rus32CAMExt\Echo.h]
-TopLine=18
-Caret=49,32
+TopLine=57
+Caret=18,84
 [Rus32CAMExt\Echo.cpp]
-TopLine=3
-Caret=139,12
-[Rus32CAMExt\QueueHandlMulti.ino]
-TopLine=3
-Caret=1,37
+TopLine=23
+Caret=3,56
 [Rus32CAMExt\Rus32CAMExt.ino]
-TopLine=3
-Caret=1,29
+TopLine=37
+Caret=1,71
+[Новый1.txt]
+TopLine=52
+Caret=100,67

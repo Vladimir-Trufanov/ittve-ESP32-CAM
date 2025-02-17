@@ -19,17 +19,20 @@
 #define I2C_SDA 14
 #define I2C_SCL 13
 
-TwoWire I2Cbus = TwoWire(0);
+//TwoWire I2Cbus = TwoWire(0);
 
 // Display defines
+/*
 #define SCREEN_WIDTH    128
 #define SCREEN_HEIGHT   64
 #define OLED_RESET      -1
 #define SCREEN_ADDRESS  0x3C
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &I2Cbus, OLED_RESET);
+*/
 
+TEcho echo(14,13,0x3C); 
 
-
+/*
 void displine(String iline, int point=0)
 {
   //display.clearDisplay();
@@ -43,7 +46,7 @@ void displine(String iline, int point=0)
   display.display();
   //delay(2000);
 }
-
+*/
 
 
 void setup()
@@ -51,9 +54,15 @@ void setup()
   Serial.begin(115200);
 
   // Initialize I2C with our defined pins
-  I2Cbus.begin(I2C_SDA, I2C_SCL, 100000);
+  //I2Cbus.begin(I2C_SDA, I2C_SCL, 100000);
+  
+  // Инициируем ведение журнала на Oled-дисплее
+  
+  Serial.println("Initialize display1");
+  bool OledSuccess = echo.Init();
+  Serial.println("Initialize display2");
 
-  Serial.println("Initialize display");
+  /*
 
   // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
   if(!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS))
@@ -70,7 +79,7 @@ void setup()
   display.setCursor(0, 0);
   display.setTextSize(2);
   display.setTextColor(SSD1306_WHITE);
-
+*/
 
   /*
   display.println(utf8rus("старт"));
@@ -98,11 +107,12 @@ void setup()
   display.display();
   //delay(2000);
 */
-
+  /*
   displine("01234567890",0);
   displine("вторая",16);
   displine("ЫВАПдесять",32);
   displine("одиннадцать",48);
+  */
   
 
 }
