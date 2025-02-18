@@ -52,6 +52,7 @@ class TEcho
    TEcho(int iI2C_SDA=14, int iI2C_SCL=13, int iSCREEN_ADDRESS=0x3C, int imodeI2C=100000, int imodeSerial=115200);
    // Вывести строку журнала
    void out(String str);
+   void out1(String str);
     
    void iniArray();
   
@@ -67,7 +68,10 @@ class TEcho
    int OLED_RESET = -1;          // вывод сброса дисплея
    int SCREEN_ADDRESS;           // адрес дисплея на шине I2C
    
-   char chArray[nLine * nColm + 1];
+   //char chArray[nLine * nColm + 1];
+
+   char myText[nLine][nColm+1];
+
    
    int modeI2C;
    int modeSerial;

@@ -95,7 +95,7 @@ void TEcho::out(String str)
   dispi.setCursor(0, 16);
   dispi.println("7sdfgh0123");
   dispi.display();
-  vTaskDelay(2097/portTICK_PERIOD_MS);
+  vTaskDelay(1097/portTICK_PERIOD_MS);
 
 }
 
@@ -105,9 +105,10 @@ void TEcho::iniArray()
 
 
   // 2 text strings with a max length of 24 each
-  const byte maxSize = nColm+1;
-  char myText[nLine][maxSize];
+  //const byte maxSize = nColm+1;
+  //char myText[nLine][maxSize];
 
+ dispi.clearDisplay();
 
   int Offset=0;
   for (int j = 0; j < nLine; j++)
@@ -190,5 +191,115 @@ void TEcho::iniArray()
   */
 
 }
+
+void TEcho::out1(String str)
+{
+
+  int Offset;
+ 
+  // Вначале перемещаем массив
+  for (int j = nLine-1; j > 0; j--)
+  {
+    for (int i = 0; i < nColm+1; i++)
+    {
+      myText[j][i]=myText[j-1][i];
+    }
+  }
+
+  /*
+  // Выводим
+  dispi.clearDisplay();
+  Offset=0;
+  for (int j = 0; j < nLine; j++)
+  {
+    dispi.setCursor(0,Offset);
+    dispi.println(myText[j]);
+    Offset=Offset+nOffset;
+  }
+
+
+  dispi.display();
+  vTaskDelay(2097/portTICK_PERIOD_MS);
+
+  */
+
+
+  // Заполняем первую строчку
+
+  strcpy(myText[0], str.c_str()); 
+
+ 
+ /*
+  for (int i = 0; i < nColm-2; i++)
+  {
+    myText[0][i]='#';
+  }
+  //myText[0][nColm-2]=' ';
+  //myText[0][nColm-1]=' ';
+  myText[0][nColm-2]='\0';
+  //myText[0][nColm]=0;
+*/
+
+  Serial.println(myText[0]);
+  
+  //
+  /*
+  if (isFirst)
+  {
+    Init();
+    isFirst=false;
+  }
+  */
+  
+  // Выводим
+
+  /*
+  dispi.clearDisplay();
+  Offset=0;
+  for (int j = 0; j < nLine; j++)
+  {
+    dispi.setCursor(0,Offset);
+    dispi.println(myText[j]);
+    Offset=Offset+nOffset;
+  }
+  */
+  dispi.clearDisplay();
+  Offset=0;
+  for (int j = nLine-1; j > -1; j--)
+  {
+    dispi.setCursor(0,Offset);
+    dispi.println(myText[j]);
+    Offset=Offset+nOffset;
+  }
+
+
+  /*
+
+  int Offset=48;
+  for (int j = nLine-2; j >0; j--)
+  {
+    for (int i = 0; i < nColm+1; i++)
+    {
+      myText[j+1][i]=myText[j][i];
+    }
+    dispi.setCursor(0,Offset);
+    dispi.println(myText[j+1]);
+    Offset=Offset-nOffset;
+  }
+  Serial.println(myText[0]);
+
+  dispi.setCursor(0,0);
+  dispi.println(myText[0]);
+  */
+
+
+
+
+  dispi.display();
+  vTaskDelay(1097/portTICK_PERIOD_MS);
+
+}
+
+
 
 // *************************************************************** Echo.cpp ***

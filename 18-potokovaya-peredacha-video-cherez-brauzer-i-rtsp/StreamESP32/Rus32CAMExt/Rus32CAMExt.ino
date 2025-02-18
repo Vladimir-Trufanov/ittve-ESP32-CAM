@@ -30,6 +30,15 @@ void setup()
   echo.out("Init!");
   Serial.println("Initialize display2");
   echo.iniArray();
+    echo.out("Init!");
+  echo.iniArray();
+ echo.out1("Init!");
+ echo.out1("Hello");
+ echo.out1("Dear");
+ echo.out1("Ura");
+ echo.out1("Ische");
+ echo.out1("Worldic 01");
+
 }
 
 void loop()
