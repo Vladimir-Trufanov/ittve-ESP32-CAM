@@ -51,13 +51,13 @@ StreamESP32
 3=Новый1.txt
 [Selected Project Files]
 Main=
-Selected=Новый1.txt
+Selected=Rus32CAMExt\Echo.cpp
 [Rus32CAMExt\Echo.h]
-TopLine=33
+TopLine=47
 Caret=1,51
 [Rus32CAMExt\Echo.cpp]
-TopLine=49
-Caret=1,69
+TopLine=37
+Caret=20,71
 [Rus32CAMExt\Rus32CAMExt.ino]
 TopLine=43
 Caret=18,64

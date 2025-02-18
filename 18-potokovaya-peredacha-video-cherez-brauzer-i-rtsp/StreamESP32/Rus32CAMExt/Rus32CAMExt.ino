@@ -5,7 +5,7 @@
  * Используются:     #include <Adafruit_GFX.h> (с руссифицированным glcdfont.c)
  *                   #include <Adafruit_SSD1306.h>
  * 
- * v1.0.1, 16.02.2025                                 Автор:      Труфанов В.Е.
+ * v1.0.3, 18.02.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 15.02.2025
 **/
 
@@ -58,10 +58,13 @@ void setup()
   
   // Инициируем ведение журнала на Oled-дисплее
   
+  //bool OledSuccess = echo.Init();
   Serial.println("Initialize display1");
-  bool OledSuccess = echo.Init();
-  Serial.println("Initialize display2");
+  //echo.Init();
   echo.out("Init!");
+  echo.out("Init!");
+  echo.out("Init!");
+  Serial.println("Initialize display2");
   /*
 
   // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally

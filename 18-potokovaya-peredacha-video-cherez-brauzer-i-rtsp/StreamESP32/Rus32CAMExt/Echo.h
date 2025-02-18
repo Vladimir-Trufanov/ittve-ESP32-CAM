@@ -8,7 +8,7 @@
  * Используются:     #include <Adafruit_GFX.h> (с руссифицированным glcdfont.c)
  *                   #include <Adafruit_SSD1306.h>
  * 
- * v1.0.2, 17.02.2025                                 Автор:      Труфанов В.Е.
+ * v1.0.3, 18.02.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 15.02.2025
  * 
  * I2C — это двунаправленный последовательный протокол передачи данных на короткие 
@@ -48,15 +48,15 @@ class TEcho
    public:
 
    // Построить объект (конструктор класса)
-   TEcho(int iI2C_SDA=14, int iI2C_SCL=13, int iSCREEN_ADDRESS=0x3C);
+   TEcho(int iI2C_SDA=14, int iI2C_SCL=13, int iSCREEN_ADDRESS=0x3C, int imodeI2C=100000, int imodeSerial=115200);
    // Инициировать ведение журнала на Oled-дисплее
-   bool Init(int modeI2C=100000, int modeSerial=115200);
+   //bool Init(int modeI2C=100000, int modeSerial=115200);
    // Вывести строку журнала
    void out(String str);
    // Вывести строку журнала
-   void proba(Adafruit_SSD1306 display);
+   //void proba(Adafruit_SSD1306 display);
   
-   Adafruit_SSD1306 isi(); 
+   Adafruit_SSD1306 Init(); 
 
  
    
@@ -87,6 +87,8 @@ class TEcho
    
    private:
    
+   bool isFirst;                 // true - вывод первой строки на дисплей
+
    int I2C_SDA;                  // "serial data" - линия последовательных данных
    int I2C_SCL;                  // "serial clock" - линия последовательного тактирования
    TwoWire I2Cbus = TwoWire(0);  // объект для работы с шиной I2C
@@ -94,8 +96,13 @@ class TEcho
    int SCREEN_HEIGHT = 64;       // размер дисплея в пикселах по высоте
    int OLED_RESET = -1;          // вывод сброса дисплея
    int SCREEN_ADDRESS;           // адрес дисплея на шине I2C
+   
+   int modeI2C;
+   int modeSerial;
 
-   bool isSuccess;               // true - удалось инициализировать Oled-дисплей
+   Adafruit_SSD1306 dispi;
+
+   //bool isSuccess;               // true - удалось инициализировать Oled-дисплей
 
    /*
    void (*atatchedF)(char *mess, char *prefix); // прикреплённая функция

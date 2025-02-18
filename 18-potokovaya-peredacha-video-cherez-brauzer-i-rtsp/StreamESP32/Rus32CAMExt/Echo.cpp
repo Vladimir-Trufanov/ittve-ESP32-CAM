@@ -7,7 +7,7 @@
  * Используются:     #include <Adafruit_GFX.h> (с руссифицированным glcdfont.c)
  *                   #include <Adafruit_SSD1306.h>
  * 
- * v1.0.2, 17.02.2025                                 Автор:      Труфанов В.Е.
+ * v1.0.3, 18.02.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 15.02.2025
 **/
 
@@ -24,7 +24,7 @@
 // ****************************************************************************
 // *                  Построить объект (конструктор класса)                   *
 // ****************************************************************************
-TEcho::TEcho(int iI2C_SDA, int iI2C_SCL, int iSCREEN_ADDRESS)
+TEcho::TEcho(int iI2C_SDA, int iI2C_SCL, int iSCREEN_ADDRESS, int imodeI2C, int imodeSerial)
 {
 
    // Определяем номер линии SDA - линии последовательных данных
@@ -33,6 +33,11 @@ TEcho::TEcho(int iI2C_SDA, int iI2C_SCL, int iSCREEN_ADDRESS)
    I2C_SCL = iI2C_SCL;
    // Определяем адрес дисплея на шине I2C
    SCREEN_ADDRESS = iSCREEN_ADDRESS;  
+
+   modeI2C = imodeI2C;  
+   modeSerial = imodeSerial;  
+
+   isFirst=true;
 }
 
 
@@ -41,14 +46,17 @@ TEcho::TEcho(int iI2C_SDA, int iI2C_SCL, int iSCREEN_ADDRESS)
 // *   (по умолчанию: частота шины I2C=100 кбит/с, частота COM-порта 115200)  *
 // ****************************************************************************
 
-Adafruit_SSD1306 TEcho::isi() 
+Adafruit_SSD1306 TEcho::Init() 
 {
+   Serial.begin(modeSerial);
+   // Инициализируем I2C на заданных пинах
+   I2Cbus.begin(I2C_SDA,I2C_SCL,modeI2C);
   Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &I2Cbus, OLED_RESET);
   if  (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS))
    {
       Serial.printf("Не удалось инициализировать дисплей SSD1306 OLED.\nПроверьте подключение SDA к контакту %d и SCL к контакту %d\n",I2C_SDA,I2C_SCL);
       // while (true);
-      isSuccess=false;  // НЕ удалось инициализировать Oled-дисплей
+      //isSuccess=false;  // НЕ удалось инициализировать Oled-дисплей
    }
    // Обеспечиваем использовании новых версий библиотеки Adafruit-GFX,
    // включая руссификацию
@@ -56,8 +64,13 @@ Adafruit_SSD1306 TEcho::isi()
    display.cp437(true);
    display.setTextSize(2);
    display.setTextColor(SSD1306_WHITE);
-return display;
+   display.clearDisplay();
+
+   dispi=display;
+   return display;
 }
+
+/*
 
 bool TEcho::Init(int modeI2C, int modeSerial)
 {
@@ -103,25 +116,46 @@ bool TEcho::Init(int modeI2C, int modeSerial)
   display.println("0123456789");
   display.display();
 
-  Adafruit_SSD1306 idin=isi(); 
-  idin.clearDisplay();
- idin.setCursor(0, 16);
-  idin.println("asdfgh0123");
-  idin.display();
-
   //proba(display);
  //delay(2000);
 
   Serial.println("OLED SSD1306 инициализирован");
   return isSuccess;
 }
+
+*/
+
 // ****************************************************************************
 // *                           Вывести строку журнала                         *
 // ****************************************************************************
 void TEcho::out(String str)
 {
+  /*
+  Adafruit_SSD1306 disp=Init(); 
+  disp.clearDisplay();
+  disp.setCursor(0, 16);
+  disp.println("71sdfgh0123");
+  disp.display();
+  vTaskDelay(2097/portTICK_PERIOD_MS);
+  */
+  //dispi.clearDisplay();
+
+  if (isFirst)
+  {
+    Init();
+    isFirst=false;
+  }
+
+
+
+  dispi.setCursor(0, 16);
+  dispi.println("9sdfgh0123");
+  dispi.display();
+  vTaskDelay(2097/portTICK_PERIOD_MS);
+
 }
 
+/*
 void TEcho::proba(Adafruit_SSD1306 display)
 {
   Serial.println("1OLED SSD1306 инициализирован");
@@ -129,7 +163,7 @@ void TEcho::proba(Adafruit_SSD1306 display)
      Serial.println("2OLED SSD1306 инициализирован");
 
 }
-  
+*/  
 
 /*
 
