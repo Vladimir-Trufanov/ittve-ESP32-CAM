@@ -18,11 +18,9 @@ Extensions=*.*
 [Project tree]
 StreamESP32
 	+StreamESP32
-		+Rus32CAMExt
+		-Rus32CAMExt
 			Rus32CAMExt\Echo.cpp
 			Rus32CAMExt\Echo.h
-			Rus32CAMExt\QHM_Message.h
-			Rus32CAMExt\QueueHandlMulti.ino
 			Rus32CAMExt\Rus32CAMExt.ino
 		CRtspSession.cpp
 		CRtspSession.h
@@ -49,18 +47,22 @@ StreamESP32
 1=Rus32CAMExt\Echo.cpp
 2=Rus32CAMExt\Rus32CAMExt.ino
 3=Новый1.txt
+4=JPEGSamples.h
 [Selected Project Files]
 Main=
 Selected=Rus32CAMExt\Echo.cpp
 [Rus32CAMExt\Echo.h]
-TopLine=31
-Caret=1,69
+TopLine=35
+Caret=30,68
 [Rus32CAMExt\Echo.cpp]
-TopLine=64
-Caret=1,94
+TopLine=81
+Caret=3,119
 [Rus32CAMExt\Rus32CAMExt.ino]
-TopLine=1
+TopLine=29
 Caret=1,68
 [Новый1.txt]
 TopLine=54
 Caret=33,92
+[JPEGSamples.h]
+TopLine=1
+Caret=7,11

@@ -29,6 +29,7 @@ void setup()
   echo.out("Init!");
   echo.out("Init!");
   Serial.println("Initialize display2");
+  echo.iniArray();
 }
 
 void loop()

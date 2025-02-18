@@ -62,7 +62,7 @@ Adafruit_SSD1306 TEcho::Init()
    // включая руссификацию
    ///delay(2000);
    display.cp437(true);
-   display.setTextSize(2);
+   display.setTextSize(modeTextSize);
    display.setTextColor(SSD1306_WHITE);
    display.clearDisplay();
 
@@ -96,6 +96,98 @@ void TEcho::out(String str)
   dispi.println("7sdfgh0123");
   dispi.display();
   vTaskDelay(2097/portTICK_PERIOD_MS);
+
+}
+
+
+void TEcho::iniArray()
+{
+
+
+  // 2 text strings with a max length of 24 each
+  const byte maxSize = nColm+1;
+  char myText[nLine][maxSize];
+
+
+  int Offset=0;
+  for (int j = 0; j < nLine; j++)
+  {
+    for (int i = 0; i < nColm; i++)
+    {
+      myText[j][i]='0';
+    }
+    myText[j][nColm]='\0';
+    Serial.println(myText[j]);
+
+    dispi.setCursor(0,Offset);
+    dispi.println(myText[j]);
+
+    Offset=Offset+nOffset;
+  }
+  dispi.display();
+  vTaskDelay(97/portTICK_PERIOD_MS);
+
+
+/*
+  // Dynamically populate the list
+  strncpy(myText[0], "hello", maxSize );
+  Serial.println(myText[0]);
+
+  for (int i = 0; i < 9; i++)
+  {
+    myText[0][i]='0';
+  }
+  myText[0][9]='\0';
+  Serial.println(myText[0]);
+
+
+
+
+  strncpy(myText[1], "world", maxSize );
+  Serial.println(myText[1]);
+*/
+
+/*
+
+  
+  char* myStrings[]={"This is 1", "This is 2", "This is 3", "This is 4", "This is 5","This is 6"};
+
+  for (int i = 0; i < 9; i++)
+  {
+    myString[0][i]='0';
+  }
+  myString[0][9]='\0';
+
+
+  for (int i = 0; i < 6; i++)
+  {
+     Serial.println(myStrings[i]);
+     delay(500);
+  }
+  
+*/
+
+
+
+  /*
+  for(int i = 0; i < nLine * nColm; i++)
+  { 
+    //chArray[i] = *("0"); 
+    chArray[i] = {'0'}; 
+  }
+  chArray[nLine * nColm + 1] = 0; 
+
+  String text = String(* chArray);
+  Serial.println(text);
+  Serial.println(chArray[0]);
+  */
+
+  /*
+  dispi.setCursor(0,0);
+  dispi.println(text);
+  dispi.display();
+  vTaskDelay(97/portTICK_PERIOD_MS);
+  */
 
 }
 

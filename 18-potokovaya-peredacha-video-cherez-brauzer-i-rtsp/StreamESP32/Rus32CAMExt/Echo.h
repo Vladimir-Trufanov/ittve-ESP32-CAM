@@ -36,6 +36,14 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
+// #define modeTextSize 1
+#define modeTextSize 2
+#ifdef modeTextSize=2
+   #define nLine   4            // число строк дисплея
+   #define nColm   10           // число столбцов дисплея
+   #define nOffset 16           // смещение в пикселах по строкам
+#endif
+
 class TEcho
 {
    public:
@@ -44,7 +52,9 @@ class TEcho
    TEcho(int iI2C_SDA=14, int iI2C_SCL=13, int iSCREEN_ADDRESS=0x3C, int imodeI2C=100000, int imodeSerial=115200);
    // Вывести строку журнала
    void out(String str);
-   
+    
+   void iniArray();
+  
    private:
    
    bool isFirst;                 // true - вывод первой строки на дисплей
@@ -56,6 +66,8 @@ class TEcho
    int SCREEN_HEIGHT = 64;       // размер дисплея в пикселах по высоте
    int OLED_RESET = -1;          // вывод сброса дисплея
    int SCREEN_ADDRESS;           // адрес дисплея на шине I2C
+   
+   char chArray[nLine * nColm + 1];
    
    int modeI2C;
    int modeSerial;
