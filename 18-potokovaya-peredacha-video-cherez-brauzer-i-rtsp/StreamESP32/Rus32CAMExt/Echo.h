@@ -8,7 +8,7 @@
  * Используются:     #include <Adafruit_GFX.h> (с руссифицированным glcdfont.c)
  *                   #include <Adafruit_SSD1306.h>
  * 
- * v1.0.3, 18.02.2025                                 Автор:      Труфанов В.Е.
+ * v1.0.4, 19.02.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 15.02.2025
  * 
  * I2C — это двунаправленный последовательный протокол передачи данных на короткие 
@@ -36,51 +36,60 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-// #define modeTextSize 1
-#define modeTextSize 2
-#ifdef modeTextSize=2
-   #define nLine   4            // число строк дисплея
-   #define nColm   10           // число столбцов дисплея
-   #define nOffset 16           // смещение в пикселах по строкам
+// Размер текста в сообщениях
+#define SmallText      1          // мелкий текст
+#define PlainText      2          // обычный текст 
+#define modeTextSize   PlainText
+#ifdef modeTextSize  = PlainText
+   #define nLine       4          // число строк дисплея
+   #define nColm       10         // число столбцов дисплея
+   #define nOffset     16         // смещение в пикселах по строкам
 #endif
+// Способ движения строк по экрану дисплея
+#define TopToBottom    1          // сверху-вниз   
+#define FromBottomTop  2          // снизу-вверх   
 
 class TEcho
 {
-   public:
+  public:
 
-   // Построить объект (конструктор класса)
-   TEcho(int iI2C_SDA=14, int iI2C_SCL=13, int iSCREEN_ADDRESS=0x3C, int imodeI2C=100000, int imodeSerial=115200);
-   // Вывести строку журнала
-   void out(String str);
-   void out1(String str);
+  // Построить объект (конструктор класса)
+  TEcho(int iI2C_SDA=14, int iI2C_SCL=13, int iSCREEN_ADDRESS=0x3C, int imodeI2C=100000, int imodeSerial=115200);
+  // Вывести строку журнала
+  void out(String str);
+  //void out1(String str);
     
-   void iniArray();
-  
-   private:
+  //void iniArray();
+  // Изменить направление движения строк
+  void ChangeLinesDir(int Direction);
    
-   bool isFirst;                 // true - вывод первой строки на дисплей
-
-   int I2C_SDA;                  // "serial data" - линия последовательных данных
-   int I2C_SCL;                  // "serial clock" - линия последовательного тактирования
-   TwoWire I2Cbus = TwoWire(0);  // объект для работы с шиной I2C
-   int SCREEN_WIDTH = 128;       // размер дисплея в пикселах по ширине
-   int SCREEN_HEIGHT = 64;       // размер дисплея в пикселах по высоте
-   int OLED_RESET = -1;          // вывод сброса дисплея
-   int SCREEN_ADDRESS;           // адрес дисплея на шине I2C
+  private:
    
-   //char chArray[nLine * nColm + 1];
+  bool isFirst;                    // true - вывод первой строки на дисплей
 
-   char myText[nLine][nColm+1];
+  int I2C_SDA;                     // "serial data" - линия последовательных данных
+  int I2C_SCL;                     // "serial clock" - линия последовательного тактирования
+  TwoWire I2Cbus = TwoWire(0);     // объект для работы с шиной I2C
+  int SCREEN_WIDTH = 128;          // размер дисплея в пикселах по ширине
+  int SCREEN_HEIGHT = 64;          // размер дисплея в пикселах по высоте
+  int OLED_RESET = -1;             // вывод сброса дисплея
+  int SCREEN_ADDRESS;              // адрес дисплея на шине I2C
+  int WayLinesMove=FromBottomTop;  // направление движения строк
+
+  //char chArray[nLine * nColm + 1];
+
+  char myText[nLine][nColm+1];
 
    
-   int modeI2C;
-   int modeSerial;
+  int modeI2C;
+  int modeSerial;
 
-   Adafruit_SSD1306 dispi;
+  Adafruit_SSD1306 dispi;
 
-   // Инициировать ведение журнала на Oled-дисплее
-   Adafruit_SSD1306 Init(); 
+  // Инициировать ведение журнала на Oled-дисплее
+  Adafruit_SSD1306 Init();
+  // Показать массив 
+  void ViewArray();
 };
-
 
 // ***************************************************************** Echo.h ***

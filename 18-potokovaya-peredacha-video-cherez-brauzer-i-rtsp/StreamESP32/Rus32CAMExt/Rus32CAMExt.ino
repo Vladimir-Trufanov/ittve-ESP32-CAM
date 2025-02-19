@@ -24,21 +24,30 @@ TEcho echo(I2C_SDA,I2C_SCL,0x3C);
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("Initialize display1");
-  echo.out("Init!");
-  echo.out("Init!");
-  echo.out("Init!");
-  Serial.println("Initialize display2");
-  echo.iniArray();
-    echo.out("Init!");
-  echo.iniArray();
- echo.out1("Init!");
- echo.out1("Hello");
- echo.out1("Dear");
- echo.out1("Ura");
- echo.out1("Ische");
- echo.out1("Worldic 01");
+  //Serial.println("Initialize display1");
 
+  //echo.out("Init!");
+  //echo.out("Init!");
+  //echo.out("Init!");
+  
+
+  /*
+  echo.iniArray();
+  */
+  //Serial.println("Initialize display2");
+
+  echo.out("Init!");
+  echo.out("Hello");
+  echo.out("Dear");
+  echo.out("Ura");
+  echo.out("Ische");
+  echo.out("Worldic 01");
+ 
+  // Меняем направление движения строк
+  echo.ChangeLinesDir(TopToBottom);
+  echo.out("Seichas");
+  echo.out("Idem");
+  echo.out("Vnizic");
 }
 
 void loop()

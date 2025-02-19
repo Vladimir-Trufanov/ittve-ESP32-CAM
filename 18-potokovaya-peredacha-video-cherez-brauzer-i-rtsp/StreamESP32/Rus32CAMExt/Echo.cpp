@@ -7,7 +7,7 @@
  * Используются:     #include <Adafruit_GFX.h> (с руссифицированным glcdfont.c)
  *                   #include <Adafruit_SSD1306.h>
  * 
- * v1.0.3, 18.02.2025                                 Автор:      Труфанов В.Е.
+ * v1.0.4, 19.02.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 15.02.2025
 **/
 
@@ -71,11 +71,9 @@ Adafruit_SSD1306 TEcho::Init()
 }
 
 
-// ****************************************************************************
-// *                           Вывести строку журнала                         *
-// ****************************************************************************
-void TEcho::out(String str)
-{
+
+//void TEcho::out(String str)
+//{
   /*
   Adafruit_SSD1306 disp=Init(); 
   disp.clearDisplay();
@@ -85,7 +83,7 @@ void TEcho::out(String str)
   vTaskDelay(2097/portTICK_PERIOD_MS);
   */
   //dispi.clearDisplay();
-
+  /*
   if (isFirst)
   {
     Init();
@@ -98,8 +96,9 @@ void TEcho::out(String str)
   vTaskDelay(1097/portTICK_PERIOD_MS);
 
 }
+*/
 
-
+/*
 void TEcho::iniArray()
 {
 
@@ -128,7 +127,7 @@ void TEcho::iniArray()
   dispi.display();
   vTaskDelay(97/portTICK_PERIOD_MS);
 
-
+*/
 /*
   // Dynamically populate the list
   strncpy(myText[0], "hello", maxSize );
@@ -190,14 +189,22 @@ void TEcho::iniArray()
   vTaskDelay(97/portTICK_PERIOD_MS);
   */
 
-}
+//}
 
-void TEcho::out1(String str)
+// ****************************************************************************
+// *                           Вывести строку журнала                         *
+// ****************************************************************************
+void TEcho::out(String str)
 {
-
-  int Offset;
- 
-  // Вначале перемещаем массив
+  // Если первая строчка, то инициируем ведение журнала на дисплее
+  if (isFirst)
+  {
+    Init();
+    isFirst=false;
+  }
+  // Вначале перемещаем массив с первой до предпоследней
+  // строчки в следующую,
+  // освобождаем место для первой строчки
   for (int j = nLine-1; j > 0; j--)
   {
     for (int i = 0; i < nColm+1; i++)
@@ -205,101 +212,52 @@ void TEcho::out1(String str)
       myText[j][i]=myText[j-1][i];
     }
   }
-
-  /*
-  // Выводим
-  dispi.clearDisplay();
-  Offset=0;
-  for (int j = 0; j < nLine; j++)
-  {
-    dispi.setCursor(0,Offset);
-    dispi.println(myText[j]);
-    Offset=Offset+nOffset;
-  }
-
-
-  dispi.display();
-  vTaskDelay(2097/portTICK_PERIOD_MS);
-
-  */
-
-
-  // Заполняем первую строчку
-
+  // Заполняем первую строчку и выводим в последовательный порт
   strcpy(myText[0], str.c_str()); 
-
- 
- /*
-  for (int i = 0; i < nColm-2; i++)
-  {
-    myText[0][i]='#';
-  }
-  //myText[0][nColm-2]=' ';
-  //myText[0][nColm-1]=' ';
-  myText[0][nColm-2]='\0';
-  //myText[0][nColm]=0;
-*/
-
   Serial.println(myText[0]);
-  
-  //
-  /*
-  if (isFirst)
-  {
-    Init();
-    isFirst=false;
-  }
-  */
-  
-  // Выводим
-
-  /*
-  dispi.clearDisplay();
-  Offset=0;
-  for (int j = 0; j < nLine; j++)
-  {
-    dispi.setCursor(0,Offset);
-    dispi.println(myText[j]);
-    Offset=Offset+nOffset;
-  }
-  */
-  dispi.clearDisplay();
-  Offset=0;
-  for (int j = nLine-1; j > -1; j--)
-  {
-    dispi.setCursor(0,Offset);
-    dispi.println(myText[j]);
-    Offset=Offset+nOffset;
-  }
-
-
-  /*
-
-  int Offset=48;
-  for (int j = nLine-2; j >0; j--)
-  {
-    for (int i = 0; i < nColm+1; i++)
-    {
-      myText[j+1][i]=myText[j][i];
-    }
-    dispi.setCursor(0,Offset);
-    dispi.println(myText[j+1]);
-    Offset=Offset-nOffset;
-  }
-  Serial.println(myText[0]);
-
-  dispi.setCursor(0,0);
-  dispi.println(myText[0]);
-  */
-
-
-
-
+  // Выводим строчки на дисплей
+  ViewArray();
   dispi.display();
   vTaskDelay(1097/portTICK_PERIOD_MS);
-
 }
+// ****************************************************************************
+// *                    Изменить направление движения строк                   *
+// ****************************************************************************
+void TEcho::ChangeLinesDir(int Direction)
+{
+  if (Direction==FromBottomTop) WayLinesMove=FromBottomTop;   // снизу-вверх
+  else  WayLinesMove=TopToBottom;                             // сверху-вниз
+}
+// ****************************************************************************
+// *                              Показать массив                             *
+// ****************************************************************************
+void TEcho::ViewArray()
+{
+  int Offset; // смещение по пикселам строк
 
-
+  dispi.clearDisplay();
+  // Если вывод снизу-вверх
+  if (WayLinesMove==FromBottomTop)
+  {
+    Offset=0;
+    for (int j = nLine-1; j > -1; j--)
+    {
+      dispi.setCursor(0,Offset);
+      dispi.println(myText[j]);
+      Offset=Offset+nOffset;
+    }
+  }
+  // Если вывод сверху-вниз
+  else
+  {
+    Offset=0;
+    for (int j = 0; j < nLine; j++)
+    {
+      dispi.setCursor(0,Offset);
+      dispi.println(myText[j]);
+      Offset=Offset+nOffset;
+    }
+  }
+}
 
 // *************************************************************** Echo.cpp ***
