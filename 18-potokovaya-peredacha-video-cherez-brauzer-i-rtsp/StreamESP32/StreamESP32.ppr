@@ -50,16 +50,16 @@ StreamESP32
 4=JPEGSamples.h
 [Selected Project Files]
 Main=
-Selected=Rus32CAMExt\Echo.cpp
+Selected=Rus32CAMExt\Rus32CAMExt.ino
 [Rus32CAMExt\Echo.h]
-TopLine=56
-Caret=1,94
+TopLine=45
+Caret=17,45
 [Rus32CAMExt\Echo.cpp]
-TopLine=210
-Caret=3,228
+TopLine=92
+Caret=1,92
 [Rus32CAMExt\Rus32CAMExt.ino]
-TopLine=19
-Caret=11,46
+TopLine=7
+Caret=25,37
 [Новый1.txt]
 TopLine=54
 Caret=33,92

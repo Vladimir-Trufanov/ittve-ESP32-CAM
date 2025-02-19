@@ -22,175 +22,80 @@
 // ****************************************************************************
 TEcho::TEcho(int iI2C_SDA, int iI2C_SCL, int iSCREEN_ADDRESS, int imodeI2C, int imodeSerial)
 {
-
-   // Определяем номер линии SDA - линии последовательных данных
-   I2C_SDA = iI2C_SDA;
-   // Определяем номер линии SCL - линии последовательного тактирования
-   I2C_SCL = iI2C_SCL;
-   // Определяем адрес дисплея на шине I2C
-   SCREEN_ADDRESS = iSCREEN_ADDRESS;  
-
-   modeI2C = imodeI2C;  
-   modeSerial = imodeSerial;  
-
-   isFirst=true;
+  // Определяем номер линии SDA - линии последовательных данных
+  I2C_SDA = iI2C_SDA;
+  // Определяем номер линии SCL - линии последовательного тактирования
+  I2C_SCL = iI2C_SCL;
+  // Определяем адрес дисплея на шине I2C
+  SCREEN_ADDRESS = iSCREEN_ADDRESS;  
+  // Определяем частоту шины внутренней связи I2C
+  modeI2C = imodeI2C;  
+  // Определяем частоту передачи через последовательный порт
+  modeSerial = imodeSerial;  
+  // Инициируем флаг вывода первой строки на дисплей
+  isFirst=true;
 }
-
-
 // ****************************************************************************
 // *                 Инициировать ведение журнала на Oled-дисплее             *
 // *   (по умолчанию: частота шины I2C=100 кбит/с, частота COM-порта 115200)  *
 // ****************************************************************************
-
-Adafruit_SSD1306 TEcho::Init() 
+void TEcho::Init() 
 {
-   Serial.begin(modeSerial);
-   // Инициализируем I2C на заданных пинах
-   I2Cbus.begin(I2C_SDA,I2C_SCL,modeI2C);
-     // Определение объекта дисплея с параметрами экрана, пином сброса для дисплея
-   // и по заданному адресу на шине I2C
-
-   
+  isSuccess=true;  // Oled-дисплей успешно инициализирован
+  Serial.begin(modeSerial);
+  // Инициализируем I2C на заданных пинах
+  I2Cbus.begin(I2C_SDA,I2C_SCL,modeI2C);
+  // Определение объекта дисплея с параметрами экрана, пином сброса для дисплея
+  // и по заданному адресу на шине I2C
   Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &I2Cbus, OLED_RESET);
-  if  (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS))
-   {
-      Serial.printf("Не удалось инициализировать дисплей SSD1306 OLED.\nПроверьте подключение SDA к контакту %d и SCL к контакту %d\n",I2C_SDA,I2C_SCL);
-      // while (true);
-      //isSuccess=false;  // НЕ удалось инициализировать Oled-дисплей
-   }
-   // Обеспечиваем использовании новых версий библиотеки Adafruit-GFX,
-   // включая руссификацию
-   ///delay(2000);
-   display.cp437(true);
-   display.setTextSize(modeTextSize);
-   display.setTextColor(SSD1306_WHITE);
-   display.clearDisplay();
-
-   dispi=display;
-   return display;
-}
-
-
-
-//void TEcho::out(String str)
-//{
-  /*
-  Adafruit_SSD1306 disp=Init(); 
-  disp.clearDisplay();
-  disp.setCursor(0, 16);
-  disp.println("71sdfgh0123");
-  disp.display();
-  vTaskDelay(2097/portTICK_PERIOD_MS);
-  */
-  //dispi.clearDisplay();
-  /*
-  if (isFirst)
+  if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS))
   {
-    Init();
-    isFirst=false;
+    Serial.printf("Не удалось инициализировать дисплей SSD1306 OLED.\nПроверьте подключение SDA к контакту %d и SCL к контакту %d\n",I2C_SDA,I2C_SCL);
+    // while (true);
+    isSuccess=false;  // НЕ удалось инициализировать Oled-дисплей
   }
-
-  dispi.setCursor(0, 16);
-  dispi.println("7sdfgh0123");
-  dispi.display();
-  vTaskDelay(1097/portTICK_PERIOD_MS);
-
+  // Обеспечиваем использовании новых версий библиотеки 
+  // Adafruit-GFX, включая руссификацию
+  display.cp437(true);
+  display.setTextSize(modeTextSize);
+  display.setTextColor(SSD1306_WHITE);
+  display.clearDisplay();
+  // Передаём заголовок дисплея с параметрами экрана по заданному адресу 
+  // на шине I2C в объект класса
+  dispi=display;
 }
-*/
-
-/*
-void TEcho::iniArray()
+// ****************************************************************************
+// *               Перекодировать русские буквы из UTF-8 в Win-1251           *
+// ****************************************************************************
+String TEcho::utf8rus(String source)
 {
-
-
-  // 2 text strings with a max length of 24 each
-  //const byte maxSize = nColm+1;
-  //char myText[nLine][maxSize];
-
- dispi.clearDisplay();
-
-  int Offset=0;
-  for (int j = 0; j < nLine; j++)
-  {
-    for (int i = 0; i < nColm; i++)
-    {
-      myText[j][i]='0';
+  int i,k;
+  String target;
+  unsigned char n;
+  char m[2] = { '0', '\0' };
+  k = source.length(); i = 0;
+  while (i < k) {
+    n = source[i]; i++;
+    if (n >= 0xC0) {
+      switch (n) {
+        case 0xD0: {
+          n = source[i]; i++;
+          if (n == 0x81) { n = 0xA8; break; }
+          if (n >= 0x90 && n <= 0xBF) n = n + 0x30;
+          break;
+        }
+        case 0xD1: {
+          n = source[i]; i++;
+          if (n == 0x91) { n = 0xB8; break; }
+          if (n >= 0x80 && n <= 0x8F) n = n + 0x70;
+          break;
+        }
+      }
     }
-    myText[j][nColm]='\0';
-    Serial.println(myText[j]);
-
-    dispi.setCursor(0,Offset);
-    dispi.println(myText[j]);
-
-    Offset=Offset+nOffset;
+    m[0] = n; target = target + String(m);
   }
-  dispi.display();
-  vTaskDelay(97/portTICK_PERIOD_MS);
-
-*/
-/*
-  // Dynamically populate the list
-  strncpy(myText[0], "hello", maxSize );
-  Serial.println(myText[0]);
-
-  for (int i = 0; i < 9; i++)
-  {
-    myText[0][i]='0';
-  }
-  myText[0][9]='\0';
-  Serial.println(myText[0]);
-
-
-
-
-  strncpy(myText[1], "world", maxSize );
-  Serial.println(myText[1]);
-*/
-
-/*
-
-  
-  char* myStrings[]={"This is 1", "This is 2", "This is 3", "This is 4", "This is 5","This is 6"};
-
-  for (int i = 0; i < 9; i++)
-  {
-    myString[0][i]='0';
-  }
-  myString[0][9]='\0';
-
-
-  for (int i = 0; i < 6; i++)
-  {
-     Serial.println(myStrings[i]);
-     delay(500);
-  }
-  
-*/
-
-
-
-  /*
-  for(int i = 0; i < nLine * nColm; i++)
-  { 
-    //chArray[i] = *("0"); 
-    chArray[i] = {'0'}; 
-  }
-  chArray[nLine * nColm + 1] = 0; 
-
-  String text = String(* chArray);
-  Serial.println(text);
-  Serial.println(chArray[0]);
-  */
-
-  /*
-  dispi.setCursor(0,0);
-  dispi.println(text);
-  dispi.display();
-  vTaskDelay(97/portTICK_PERIOD_MS);
-  */
-
-//}
-
+  return target;
+}
 // ****************************************************************************
 // *                           Вывести строку журнала                         *
 // ****************************************************************************
@@ -213,8 +118,10 @@ void TEcho::out(String str)
     }
   }
   // Заполняем первую строчку и выводим в последовательный порт
-  strcpy(myText[0], str.c_str()); 
-  Serial.println(myText[0]);
+  Serial.println(str);
+  String str1251 = utf8rus(str);
+  if (str1251.length()>nColm) str1251=str1251.substring(0,nColm);
+  strcpy(myText[0], str1251.c_str()); 
   // Выводим строчки на дисплей
   ViewArray();
   dispi.display();

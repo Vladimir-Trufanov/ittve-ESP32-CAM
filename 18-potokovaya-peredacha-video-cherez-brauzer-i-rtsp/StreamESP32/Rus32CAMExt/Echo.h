@@ -57,16 +57,13 @@ class TEcho
   TEcho(int iI2C_SDA=14, int iI2C_SCL=13, int iSCREEN_ADDRESS=0x3C, int imodeI2C=100000, int imodeSerial=115200);
   // Вывести строку журнала
   void out(String str);
-  //void out1(String str);
-    
-  //void iniArray();
   // Изменить направление движения строк
   void ChangeLinesDir(int Direction);
    
   private:
    
   bool isFirst;                    // true - вывод первой строки на дисплей
-
+  bool isSuccess;                  // true - успешно инициализирован дисплей
   int I2C_SDA;                     // "serial data" - линия последовательных данных
   int I2C_SCL;                     // "serial clock" - линия последовательного тактирования
   TwoWire I2Cbus = TwoWire(0);     // объект для работы с шиной I2C
@@ -75,21 +72,18 @@ class TEcho
   int OLED_RESET = -1;             // вывод сброса дисплея
   int SCREEN_ADDRESS;              // адрес дисплея на шине I2C
   int WayLinesMove=FromBottomTop;  // направление движения строк
+  int modeI2C;                     // частота шины внутренней связи I2C
+  int modeSerial;                  // частота передачи через последовательный порт
+  char myText[nLine][nColm+1];     // буфер показываемых строк журнала
 
-  //char chArray[nLine * nColm + 1];
-
-  char myText[nLine][nColm+1];
-
-   
-  int modeI2C;
-  int modeSerial;
-
-  Adafruit_SSD1306 dispi;
+  Adafruit_SSD1306 dispi;          // объект дисплея с параметрами экрана по заданному адресу на шине I2C
 
   // Инициировать ведение журнала на Oled-дисплее
-  Adafruit_SSD1306 Init();
+  void Init();
   // Показать массив 
   void ViewArray();
+  // Перекодировать русские буквы из UTF-8 в Win-1251
+  String utf8rus(String source);
 };
 
 // ***************************************************************** Echo.h ***
