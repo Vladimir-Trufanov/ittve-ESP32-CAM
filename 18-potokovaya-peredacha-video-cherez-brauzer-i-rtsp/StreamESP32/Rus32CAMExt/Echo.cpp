@@ -101,6 +101,7 @@ String TEcho::utf8rus(String source)
 // ****************************************************************************
 void TEcho::out(String str)
 {
+  String strUtf8;
   // Если первая строчка, то инициируем ведение журнала на дисплее
   if (isFirst)
   {
@@ -119,12 +120,12 @@ void TEcho::out(String str)
   }
   // Заполняем первую строчку и выводим в последовательный порт
   Serial.println(str);
-  String str1251 = utf8rus(str);
-  if (str1251.length()>nColm) str1251=str1251.substring(0,nColm);
-  strcpy(myText[0], str1251.c_str()); 
+  if (str.length()>nColm) strUtf8=str.substring(0,nColm);
+  else strUtf8=str;
+  strcpy(myText[0], strUtf8.c_str()); 
   // Выводим строчки на дисплей
   ViewArray();
-  dispi.display();
+  //dispi.display();
   vTaskDelay(1097/portTICK_PERIOD_MS);
 }
 // ****************************************************************************
@@ -142,15 +143,16 @@ void TEcho::ViewArray()
 {
   int Offset; // смещение по пикселам строк
 
-  dispi.clearDisplay();
+  //dispi.clearDisplay();
   // Если вывод снизу-вверх
   if (WayLinesMove==FromBottomTop)
   {
     Offset=0;
     for (int j = nLine-1; j > -1; j--)
     {
-      dispi.setCursor(0,Offset);
-      dispi.println(myText[j]);
+      //dispi.setCursor(0,Offset);
+      //dispi.println(utf8rus(myText[j]));
+      Serial.print("***"); Serial.print(myText[j]); Serial.println("***");
       Offset=Offset+nOffset;
     }
   }
@@ -160,11 +162,103 @@ void TEcho::ViewArray()
     Offset=0;
     for (int j = 0; j < nLine; j++)
     {
-      dispi.setCursor(0,Offset);
-      dispi.println(myText[j]);
+      //dispi.setCursor(0,Offset);
+      //dispi.println(utf8rus(myText[j]));
+      Serial.print("***"); Serial.print(myText[j]); Serial.println("***");
       Offset=Offset+nOffset;
     }
   }
 }
-
+/*
+Initialization
+******
+******
+******
+***Initializa***
+Initialization
+******
+******
+***Initializa***
+***Initializa***
+Hello
+******
+***Initializa***
+***Initializa***
+***Hello***
+Hello
+***Initializa***
+***Initializa***
+***Hello***
+***Hello***
+dear
+***Initializa***
+***Hello***
+***Hello***
+***dear***
+dear
+***Hello***
+***Hello***
+***dear***
+***dear***
+World
+***Hello***
+***dear***
+***dear***
+***World***
+World
+***dear***
+***dear***
+***World***
+***World***
+01234567890123456789
+***dear***
+***World***
+***World***
+***0123456789***
+01234567890123456789
+***World***
+***World***
+***0123456789***
+***0123456789***
+01234567890123456789
+***World***
+***0123456789***
+***0123456789***
+***0123456789***
+Сейчас
+***Сейча***
+***0123456789***
+***0123456789***
+***0123456789***
+внизёхонько
+***внизё***
+***Сейча***
+***0123456789***
+***0123456789***
+внизёхонько
+***внизё***
+***внизё***
+***Сейча***
+***0123456789***
+внизёхонько
+***внизё***
+***внизё***
+***внизё***
+***Сейча***
+уже
+***уже***
+***внизё***
+***внизё***
+***внизё***
+уже
+***уже***
+***уже***
+***внизё***
+***внизё***
+идем
+***идем***
+***уже***
+***уже***
+***внизё***
+*/
 // *************************************************************** Echo.cpp ***

@@ -25,14 +25,23 @@ void setup()
   Serial.begin(115200);
 
   echo.out("Initialization");
+  echo.out("Initialization");
+  echo.out("Hello");
   echo.out("Hello");
   echo.out("dear");
+  echo.out("dear");
   echo.out("World");
-  // echo.out("01234567890123456789");
+  echo.out("World");
+  echo.out("01234567890123456789");
+  echo.out("01234567890123456789");
+  echo.out("01234567890123456789");
   // Меняем направление движения строк
   echo.ChangeLinesDir(TopToBottom);
   echo.out("Сейчас");
-  // echo.out("внизёхонько");
+  echo.out("внизёхонько");
+  echo.out("внизёхонько");
+  echo.out("внизёхонько");
+  echo.out("уже");
   echo.out("уже");
   echo.out("идем");
 }
