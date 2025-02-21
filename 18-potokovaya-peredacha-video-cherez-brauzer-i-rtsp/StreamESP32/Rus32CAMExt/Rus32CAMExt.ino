@@ -14,21 +14,34 @@
 #include <Adafruit_SSD1306.h>
 
 #include "Echo.h"   
+#include "Mems.h"   
 
 // Инициируем ведение журнала на Oled-дисплее
 #define I2C_SDA 14
 #define I2C_SCL 13
+
 TEcho echo(I2C_SDA,I2C_SCL,0x3C); 
+TMems mems(5); 
 
 void setup()
 {
   Serial.begin(115200);
-
-  echo.out("Initialization");
-  echo.out("Initialization");
+  mems.Fix();
+  //echo.out("Initialization");
+  //echo.out("Initialization");
   echo.out("Hello");
+  mems.Diff();
   echo.out("Hello");
+  mems.Diff();
   echo.out("dear");
+  mems.Diff();
+  echo.out("dear");
+  mems.Diff();
+  echo.out("012345678901");
+  mems.Diff();
+  echo.out("01234567890123456789");
+  mems.Diff();
+  /*
   echo.out("dear");
   echo.out("World");
   echo.out("World");
@@ -44,6 +57,9 @@ void setup()
   echo.out("уже");
   echo.out("уже");
   echo.out("идем");
+  */
+  //mems.FixView();
+  mems.Diff();
 }
 
 void loop()

@@ -125,7 +125,7 @@ void TEcho::out(String str)
   strcpy(myText[0], strUtf8.c_str()); 
   // Выводим строчки на дисплей
   ViewArray();
-  //dispi.display();
+  dispi.display();
   vTaskDelay(1097/portTICK_PERIOD_MS);
 }
 // ****************************************************************************

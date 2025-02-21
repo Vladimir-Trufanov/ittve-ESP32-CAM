@@ -1,0 +1,196 @@
+/** Arduino-Esp32-CAM                                  *** Rus32CAMExt4.ino ***
+ *                          
+ *        Тестовая программа работы с OLED-дисплеем SSD1306 128x64 на ESP32-CAM
+ *                    в отдельной задаче и назначением собственных выводов I2С.
+ * Используются:     #include <Adafruit_GFX.h> (с руссифицированным glcdfont.c)
+ *                   #include <Adafruit_SSD1306.h>
+ * 
+ * v1.0.1, 21.02.2025                                 Автор:      Труфанов В.Е.
+ * Copyright © 2025 tve                               Дата создания: 21.02.2025
+**/
+
+/*
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+
+#include "Mems.h"   
+TMems mems(5); 
+*/
+
+#include "task_Echo.h"
+
+void setup() 
+{
+  Serial.begin(115200);
+  iniEcho();
+  
+  /* 
+  // Определяем дополнительную задачу
+  xTaskCreatePinnedToCore (
+    echo,         // название функции, которая будет запускаться, как параллельная задача
+    "echo",       // название задачи
+    3072,         // размер стека в байтах
+    NULL,         // указатель на параметр новой задаче. NULL, если параметр не передаётся.
+    3,            // приоритет задачи
+    NULL,         // дескриптор или указатель на задачу. Его можно использовать для вызова задачи.
+    1             // идентификатор ядра процессора, на котором требуется запустить задачу. 
+  );
+  */
+  
+}
+
+void loop() 
+{ 
+}
+
+/*
+// ****************************************************************************
+// *           Выполнять передачу сообщений на OLED-дисплей SSD1306           *
+// ****************************************************************************
+
+#define I2C_SDA 14
+#define I2C_SCL 13
+
+static TwoWire I2Cbus = TwoWire(0);  // объект для работы с шиной I2C
+static Adafruit_SSD1306 display;     // объект дисплея
+
+void echo (void* pvParameters) 
+{
+  int i;
+  mems.Fix();
+
+  I2Cbus.begin(I2C_SDA,I2C_SCL,100000);
+
+  Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &I2Cbus, -1);
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) 
+  { 
+    Serial.println("SSD1306 allocation failed");
+    //for(;;);
+  }
+  delay(100);
+  display.cp437(true);
+  display.setTextSize(2);             
+  display.setTextColor(WHITE);  
+
+  while (1) 
+  {
+    Serial.println ("Всем привет!");
+
+    String aLines[4];
+    aLines[0]=squezy(utf8rus("Привет МИР"));
+    aLines[1]=squezy(utf8rus("012345678901234567890"));
+    aLines[2]=squezy(utf8rus("0123456789"));
+    aLines[3]=squezy(utf8rus("Привет МИР"));
+
+    display.clearDisplay();
+    for (i=0; i<4; i++)
+    {
+      display.setCursor(0,i*16);             
+      display.println(aLines[i]);
+    }
+    display.display();
+    mems.Diff();
+    delay(1000); 
+
+    for (i=3; i>0; i--)
+    {
+      aLines[i]=aLines[i-1];
+    }
+    aLines[0]=squezy(utf8rus("Привет!"));
+    display.clearDisplay();
+    for (i=0; i<4; i++)
+    {
+      display.setCursor(0,i*16);             
+      display.println(aLines[i]);
+    }
+    display.display();
+    mems.Diff();
+    delay(1000); 
+
+    for (i=3; i>0; i--)
+    {
+      aLines[i]=aLines[i-1];
+    }
+    aLines[0]=squezy(utf8rus("555"));
+    display.clearDisplay();
+    for (i=0; i<4; i++)
+    {
+      display.setCursor(0,i*16);             
+      display.println(aLines[i]);
+    }
+    display.display();
+    mems.Diff();
+    delay(1000); 
+
+    for (i=3; i>0; i--)
+    {
+      aLines[i]=aLines[i-1];
+    }
+    aLines[0]=squezy(utf8rus("Привет МИР, такой очень удивительный"));
+    display.clearDisplay();
+    for (i=0; i<4; i++)
+    {
+      display.setCursor(0,i*16);             
+      display.println(aLines[i]);
+    }
+    display.display();
+    mems.Diff();
+
+    delay (2000); 
+  }
+}
+*/
+
+/*
+String squezy(String str)
+{
+  String strUtf8;
+  return strUtf8=str.substring(0,10);
+}
+*/
+/* Функция перекодировки русских букв из UTF-8 в Win-1251 */
+/*
+String utf8rus(String source)
+{
+  int i,k;
+  String target;
+  unsigned char n;
+  char m[2] = { '0', '\0' };
+  k = source.length(); i = 0;
+  while (i < k) 
+  {
+    n = source[i]; i++;
+    if (n >= 0xC0) 
+    {
+      switch (n) 
+      {
+        case 0xD0: 
+        {
+          n = source[i]; i++;
+          if (n == 0x81) { n = 0xA8; break; }
+          if (n >= 0x90 && n <= 0xBF) n = n + 0x30;
+          break;
+        }
+        case 0xD1: 
+        {
+          n = source[i]; i++;
+          if (n == 0x91) { n = 0xB8; break; }
+          if (n >= 0x80 && n <= 0x8F) n = n + 0x70;
+          break;
+        }
+      }
+    }
+    m[0] = n; target = target + String(m);
+  }
+return target;
+}
+*/
+
+// ******************************************************* Rus32CAMExt4.ino ***
+
+
+
+

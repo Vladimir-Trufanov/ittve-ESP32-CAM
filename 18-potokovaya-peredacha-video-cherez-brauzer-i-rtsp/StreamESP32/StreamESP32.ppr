@@ -21,7 +21,22 @@ StreamESP32
 		-Rus32CAMExt
 			Rus32CAMExt\Echo.cpp
 			Rus32CAMExt\Echo.h
+			Rus32CAMExt\Mems.cpp
+			Rus32CAMExt\Mems.h
 			Rus32CAMExt\Rus32CAMExt.ino
+		-Rus32CAMExt2
+			Rus32CAMExt2\Mems.cpp
+			Rus32CAMExt2\Mems.h
+			Rus32CAMExt2\Rus32CAMExt2.ino
+		-Rus32CAMExt3
+			Rus32CAMExt3\Mems.cpp
+			Rus32CAMExt3\Mems.h
+			Rus32CAMExt3\Rus32CAMExt3.ino
+		+Rus32CAMExt4
+			Rus32CAMExt4\Mems.cpp
+			Rus32CAMExt4\Mems.h
+			Rus32CAMExt4\Rus32CAMExt4.ino
+			Rus32CAMExt4\task_Echo.h
 		CRtspSession.cpp
 		CRtspSession.h
 		CStreamer.cpp
@@ -43,26 +58,14 @@ StreamESP32
 		wifikeys.h
 		Новый1.txt
 [Open project files]
-0=Rus32CAMExt\Echo.h
-1=Rus32CAMExt\Echo.cpp
-2=Rus32CAMExt\Rus32CAMExt.ino
-3=Новый1.txt
-4=JPEGSamples.h
+0=Rus32CAMExt4\task_Echo.h
+1=Rus32CAMExt4\Rus32CAMExt4.ino
 [Selected Project Files]
 Main=
-Selected=Rus32CAMExt\Rus32CAMExt.ino
-[Rus32CAMExt\Echo.h]
-TopLine=45
-Caret=17,45
-[Rus32CAMExt\Echo.cpp]
-TopLine=92
-Caret=1,92
-[Rus32CAMExt\Rus32CAMExt.ino]
-TopLine=7
-Caret=25,37
-[Новый1.txt]
-TopLine=54
-Caret=33,92
-[JPEGSamples.h]
-TopLine=1
-Caret=7,11
+Selected=Rus32CAMExt4\Rus32CAMExt4.ino
+[Rus32CAMExt4\task_Echo.h]
+TopLine=145
+Caret=1,137
+[Rus32CAMExt4\Rus32CAMExt4.ino]
+TopLine=98
+Caret=3,186
