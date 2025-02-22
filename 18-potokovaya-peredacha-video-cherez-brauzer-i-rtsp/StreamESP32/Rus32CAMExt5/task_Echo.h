@@ -106,34 +106,27 @@ void Echo (void* pvParameters)
   mems.Diff();
   vTaskDelay(97/portTICK_PERIOD_MS);
   
+  uint32_t ulInterruptStatus;
   while (1) 
   {
-    Serial.println ("Всем привет!");
+    // Ждём получения уведомления, которое будет отправлено непосредственно в эту задачу.   
+    xTaskNotifyWait ( 
+      0,              
+      0,       
+      &ulInterruptStatus, // для приёма значения 
+      portMAX_DELAY       // блокировка до приема на неопределённый срок
+    );
+    // Выполняем обработку уведомления                       
+    // Serial.println ("Всем привет!");
 
-    /*
-    String aLines[4];
-    aLines[0]=squezy(utf8rus("Привет МИР"));
-    aLines[1]=squezy(utf8rus("012345678901234567890"));
-    aLines[2]=squezy(utf8rus("0123456789"));
-    aLines[3]=squezy(utf8rus("Привет МИР"));
-    
-    display.clearDisplay();
-    for (i=0; i<4; i++)
-    {
-      display.setCursor(0,i*16);             
-      display.println(aLines[i]);
-    }
-    display.display();
-    mems.Diff();
-    delay(1000); 
-    */
     // Сдвигаем 3 строки на 1 позицию, освобождаем первую
     for (i=3; i>0; i--)
     {
       aLines[i]=aLines[i-1];
     }
     // Принимаем первую
-    aLines[0]=squezy(utf8rus("Привет!"));
+    //aLines[0]=squezy(utf8rus("Привет!"));
+    aLines[0]=squezy(utf8rus(String(ulInterruptStatus)));
     // Выводим строки на дисплей
     display.clearDisplay();
     for (i=0; i<4; i++)
@@ -143,40 +136,9 @@ void Echo (void* pvParameters)
     }
     display.display();
     mems.Diff();
-    vTaskDelay(97/portTICK_PERIOD_MS);
+    //vTaskDelay(97/portTICK_PERIOD_MS);
     
-    
-    /*
-    for (i=3; i>0; i--)
-    {
-      aLines[i]=aLines[i-1];
-    }
-    aLines[0]=squezy(utf8rus("555"));
-    display.clearDisplay();
-    for (i=0; i<4; i++)
-    {
-      display.setCursor(0,i*16);             
-      display.println(aLines[i]);
-    }
-    display.display();
-    mems.Diff();
-    delay(1000); 
-
-    for (i=3; i>0; i--)
-    {
-      aLines[i]=aLines[i-1];
-    }
-    aLines[0]=squezy(utf8rus("Привет МИР, такой очень удивительный"));
-    display.clearDisplay();
-    for (i=0; i<4; i++)
-    {
-      display.setCursor(0,i*16);             
-      display.println(aLines[i]);
-    }
-    display.display();
-    mems.Diff();
-    */
-    vTaskDelay(2097/portTICK_PERIOD_MS);
+    //vTaskDelay(2097/portTICK_PERIOD_MS);
   }
 }
 
@@ -200,6 +162,58 @@ void iniEcho()
     &xHandlingEcho,  // дескриптор (указатель или заголовок) на задачу
     1                // идентификатор ядра процессора, на котором требуется запустить задачу. 
   );
+}
+
+typedef union
+{
+  uint32_t value;      // для контрольного значения = 0x1A2B3C4D; 
+
+  struct 
+  {
+  	uint8_t сode;      // код сообщения = 1 байт (от 0 до 255)
+    unsigned v00:4;    // младшая контекстная тетрада  (0-15)
+    unsigned v01:4;    // старшая контекстная тетрада  (0-15)
+    uint16_t calc;     // счётчик или беззнаковое целое (0-65535)
+  }
+  nibbles;
+}
+split;
+
+
+#define def(ncase,mmess)  case (ncase): mess=(mmess); break;
+
+String TakeMess(uint8_t code)
+{
+  String mess;
+  switch (code) {
+
+  
+  def (0x1A2B3C4D,"0x1A2B3C4D")
+  def ( 0, "NULL")
+  def ( 1, ": ISR")
+  def ( 2, "Привет!")
+  def ( 3, "555")
+  def ( 4, "Привет МИР, такой очень удивительный")
+  def ( 5, "01234567890123456789")
+  def ( 6, "Hello")
+  def ( 7, "world")
+  def ( 8, "идем")
+  def ( 9, "уже")
+  def (10, "внизёхонько")
+  def (11, "Сейчас")
+
+  /*  
+  case 0:  mess="NULL";    break;
+  case 1:  mess="ISR: ";   break;
+  case 2:  mess="Два: ";   break;
+  case 3:  mess="Три: ";   break;
+  */
+
+  default: mess="Default"; break;
+    // выполнить, если значение не совпадает ни с одним из case
+    break;
+  }
+  return mess;
 }
 
 // ************************************************************ task_Echo.h ***

@@ -27,33 +27,44 @@ void setup()
   // раз (четвертый параметр = 0) 
   timerAlarm(timer, 2000000, true, 0);
   Serial.println("SETUP отработал!");
+  //Serial.println(TakeMess(0));
+  //Serial.println(TakeMess(1));
+  //Serial.println(TakeMess(2));
+  //Serial.println(TakeMess(5));
 }
 
 // ****************************************************************************
 // *           Отправить уведомление cо значением задаче из прерывания        *
 // ****************************************************************************
+
 int i=0; // счётчик прерываний
+static split CommAndCalc;
+CommAndCalc.nibbles.сode=1;
+CommAndCalc.nibbles.calc=0;
+
 void ARDUINO_ISR_ATTR onTimer() 
 {
   // Резервируем переменную для значения
-  //uint32_t ulStatusRegister;
+  uint32_t ulStatusRegister;
   // Резервируем регистратор приоритета разблокированной задачи
-  //BaseType_t xHigherPriorityTaskWoken;
+  BaseType_t xHigherPriorityTaskWoken;
   i++;
+  CommAndCalc.nibbles.calc++;
+
   Serial.print("Прерывание сработало "); Serial.print(i); Serial.println(" раз");
   // Готовим значение для передачи с оповещением
-  //ulStatusRegister = i;
+  ulStatusRegister = CommAndCalc.value;
   // Инициализируем xHigherPriorityTaskWoken значением false. При вызове
   // функция xTaskNotifyFromISR() разблокирует задачу обработки, и если приоритет
   // задачи обработки выше приоритета текущей запущенной задачи, то для функции 
   // xHigherPriorityTaskWoken автоматически будет установлено значение pdTRUE
-  //xHigherPriorityTaskWoken = pdFALSE;
+  xHigherPriorityTaskWoken = pdFALSE;
   // Передаём сообщение в задачу обработки от прерывания. xHandlingTask - это дескриптор задачи,
-  // который был получен когда задача была создана
-  //xTaskNotifyIndexedFromISR(xHandlingTask,2,ulStatusRegister,eSetValueWithOverwrite,&xHigherPriorityTaskWoken);
-  //xTaskNotifyFromISR(xHandlingTask,ulStatusRegister,eSetValueWithOverwrite,&xHigherPriorityTaskWoken);
+  // который был получен когда задача была создана. eSetValueWithOverwrite - заставляем уведомление 
+  // для целевой задачи обязательно быть равным отправляемому значению ulStatusRegister.
+  xTaskNotifyFromISR(xHandlingEcho,ulStatusRegister,eSetValueWithOverwrite,&xHigherPriorityTaskWoken);
   // Принудительно переключаеме контекст на задачу xHandlingTask, так как теперь xHigherPriorityTaskWoken = pdTRUE
-  //portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
+  portYIELD_FROM_ISR( xHigherPriorityTaskWoken );
 }
 
 void loop() 
