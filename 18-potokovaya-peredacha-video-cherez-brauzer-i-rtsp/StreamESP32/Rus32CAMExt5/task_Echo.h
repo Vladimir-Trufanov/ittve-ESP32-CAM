@@ -27,6 +27,48 @@ static Adafruit_SSD1306 display;     // объект дисплея
 #include "Mems.h"   
 TMems mems(5); 
 
+typedef union
+{
+  uint32_t value;      // для контрольного значения = 0x1A2B3C4D; 
+
+  struct 
+  {
+  	uint8_t сode;      // код сообщения = 1 байт (от 0 до 255)
+    unsigned v00:4;    // младшая контекстная тетрада  (0-15)
+    unsigned v01:4;    // старшая контекстная тетрада  (0-15)
+    uint16_t calc;     // счётчик или беззнаковое целое (0-65535)
+  }
+  nibbles;
+}
+split;
+
+#define def(ncase,mmess)  case (ncase): mess=(mmess); break;
+
+String TakeMess(uint8_t code)
+{
+  String mess;
+  switch (code) {
+  def (0x1A2B3C4D,"0x1A2B3C4D")
+  def ( 0, "NULL")
+  def ( 1, ": ISR")
+  def ( 2, "Привет!")
+  def ( 3, "555")
+  def ( 4, "Привет МИР, такой очень удивительный")
+  def ( 5, "01234567890123456789")
+  def ( 6, "Hello")
+  def ( 7, "world")
+  def ( 8, "идем")
+  def ( 9, "уже")
+  def (10, "внизёхонько")
+  def (11, "Сейчас")
+  def (12, "0123456789")
+  default: mess="Неизвестно"; break;
+    // выполнить, если значение не совпадает ни с одним из выбора
+    // break;
+  }
+  return mess;
+}
+
 String squezy(String str)
 {
   String strUtf8;
@@ -90,11 +132,8 @@ void Echo (void* pvParameters)
   display.setTextSize(2);             
   display.setTextColor(WHITE);  
   // Выполняем начальное заполнение массива
-  String aLines[4];
-  aLines[0]=squezy(utf8rus("Привет МИР"));
-  aLines[1]=squezy(utf8rus("012345678901234567890"));
-  aLines[2]=squezy(utf8rus("0123456789"));
-  aLines[3]=squezy(utf8rus("Привет МИР"));
+  String aLines[4]; 
+  aLines[0]=" "; aLines[1]=" "; aLines[2]=" "; aLines[3]=" ";
   // Делаем первый вывод на экран
   display.clearDisplay();
   for (i=0; i<4; i++)
@@ -107,6 +146,8 @@ void Echo (void* pvParameters)
   vTaskDelay(97/portTICK_PERIOD_MS);
   
   uint32_t ulInterruptStatus;
+  static split EchoComm;
+
   while (1) 
   {
     // Ждём получения уведомления, которое будет отправлено непосредственно в эту задачу.   
@@ -118,15 +159,21 @@ void Echo (void* pvParameters)
     );
     // Выполняем обработку уведомления                       
     // Serial.println ("Всем привет!");
-
+    EchoComm=split(ulInterruptStatus);
+  
     // Сдвигаем 3 строки на 1 позицию, освобождаем первую
     for (i=3; i>0; i--)
     {
       aLines[i]=aLines[i-1];
     }
-    // Принимаем первую
-    //aLines[0]=squezy(utf8rus("Привет!"));
-    aLines[0]=squezy(utf8rus(String(ulInterruptStatus)));
+    // Заполняем текущую строку 
+    String inmess="Undefaund!";
+    uint8_t inсode=EchoComm.nibbles.сode;
+    if (EchoComm.value==0x1A2B3C4D) inmess="Контроль";
+    else if (inсode==1) inmess=String(EchoComm.nibbles.calc)+TakeMess(inсode);
+    else inmess=TakeMess(inсode);
+  
+    aLines[0]=squezy(utf8rus(inmess));
     // Выводим строки на дисплей
     display.clearDisplay();
     for (i=0; i<4; i++)
@@ -136,9 +183,7 @@ void Echo (void* pvParameters)
     }
     display.display();
     mems.Diff();
-    //vTaskDelay(97/portTICK_PERIOD_MS);
-    
-    //vTaskDelay(2097/portTICK_PERIOD_MS);
+    vTaskDelay(97/portTICK_PERIOD_MS);
   }
 }
 
@@ -162,58 +207,6 @@ void iniEcho()
     &xHandlingEcho,  // дескриптор (указатель или заголовок) на задачу
     1                // идентификатор ядра процессора, на котором требуется запустить задачу. 
   );
-}
-
-typedef union
-{
-  uint32_t value;      // для контрольного значения = 0x1A2B3C4D; 
-
-  struct 
-  {
-  	uint8_t сode;      // код сообщения = 1 байт (от 0 до 255)
-    unsigned v00:4;    // младшая контекстная тетрада  (0-15)
-    unsigned v01:4;    // старшая контекстная тетрада  (0-15)
-    uint16_t calc;     // счётчик или беззнаковое целое (0-65535)
-  }
-  nibbles;
-}
-split;
-
-
-#define def(ncase,mmess)  case (ncase): mess=(mmess); break;
-
-String TakeMess(uint8_t code)
-{
-  String mess;
-  switch (code) {
-
-  
-  def (0x1A2B3C4D,"0x1A2B3C4D")
-  def ( 0, "NULL")
-  def ( 1, ": ISR")
-  def ( 2, "Привет!")
-  def ( 3, "555")
-  def ( 4, "Привет МИР, такой очень удивительный")
-  def ( 5, "01234567890123456789")
-  def ( 6, "Hello")
-  def ( 7, "world")
-  def ( 8, "идем")
-  def ( 9, "уже")
-  def (10, "внизёхонько")
-  def (11, "Сейчас")
-
-  /*  
-  case 0:  mess="NULL";    break;
-  case 1:  mess="ISR: ";   break;
-  case 2:  mess="Два: ";   break;
-  case 3:  mess="Три: ";   break;
-  */
-
-  default: mess="Default"; break;
-    // выполнить, если значение не совпадает ни с одним из case
-    break;
-  }
-  return mess;
 }
 
 // ************************************************************ task_Echo.h ***

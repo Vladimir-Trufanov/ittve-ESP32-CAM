@@ -39,8 +39,6 @@ void setup()
 
 int i=0; // счётчик прерываний
 static split CommAndCalc;
-CommAndCalc.nibbles.сode=1;
-CommAndCalc.nibbles.calc=0;
 
 void ARDUINO_ISR_ATTR onTimer() 
 {
@@ -49,7 +47,8 @@ void ARDUINO_ISR_ATTR onTimer()
   // Резервируем регистратор приоритета разблокированной задачи
   BaseType_t xHigherPriorityTaskWoken;
   i++;
-  CommAndCalc.nibbles.calc++;
+  CommAndCalc.nibbles.сode=1;
+  CommAndCalc.nibbles.calc=i;
 
   Serial.print("Прерывание сработало "); Serial.print(i); Serial.println(" раз");
   // Готовим значение для передачи с оповещением
@@ -69,6 +68,33 @@ void ARDUINO_ISR_ATTR onTimer()
 
 void loop() 
 { 
+  // Резервируем переменную для значения
+  uint32_t ulValue;
+  // Передаём контрольное сообщение в задачу. xHandlingEcho - это дескриптор задачи,
+  // который был получен когда задача была создана. eSetValueWithOverwrite - заставляем уведомление 
+  // для целевой задачи обязательно быть равным отправляемому значению ulStatusRegister.
+  ulValue=0x1A2B3C4D;
+  xTaskNotify(xHandlingEcho,ulValue,eSetValueWithOverwrite);
+  delay(2000);
+  // Передаем учтенные сообщения
+  xTaskNotify(xHandlingEcho,0,eSetValueWithOverwrite);  // "NULL"
+  delay(2000);
+  xTaskNotify(xHandlingEcho,2,eSetValueWithOverwrite);  // "Привет!"
+  delay(2000);
+  xTaskNotify(xHandlingEcho,3,eSetValueWithOverwrite);  // "555"
+  delay(2000);
+  xTaskNotify(xHandlingEcho,4,eSetValueWithOverwrite);  // "Привет МИР, такой очень удивительный"
+  delay(2000);
+  // Передаем неучтенное сообщение
+  xTaskNotify(xHandlingEcho,254,eSetValueWithOverwrite);  // "NULL"
+  delay(2000);
+  // Передаем запредельное сообщение
+  xTaskNotify(xHandlingEcho,513,eSetValueWithOverwrite);  // "NULL"
+  delay(2000);
+  //delay(10000);
+  //CommAndCalc.nibbles.сode=0x1A2B3C4D;
+  //CommAndCalc.nibbles.calc=i;
+  //delay(10000);
 }
 
 // ******************************************************* Rus32CAMExt5.ino ***
