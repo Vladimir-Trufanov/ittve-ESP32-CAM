@@ -5,7 +5,7 @@
  * Используются:     #include <Adafruit_GFX.h> (с руссифицированным glcdfont.c)
  *                   #include <Adafruit_SSD1306.h>
  * 
- * v1.0.5, 22.02.2025                                 Автор:      Труфанов В.Е.
+ * v1.0.6, 23.02.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 21.02.2025
 **/
 
@@ -26,6 +26,10 @@ static Adafruit_SSD1306 display;     // объект дисплея
 
 #include "Mems.h"   
 TMems mems(5); 
+
+// Способ движения строк по экрану дисплея
+#define TopToBottom    1          // сверху-вниз   
+#define FromBottomTop  2          // снизу-вверх   
 
 typedef union
 {
@@ -55,6 +59,7 @@ String TakeMess(uint8_t code)
   def ( 3, "555")
   def ( 4, "Привет МИР, такой очень удивительный")
   def ( 5, "01234567890123456789")
+
   def ( 6, "Hello")
   def ( 7, "world")
   def ( 8, "идем")
@@ -62,9 +67,11 @@ String TakeMess(uint8_t code)
   def (10, "внизёхонько")
   def (11, "Сейчас")
   def (12, "0123456789")
+
+  def (13, "Идем ВВЕРХ")
+  def (14, "Поток ВНИЗ")
+
   default: mess="Неизвестно"; break;
-    // выполнить, если значение не совпадает ни с одним из выбора
-    // break;
   }
   return mess;
 }
@@ -147,6 +154,7 @@ void Echo (void* pvParameters)
   
   uint32_t ulInterruptStatus;
   static split EchoComm;
+  static int direction=TopToBottom;
 
   while (1) 
   {
@@ -158,29 +166,55 @@ void Echo (void* pvParameters)
       portMAX_DELAY       // блокировка до приема на неопределённый срок
     );
     // Выполняем обработку уведомления                       
-    // Serial.println ("Всем привет!");
     EchoComm=split(ulInterruptStatus);
-  
-    // Сдвигаем 3 строки на 1 позицию, освобождаем первую
+    // Выделяем команды
+    uint8_t inсode=EchoComm.nibbles.сode;
+    // Формируем сообщение текущей строки
+    String inmess="Undefaund!";
+    if (EchoComm.value==0x1A2B3C4D) inmess="Контроль";
+    else if (inсode==1) inmess=String(EchoComm.nibbles.calc)+TakeMess(inсode);
+    // При необходимости устанавливаем направление движения строк вверх 
+    // def (13, "Вверх - команда на движение строк СНИЗУ-ВВЕРХ")
+    else if (inсode==13) 
+    {
+      direction=FromBottomTop;
+      inmess=TakeMess(inсode);
+    }
+    // Или устанавливаем направление движения строк вниз 
+    // def (14, "Вниз  - команда на движение строк СВЕРХУ-ВНИЗ")
+    else if (inсode==14) 
+    {
+      direction=TopToBottom;
+      inmess=TakeMess(inсode);
+    }
+    else inmess=TakeMess(inсode);
+    // Сдвигаем 3 строки на 1 позицию, заполняем первую
     for (i=3; i>0; i--)
     {
       aLines[i]=aLines[i-1];
     }
-    // Заполняем текущую строку 
-    String inmess="Undefaund!";
-    uint8_t inсode=EchoComm.nibbles.сode;
-    if (EchoComm.value==0x1A2B3C4D) inmess="Контроль";
-    else if (inсode==1) inmess=String(EchoComm.nibbles.calc)+TakeMess(inсode);
-    else inmess=TakeMess(inсode);
-  
     aLines[0]=squezy(utf8rus(inmess));
-    // Выводим строки на дисплей
+    // Очищаем в мгновение дисплей 
     display.clearDisplay();
-    for (i=0; i<4; i++)
+    // Выводим строки на дисплей сверху-вниз
+    if (direction==TopToBottom)
     {
-      display.setCursor(0,i*16);             
-      display.println(aLines[i]);
+      for (i=0; i<4; i++)
+      {
+        display.setCursor(0,i*16);             
+        display.println(aLines[i]);
+      }
     }
+    // Или снизу-вверх
+    else
+    {
+      for (i=0; i<4; i++)
+      {
+        display.setCursor(0,i*16);             
+        display.println(aLines[3-i]);
+      }
+    }
+    // Зажигаем дисплей
     display.display();
     mems.Diff();
     vTaskDelay(97/portTICK_PERIOD_MS);

@@ -5,7 +5,7 @@
  * Используются:     #include <Adafruit_GFX.h> (с руссифицированным glcdfont.c)
  *                   #include <Adafruit_SSD1306.h>
  * 
- * v1.0.5, 22.02.2025                                 Автор:      Труфанов В.Е.
+ * v1.0.6, 23.02.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 21.02.2025
 **/
 
@@ -27,10 +27,6 @@ void setup()
   // раз (четвертый параметр = 0) 
   timerAlarm(timer, 2000000, true, 0);
   Serial.println("SETUP отработал!");
-  //Serial.println(TakeMess(0));
-  //Serial.println(TakeMess(1));
-  //Serial.println(TakeMess(2));
-  //Serial.println(TakeMess(5));
 }
 
 // ****************************************************************************
@@ -67,9 +63,15 @@ void ARDUINO_ISR_ATTR onTimer()
 }
 
 void loop() 
-{ 
+{
   // Резервируем переменную для значения
   uint32_t ulValue;
+  // Даём возможность поработать счетчику прерываний без помех 
+  delay(10000);
+  
+  // Направляем сообщения вверх, code=13
+  xTaskNotify(xHandlingEcho,13,eSetValueWithOverwrite);   // "Вверх - команда на движение строк СНИЗУ-ВВЕРХ"
+  delay(2000);
   // Передаём контрольное сообщение в задачу. xHandlingEcho - это дескриптор задачи,
   // который был получен когда задача была создана. eSetValueWithOverwrite - заставляем уведомление 
   // для целевой задачи обязательно быть равным отправляемому значению ulStatusRegister.
@@ -77,24 +79,36 @@ void loop()
   xTaskNotify(xHandlingEcho,ulValue,eSetValueWithOverwrite);
   delay(2000);
   // Передаем учтенные сообщения
-  xTaskNotify(xHandlingEcho,0,eSetValueWithOverwrite);  // "NULL"
+  xTaskNotify(xHandlingEcho,0,eSetValueWithOverwrite);    // "NULL"
   delay(2000);
-  xTaskNotify(xHandlingEcho,2,eSetValueWithOverwrite);  // "Привет!"
+  xTaskNotify(xHandlingEcho,2,eSetValueWithOverwrite);    // "Привет!"
   delay(2000);
-  xTaskNotify(xHandlingEcho,3,eSetValueWithOverwrite);  // "555"
+  xTaskNotify(xHandlingEcho,3,eSetValueWithOverwrite);    // "555"
   delay(2000);
-  xTaskNotify(xHandlingEcho,4,eSetValueWithOverwrite);  // "Привет МИР, такой очень удивительный"
+  xTaskNotify(xHandlingEcho,4,eSetValueWithOverwrite);    // "Привет МИР, такой очень удивительный"
+  delay(2000);
+  xTaskNotify(xHandlingEcho,5,eSetValueWithOverwrite);    // "01234567890123456789"
   delay(2000);
   // Передаем неучтенное сообщение
-  xTaskNotify(xHandlingEcho,254,eSetValueWithOverwrite);  // "NULL"
+  xTaskNotify(xHandlingEcho,254,eSetValueWithOverwrite);  // "Неизвестно"
   delay(2000);
-  // Передаем запредельное сообщение
-  xTaskNotify(xHandlingEcho,513,eSetValueWithOverwrite);  // "NULL"
+  
+  // Возвращаем направление движения вниз, code=14
+  xTaskNotify(xHandlingEcho,14,eSetValueWithOverwrite);   // "Вниз  - команда на движение строк СВЕРХУ-ВНИЗ"
   delay(2000);
-  //delay(10000);
-  //CommAndCalc.nibbles.сode=0x1A2B3C4D;
-  //CommAndCalc.nibbles.calc=i;
-  //delay(10000);
+  xTaskNotify(xHandlingEcho,6,eSetValueWithOverwrite);    // "Hello"
+  delay(2000);
+  xTaskNotify(xHandlingEcho,7,eSetValueWithOverwrite);    // "world"
+  delay(2000);
+  xTaskNotify(xHandlingEcho,8,eSetValueWithOverwrite);    // "идем"
+  delay(2000);
+  xTaskNotify(xHandlingEcho,9,eSetValueWithOverwrite);    // "уже"
+  delay(2000);
+  xTaskNotify(xHandlingEcho,10,eSetValueWithOverwrite);  // "внизёхонько"
+  delay(2000);
+  xTaskNotify(xHandlingEcho,11,eSetValueWithOverwrite);  // "Сейчас"
+  delay(2000);
+  xTaskNotify(xHandlingEcho,12,eSetValueWithOverwrite);  // "0123456789"
 }
 
 // ******************************************************* Rus32CAMExt5.ino ***
