@@ -18,7 +18,7 @@ Extensions=*.*
 [Project tree]
 StreamESP32
 	+StreamESP32
-		-Rus32CAMExt5
+		+Rus32CAMExt5
 			Rus32CAMExt5\Mems.cpp
 			Rus32CAMExt5\Mems.h
 			Rus32CAMExt5\Rus32CAMExt5.ino
@@ -47,12 +47,16 @@ StreamESP32
 [Open project files]
 0=Rus32CAMExt5\Rus32CAMExt5.ino
 1=Rus32CAMExt6\Rus32CAMExt6.ino
+2=Rus32CAMExt5\task_Echo.h
 [Selected Project Files]
 Main=
-Selected=Rus32CAMExt6\Rus32CAMExt6.ino
+Selected=Rus32CAMExt5\task_Echo.h
 [Rus32CAMExt5\Rus32CAMExt5.ino]
-TopLine=79
+TopLine=30
 Caret=1,30
 [Rus32CAMExt6\Rus32CAMExt6.ino]
 TopLine=1
 Caret=1,1
+[Rus32CAMExt5\task_Echo.h]
+TopLine=1
+Caret=73,3
