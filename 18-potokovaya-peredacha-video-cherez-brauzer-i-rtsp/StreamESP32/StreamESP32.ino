@@ -61,8 +61,8 @@ void handle_jpg_stream(void)
   server.sendContent(response);
   while (1)
   {
-    // ii++;
-    // Serial.print("ii: "); Serial.println(ii);
+    ii++;
+    Serial.print("ii: "); Serial.println(ii);
     cam.run();
     if (!client.connected()) break;
     response = "--frame\r\n";
@@ -70,7 +70,7 @@ void handle_jpg_stream(void)
     server.sendContent(response);
 
     client.write((char *)cam.getfb(), cam.getSize());
-    // Serial.println("1-r-n");
+    Serial.println("1-r-n");
     server.sendContent("\r\n");
     // delay(150); // 2025-02-03
     if (!client.connected())
@@ -78,7 +78,7 @@ void handle_jpg_stream(void)
       //Serial.println("!client.connected()");
       break;
     }
-    //Serial.println("3-r-n");
+    Serial.println("3-r-n");
   }
 }
 // ****************************************************************************
