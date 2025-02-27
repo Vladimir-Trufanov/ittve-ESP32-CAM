@@ -34,9 +34,21 @@ StreamESP32
 		StreamESP32.ppr
 [Open project files]
 0=StreamESP32.ino
+1=..\..\..\Users\Евгеньевич\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.0.7\libraries\WebServer\src\WebServer.cpp
+2=..\..\..\Users\Евгеньевич\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.0.7\libraries\WebServer\src\WebServer.h
+3=..\..\..\Users\Евгеньевич\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.0.7\libraries\WebServer\src\Parsing.cpp
 [Selected Project Files]
 Main=
-Selected=StreamESP32.ino
+Selected=..\..\..\Users\Евгеньевич\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.0.7\libraries\WebServer\src\Parsing.cpp
 [StreamESP32.ino]
-TopLine=148
-Caret=1,178
+TopLine=11
+Caret=3,26
+[..\..\..\Users\Евгеньевич\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.0.7\libraries\WebServer\src\WebServer.cpp]
+TopLine=437
+Caret=28,449
+[..\..\..\Users\Евгеньевич\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.0.7\libraries\WebServer\src\WebServer.h]
+TopLine=43
+Caret=1,1
+[..\..\..\Users\Евгеньевич\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.0.7\libraries\WebServer\src\Parsing.cpp]
+TopLine=52
+Caret=1,77
