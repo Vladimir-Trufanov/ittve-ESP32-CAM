@@ -76,7 +76,7 @@ void handle_jpg_stream(void)
     server.sendContent("\r\n");
     Serial.print("Размер: "); Serial.println(SizeFR);
     Serial.print("Интервал: "); Serial.println(msCurr-msOld); msOld=msCurr;
-    //callback((char *)cam.getfb(),SizeFR); 
+    callback((char *)cam.getfb(),SizeFR); 
     // delay(150); // 2025-02-03
     if (!client.connected())
     { 
@@ -86,14 +86,19 @@ void handle_jpg_stream(void)
   }
 }
 
-void callback(char* payload, uint16_t len) 
+
+static char str[20000];
+
+void callback(char* payload, uint16_t inlen) 
 {
-  /*
-  char str[len + 1];
+  uint16_t len=inlen;
+  if (inlen>19998) len=19998;
+  //char str[len + 1];
   strncpy(str, (char*)payload, len);
   str[len] = 0;
   Serial.println(str);
-  */
+  //lcdMessage(String(str));
+  
 }
 
 
@@ -178,6 +183,21 @@ void setup()
 
   lcdMessage(ip.toString());
 
+   // Cоздаем задачи, привязывая их к ядру 1 (пользовательскому)
+   xTaskCreatePinnedToCore 
+   (
+      task1,     // Function to implement the task
+      "task1",   // Name of the task
+      4096,      // Stack size in words
+      NULL,      // Task input parameter
+      5,         // Priority of the task
+      NULL,      // Task handle.
+      1          // Core where the task should run
+   );
+
+
+
+
   // Определяем действия при различных HTTP-запросах. Простой запрос http://<IP-АДРЕС>/ 
   // запускает непрерывную потоковую передачу изображений в веб-браузер.
   // http://<IP-АДРЕС>/jpg отправляет одно изображение с камеры в веб-браузер.
@@ -198,7 +218,14 @@ WiFiClient client; // FIXME, support multiple clients
 
 void loop()
 {
-  // Постоянно подключаемся к клиенту
-  server.handleClient();
+}
+
+void task1 (void *pvParameters) 
+{
+  while (1) 
+  {
+     // Постоянно подключаемся к клиенту
+     server.handleClient();
+  }
 }
 
