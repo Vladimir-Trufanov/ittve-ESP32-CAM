@@ -17,6 +17,10 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   Modified 8 May 2015 by Hristo Gochkov (proper post and file upload handling)
+  
+  // Разобрать запрос от клиента
+  bool WebServer::_parseRequest(NetworkClient &client)   
+  
 */
 
 #include <Arduino.h>
@@ -90,13 +94,13 @@ bool WebServer::_parseRequest(NetworkClient &client)
   int addr_end = req.indexOf(' ', addr_start + 1);
   if (addr_start == -1 || addr_end == -1) 
   {
-    Serial.print("Неправильный запрос: "); Serial.println(req);
+    // Serial.print("Неправильный запрос: "); Serial.println(req);
     log_e("Invalid request: %s", req.c_str());
     return false;
   }
   else 
   {
-    Serial.print("Правильный запрос: "); Serial.println(req);
+    // Serial.print("Правильный запрос: "); Serial.println(req);
   }
 
   String methodStr = req.substring(0, addr_start);

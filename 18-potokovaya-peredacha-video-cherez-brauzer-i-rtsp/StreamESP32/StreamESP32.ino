@@ -22,15 +22,29 @@
 #include "SimStreamer.h"
 #include "OV2640Streamer.h"
 
-//#define ENABLE_OLED //if want use oled ,turn on thi macro
+// ```
+#include "FS.h"                // SD Card ESP32
+#include "SD_MMC.h"            // SD Card ESP32
+#include <EEPROM.h>            // read and write from flash memory
+
+// define the number of bytes you want to access
+#define EEPROM_SIZE 1
+// Инициализируем переменную, обеспечивающую генерацию названий фотографий: picture1.jpg, picture2.jpg ...
+int pictureNumber = 0;
+// ```
+
 //#define ENABLE_WEBSERVER
 
-#include <SSD1306.h>
-#define OLED_ADDRESS 0x3c
-#define I2C_SDA 14
-#define I2C_SCL 13
-SSD1306Wire display(OLED_ADDRESS, I2C_SDA, I2C_SCL, GEOMETRY_128_32);
-bool hasDisplay; // мы проверяем наличие устройства во время выполнения
+// Определяем наличие Oled-дисплея 128*64
+// #define ENABLE_OLED 
+#ifdef ENABLE_OLED
+  #include <SSD1306.h>
+  #define OLED_ADDRESS 0x3c
+  #define I2C_SDA 14
+  #define I2C_SCL 13
+  SSD1306Wire display(OLED_ADDRESS, I2C_SDA, I2C_SCL, GEOMETRY_128_32);
+  bool hasDisplay; // мы проверяем наличие устройства во время выполнения
+#endif
 
 const char* ssid     = "OPPO A9 2020";
 const char* password = "b277a4ee84e8";
@@ -65,19 +79,22 @@ void handle_jpg_stream(void)
   {
     ii++; msCurr=millis();
     Serial.print("Кадр: "); Serial.println(ii);
+    
     cam.run();
     if (!client.connected()) break;
     response = "--frame\r\n";
     response += "Content-Type: image/jpeg\r\n\r\n";
     server.sendContent(response);
-
-    size_t SizeFR = cam.getSize();
     client.write((char *)cam.getfb(), cam.getSize());
     server.sendContent("\r\n");
-    Serial.print("Размер: "); Serial.println(SizeFR);
-    Serial.print("Интервал: "); Serial.println(msCurr-msOld); msOld=msCurr;
+
+    size_t SizeFR = cam.getSize();
+    //Serial.print("Размер: "); Serial.println(SizeFR);
+    //Serial.print("Интервал: "); Serial.println(msCurr-msOld); msOld=msCurr;
     //callback((char *)cam.getfb(),SizeFR); 
+    callphoto((char *)cam.getfb(),SizeFR);
     // delay(150); // 2025-02-03
+    
     if (!client.connected())
     { 
       Serial.println("!client.connected()");
@@ -86,16 +103,69 @@ void handle_jpg_stream(void)
   }
 }
 
-void callback(char* payload, uint16_t len) 
+void callback(char* payload, uint16_t len)
 {
-  /*
-  char str[len + 1];
-  strncpy(str, (char*)payload, len);
-  str[len] = 0;
-  Serial.println(str);
-  */
+  for (uint16_t i = 0; i < len; i++) 
+  //for (uint16_t i = 0; i < 100; i++) 
+  {
+    //Serial.print(*(payload + i));
+    //byte b=*(payload + i);
+    //Serial.print(b);
+    //Serial.print(" ");
+  }
+  Serial.println(); 
 }
 
+bool isphoto=false;
+void callphoto(char* payload, uint16_t len)
+{
+  if (!isphoto)
+  {
+  isphoto=true;
+  //Serial.println("Starting SD Card");
+  if(!SD_MMC.begin())
+  {
+    Serial.println("SD Card Mount Failed");
+    return;
+  }
+  else Serial.println("SD карта смонтирована");
+  
+  uint8_t cardType = SD_MMC.cardType();
+  if(cardType == CARD_NONE)
+  {
+    Serial.println("No SD Card attached");
+    return;
+  }
+  else Serial.println("SD карта подключена");
+  
+  // initialize EEPROM with predefined size
+  EEPROM.begin(EEPROM_SIZE);
+  pictureNumber = EEPROM.read(0) + 1;
+
+  // Определяем путь к своему файлу фотографии в главном каталоге карты microSD,
+  // имя файла будет (picture1.jpg, picture2.jpg, picture3.jpg и т.д.
+  String path = "/picture" + String(pictureNumber) +".jpg";
+  // Сохраняем фотографию на карту microSD
+  fs::FS & fs = SD_MMC; 
+  Serial.printf("Picture file name: %s\n", path.c_str());
+  
+  File file = fs.open(path.c_str(), FILE_WRITE);
+  if(!file)
+  {
+    Serial.println("Failed to open file in writing mode");
+  } 
+  else 
+  {
+    //file.write(fb->buf, fb->len); // payload (image), payload length
+    Serial.printf("Saved file to path: %s\n", path.c_str());
+    // Cохраняем текущий номер снимка во флэш-памяти, 
+    // чтобы отслеживать количество сделанных фотографий.
+    EEPROM.write(0, pictureNumber);
+    EEPROM.commit();
+  }
+  file.close();
+  }
+}
 
 // ****************************************************************************
 // *    Обработать запросы на отдельные изображения: считать изображение с    *
@@ -133,6 +203,7 @@ void handleNotFound()
   server.send(200, "text/plain", message);
 }
 
+#ifdef ENABLE_OLED
 void lcdMessage(String msg)
 {
   if (hasDisplay) 
@@ -142,28 +213,37 @@ void lcdMessage(String msg)
     display.display();
   }
 }
+#endif
 
 void setup()
 {
-  hasDisplay = display.init();
-  if(hasDisplay) 
-  {
-    display.flipScreenVertically();
-    display.setFont(ArialMT_Plain_16);
-    display.setTextAlignment(TEXT_ALIGN_CENTER);
-  }
-  lcdMessage("booting");
+
+  #ifdef ENABLE_OLED
+    hasDisplay = display.init();
+    if(hasDisplay) 
+    {
+      display.flipScreenVertically();
+      display.setFont(ArialMT_Plain_16);
+      display.setTextAlignment(TEXT_ALIGN_CENTER);
+    }
+    lcdMessage("booting");
+  #endif
 
   Serial.begin(115200);
   while (!Serial)
   {
     ;
   }
+  Serial.println("booting");
+
   cam.init(esp32cam_aithinker_config);
 
   IPAddress ip;
 
-  lcdMessage(String("join ") + ssid);
+  #ifdef ENABLE_OLED
+    lcdMessage(String("join ") + ssid);
+  #endif
+  
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED)
@@ -174,9 +254,14 @@ void setup()
   ip = WiFi.localIP();
   Serial.println(F("WiFi connected"));
   Serial.println("");
-  Serial.println(ip);
+  Serial.println(ip);                              
 
-  lcdMessage(ip.toString());
+  #ifdef ENABLE_OLED
+    lcdMessage(ip.toString());
+  #endif
+  
+  // ```
+  // ```
 
   // Определяем действия при различных HTTP-запросах. Простой запрос http://<IP-АДРЕС>/ 
   // запускает непрерывную потоковую передачу изображений в веб-браузер.

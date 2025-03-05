@@ -18,6 +18,10 @@
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   Modified 8 May 2015 by Hristo Gochkov (proper post and file upload handling)
+  
+  // Послать контекстом строку с указанием длины
+  void WebServer::sendContent(const String &content) 
+
 */
 
 #include <Arduino.h>
@@ -422,7 +426,7 @@ void WebServer::handleClient()
       return;
     }
 
-    Serial.print("Новый клиент: localIP="); Serial.println(_currentClient.localIP().toString());
+    Serial.print("Появился клиент localIP="); Serial.println(_currentClient.localIP().toString());
     log_v("New client: client.localIP()=%s", _currentClient.localIP().toString().c_str());
 
     _currentStatus = HC_WAIT_READ;
@@ -637,9 +641,10 @@ void WebServer::send_P(int code, PGM_P content_type, PGM_P content, size_t conte
   sendContent_P(content, contentLength);
 }
 
+// Послать контекстом строку с указанием длины
 void WebServer::sendContent(const String &content) 
 {
-  Serial.print("WebServer::sendContent: "); Serial.println(content);
+  // Serial.print("WebServer::sendContent: "); Serial.println(content);
   sendContent(content.c_str(), content.length());
 }
 

@@ -170,7 +170,7 @@ ittve-ESP32-CAM
 			11-dostup-i-kontrol-dachi-cherez-telegram\seans-v-bote.jpg
 			11-dostup-i-kontrol-dachi-cherez-telegram\tveEsp_bot.jpg
 			11-dostup-i-kontrol-dachi-cherez-telegram\vpajka-peremychki-kusok-provoda.png
-		-12-MJPEG2SD
+		+12-MJPEG2SD
 			-data_v98
 				12-MJPEG2SD\data_v98\common.js
 				12-MJPEG2SD\data_v98\MJPEG2SD.htm
@@ -178,7 +178,7 @@ ittve-ESP32-CAM
 				12-MJPEG2SD\data20250207\common.js
 				12-MJPEG2SD\data20250207\configs.txt
 				12-MJPEG2SD\data20250207\MJPEG2SD.htm
-			-ESP32-CAM_MJPEG2SD-v98
+			+ESP32-CAM_MJPEG2SD-v98
 				-data
 					12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\data\common.js
 					12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\data\MJPEG2SD.htm
@@ -452,17 +452,21 @@ ittve-ESP32-CAM
 		README.md
 [Open project files]
 0=18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\StreamESP32\StreamESP32.ino
-1=18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\StreamESP32\CRtspSession.h
-2=18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\StreamESP32\CStreamer.h
+1=18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\StreamESP32\CStreamer.h
+2=12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\mjpeg2sd.cpp
+3=18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32v307\ESP32-devcam-tve\OV2640Streamer.cpp
 [Selected Project Files]
 Main=
-Selected=18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\StreamESP32\CStreamer.h
+Selected=18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32v307\ESP32-devcam-tve\OV2640Streamer.cpp
 [18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\StreamESP32\StreamESP32.ino]
-TopLine=99
+TopLine=113
 Caret=1,138
-[18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\StreamESP32\CRtspSession.h]
-TopLine=1
-Caret=11,4
 [18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\StreamESP32\CStreamer.h]
 TopLine=1
 Caret=1,3
+[12-MJPEG2SD\ESP32-CAM_MJPEG2SD-v98\mjpeg2sd.cpp]
+TopLine=1
+Caret=1,1
+[18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp\ESP32v307\ESP32-devcam-tve\OV2640Streamer.cpp]
+TopLine=1
+Caret=27,16
