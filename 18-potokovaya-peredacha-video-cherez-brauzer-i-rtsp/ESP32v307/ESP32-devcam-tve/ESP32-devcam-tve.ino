@@ -28,11 +28,11 @@ OV2640 cam;
 // Инициализируем веб-сервер для обработки входящих HTTP-запросов на порту 80
 WebServer server(80);
 
-const char* ssid     = "OPPO A9 2020";
-const char* password = "b277a4ee84e8";
+//const char* ssid     = "OPPO A9 2020";
+//const char* password = "b277a4ee84e8";
 
-//const char* ssid     = "TP-Link_B394";
-//const char* password = "18009217";
+const char* ssid     = "TP-Link_B394";
+const char* password = "18009217";
 
 // ****************************************************************************
 // *   Для непрерывной потоковой передачи изображений выполнить две задачи:   *

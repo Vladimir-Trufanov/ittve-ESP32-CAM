@@ -85,6 +85,8 @@ void handle_jpg_stream(void)
     response = "--frame\r\n";
     response += "Content-Type: image/jpeg\r\n\r\n";
     server.sendContent(response);
+    // uint8_t *OV2640::getfb(void) - получить указатель на буфер изображения   "OV2640.h"
+    // size_t OV2640::getSize(void) - получить размер изображения в буферения   "OV2640.h"
     client.write((char *)cam.getfb(), cam.getSize());
     server.sendContent("\r\n");
 
@@ -92,7 +94,7 @@ void handle_jpg_stream(void)
     //Serial.print("Размер: "); Serial.println(SizeFR);
     //Serial.print("Интервал: "); Serial.println(msCurr-msOld); msOld=msCurr;
     //callback((char *)cam.getfb(),SizeFR); 
-    callphoto((char *)cam.getfb(),SizeFR);
+    callphoto(cam.getfb(),SizeFR);
     // delay(150); // 2025-02-03
     
     if (!client.connected())
@@ -117,11 +119,15 @@ void callback(char* payload, uint16_t len)
 }
 
 bool isphoto=false;
-void callphoto(char* payload, uint16_t len)
+int nf=0;
+void callphoto(uint8_t *payload, uint16_t len)
 {
-  if (!isphoto)
+  nf++;
+  //if (!isphoto)
+  if ((nf>20)&&(nf<25))
   {
   isphoto=true;
+  /*
   //Serial.println("Starting SD Card");
   if(!SD_MMC.begin())
   {
@@ -137,9 +143,7 @@ void callphoto(char* payload, uint16_t len)
     return;
   }
   else Serial.println("SD карта подключена");
-  
-  // initialize EEPROM with predefined size
-  EEPROM.begin(EEPROM_SIZE);
+  */
   pictureNumber = EEPROM.read(0) + 1;
 
   // Определяем путь к своему файлу фотографии в главном каталоге карты microSD,
@@ -156,7 +160,8 @@ void callphoto(char* payload, uint16_t len)
   } 
   else 
   {
-    //file.write(fb->buf, fb->len); // payload (image), payload length
+    //file.write(fb->buf, fb->len); 
+    file.write(payload, len); 
     Serial.printf("Saved file to path: %s\n", path.c_str());
     // Cохраняем текущий номер снимка во флэш-памяти, 
     // чтобы отслеживать количество сделанных фотографий.
@@ -261,6 +266,23 @@ void setup()
   #endif
   
   // ```
+  //Serial.println("Starting SD Card");
+  if(!SD_MMC.begin())
+  {
+    Serial.println("SD Card Mount Failed");
+    return;
+  }
+  else Serial.println("SD карта смонтирована");
+  
+  uint8_t cardType = SD_MMC.cardType();
+  if(cardType == CARD_NONE)
+  {
+    Serial.println("No SD Card attached");
+    return;
+  }
+  else Serial.println("SD карта подключена");
+  // initialize EEPROM with predefined size
+  EEPROM.begin(EEPROM_SIZE);
   // ```
 
   // Определяем действия при различных HTTP-запросах. Простой запрос http://<IP-АДРЕС>/ 

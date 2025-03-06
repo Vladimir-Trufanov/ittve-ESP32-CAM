@@ -41,15 +41,16 @@ StreamESP32
 5=CStreamer.h
 6=SimStreamer.h
 7=..\..\14-cdelat-snimok-i-sohranit-na-kartu-microsd\esp32-cam-take-photo-save-microsd-card\esp32-cam-take-photo-save-microsd-card.ino
+8=..\..\..\Users\Евгеньевич\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.1-632e0c2a\esp32\include\espressif__esp32-camera\driver\include\esp_camera.h
 [Selected Project Files]
 Main=
 Selected=StreamESP32.ino
 [StreamESP32.ino]
-TopLine=77
-Caret=43,95
+TopLine=123
+Caret=16,162
 [OV2640.cpp]
-TopLine=114
-Caret=10,114
+TopLine=118
+Caret=30,135
 [OV2640.h]
 TopLine=4
 Caret=12,24
@@ -66,5 +67,8 @@ Caret=13,20
 TopLine=1
 Caret=10,15
 [..\..\14-cdelat-snimok-i-sohranit-na-kartu-microsd\esp32-cam-take-photo-save-microsd-card\esp32-cam-take-photo-save-microsd-card.ino]
-TopLine=118
-Caret=1,151
+TopLine=111
+Caret=25,118
+[..\..\..\Users\Евгеньевич\AppData\Local\Arduino15\packages\esp32\tools\esp32-arduino-libs\idf-release_v5.1-632e0c2a\esp32\include\espressif__esp32-camera\driver\include\esp_camera.h]
+TopLine=190
+Caret=31,210
