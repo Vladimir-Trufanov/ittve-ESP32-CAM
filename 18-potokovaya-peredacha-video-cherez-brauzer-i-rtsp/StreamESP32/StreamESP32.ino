@@ -94,7 +94,7 @@ void handle_jpg_stream(void)
     //Serial.print("Размер: "); Serial.println(SizeFR);
     //Serial.print("Интервал: "); Serial.println(msCurr-msOld); msOld=msCurr;
     //callback((char *)cam.getfb(),SizeFR); 
-    callphoto(cam.getfb(),SizeFR);
+    //callphoto(cam.getfb(),SizeFR);
     // delay(150); // 2025-02-03
     
     if (!client.connected())
