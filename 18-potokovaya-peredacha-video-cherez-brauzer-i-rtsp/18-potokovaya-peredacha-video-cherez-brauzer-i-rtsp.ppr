@@ -13,6 +13,7 @@ DontOpen=0
 AbsolutePath=0
 FileFormat=0
 ProjectFilesOnly=0
+HTServer=localhost
 Extensions=*.*
 [Project tree]
 18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp
@@ -100,7 +101,8 @@ Extensions=*.*
 			ESP32v307\Micro-RTSP.zip
 			ESP32v307\nastroiki-scetcha.jpeg
 			ESP32v307\Scheme-in-Fritzing.png
-		-InStream
+		+InStream
+			InStream\InStream.ino
 		+StreamESP32
 			StreamESP32\CStreamer.cpp
 			StreamESP32\CStreamer.h
@@ -113,9 +115,10 @@ Extensions=*.*
 			StreamESP32\platglue-esp32.h
 			StreamESP32\SimStreamer.cpp
 			StreamESP32\SimStreamer.h
-			InStream\InStream.ino
+			StreamESP32\StreamESP32.ino
 			StreamESP32\StreamESP32.md
 			StreamESP32\StreamESP32.ppr
+		18-potokovaya-peredacha-video-cherez-brauzer-i-rtsp.ppr
 		ESP32-CAM-Camera-AI-Think-Module-VCC-Power-Pins.jpg
 		ESP32-CAM-RTC-GPIO-Pins.jpg
 		ESP32-CAM-RTC-GPIO-Pins.png
@@ -125,9 +128,21 @@ Extensions=*.*
 		SPI.jpg
 [Open project files]
 0=InStream\InStream.ino
+1=StreamESP32\StreamESP32.ino
+2=StreamESP32\OV2640.h
+3=StreamESP32\OV2640.cpp
 [Selected Project Files]
 Main=
 Selected=InStream\InStream.ino
 [InStream\InStream.ino]
-TopLine=41
-Caret=3,54
+TopLine=80
+Caret=1,65
+[StreamESP32\StreamESP32.ino]
+TopLine=219
+Caret=1,245
+[StreamESP32\OV2640.h]
+TopLine=1
+Caret=1,1
+[StreamESP32\OV2640.cpp]
+TopLine=11
+Caret=1,1
