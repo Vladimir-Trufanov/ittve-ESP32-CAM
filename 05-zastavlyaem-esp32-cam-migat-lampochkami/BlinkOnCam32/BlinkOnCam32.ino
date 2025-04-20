@@ -23,7 +23,8 @@
 // Менеджер плат:         esp32 by Espressif Systems 3.0.1 installed
 // Платы в данном пакете: ESP32 Dev Board, ESP32-S2 Dev Board, ESP32-S3 Dev Board, ESP32-C3 Dev Board, Arduino Nano ESP32.
 
-#include<Arduino.h>
+#include <Arduino.h>
+#include <Base64.h>
 #include "tveEsp32Cam10.h"       
 
 void setup() 
