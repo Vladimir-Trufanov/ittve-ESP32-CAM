@@ -46,11 +46,11 @@ int pictureNumber = 0;
   bool hasDisplay; // мы проверяем наличие устройства во время выполнения
 #endif
 
-//const char* ssid     = "OPPO A9 2020";
-//const char* password = "b277a4ee84e8";
+const char* ssid     = "OPPO A9 2020";
+const char* password = "b277a4ee84e8";
 
-const char* ssid     = "TP-Link_B394";
-const char* password = "18009217";
+//const char* ssid     = "TP-Link_B394";
+//const char* password = "18009217";
 
 OV2640 cam;
 
@@ -78,7 +78,7 @@ void handle_jpg_stream(void)
   while (1)
   {
     ii++; msCurr=millis();
-    Serial.print("Кадр: "); Serial.println(ii);
+    //Serial.print("Кадр: "); Serial.println(ii);
     
     cam.run();
     if (!client.connected()) break;
