@@ -33,7 +33,7 @@ CameraWebServer202
 Main=
 Selected=app_httpd.cpp
 [CameraWebServer202.ino]
-TopLine=69
+TopLine=32
 Caret=6,32
 [app_httpd.cpp]
 TopLine=317
