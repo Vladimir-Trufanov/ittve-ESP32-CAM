@@ -1,13 +1,20 @@
+/** Arduino C/C++ ********************************** CameraWebServer202.ino ***
+ *
+ * 
+ * v2.0.1, 04.01.2026                                 Автор:      Труфанов В.Е.
+ * Copyright © 2025 tve                               Дата создания: 16.10.2025
+ * 
+**/
+
 #include "esp_camera.h"
 #include <WiFi.h>
 
-//
-// WARNING!!! PSRAM IC required for UXGA resolution and high JPEG quality
-//            Ensure ESP32 Wrover Module or other board with PSRAM is selected
-//            Partial images will be transmitted if image exceeds buffer size
-//
+// WARNING!!! При использовании разрешения UXGA и высокого качества JPEG убедитесь, 
+// что выбран модуль ESP32 Rover или другая плата с параметром PARAM, частичные 
+// изображения будут переданы, если размер буфера изображения превысит размер буфера.
 
-// Select camera model
+#define CAMERA_MODEL_AI_THINKER // Has PSRAM
+
 //#define CAMERA_MODEL_WROVER_KIT // Has PSRAM
 //#define CAMERA_MODEL_ESP_EYE // Has PSRAM
 //#define CAMERA_MODEL_M5STACK_PSRAM // Has PSRAM
@@ -15,7 +22,6 @@
 //#define CAMERA_MODEL_M5STACK_WIDE // Has PSRAM
 //#define CAMERA_MODEL_M5STACK_ESP32CAM // No PSRAM
 //#define CAMERA_MODEL_M5STACK_UNITCAM // No PSRAM
-#define CAMERA_MODEL_AI_THINKER       // Has PSRAM
 //#define CAMERA_MODEL_TTGO_T_JOURNAL // No PSRAM
 
 #include "camera_pins.h"
@@ -25,11 +31,12 @@ const char* password = "b277a4ee84e8";
 
 void startCameraServer();
 
-void setup() {
+void setup() 
+{
   Serial.begin(115200);
   Serial.setDebugOutput(true);
   Serial.println();
-
+  
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
   config.ledc_timer = LEDC_TIMER_0;
@@ -107,7 +114,9 @@ void setup() {
   Serial.println("' to connect");
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+void loop() 
+{
   delay(10000);
 }
+
+// Arduino C/C++ *********************************** CameraWebServer202.ino ***
