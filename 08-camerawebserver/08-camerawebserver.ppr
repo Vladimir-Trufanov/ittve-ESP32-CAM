@@ -18,14 +18,14 @@ Extensions=*.*
 [Project tree]
 08-camerawebserver
 	+08-camerawebserver
-		-BasicHttpClient202
+		+BasicHttpClient202
 			BasicHttpClient202\BasicHttpClient202.ino
-		+BasicHttpsClient202
+		-BasicHttpsClient202
 			BasicHttpsClient202\BasicHttpsClient202.ino
 			BasicHttpsClient202\certificate.txt
 			BasicHttpsClient202\csr.txt
 			BasicHttpsClient202\key.txt
-		+BasicHttpsClient305
+		-BasicHttpsClient305
 			BasicHttpsClient305\BasicHttpsClient305.ino
 		-CameraWebServer202
 			CameraWebServer202\app_httpd.cpp
@@ -74,12 +74,16 @@ Extensions=*.*
 [Open project files]
 0=BasicHttpsClient202\BasicHttpsClient202.ino
 1=BasicHttpsClient305\BasicHttpsClient305.ino
+2=BasicHttpClient202\BasicHttpClient202.ino
 [Selected Project Files]
 Main=
-Selected=BasicHttpsClient202\BasicHttpsClient202.ino
+Selected=BasicHttpClient202\BasicHttpClient202.ino
 [BasicHttpsClient202\BasicHttpsClient202.ino]
 TopLine=79
 Caret=1,109
 [BasicHttpsClient305\BasicHttpsClient305.ino]
 TopLine=35
 Caret=1,43
+[BasicHttpClient202\BasicHttpClient202.ino]
+TopLine=65
+Caret=11,80
