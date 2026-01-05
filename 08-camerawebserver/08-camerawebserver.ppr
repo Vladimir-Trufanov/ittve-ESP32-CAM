@@ -27,7 +27,7 @@ Extensions=*.*
 			BasicHttpsClient202\key.txt
 		-BasicHttpsClient305
 			BasicHttpsClient305\BasicHttpsClient305.ino
-		-CameraWebServer202
+		+CameraWebServer202
 			CameraWebServer202\app_httpd.cpp
 			CameraWebServer202\camera_index.h
 			CameraWebServer202\camera_pins.h
@@ -75,9 +75,10 @@ Extensions=*.*
 0=BasicHttpsClient202\BasicHttpsClient202.ino
 1=BasicHttpsClient305\BasicHttpsClient305.ino
 2=BasicHttpClient202\BasicHttpClient202.ino
+3=CameraWebServer202\CameraWebServer202.ino
 [Selected Project Files]
 Main=
-Selected=BasicHttpClient202\BasicHttpClient202.ino
+Selected=CameraWebServer202\CameraWebServer202.ino
 [BasicHttpsClient202\BasicHttpsClient202.ino]
 TopLine=79
 Caret=1,109
@@ -85,5 +86,8 @@ Caret=1,109
 TopLine=35
 Caret=1,43
 [BasicHttpClient202\BasicHttpClient202.ino]
-TopLine=65
-Caret=11,80
+TopLine=46
+Caret=6,80
+[CameraWebServer202\CameraWebServer202.ino]
+TopLine=1
+Caret=1,1

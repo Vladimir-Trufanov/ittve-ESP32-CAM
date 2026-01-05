@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2018-2021 Espressif Systems (Shanghai) CO LTD
- *
+ * рус для платформы ESP32 v2.0.2
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -20,29 +20,38 @@ extern "C" {
 #endif
 
 /*
-note: esp_https_server.h includes a customized copy of this
-initializer that should be kept in sync
+Определить стандартную конфигурацию для HTTP-сервера,
+еоторая позволяет инициализировать значения по умолчанию, а затем изменять только 
+те поля, которые нужны в конкретном случае использования. 
+
+Task_priority    — приоритет задачи FreeRTOS, которая запускает сервер;
+Stack_size       — максимальный размер стека, разрешённый для задачи сервера;
+Core_id          — ядро, на котором будет работать задача HTTP-сервера;
+Server_port      — номер TCP-порта для приёма и передачи HTTP-трафика;
+Ctrl_port        — номер UDP-порта для асинхронного обмена сигналами управления между различными компонентами сервера;
+Max_open_sockets — максимальное количество сокетов/клиентов, подключённых в любое время (3 сокета зарезервированы для внутренней работы HTTP-сервера);
+Max_uri_handlers — максимальное количество разрешённых обработчиков URI.
 */
-#define HTTPD_DEFAULT_CONFIG() {                        \
-        .task_priority      = tskIDLE_PRIORITY+5,       \
-        .stack_size         = 4096,                     \
-        .core_id            = tskNO_AFFINITY,           \
-        .server_port        = 80,                       \
-        .ctrl_port          = 32768,                    \
-        .max_open_sockets   = 7,                        \
-        .max_uri_handlers   = 8,                        \
-        .max_resp_headers   = 8,                        \
-        .backlog_conn       = 5,                        \
-        .lru_purge_enable   = false,                    \
-        .recv_wait_timeout  = 5,                        \
-        .send_wait_timeout  = 5,                        \
-        .global_user_ctx = NULL,                        \
-        .global_user_ctx_free_fn = NULL,                \
-        .global_transport_ctx = NULL,                   \
-        .global_transport_ctx_free_fn = NULL,           \
-        .open_fn = NULL,                                \
-        .close_fn = NULL,                               \
-        .uri_match_fn = NULL                            \
+#define HTTPD_DEFAULT_CONFIG() {                  \
+  .task_priority      = tskIDLE_PRIORITY+5,       \
+  .stack_size         = 4096,                     \
+  .core_id            = tskNO_AFFINITY,           \
+  .server_port        = 80,                       \
+  .ctrl_port          = 32768,                    \
+  .max_open_sockets   = 7,                        \
+  .max_uri_handlers   = 8,                        \
+  .max_resp_headers   = 8,                        \
+  .backlog_conn       = 5,                        \
+  .lru_purge_enable   = false,                    \
+  .recv_wait_timeout  = 5,                        \
+  .send_wait_timeout  = 5,                        \
+  .global_user_ctx = NULL,                        \
+  .global_user_ctx_free_fn = NULL,                \
+  .global_transport_ctx = NULL,                   \
+  .global_transport_ctx_free_fn = NULL,           \
+  .open_fn = NULL,                                \
+  .close_fn = NULL,                               \
+  .uri_match_fn = NULL                            \
 }
 
 #define ESP_ERR_HTTPD_BASE              (0xb000)                    /*!< Starting number of HTTPD error codes */
@@ -376,40 +385,46 @@ typedef struct httpd_req {
 
 /**
  * @brief Structure for URI handler
+ * 
+ * Определить структуру для HTTP-сервера, которая используется для регистрации 
+ * URI-обработчиков — функций, которые обрабатывают разные HTTP-запросы. 
+ * Каждый обработчик привязывается к определённому URI и HTTP-методу (GET, POST и т. п.).
+ * 
+ * В структуре httpd_uri_t должны быть заполнены поля:
+ * - uri — имя ссылки;
+ * - method — тип метода (например, HTTP_GET, HTTP_POST, HTTP_PUT и т. п.);
+ * - handler — указатель на функцию типа esp_err_t *handler (httpd_req_t *req);
+ * - user_ctx — указатель на пользовательские контекстные данные, которые доступны для обработки.
+ * 
+ * Также в структуре могут быть указан, например:
+ * is_websocket — признак того, что этот URI может быть преобразован в WebSocket;
+ * ws_handler — указатель на пользовательскую функцию-обработчик, которая будет вызываться после завершения рукопожатия WebSocket;
+ * handle_ws_control_frames — если true, HTTP-сервер будет автоматически обрабатывать фреймы Ping, отправляя ответы.
+ * 
+ * Использование: обработчик URI регистрируется передачей объекта типа структуры httpd_uri_t 
+ * в функцию httpd_register_uri_handler. Например, при регистрации обработчика для главной страницы URI: "/" (метод: GET).
+ * 
+ * Важно: функция обработчика вызывается всякий раз, когда поступает запрос, соответствующий URI и методу. 
+ * Функция обработчика может вернуть значение esp_err_t. Если обработчик возвращает ESP_OK, 
+ * соединение остаётся открытым, если возвращает любое другое значение — соединение закрывается. 
  */
-typedef struct httpd_uri {
-    const char       *uri;    /*!< The URI to handle */
-    httpd_method_t    method; /*!< Method supported by the URI */
-
-    /**
-     * Handler to call for supported request method. This must
-     * return ESP_OK, or else the underlying socket will be closed.
-     */
-    esp_err_t (*handler)(httpd_req_t *r);
-
-    /**
-     * Pointer to user context data which will be available to handler
-     */
-    void *user_ctx;
-
-#ifdef CONFIG_HTTPD_WS_SUPPORT
-    /**
-     * Flag for indicating a WebSocket endpoint.
-     * If this flag is true, then method must be HTTP_GET. Otherwise the handshake will not be handled.
-     */
-    bool is_websocket;
-
-    /**
-     * Flag indicating that control frames (PING, PONG, CLOSE) are also passed to the handler
-     * This is used if a custom processing of the control frames is needed
-     */
-    bool handle_ws_control_frames;
-
-    /**
-     * Pointer to subprotocol supported by URI
-     */
-    const char *supported_subprotocol;
-#endif
+typedef struct httpd_uri 
+{
+  const char       *uri;    /*!< The URI to handle */
+  httpd_method_t    method; /*!< Method supported by the URI */
+  esp_err_t (*handler)(httpd_req_t *r);
+  void *user_ctx;
+  #ifdef CONFIG_HTTPD_WS_SUPPORT
+   // Флаг для указания конечной точки WebSocket. Если этот флаг имеет значение true, 
+   // то метод должен быть HTTP_GET. В противном случае квитирование не будет обработано.
+   bool is_websocket;
+   // Флаг, указывающий на то, что управляющие кадры (PING, PONG, CLOSE) также 
+   // передаются обработчику. Используется, если требуется пользовательская 
+   // обработка управляющих кадров
+   bool handle_ws_control_frames;
+   // Указатель на подпротокол, поддерживаемый URI
+   const char *supported_subprotocol;
+  #endif
 } httpd_uri_t;
 
 /**

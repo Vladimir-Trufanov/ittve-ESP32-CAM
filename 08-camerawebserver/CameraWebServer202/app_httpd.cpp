@@ -22,48 +22,45 @@
 #include "camera_index.h"
 
 #if defined(ARDUINO_ARCH_ESP32) && defined(CONFIG_ARDUHAL_ESP_LOG)
-#include "esp32-hal-log.h"
-#define TAG ""
+  #include "esp32-hal-log.h"
+  #define TAG ""
 #else
-#include "esp_log.h"
-static const char *TAG = "camera_httpd";
+  #include "esp_log.h"
+  static const char *TAG = "camera_httpd";
 #endif
 
 #if CONFIG_ESP_FACE_DETECT_ENABLED
+  #include "fd_forward.h"
+  #if CONFIG_ESP_FACE_RECOGNITION_ENABLED
+    #include "fr_forward.h"
+    #define ENROLL_CONFIRM_TIMES 5
+    #define FACE_ID_SAVE_NUMBER 7
+  #endif
 
-#include "fd_forward.h"
-
-#if CONFIG_ESP_FACE_RECOGNITION_ENABLED
-#include "fr_forward.h"
-
-#define ENROLL_CONFIRM_TIMES 5
-#define FACE_ID_SAVE_NUMBER 7
-#endif
-
-#define FACE_COLOR_WHITE 0x00FFFFFF
-#define FACE_COLOR_BLACK 0x00000000
-#define FACE_COLOR_RED 0x000000FF
-#define FACE_COLOR_GREEN 0x0000FF00
-#define FACE_COLOR_BLUE 0x00FF0000
-#define FACE_COLOR_YELLOW (FACE_COLOR_RED | FACE_COLOR_GREEN)
-#define FACE_COLOR_CYAN (FACE_COLOR_BLUE | FACE_COLOR_GREEN)
-#define FACE_COLOR_PURPLE (FACE_COLOR_BLUE | FACE_COLOR_RED)
+  #define FACE_COLOR_WHITE 0x00FFFFFF
+  #define FACE_COLOR_BLACK 0x00000000
+  #define FACE_COLOR_RED 0x000000FF
+  #define FACE_COLOR_GREEN 0x0000FF00
+  #define FACE_COLOR_BLUE 0x00FF0000
+  #define FACE_COLOR_YELLOW (FACE_COLOR_RED | FACE_COLOR_GREEN)
+  #define FACE_COLOR_CYAN (FACE_COLOR_BLUE | FACE_COLOR_GREEN)
+  #define FACE_COLOR_PURPLE (FACE_COLOR_BLUE | FACE_COLOR_RED)
 #endif
 
 #ifdef CONFIG_LED_ILLUMINATOR_ENABLED
-int led_duty = 0;
-bool isStreaming = false;
-#ifdef CONFIG_LED_LEDC_LOW_SPEED_MODE
-#define CONFIG_LED_LEDC_SPEED_MODE LEDC_LOW_SPEED_MODE
-#else
-#define CONFIG_LED_LEDC_SPEED_MODE LEDC_HIGH_SPEED_MODE
-#endif
+  int led_duty = 0;
+  bool isStreaming = false;
+  #ifdef CONFIG_LED_LEDC_LOW_SPEED_MODE
+    #define CONFIG_LED_LEDC_SPEED_MODE LEDC_LOW_SPEED_MODE
+  #else
+    #define CONFIG_LED_LEDC_SPEED_MODE LEDC_HIGH_SPEED_MODE
+  #endif
 #endif
 
 typedef struct
 {
-    httpd_req_t *req;
-    size_t len;
+  httpd_req_t *req;
+  size_t len;
 } jpg_chunking_t;
 
 #define PART_BOUNDARY "123456789000000000000987654321"
@@ -1080,79 +1077,102 @@ static esp_err_t index_handler(httpd_req_t *req)
 
 void startCameraServer()
 {
-    httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-    config.max_uri_handlers = 16;
+  // Определяем конфигурацию для HTTP-сервера
+  httpd_config_t config = HTTPD_DEFAULT_CONFIG();
+  config.max_uri_handlers = 16; // увеличили максимальное количество разрешённых обработчиков URI
+  // Определяем обработчики разных http-запросов
 
-    httpd_uri_t index_uri = {
-        .uri = "/",
-        .method = HTTP_GET,
-        .handler = index_handler,
-        .user_ctx = NULL};
+  httpd_uri_t index_uri = 
+  {
+    .uri = "/",
+    .method = HTTP_GET,
+    .handler = index_handler,
+    .user_ctx = NULL
+  };
 
-    httpd_uri_t status_uri = {
-        .uri = "/status",
-        .method = HTTP_GET,
-        .handler = status_handler,
-        .user_ctx = NULL};
+  httpd_uri_t status_uri = 
+  {
+    .uri = "/status",
+    .method = HTTP_GET,
+    .handler = status_handler,
+    .user_ctx = NULL
+  };
 
-    httpd_uri_t cmd_uri = {
-        .uri = "/control",
-        .method = HTTP_GET,
-        .handler = cmd_handler,
-        .user_ctx = NULL};
+  httpd_uri_t cmd_uri = 
+  {
+    .uri = "/control",
+    .method = HTTP_GET,
+    .handler = cmd_handler,
+    .user_ctx = NULL
+  };
 
-    httpd_uri_t capture_uri = {
-        .uri = "/capture",
-        .method = HTTP_GET,
-        .handler = capture_handler,
-        .user_ctx = NULL};
+  httpd_uri_t capture_uri = 
+  {
+    .uri = "/capture",
+    .method = HTTP_GET,
+    .handler = capture_handler,
+    .user_ctx = NULL
+  };
 
-    httpd_uri_t stream_uri = {
-        .uri = "/stream",
-        .method = HTTP_GET,
-        .handler = stream_handler,
-        .user_ctx = NULL};
+  httpd_uri_t stream_uri = 
+  {
+    .uri = "/stream",
+    .method = HTTP_GET,
+    .handler = stream_handler,
+    .user_ctx = NULL
+  };
 
-    httpd_uri_t bmp_uri = {
-        .uri = "/bmp",
-        .method = HTTP_GET,
-        .handler = bmp_handler,
-        .user_ctx = NULL};
+  httpd_uri_t bmp_uri = 
+  {
+    .uri = "/bmp",
+    .method = HTTP_GET,
+    .handler = bmp_handler,
+    .user_ctx = NULL
+  };
 
-    httpd_uri_t xclk_uri = {
-        .uri = "/xclk",
-        .method = HTTP_GET,
-        .handler = xclk_handler,
-        .user_ctx = NULL};
+  httpd_uri_t xclk_uri = 
+  {
+    .uri = "/xclk",
+    .method = HTTP_GET,
+    .handler = xclk_handler,
+    .user_ctx = NULL
+  };
 
-    httpd_uri_t reg_uri = {
-        .uri = "/reg",
-        .method = HTTP_GET,
-        .handler = reg_handler,
-        .user_ctx = NULL};
+  httpd_uri_t reg_uri = 
+  {
+    .uri = "/reg",
+    .method = HTTP_GET,
+    .handler = reg_handler,
+    .user_ctx = NULL
+  };
 
-    httpd_uri_t greg_uri = {
-        .uri = "/greg",
-        .method = HTTP_GET,
-        .handler = greg_handler,
-        .user_ctx = NULL};
+  httpd_uri_t greg_uri = 
+  {
+    .uri = "/greg",
+    .method = HTTP_GET,
+    .handler = greg_handler,
+    .user_ctx = NULL
+  };
 
-    httpd_uri_t pll_uri = {
-        .uri = "/pll",
-        .method = HTTP_GET,
-        .handler = pll_handler,
-        .user_ctx = NULL};
+  httpd_uri_t pll_uri = 
+  {
+    .uri = "/pll",
+    .method = HTTP_GET,
+    .handler = pll_handler,
+    .user_ctx = NULL
+  };
 
-    httpd_uri_t win_uri = {
-        .uri = "/resolution",
-        .method = HTTP_GET,
-        .handler = win_handler,
-        .user_ctx = NULL};
+  httpd_uri_t win_uri = 
+  {
+    .uri = "/resolution",
+    .method = HTTP_GET,
+    .handler = win_handler,
+    .user_ctx = NULL
+  };
 
-    ra_filter_init(&ra_filter, 20);
+  ra_filter_init(&ra_filter, 20);
 
-#if CONFIG_ESP_FACE_DETECT_ENABLED
-
+  #if CONFIG_ESP_FACE_DETECT_ENABLED
     mtmn_config.type = FAST;
     mtmn_config.min_face = 80;
     mtmn_config.pyramid = 0.707;
@@ -1166,33 +1186,32 @@ void startCameraServer()
     mtmn_config.o_threshold.score = 0.7;
     mtmn_config.o_threshold.nms = 0.7;
     mtmn_config.o_threshold.candidate_number = 1;
+    #if CONFIG_ESP_FACE_RECOGNITION_ENABLED
+      face_id_init(&id_list, FACE_ID_SAVE_NUMBER, ENROLL_CONFIRM_TIMES);
+    #endif
+  #endif
+  
+  ESP_LOGI(TAG, "Starting web server on port: '%d'", config.server_port);
+  if (httpd_start(&camera_httpd, &config) == ESP_OK)
+  {
+    httpd_register_uri_handler(camera_httpd, &index_uri);
+    httpd_register_uri_handler(camera_httpd, &cmd_uri);
+    httpd_register_uri_handler(camera_httpd, &status_uri);
+    httpd_register_uri_handler(camera_httpd, &capture_uri);
+    httpd_register_uri_handler(camera_httpd, &bmp_uri);
 
-#if CONFIG_ESP_FACE_RECOGNITION_ENABLED
-    face_id_init(&id_list, FACE_ID_SAVE_NUMBER, ENROLL_CONFIRM_TIMES);
-#endif
+    httpd_register_uri_handler(camera_httpd, &xclk_uri);
+    httpd_register_uri_handler(camera_httpd, &reg_uri);
+    httpd_register_uri_handler(camera_httpd, &greg_uri);
+    httpd_register_uri_handler(camera_httpd, &pll_uri);
+    httpd_register_uri_handler(camera_httpd, &win_uri);
+  }
 
-#endif
-    ESP_LOGI(TAG, "Starting web server on port: '%d'", config.server_port);
-    if (httpd_start(&camera_httpd, &config) == ESP_OK)
-    {
-        httpd_register_uri_handler(camera_httpd, &index_uri);
-        httpd_register_uri_handler(camera_httpd, &cmd_uri);
-        httpd_register_uri_handler(camera_httpd, &status_uri);
-        httpd_register_uri_handler(camera_httpd, &capture_uri);
-        httpd_register_uri_handler(camera_httpd, &bmp_uri);
-
-        httpd_register_uri_handler(camera_httpd, &xclk_uri);
-        httpd_register_uri_handler(camera_httpd, &reg_uri);
-        httpd_register_uri_handler(camera_httpd, &greg_uri);
-        httpd_register_uri_handler(camera_httpd, &pll_uri);
-        httpd_register_uri_handler(camera_httpd, &win_uri);
-    }
-
-    config.server_port += 1;
-    config.ctrl_port += 1;
-    ESP_LOGI(TAG, "Starting stream server on port: '%d'", config.server_port);
-    if (httpd_start(&stream_httpd, &config) == ESP_OK)
-    {
-        httpd_register_uri_handler(stream_httpd, &stream_uri);
-    }
+  config.server_port += 1;
+  config.ctrl_port += 1;
+  ESP_LOGI(TAG, "Starting stream server on port: '%d'", config.server_port);
+  if (httpd_start(&stream_httpd, &config) == ESP_OK)
+  {
+    httpd_register_uri_handler(stream_httpd, &stream_uri);
+  }
 }
