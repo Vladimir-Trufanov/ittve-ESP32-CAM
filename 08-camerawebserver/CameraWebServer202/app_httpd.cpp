@@ -72,45 +72,61 @@ httpd_handle_t stream_httpd = NULL;
 httpd_handle_t camera_httpd = NULL;
 
 #if CONFIG_ESP_FACE_DETECT_ENABLED
-
-static int8_t detection_enabled = 0;
-
-static mtmn_config_t mtmn_config = {0};
-
-#if CONFIG_ESP_FACE_RECOGNITION_ENABLED
-static int8_t recognition_enabled = 0;
-static int8_t is_enrolling = 0;
-static face_id_list id_list = {0};
+  static int8_t detection_enabled = 0;
+  static mtmn_config_t mtmn_config = {0};
+  #if CONFIG_ESP_FACE_RECOGNITION_ENABLED
+    static int8_t recognition_enabled = 0;
+    static int8_t is_enrolling = 0;
+    static face_id_list id_list = {0};
+  #endif
 #endif
 
-#endif
-
+// ****************************************************************************
+// * Взять указатель на структуру ra_filter_t и размер выборки (sample_size), *
+// *    использовать поля структуры ra_filter_t для инициализации значений    *
+// ****************************************************************************
 typedef struct
 {
-    size_t size;  //number of values used for filtering
-    size_t index; //current value index
-    size_t count; //value count
+    size_t size;  // количество значений, используемых для фильтрации
+    size_t index; // текущее значение индекса
+    size_t count; // количество значений
     int sum;
-    int *values; //array to be filled with values
+    int *values;  // массив, который должен быть заполнен значениями
 } ra_filter_t;
 
 static ra_filter_t ra_filter;
 
 static ra_filter_t *ra_filter_init(ra_filter_t *filter, size_t sample_size)
 {
-    memset(filter, 0, sizeof(ra_filter_t));
-
-    filter->values = (int *)malloc(sample_size * sizeof(int));
-    if (!filter->values)
-    {
-        return NULL;
-    }
-    memset(filter->values, 0, sample_size * sizeof(int));
-
-    filter->size = sample_size;
-    return filter;
+  // Устанавливаем все поля структуры ra_filter_t в значение 0
+  memset(filter, 0, sizeof(ra_filter_t));
+  // Выделяет память для массива значений
+  filter->values = (int *)malloc(sample_size * sizeof(int));
+  // Проверяем, что массив выделен, и если нет, возвращаем значение NULL.
+  if (!filter->values)
+  {
+    return NULL;
+  }
+  // Устанавливает значение 0 для выделенного массива
+  memset(filter->values, 0, sample_size * sizeof(int));
+  // Устанавливаем размер выборки для поля структуры ra_filter_t 
+  filter->size = sample_size;
+  // Возвращаем указатель на структуру ra_filter_t
+  return filter;
 }
 
+/*
+Возможно, имелась в виду функция ra_filter_run, которая принимает указатель на структуру 
+ra_filter_t и значение и выполняет некоторые действия с полями структуры:
+Если в структуре нет полей values, функция возвращает переданное значение.
+Из поля sum вычитается значение, которое хранится в элементе values по индексу index.
+В элемент values по индексу index записывается переданное значение.
+К полю sum прибавляется значение из элемента values по индексу index.
+Индекс элемента index увеличивается на 1.
+Индекс элемента вычисляется по формуле: index = index % filter->size.
+Если значение count меньше размера фильтра, то count увеличивается на 1.
+Функция возвращает значение, которое вычисляется по формуле: sum / count.
+*/
 static int ra_filter_run(ra_filter_t *filter, int value)
 {
     if (!filter->values)

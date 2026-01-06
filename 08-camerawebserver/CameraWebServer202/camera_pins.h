@@ -1,4 +1,4 @@
-
+// рус для платформы ESP32 v2.0.2
 #if defined(CAMERA_MODEL_WROVER_KIT)
 #define PWDN_GPIO_NUM    -1
 #define RESET_GPIO_NUM   -1

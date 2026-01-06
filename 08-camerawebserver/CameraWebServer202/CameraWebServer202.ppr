@@ -28,8 +28,6 @@ CameraWebServer202
 [Open project files]
 0=CameraWebServer202.ino
 1=app_httpd.cpp
-2=esp_http_server.h
-3=http_server.h
 [Selected Project Files]
 Main=
 Selected=app_httpd.cpp
@@ -37,11 +35,5 @@ Selected=app_httpd.cpp
 TopLine=21
 Caret=23,35
 [app_httpd.cpp]
-TopLine=45
-Caret=2,63
-[esp_http_server.h]
-TopLine=1
-Caret=34,3
-[http_server.h]
-TopLine=1
-Caret=1,1
+TopLine=99
+Caret=1,130
