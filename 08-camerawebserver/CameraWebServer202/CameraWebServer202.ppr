@@ -23,17 +23,18 @@ CameraWebServer202
 		camera_pins.h
 		CameraWebServer202.ino
 		CameraWebServer202.ppr
+		CameraWebServer202-dop-materialy.md
+		esp_camera.h
 		esp_http_server.h
+		esp_jpg_decode.h
 		http_server.h
+		img_converters.h
+		sensor.h
 [Open project files]
 0=CameraWebServer202.ino
-1=app_httpd.cpp
 [Selected Project Files]
 Main=
-Selected=app_httpd.cpp
+Selected=CameraWebServer202.ino
 [CameraWebServer202.ino]
-TopLine=21
+TopLine=1
 Caret=23,35
-[app_httpd.cpp]
-TopLine=99
-Caret=1,130
