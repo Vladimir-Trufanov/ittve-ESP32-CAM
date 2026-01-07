@@ -11,15 +11,16 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+#include "arduino.h"
 #include "esp_http_server.h"
 #include "esp_timer.h"
 #include "esp_camera.h"
 #include "img_converters.h"
 #include "fb_gfx.h"
 #include "driver/ledc.h"
-//#include "camera_index.h"
 #include "sdkconfig.h"
 #include "camera_index.h"
+
 
 #if defined(ARDUINO_ARCH_ESP32) && defined(CONFIG_ARDUHAL_ESP_LOG)
   #include "esp32-hal-log.h"
@@ -28,6 +29,7 @@
   #include "esp_log.h"
   static const char *TAG = "camera_httpd";
 #endif
+
 
 #if CONFIG_ESP_FACE_DETECT_ENABLED
   #include "fd_forward.h"
@@ -1208,7 +1210,61 @@ void startCameraServer()
     #endif
   #endif
   
-  ESP_LOGI(TAG, "Starting web server on port: '%d'", config.server_port);
+  // ESP_LOGI(TAG, "Starting web server on port: '%d'", config.server_port);
+  Serial.begin(115200);
+  delay(200);
+  Serial.print("Starting web server on port: "); Serial.println(config.server_port);
+//    Serial.begin(115200);
+
+  //esplog("SSStarting web server on port");
+
+/** 
+ * Стартуем HTTP-сервер: esp_err_t httpd_start(httpd_handle_t *handle, const httpd_config_t *config):
+ * создаём экземпляр HTTP-сервера, выделяет ему память/ресурсы в зависимости от заданной конфигурации
+ * и выдаёт дескриптор экземпляру сервера.
+ * 
+ * На сервере имеется прослушивающий сокет (TCP) для HTTP-трафика и управляющий сокет (UDP) 
+ * для управляющих сигналов, которые выбираются циклически (по алгоритму round robin) 
+ * в цикле задач сервера (server task loop). 
+ * Приоритет задачи сервера и размер её стека конфигурируются во время создания 
+ * экземпляра сервера путем передачи структуры httpd_config_t в вызов httpd_start().
+ * 
+ * TCP-трафик обрабатывается как HTTP-запросы, и, в зависимости от запрошенного URI, 
+ * вызываются зарегистрированные пользователем обработчики, которые должны 
+ * отправлять HTTP-пакеты ответов.
+ * 
+ * Example usage:
+ * // Функция для запуска веб-сервера
+ * httpd_handle_t start_webserver(void)
+ * {
+ *   // Генерируем конфигурацию по умолчанию
+ *   httpd_config_t config = HTTPD_DEFAULT_CONFIG();
+ *   // Инициируем пустой дескриптор http_server
+ *   (если сервер не запуститься, вернем дескриптор равный NULL)
+ *   httpd_handle_t server = NULL;
+ *   // Запускаем httpd-сервер и получаем дескриптор
+ *   if (httpd_start(&server, &config) == ESP_OK) 
+ *   {
+ *     // Регистрируем обработчики URI
+ *     httpd_register_uri_handler(server, &uri_get);
+ *     httpd_register_uri_handler(server, &uri_post);
+ *   }
+ *   // Возвращаем реальный дескриптор или NULL, если серверу не удалось запуститься
+ *   return server;
+ * }
+ * 
+ * Parameters:
+ *   config -- [in]  конфигурация для нового экземпляра сервера
+ *   handle -- [out] дескриптор вновь созданного экземпляра сервера. NULL в случае ошибки
+ *   
+ * Returns
+ * 
+ * ESP_OK                  - экземпляр успешно создан
+ * ESP_ERR_INVALID_ARG     - недопустимый аргумент(ы)
+ * ESP_ERR_HTTPD_ALLOC_MEM - не удалось выделить память для экземпляра
+ * ESP_ERR_HTTPD_TASK      - не удалось запустить серверную задачу
+**/
+
   if (httpd_start(&camera_httpd, &config) == ESP_OK)
   {
     httpd_register_uri_handler(camera_httpd, &index_uri);

@@ -279,6 +279,9 @@ typedef struct httpd_config {
  *  - ESP_ERR_INVALID_ARG      : Null argument(s)
  *  - ESP_ERR_HTTPD_ALLOC_MEM  : Failed to allocate memory for instance
  *  - ESP_ERR_HTTPD_TASK       : Failed to launch server task
+ *  
+ * 
+ * 
  */
 esp_err_t  httpd_start(httpd_handle_t *handle, const httpd_config_t *config);
 

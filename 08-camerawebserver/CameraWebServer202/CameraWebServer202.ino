@@ -9,6 +9,17 @@
 #include "esp_camera.h"
 #include <WiFi.h>
 
+
+  /*
+  #if defined(ARDUINO_ARCH_ESP32) && defined(CONFIG_ARDUHAL_ESP_LOG)
+  #include "esp32-hal-log.h"
+  #define TAG ""
+#else
+  #include "esp_log.h"
+  static const char *TAG = "cameRARA_httpd";
+#endif
+*/
+
 // WARNING!!! При использовании разрешения UXGA и высокого качества JPEG убедитесь, 
 // что выбран модуль ESP32 Rover или другая плата с параметром PARAM, частичные 
 // изображения будут переданы, если размер буфера изображения превысит размер буфера.
@@ -24,7 +35,13 @@
 //#define CAMERA_MODEL_M5STACK_UNITCAM // No PSRAM
 //#define CAMERA_MODEL_TTGO_T_JOURNAL // No PSRAM
 
+void esplog(String c)
+{
+  Serial.println(c);
+}
+
 #include "camera_pins.h"
+//#include "app_httpd.cpp"
 
 const char* ssid     = "OPPO A9 2020";
 const char* password = "b277a4ee84e8";
@@ -37,8 +54,11 @@ void startCameraServer();
 void setup() 
 {
   Serial.begin(115200);
-  Serial.setDebugOutput(true);
+  //Serial.setDebugOutput(true);
   Serial.println();
+  //Serial.println();
+  //Serial.println();
+  //Serial.println();
   
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
@@ -109,6 +129,15 @@ void setup()
   }
   Serial.println("");
   Serial.println("WiFi connected");
+
+//      delay(200);
+
+//esp_log_level_set(TAG, ESP_LOG_ERROR);
+//    delay(200);
+//ESP_LOGI(TAG,"----Starting web server on port: '%d'", 76);
+
+  
+  
 
   startCameraServer();
 
