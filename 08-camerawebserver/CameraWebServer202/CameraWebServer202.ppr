@@ -27,6 +27,8 @@ CameraWebServer202
 		esp_camera.h
 		esp_http_server.h
 		esp_jpg_decode.h
+		esp_log.h
+		esp_log_internal.h
 		http_server.h
 		img_converters.h
 		sensor.h
@@ -36,5 +38,5 @@ CameraWebServer202
 Main=
 Selected=CameraWebServer202.ino
 [CameraWebServer202.ino]
-TopLine=1
+TopLine=21
 Caret=23,35

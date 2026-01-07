@@ -2,11 +2,11 @@
  * 
  * Библиотека приватных функций ESP32-CAM 
  * 
- * v1.0, 20.07.2024                                   Автор:      Труфанов В.Е.
+ * v1.0, 20.07.2024                                   Автор:      Труфанов В.Е.p
  * Copyright © 2024 tve                               Дата создания: 20.07.2024
 **/
 
-#ifndef tveEsp32Cam
+#ifndef tveEsp32Camn
 #define tveEsp32Cam
 #pragma once            
 

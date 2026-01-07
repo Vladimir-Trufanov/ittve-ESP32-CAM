@@ -1093,9 +1093,9 @@ static esp_err_t index_handler(httpd_req_t *req)
 
 void startCameraServer()
 {
-  // Определяем конфигурацию для HTTP-сервера
-  httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-  config.max_uri_handlers = 16; // увеличили максимальное количество разрешённых обработчиков URI
+  httpd_config_t config = HTTPD_DEFAULT_CONFIG(); // определили конфигурацию для HTTP-сервера, как по умолчанию
+  config.max_uri_handlers = 16;                   // увеличили максимальное количество разрешённых обработчиков URI
+  
   // Определяем обработчики разных http-запросов
 
   httpd_uri_t index_uri = 
@@ -1186,8 +1186,9 @@ void startCameraServer()
     .user_ctx = NULL
   };
 
+  // Инициируем структуру фильтрации
   ra_filter_init(&ra_filter, 20);
-
+  // Инициируем параметры распознавания лиц
   #if CONFIG_ESP_FACE_DETECT_ENABLED
     mtmn_config.type = FAST;
     mtmn_config.min_face = 80;
