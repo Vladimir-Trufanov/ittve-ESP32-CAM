@@ -21,15 +21,8 @@
 #include "sdkconfig.h"
 #include "camera_index.h"
 
-
-#if defined(ARDUINO_ARCH_ESP32) && defined(CONFIG_ARDUHAL_ESP_LOG)
-  #include "esp32-hal-log.h"
-  #define TAG ""
-#else
-  #include "esp_log.h"
+#include "esp32-hal-log.h"
   static const char *TAG = "camera_httpd";
-#endif
-
 
 #if CONFIG_ESP_FACE_DETECT_ENABLED
   #include "fd_forward.h"
@@ -70,6 +63,58 @@ static const char *_STREAM_CONTENT_TYPE = "multipart/x-mixed-replace;boundary=" 
 static const char *_STREAM_BOUNDARY = "\r\n--" PART_BOUNDARY "\r\n";
 static const char *_STREAM_PART = "Content-Type: image/jpeg\r\nContent-Length: %u\r\nX-Timestamp: %d.%06d\r\n\r\n";
 
+/**
+ * Инициируем httpd_handle_t - дескрипторы потокового сервера (stream_httpd) и сервера камеры (camera_httpd).
+ * Тип httpd_handle_t предоставляется для управления экземпляром HTTP-сервера, который получает запросы от клиентов и отправляет ответы. 
+ * 
+ * Структура
+ * Хотя формально тип httpd_handle_t не является типом указателя, его определение — typedef void * httpd_handle_t. Это означает, 
+ * что дескриптор сервера — по сути, указатель. 
+ * 
+ * Использование
+ * После создания дескриптор сервера используется для всех операций сервера, например: 
+ * регистрация URI-обработчиков. Каждый обработчик (URI handler) привязывается к определённому URI и HTTP-методу (GET, POST и т. п.). 
+ * Функция обработчика вызывается всякий раз, когда поступает запрос, соответствующий URI и методу. 
+ * 
+ * Остановка сервера. 
+ * Функция httpd_stop() останавливает сервер по предоставленному дескриптору и освобождает любые выделенные для него ресурсы и память. 
+ * При остановке задача закрывает все открытые соединения, удаляет зарегистрированные обработчики URI 
+ * и сбрасывает все данные контекста сеанса в пустое состояние. 
+ * 
+ * URI-обработчики с использованием httpd_handle_t регистрируются с помощью функции httpd_register_uri_handler. 
+ * При регистрации обработчика передаётся объект типа структуры httpd_uri_t. В ней заполняются следующие поля:
+ * uri — имя ссылки (например, /hello, /data, /* для wildcard).
+ * method — тип метода (например, HTTP_GET, HTTP_POST, HTTP_PUT, HTTP_DELETE).
+ * handler — указатель на функцию C, которая будет обрабатывать запросы, соответствующие URI и методу.
+ * user_ctx — указатель на пользовательские контекстные данные, которые будут переданы в функцию обработчика.
+ * 
+ * Пример использования: 
+ * 
+ * esp_err_t my_uri_handler(httpd_req_t *req) 
+ * {
+ *   // Обработка запроса
+ *   ...
+ *   // Возврат ESP_OK, если запрос был успешно обработан
+ *   return ESP_OK;
+ *   // Возврат кода ошибки, чтобы закрыть соединение
+ *   return ESP_FAIL;
+ * }
+ * 
+ * void register_uri_handlers(httpd_handle_t server) 
+ * {
+ *   httpd_uri_t my_uri = 
+ *   {
+ *     .uri = "/my_uri",
+ *     .method = HTTP_GET,
+ *     .handler = my_uri_handler,
+ *     .user_ctx = NULL
+ *   };
+ *   httpd_register_uri_handler(server, &my_uri);
+ * }
+ * 
+ * В этом примере говорится серверу: «Когда приходит HTTP-запрос с методом GET на путь /api/data — 
+ * вызови вот мою функцию-обработчик». Функция обработчика должна вернуть значение **esp_err_t**.
+**/
 httpd_handle_t stream_httpd = NULL;
 httpd_handle_t camera_httpd = NULL;
 
@@ -116,35 +161,33 @@ static ra_filter_t *ra_filter_init(ra_filter_t *filter, size_t sample_size)
   // Возвращаем указатель на структуру ra_filter_t
   return filter;
 }
-
-/*
-Возможно, имелась в виду функция ra_filter_run, которая принимает указатель на структуру 
-ra_filter_t и значение и выполняет некоторые действия с полями структуры:
-Если в структуре нет полей values, функция возвращает переданное значение.
-Из поля sum вычитается значение, которое хранится в элементе values по индексу index.
-В элемент values по индексу index записывается переданное значение.
-К полю sum прибавляется значение из элемента values по индексу index.
-Индекс элемента index увеличивается на 1.
-Индекс элемента вычисляется по формуле: index = index % filter->size.
-Если значение count меньше размера фильтра, то count увеличивается на 1.
-Функция возвращает значение, которое вычисляется по формуле: sum / count.
-*/
+// ****************************************************************************
+// *     Принять указатель на структуру ra_filter_t и значение, выполнить     * 
+// * действия с полями структуры:  если в структуре нет полей values, вернуть *
+// *  переданное значение;  из поля sum вычесть значение, которое хранится в  *
+// *    элементе values по индексу index; в элемент values по индексу index   *
+// *  записать переданное значение; к полю sum прибавить значение из элемента *
+// * values по индексу index; индекс элемента index увеличить на 1.           *
+// * Индекс элемента вычислить по формуле: index = index % filter->size. Если *
+// * значение count меньше размера фильтра, то count увеличить на 1.          *
+// * Вернуть значение, которое вычисляется по формуле: sum / count.           *
+// ****************************************************************************
 static int ra_filter_run(ra_filter_t *filter, int value)
 {
-    if (!filter->values)
-    {
-        return value;
-    }
-    filter->sum -= filter->values[filter->index];
-    filter->values[filter->index] = value;
-    filter->sum += filter->values[filter->index];
-    filter->index++;
-    filter->index = filter->index % filter->size;
-    if (filter->count < filter->size)
-    {
-        filter->count++;
-    }
-    return filter->sum / filter->count;
+  if (!filter->values)
+  {
+    return value;
+  }
+  filter->sum -= filter->values[filter->index];
+  filter->values[filter->index] = value;
+  filter->sum += filter->values[filter->index];
+  filter->index++;
+  filter->index = filter->index % filter->size;
+  if (filter->count < filter->size)
+  {
+    filter->count++;
+  }
+  return filter->sum / filter->count;
 }
 
 #if CONFIG_ESP_FACE_DETECT_ENABLED
@@ -1214,9 +1257,6 @@ void startCameraServer()
   Serial.begin(115200);
   delay(200);
   Serial.print("Starting web server on port: "); Serial.println(config.server_port);
-//    Serial.begin(115200);
-
-  //esplog("SSStarting web server on port");
 
 /** 
  * Стартуем HTTP-сервер: esp_err_t httpd_start(httpd_handle_t *handle, const httpd_config_t *config):
