@@ -37,10 +37,10 @@ CameraWebServer202
 3=CameraWebServer202.ppr
 [Selected Project Files]
 Main=
-Selected=app_httpd.cpp
+Selected=CameraWebServer202.ino
 [CameraWebServer202.ino]
-TopLine=87
-Caret=1,126
+TopLine=1
+Caret=1,32
 [app_httpd.cpp]
 TopLine=243
 Caret=25,253
@@ -48,5 +48,5 @@ Caret=25,253
 TopLine=272
 Caret=1,283
 [CameraWebServer202.ppr]
-TopLine=14
+TopLine=12
 Caret=2,43

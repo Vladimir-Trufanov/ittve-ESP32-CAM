@@ -1,17 +1,23 @@
-/** Arduino C/C++ ********************************** CameraWebServer202.ino ***
- *
+/** Arduino, ESP32, C/C++ ************************** CameraWebServer202.ino ***
  * 
  * v2.0.3, 08.01.2026                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
  * 
+ * Preferences:       https://espressif.github.io/arduino-esp32/package_esp32_dev_index.json
+ * Espressif Systems: Esp32 от Espressif Systems версии 2.0.2 
+ * Payment:           "Al Thinker ESP32-CAM"
+ * CPU Frequency:     "240MHz (WiFi/BT)"
+ * Flash Frequency:   "80MHz"
+ * Flash Mode:        "QIO"
 **/
 
+#include "Arduino.h"
 #include "esp_camera.h"
 #include <WiFi.h>
 
 // WARNING!!! При использовании разрешения UXGA и высокого качества JPEG убедитесь, 
-// что выбран модуль ESP32 Rover или другая плата с параметром PARAM, частичные 
-// изображения будут переданы, если размер буфера изображения превысит размер буфера.
+// что выбрана плата с параметром PARAM. Изображение будет передаваться частично,
+// если размер буфера изображения превысит размер буфера.
 
 #define CAMERA_MODEL_AI_THINKER // Has PSRAM
 
@@ -24,15 +30,7 @@
 //#define CAMERA_MODEL_M5STACK_UNITCAM // No PSRAM
 //#define CAMERA_MODEL_TTGO_T_JOURNAL // No PSRAM
 
-/*
-void esplog(String c)
-{
-  Serial.println(c);
-}
-*/
-
 #include "camera_pins.h"
-//#include "app_httpd.cpp"
 
 const char* ssid     = "OPPO A9 2020";
 const char* password = "b277a4ee84e8";
@@ -40,12 +38,17 @@ const char* password = "b277a4ee84e8";
 //const char* ssid     = "TP-Link_B394";
 //const char* password = "18009217";
 
+#define CONFIG_RLOG_PROJECT_LEVEL RLOG_LEVEL_VERBOSE  // выводим сообщения всех уровней
+#define CONFIG_RLOG_SHOW_TIMESTAMP 0                  // не выводим отметок времени
+#define CONFIG_RLOG_SHOW_FILEINFO 0                   // не выводим отметку о месте сообщения в скетче
+#include "rLog.h"                                      
+static const char* rl = "CamWeb";                     // указали тег сообщений
+
 void startCameraServer();
 
 void setup() 
 {
   Serial.begin(115200);
-  //Serial.setDebugOutput(true);
   Serial.println();
   
   camera_config_t config;
@@ -70,33 +73,39 @@ void setup()
   config.xclk_freq_hz = 20000000;
   config.pixel_format = PIXFORMAT_JPEG;
   
-  // if PSRAM IC present, init with UXGA resolution and higher JPEG quality
-  //                      for larger pre-allocated frame buffer.
-  if(psramFound()){
+  // Если плата имеет PSRAM, то инициировать с разрешением UXGA и более высоким 
+  // качеством JPEG для увеличения предварительно выделенного буфера кадров.
+  if(psramFound())
+  {
     config.frame_size = FRAMESIZE_UXGA;
     config.jpeg_quality = 10;
     config.fb_count = 2;
-  } else {
+  } 
+  else 
+  {
     config.frame_size = FRAMESIZE_SVGA;
     config.jpeg_quality = 12;
     config.fb_count = 1;
   }
 
-#if defined(CAMERA_MODEL_ESP_EYE)
-  pinMode(13, INPUT_PULLUP);
-  pinMode(14, INPUT_PULLUP);
-#endif
+  #if defined(CAMERA_MODEL_ESP_EYE)
+    pinMode(13, INPUT_PULLUP);
+    pinMode(14, INPUT_PULLUP);
+  #endif
 
   // camera init
   esp_err_t err = esp_camera_init(&config);
-  if (err != ESP_OK) {
-    Serial.printf("Camera init failed with error 0x%x", err);
+  if (err != ESP_OK) 
+  {
+    // Serial.printf("Camera init failed with error 0x%x", err);
+    rlog_i(rl, "Не удалось выполнить инициализацию камеры. Ошибка:0x%x",err);
     return;
   }
 
   sensor_t * s = esp_camera_sensor_get();
   // initial sensors are flipped vertically and colors are a bit saturated
-  if (s->id.PID == OV3660_PID) {
+  if (s->id.PID == OV3660_PID) 
+  {
     s->set_vflip(s, 1); // flip it back
     s->set_brightness(s, 1); // up the brightness just a bit
     s->set_saturation(s, -2); // lower the saturation
@@ -104,25 +113,26 @@ void setup()
   // drop down frame size for higher initial frame rate
   s->set_framesize(s, FRAMESIZE_QVGA);
 
-#if defined(CAMERA_MODEL_M5STACK_WIDE) || defined(CAMERA_MODEL_M5STACK_ESP32CAM)
-  s->set_vflip(s, 1);
-  s->set_hmirror(s, 1);
-#endif
+  #if defined(CAMERA_MODEL_M5STACK_WIDE) || defined(CAMERA_MODEL_M5STACK_ESP32CAM)
+    s->set_vflip(s, 1);
+    s->set_hmirror(s, 1);
+  #endif
 
   WiFi.begin(ssid, password);
 
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED) 
+  {
     delay(500);
     Serial.print(".");
   }
   Serial.println("");
-  Serial.println("WiFi connected");
+  Serial.println("WiFi подключен");
 
   startCameraServer();
 
-  Serial.print("Camera Ready! Use 'http://");
+  Serial.print("Камера готова! Подключение по 'http://");
   Serial.print(WiFi.localIP());
-  Serial.println("' to connect");
+  Serial.println("'");
 }
 
 void loop() 

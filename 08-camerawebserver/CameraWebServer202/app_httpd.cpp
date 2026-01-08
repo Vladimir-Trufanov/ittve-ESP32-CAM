@@ -1,16 +1,13 @@
-// (рус) Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
+// (рус) Copyright 2015-2016 Espressif Systems 2.0.2 (Shanghai) PTE LTD
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Лицензирован по лицензии Apache версии 2.0 ("Лицензия"); 
+// вы можете использовать этот файл только в соответствии с Лицензией.  
+// Вы можете получить копию Лицензии по адресу http://www.apache.org/licenses/LICENSE-2.0
+// за исключением случаев, предусмотренных действующим законодательством или оговоренных в письменной форме, 
+// программное обеспечение, распространяемое по Лицензии, распространяется на УСЛОВИЯХ "КАК ЕСТЬ", 
+// БЕЗ КАКИХ-ЛИБО ГАРАНТИЙ ИЛИ УСЛОВИЙ, явных или подразумеваемых. Сведения о конкретном языке, 
+// регулирующем разрешения и ограничения в соответствии с Лицензией, приведены в Лицензии.
+
 #include "arduino.h"
 #include "esp_http_server.h"
 #include "esp_timer.h"
@@ -22,7 +19,13 @@
 #include "camera_index.h"
 
 #include "esp32-hal-log.h"
-  static const char *TAG = "camera_httpd";
+static const char *TAG = "camera_httpd";
+
+#define CONFIG_RLOG_PROJECT_LEVEL RLOG_LEVEL_VERBOSE  // выводим сообщения всех уровней
+#define CONFIG_RLOG_SHOW_TIMESTAMP 0                  // не выводим отметок времени
+#define CONFIG_RLOG_SHOW_FILEINFO 0                   // не выводим отметку о месте сообщения в скетче
+#include "rLog.h"                                      
+static const char* rl = "CamWeb";                     // указали тег сообщений
 
 #if CONFIG_ESP_FACE_DETECT_ENABLED
   #include "fd_forward.h"
@@ -127,7 +130,6 @@ httpd_handle_t camera_httpd = NULL;
     static face_id_list id_list = {0};
   #endif
 #endif
-
 // ****************************************************************************
 // * Взять указатель на структуру ra_filter_t и размер выборки (sample_size), *
 // *    использовать поля структуры ra_filter_t для инициализации значений    *
@@ -1136,13 +1138,15 @@ static esp_err_t index_handler(httpd_req_t *req)
     }
 }
 
+// ****************************************************************************
+// *  Подготовить обработчики и стартовать сервер камеры (по camera_httpd) и  *
+// *                  потоковый сервер (по stream_httpd)                      *
+// ****************************************************************************
 void startCameraServer()
 {
   httpd_config_t config = HTTPD_DEFAULT_CONFIG(); // определили конфигурацию для HTTP-сервера, как по умолчанию
   config.max_uri_handlers = 16;                   // увеличили максимальное количество разрешённых обработчиков URI
-  
   // Определяем обработчики разных http-запросов
-
   httpd_uri_t index_uri = 
   {
     .uri = "/",
@@ -1252,59 +1256,55 @@ void startCameraServer()
       face_id_init(&id_list, FACE_ID_SAVE_NUMBER, ENROLL_CONFIRM_TIMES);
     #endif
   #endif
-  
-  // ESP_LOGI(TAG, "Starting web server on port: '%d'", config.server_port);
-  Serial.begin(115200);
-  delay(200);
-  Serial.print("Starting web server on port: "); Serial.println(config.server_port);
 
-/** 
- * Стартуем HTTP-сервер: esp_err_t httpd_start(httpd_handle_t *handle, const httpd_config_t *config):
- * создаём экземпляр HTTP-сервера, выделяет ему память/ресурсы в зависимости от заданной конфигурации
- * и выдаёт дескриптор экземпляру сервера.
- * 
- * На сервере имеется прослушивающий сокет (TCP) для HTTP-трафика и управляющий сокет (UDP) 
- * для управляющих сигналов, которые выбираются циклически (по алгоритму round robin) 
- * в цикле задач сервера (server task loop). 
- * Приоритет задачи сервера и размер её стека конфигурируются во время создания 
- * экземпляра сервера путем передачи структуры httpd_config_t в вызов httpd_start().
- * 
- * TCP-трафик обрабатывается как HTTP-запросы, и, в зависимости от запрошенного URI, 
- * вызываются зарегистрированные пользователем обработчики, которые должны 
- * отправлять HTTP-пакеты ответов.
- * 
- * Example usage:
- * // Функция для запуска веб-сервера
- * httpd_handle_t start_webserver(void)
- * {
- *   // Генерируем конфигурацию по умолчанию
- *   httpd_config_t config = HTTPD_DEFAULT_CONFIG();
- *   // Инициируем пустой дескриптор http_server
- *   (если сервер не запуститься, вернем дескриптор равный NULL)
- *   httpd_handle_t server = NULL;
- *   // Запускаем httpd-сервер и получаем дескриптор
- *   if (httpd_start(&server, &config) == ESP_OK) 
- *   {
- *     // Регистрируем обработчики URI
- *     httpd_register_uri_handler(server, &uri_get);
- *     httpd_register_uri_handler(server, &uri_post);
- *   }
- *   // Возвращаем реальный дескриптор или NULL, если серверу не удалось запуститься
- *   return server;
- * }
- * 
- * Parameters:
- *   config -- [in]  конфигурация для нового экземпляра сервера
- *   handle -- [out] дескриптор вновь созданного экземпляра сервера. NULL в случае ошибки
- *   
- * Returns
- * 
- * ESP_OK                  - экземпляр успешно создан
- * ESP_ERR_INVALID_ARG     - недопустимый аргумент(ы)
- * ESP_ERR_HTTPD_ALLOC_MEM - не удалось выделить память для экземпляра
- * ESP_ERR_HTTPD_TASK      - не удалось запустить серверную задачу
-**/
-
+  // Стартуем HTTP-сервер камеры
+  /** 
+   * Стартуем HTTP-сервер: esp_err_t httpd_start(httpd_handle_t *handle, const httpd_config_t *config):
+   * создаём экземпляр HTTP-сервера, выделяет ему память/ресурсы в зависимости от заданной конфигурации
+   * и выдаёт дескриптор экземпляру сервера.
+   * 
+   * На сервере имеется прослушивающий сокет (TCP) для HTTP-трафика и управляющий сокет (UDP) 
+   * для управляющих сигналов, которые выбираются циклически (по алгоритму round robin) 
+   * в цикле задач сервера (server task loop). 
+   * Приоритет задачи сервера и размер её стека конфигурируются во время создания 
+   * экземпляра сервера путем передачи структуры httpd_config_t в вызов httpd_start().
+   * 
+   * TCP-трафик обрабатывается как HTTP-запросы, и, в зависимости от запрошенного URI, 
+   * вызываются зарегистрированные пользователем обработчики, которые должны 
+   * отправлять HTTP-пакеты ответов.
+   * 
+   * Example usage:
+   * // Функция для запуска веб-сервера
+   * httpd_handle_t start_webserver(void)
+   * {
+   *   // Генерируем конфигурацию по умолчанию
+   *   httpd_config_t config = HTTPD_DEFAULT_CONFIG();
+   *   // Инициируем пустой дескриптор http_server
+   *   (если сервер не запуститься, вернем дескриптор равный NULL)
+   *   httpd_handle_t server = NULL;
+   *   // Запускаем httpd-сервер и получаем дескриптор
+   *   if (httpd_start(&server, &config) == ESP_OK) 
+   *   {
+   *     // Регистрируем обработчики URI
+   *     httpd_register_uri_handler(server, &uri_get);
+   *     httpd_register_uri_handler(server, &uri_post);
+   *   }
+   *   // Возвращаем реальный дескриптор или NULL, если серверу не удалось запуститься
+   *   return server;
+   * }
+   * 
+   * Parameters:
+   *   config -- [in]  конфигурация для нового экземпляра сервера
+   *   handle -- [out] дескриптор вновь созданного экземпляра сервера. NULL в случае ошибки
+   *   
+   * Returns
+   * 
+   * ESP_OK                  - экземпляр успешно создан
+   * ESP_ERR_INVALID_ARG     - недопустимый аргумент(ы)
+   * ESP_ERR_HTTPD_ALLOC_MEM - не удалось выделить память для экземпляра
+   * ESP_ERR_HTTPD_TASK      - не удалось запустить серверную задачу
+  **/
+  rlog_i(rl, "Стартуется сервер камеры на порту: %d",config.server_port);
   if (httpd_start(&camera_httpd, &config) == ESP_OK)
   {
     httpd_register_uri_handler(camera_httpd, &index_uri);
@@ -1319,10 +1319,10 @@ void startCameraServer()
     httpd_register_uri_handler(camera_httpd, &pll_uri);
     httpd_register_uri_handler(camera_httpd, &win_uri);
   }
-
+  // Стартуем потоковый сервер
   config.server_port += 1;
   config.ctrl_port += 1;
-  ESP_LOGI(TAG, "Starting stream server on port: '%d'", config.server_port);
+  rlog_i(rl, "Стартуется потоковый сервер на порту: %d",config.server_port);
   if (httpd_start(&stream_httpd, &config) == ESP_OK)
   {
     httpd_register_uri_handler(stream_httpd, &stream_uri);
