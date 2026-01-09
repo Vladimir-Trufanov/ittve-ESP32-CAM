@@ -1146,7 +1146,14 @@ void startCameraServer()
 {
   httpd_config_t config = HTTPD_DEFAULT_CONFIG(); // определили конфигурацию для HTTP-сервера, как по умолчанию
   config.max_uri_handlers = 16;                   // увеличили максимальное количество разрешённых обработчиков URI
-  // Определяем обработчики разных http-запросов
+
+  // Определяем объекты типа структуры httpd_uri_t для обработчиков разных http-запросов: 
+  // в них заполняются следующие поля:
+  // uri      — текст ссылки на страницу (например, /hello, /data),
+  // method   — тип метода (например, HTTP_GET, HTTP_POST, HTTP_PUT, HTTP_DELETE),
+  // handler  — указатель на функцию C, которая будет обрабатывать запросы, соответствующие URI и методу,
+  // user_ctx — указатель на пользовательские контекстные данные, которые будут переданы в функцию обработчика.
+
   httpd_uri_t index_uri = 
   {
     .uri = "/",
@@ -1307,6 +1314,8 @@ void startCameraServer()
   rlog_i(rl, "Стартуется сервер камеры на порту: %d",config.server_port);
   if (httpd_start(&camera_httpd, &config) == ESP_OK)
   {
+    // Регистрируем URI-обработчики страниц с использованием httpd_handle_t 
+    // с помощью функции httpd_register_uri_handler. 
     httpd_register_uri_handler(camera_httpd, &index_uri);
     httpd_register_uri_handler(camera_httpd, &cmd_uri);
     httpd_register_uri_handler(camera_httpd, &status_uri);
