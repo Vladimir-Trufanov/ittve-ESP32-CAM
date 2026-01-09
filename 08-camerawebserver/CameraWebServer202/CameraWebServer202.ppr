@@ -34,19 +34,19 @@ CameraWebServer202
 0=CameraWebServer202.ino
 1=app_httpd.cpp
 2=esp_http_server.h
-3=CameraWebServer202.ppr
+3=esp_camera.h
 [Selected Project Files]
 Main=
 Selected=CameraWebServer202.ino
 [CameraWebServer202.ino]
-TopLine=1
-Caret=1,32
+TopLine=105
+Caret=6,115
 [app_httpd.cpp]
 TopLine=243
 Caret=25,253
 [esp_http_server.h]
 TopLine=272
 Caret=1,283
-[CameraWebServer202.ppr]
-TopLine=12
-Caret=2,43
+[esp_camera.h]
+TopLine=207
+Caret=2,225

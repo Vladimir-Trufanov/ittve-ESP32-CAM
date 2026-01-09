@@ -1,6 +1,6 @@
 /** Arduino, ESP32, C/C++ ************************** CameraWebServer202.ino ***
  * 
- * v2.0.3, 08.01.2026                                 Автор:      Труфанов В.Е.
+ * v2.0.4, 09.01.2026                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
  * 
  * Preferences:       https://espressif.github.io/arduino-esp32/package_esp32_dev_index.json
@@ -73,7 +73,7 @@ void setup()
   config.xclk_freq_hz = 20000000;
   config.pixel_format = PIXFORMAT_JPEG;
   
-  // Если плата имеет PSRAM, то инициировать с разрешением UXGA и более высоким 
+  // Если плата имеет PSRAM, то инициируем с разрешением UXGA и более высоким 
   // качеством JPEG для увеличения предварительно выделенного буфера кадров.
   if(psramFound())
   {
@@ -81,6 +81,7 @@ void setup()
     config.jpeg_quality = 10;
     config.fb_count = 2;
   } 
+  // Иначе инициируем с разрешением SVGA 
   else 
   {
     config.frame_size = FRAMESIZE_SVGA;
@@ -93,7 +94,7 @@ void setup()
     pinMode(14, INPUT_PULLUP);
   #endif
 
-  // camera init
+  // Инициируем камеру
   esp_err_t err = esp_camera_init(&config);
   if (err != ESP_OK) 
   {
@@ -101,16 +102,16 @@ void setup()
     rlog_i(rl, "Не удалось выполнить инициализацию камеры. Ошибка:0x%x",err);
     return;
   }
-
+  // Считываем и подправляем параметры камеры, так как исходные сенсоры перевернуты 
+  // вертикально, а цвета немного насыщены
   sensor_t * s = esp_camera_sensor_get();
-  // initial sensors are flipped vertically and colors are a bit saturated
   if (s->id.PID == OV3660_PID) 
   {
-    s->set_vflip(s, 1); // flip it back
-    s->set_brightness(s, 1); // up the brightness just a bit
-    s->set_saturation(s, -2); // lower the saturation
+    s->set_vflip(s, 1);       // перевернули изображение обратно
+    s->set_brightness(s, 1);  // немного увеличили яркость
+    s->set_saturation(s, -2); // уменьшили насыщенность
   }
-  // drop down frame size for higher initial frame rate
+  // Определяем начальный размер кадров и частоту, как QVGA
   s->set_framesize(s, FRAMESIZE_QVGA);
 
   #if defined(CAMERA_MODEL_M5STACK_WIDE) || defined(CAMERA_MODEL_M5STACK_ESP32CAM)

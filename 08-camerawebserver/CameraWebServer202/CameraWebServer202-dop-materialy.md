@@ -1,5 +1,13 @@
 ### [2026-01-06 CameraWebServer - дополнительные материалы](#)
 
+#### Основы
+
+##### [esp32-camera](https://github.com/espressif/esp32-camera)
+
+##### [ESP32-CAM ESP-IDF Take Photos and Save into SD Card](https://esp32tutorials.com/esp32-cam-esp-idf-take-photos-save-sd-card/)
+
+##### [Chapter 149: Camera Interface and ESP32-CAM](https://circuitlabs.net/camera-interface-and-esp32-cam/)
+
 #### [1.1: 2022-02-01 Использование модуля камеры ESP32 для видео трансляции и распознавания лиц](https://microkontroller.ru/esp32-projects/ispolzovanie-modulya-kamery-esp32-dlya-video-translyaczii-i-raspoznavaniya-licz/)
 
 ***Тезисы***
