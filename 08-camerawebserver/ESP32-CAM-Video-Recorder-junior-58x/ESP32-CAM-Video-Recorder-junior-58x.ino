@@ -71,6 +71,74 @@ Global variables use 59268 bytes (18%) of dynamic memory, leaving 268412 bytes f
 C:\ArduinoPortable\arduino-1.8.19\portable\packages\esp32\tools\esptool_py\3.1.0/esptool.exe --chip esp32 --port COM7 --baud 460800 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 4MB 0xe000 C:\ArduinoPortable\arduino-1.8.19\portable\packages\esp32\hardware\esp32\2.0.2/tools/partitions/boot_app0.bin 0x1000 C:\Users\James\AppData\Local\Temp\arduino_build_568185/ESP32-CAM-Video-Recorder-junior-58x.8.ino.bootloader.bin 0x10000 C:\Users\James\AppData\Local\Temp\arduino_build_568185/ESP32-CAM-Video-Recorder-junior-58x.8.ino.bin 0x8000 C:\Users\James\AppData\Local\Temp\arduino_build_568185/ESP32-CAM-Video-Recorder-junior-58x.8.ino.partitions.bin 
 
 
+                                    
+-------------------------------------
+ESP32-CAM-Video-Recorder-junior v58
+-------------------------------------
+setup, core 1, priority = 1
+--- reboot ------ because: ESP_RST_POWERON
+Reading the eprom  ...
+Good settings in the EPROM 
+New File Group 19
+Writing to EPROM ...
+Mounting the SD card ...
+SD_MMC Begin: 1
+SD_MMC Card Type: SDHC
+SD_MMC Card Size: 15103MB
+Try to get parameters from config.txt ...
+Reading simple.txt
+=========   Data fram config.txt and defaults  =========
+Name desklens
+Framesize 11
+Quality 12
+Framesize config 13
+Quality config 5
+Buffers config 3
+Length 1800
+Interval 0
+Speedup 1
+Streamdelay 0
+Internet 0
+Zone len 3, GMT
+ssid ssid1234
+pass mrpeanut
+Creating logfile /desklens19.999.txt
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+You have not wifi - no streamning, no file manager
+Put your ssid and password in config.txt on the sd card
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Setting up the camera ...
+Frame config 13, quality config 5, buffers config 3
+Before camera config ...Internal Total heap 289896, internal Free Heap 263432, SPIRam Total heap   4192115, SPIRam Free Heap   4165179
+After  camera config ...Internal Total heap 289656, internal Free Heap 226436, SPIRam Total heap   4192079, SPIRam Free Heap   3013143
+
+Camera started correctly, Type is 26 (hex) of 9650, 7725, 2640, 3660, 5640
+
+Pic, len=192413, new fb 3F8071CC
+Pic, len=18628, new fb 3F864DDC
+Pic, len=18628, new fb 3F8C29EC
+Pic, len=67704, new fb 3F8071CC
+Checking SD for available space ...
+Total space: 15095MB
+Used space: 558MB
+Nothing deleted, 3.7% disk full
+Creating the_camera_loop_task
+the camera loop, core 0, priority = 6
+the_sd_loop, core 1, priority = 4
+  End of setup()
+
+
+
+Start the avi ... at 3295
+Framesize 11, quality 12, length 1800 seconds
+
+Starting an avi 
+File open: /desklens19.001.avi
+
+Recording 1800 seconds.
+
+
+
 */
 
 //#define LOG_LOCAL_LEVEL ESP_LOG_VERBOSE
@@ -87,12 +155,6 @@ char devname[30];
 String devstr =  "desklens";
 
 int IncludeInternet = 0;      // 0 for no internet, 1 for time only, 2 streaming with WiFiMan, 3 ssid in file, 4 default internet on and file
-
-const char* ssid     = "OPPO A9 2020";
-const char* password = "b277a4ee84e8";
-
-//const char* ssid     = "TP-Link_B394";
-//const char* password = "18009217";
 
 // https://sites.google.com/a/usapiens.com/opnode/time-zones  -- find your timezone here
 String TIMEZONE = "GMT0BST,M3.5.0/01,M10.5.0/02";
@@ -663,8 +725,8 @@ const char simple_txt[] PROGMEM = {
   0x2C, 0x20, 0x32, 0x30, 0x32, 0x32, 0x0D, 0x0A, 0x0D, 0x0A
 };
 
-void read_config_file() {
-
+void read_config_file() 
+{
   // if there is a config.txt, use it plus defaults
   // else use defaults, and create a config.txt
 
@@ -716,12 +778,19 @@ void read_config_file() {
   int cstreamdelay = 0;
   int cinternet = 0;
   String czone = "GMT";
-  cssid = "ssid1234";
-  cpass = "mrpeanut";
+  
+  //cssid = "ssid1234";
+  //cpass = "mrpeanut";
+  
+  //cssid = "TP-Link_B394";
+  //cpass = "18009217";
+
+  cssid = "OPPO A9 2020";
+  cpass = "b277a4ee84e8";
 
   File config_file = SD_MMC.open("/config.txt", "r");
-  if (config_file) {
-
+  if (config_file) 
+  {
     Serial.println("Reading simple.txt");
     cname = config_file.readStringUntil(' ');
     junk = config_file.readStringUntil('\n');
@@ -738,20 +807,30 @@ void read_config_file() {
     junk = config_file.readStringUntil('\n');
     czone = config_file.readStringUntil(' ');
     junk = config_file.readStringUntil('\n');
-    cssid = config_file.readStringUntil(' ');
+    cssid = config_file.readStringUntil('#');
     junk = config_file.readStringUntil('\n');
-    cpass = config_file.readStringUntil(' ');
+    cpass = config_file.readStringUntil('#');
     junk = config_file.readStringUntil('\n');
     config_file.close();
 
-    if (String(cssid) == "ssid1234") {
+    Serial.print("cssid: "); Serial.println(cssid);
+    delay(10000);
+
+    if (String(cssid) == "ssid1234") 
+    {
       cinternet = 0;
-    } else if (String(cssid) == "wifiman") {
+    } 
+    else if (String(cssid) == "wifiman") 
+    {
       cinternet = 2;
-    } else {
+    } 
+    else 
+    {
       cinternet = 4;
     }
-  } else {
+  } 
+  else 
+  {
     Serial.println("Failed to open config.txt - writing a default");
 
     // lets make a simple.txt config file
@@ -1466,7 +1545,10 @@ bool init_wifi()
   uint32_t brown_reg_temp = READ_PERI_REG(RTC_CNTL_BROWN_OUT_REG);
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
 
-  if (IncludeInternet >= 3) {
+  if (IncludeInternet >= 3) 
+  {
+    Serial.print("IncludeInternet: "); Serial.println(IncludeInternet);
+    Serial.print("devname:         "); Serial.println(devname);
 
     WiFi.disconnect(true, true);
     //WiFi.mode(WIFI_STA);  // https://github.com/espressif/arduino-esp32/issues/6086
