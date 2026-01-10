@@ -3562,10 +3562,12 @@ void delete_old_stuff();
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-void setup() {
-
+void setup() 
+{
   Serial.begin(115200);
   Serial.println("\n\n---");
+  Serial.println("Arduino IDE 2.3.7 - Espressif ESP32 3.3.5");
+  delay(10000);
 
   pinMode(33, OUTPUT);             // little red led on back of chip
   digitalWrite(33, LOW);           // turn on the red LED on the back of chip
