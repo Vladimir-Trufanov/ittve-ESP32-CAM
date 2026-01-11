@@ -1,64 +1,54 @@
+/** Arduino, ESP32, C/C++ ************* VideoRecorderESP32-CAM-junior62.ino ***
+ * 
+ * v1.0.0, 11.01.2026                                 Автор:      Труфанов В.Е.
+ * Copyright © 2026 tve                               Дата создания: 11.01.2026
+ * 
+ * Modify by James Zahary Sep 12, 2020 - jamzah.plc@gmail.com
+ * 
+ * По версии https://github.com/jameszah/ESP32-CAM-Video-Recorder,
+ * которая включает работу с Wi-Fi, потоковым видео, управлением по http, 
+ * через telegram, pir-контроль, сенсорное управление, загрузка по ftp и другое.
+ * 
+ * Программа записывает видео в формате mjpeg avi на sd-карту ESP 32-CAM. 
+ * По умолчанию файлы имеют такие названия, как: desklens001.003.avi
+ * "desklens" - имя определяемое разработчиком,
+ * 001 - это число, сохраненное в eprom, которое будет увеличиваться при каждой загрузке устройства
+ * 003 - это третий файл, созданный во время текущей загрузки
+ * 
+ * Arduino IDE 2.3.7 
+ * Esp32 от Espressif Systems версии 3.3.5
+ * Payment:           "Al Thinker ESP32-CAM"
+ * CPU Frequency:     "240MHz (WiFi/BT)"
+ * Flash Frequency:   "80MHz"
+ * Flash Mode:        "QIO"
+**/
+
 /*
+  - Sep 17, 2024 arduino 1.8.19
+    esp32-arduino 3.04
+    change to soc line
+    ESP32-CAM-Video-Recorder-junior-60x.4.7soc ~ ArduinoSketch folder
 
-  ESP32-CAM-Video-Recorder-junior
-
-  This program records an mjpeg avi video to the sd card of an ESP32-CAM.
-
-
-  It is the junior version of   https://github.com/jameszah/ESP32-CAM-Video-Recorder
-  which has 100 other features of wifi, streaming video, http control, telegram updates, pir control,
-  touch control, ftp downloads, .... and other things that make it very big and complex.
-
-  Just set a few parameters, compile and download, and it will record on power-on, until sd is full, or power-off.
-  Then pull out the sd and move it to your computer, and you will see all but the last file avi which died during the unplug.
-
-  The files will have the name such as:
-
-    desklens001.003.avi
-
-    "desklens" is your devname
-    001 - is a number stored in eprom that will increase everytime your device boots
-    003 - is the 3rd file created during the current boot
-
-  Small red led on the back blinks with every frame.
-
-
-  by James Zahary Sep 12, 2020
-     jamzah.plc@gmail.com
-
-    - Sep 17, 2024 arduino 1.8.19
-                   esp32-arduino 3.04
-                   change to soc line
-                   ESP32-CAM-Video-Recorder-junior-60x.4.7soc ~ ArduinoSketch folder
-
-    - Feb 24, 2025 arduino 1.8.19
-                  esp32-arduino 3.1.1
-                  ESP32-CAM-Video-Recorder-junior-62
-                  ota passowrd "mrpeanut"
-                  ap mode password "12344321"
-                  config file is now config2.txt
+  - Feb 24, 2025 arduino 1.8.19
+    esp32-arduino 3.1.1
+    ESP32-CAM-Video-Recorder-junior-62
+    ota passowrd "mrpeanut"
+    ap mode password "12344321"
+    config file is now config2.txt
 
   https://github.com/jameszah/ESP32-CAM-Video-Recorder-junior
-
-    jameszah/ESP32-CAM-Video-Recorder-junior is licensed under the
-    GNU General Public License v3.0
+  jameszah/ESP32-CAM-Video-Recorder-junior is licensed under the
+  GNU General Public License v3.0
 
   The is Arduino code, with standard setup for ESP32-CAM
-    - Board ESP32 Wrover Module or AI Thinker ESP32-CAM
-    - Partition Scheme Minimal SPIFFS with OTA
-
-  Needs these libraries or better:
-
-
+  - Board ESP32 Wrover Module or AI Thinker ESP32-CAM
+  - Partition Scheme Minimal SPIFFS with OTA
 */
 
-//#define LOG_LOCAL_LEVEL ESP_LOG_VERBOSE
 #include "esp_log.h"
 #include "esp_http_server.h"
 #include "esp_camera.h"
 #include "sensor.h"
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 #define jpr(format, ...) \
   { \
@@ -83,8 +73,10 @@
 static const char vernum[] = "v62.34";
 char devname[30];
 
-// https://sites.google.com/a/usapiens.com/opnode/time-zones  -- find your timezone here
-String TIMEZONE = "GMT0BST,M3.5.0/01,M10.5.0/02";
+// Определяем Московскую timezone в соответствии с:
+// https://www.gnu.org/software/libc/manual/html_node/Proleptic-TZ.html
+// String TIMEZONE = "GMT0BST,M3.5.0/01,M10.5.0/02";
+String TIMEZONE = "MSK+00";
 
 #define Lots_of_Stats 1
 #define blinking 0
@@ -94,15 +86,13 @@ int quality ;
 int framesizeconfig ;
 int qualityconfig ;
 int buffersconfig ;
-int avi_length ;            // how long a movie in seconds -- 1800 sec = 30 min
-int frame_interval ;          // record at full speed
-int speed_up_factor ;          // play at realtime
-int stream_delay ;           // minimum of 500 ms delay between frames
+int avi_length ;            // сколько длится фильм в секундах -- 1800 sec = 30 min
+int frame_interval ;        // запись на полной скорости
+int speed_up_factor ;       // воспроизведение в режиме реального времени
+int stream_delay ;          // задержка между кадрами не менее 500 мс
 
-int MagicNumber = 12;                // change this number to reset the eprom in your esp32 for file numbers
+int MagicNumber = 12;       // изменить этот номер, чтобы сбросить номера файлов в eprom вашего esp32
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 bool configfile = false;
 bool InternetOff = true;
 bool reboot_now = false;
@@ -219,10 +209,6 @@ int gframe_cnt;
 int gfblen;
 int gj;
 int  gmdelay;
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//  Avi Writer Stuff here
-
 
 // MicroSD
 #include "driver/sdmmc_host.h"
@@ -276,15 +262,17 @@ uint8_t avi1_buf[4] = {0x41, 0x56, 0x49, 0x31};    // "AVI1"
 uint8_t idx1_buf[4] = {0x69, 0x64, 0x78, 0x31};    // "idx1"
 
 
-struct frameSizeStruct {
+struct frameSizeStruct 
+{
   uint8_t frameWidth[2];
   uint8_t frameHeight[2];
 };
 
-//  data structure from here https://github.com/s60sc/ESP32-CAM_MJPEG2SD/blob/master/avi.cpp, extended for ov5640
+// data structure from here https://github.com/s60sc/ESP32-CAM_MJPEG2SD/blob/master/avi.cpp, extended for ov5640
 // must match https://github.com/espressif/esp32-camera/blob/b6a8297342ed728774036089f196d599f03ea367/driver/include/sensor.h#L87
 // which changed in Nov 2024
-static const frameSizeStruct frameSizeData[] = {
+static const frameSizeStruct frameSizeData[] = 
+{
   {{0x60, 0x00}, {0x60, 0x00}}, // FRAMESIZE_96X96,    // 96x96    0 framesize
   {{0xA0, 0x00}, {0x78, 0x00}}, // FRAMESIZE_QQVGA,    // 160x120  1
   {{0x60, 0x00}, {0x60, 0x00}}, // FRAMESIZE_128X128   // 128x128  2
@@ -315,7 +303,8 @@ static const frameSizeStruct frameSizeData[] = {
 
 };
 
-const int avi_header[AVIOFFSET] PROGMEM = {
+const int avi_header[AVIOFFSET] PROGMEM = 
+{
   0x52, 0x49, 0x46, 0x46, 0xD8, 0x01, 0x0E, 0x00, 0x41, 0x56, 0x49, 0x20, 0x4C, 0x49, 0x53, 0x54,
   0xD0, 0x00, 0x00, 0x00, 0x68, 0x64, 0x72, 0x6C, 0x61, 0x76, 0x69, 0x68, 0x38, 0x00, 0x00, 0x00,
   0xA0, 0x86, 0x01, 0x00, 0x80, 0x66, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00, 0x00,
@@ -380,7 +369,8 @@ void print_sock(int sock) {
 
   char ip[INET6_ADDRSTRLEN] = {0};
 
-  if (getpeername(clientFd, (struct sockaddr*)&clientAddr, &addrLen) == 0) {
+  if (getpeername(clientFd, (struct sockaddr*)&clientAddr, &addrLen) == 0) 
+  {
     //inet_ntop(AF_INET, &clientAddr.sin_addr.s_addr, ip, sizeof(ip));
     jpr("family %d ", clientAddr.sin6_family);
     inet_ntop(AF_INET, &clientAddr.sin6_addr.un.u32_addr[3], ip, sizeof(ip));
@@ -393,11 +383,14 @@ void print_sock(int sock) {
     jpr(", Client Port: ");
     jprln("%d", clientPort);
 
-  } else {
+  } 
+  else 
+  {
     Serial.println("Failed to get client address.");
   }
 
-  if (getsockname(clientFd, (struct sockaddr*)&clientAddr, &addrLen) == 0) {
+  if (getsockname(clientFd, (struct sockaddr*)&clientAddr, &addrLen) == 0) 
+  {
     //inet_ntop(AF_INET, &clientAddr.sin_addr.s_addr, ip, sizeof(ip));
     jpr("family %d ", clientAddr.sin6_family);
     inet_ntop(AF_INET, &clientAddr.sin6_addr.un.u32_addr[3], ip, sizeof(ip));
@@ -442,12 +435,8 @@ void major_fail() {
 }
 
 
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-
-static void config_camera() {
+static void config_camera() 
+{
 
   camera_config_t config;
 
@@ -1403,7 +1392,7 @@ bool init_wifi() {
   String idfver = esp_get_idf_version();
   Serial.println(esp_get_idf_version());
 
-  jpr("Setting AP (Access Point)…");
+  jpr("Setting AP (Access Point)вЂ¦");
 
   WiFi.softAP(ssidch3, passch3);
 
@@ -3558,10 +3547,8 @@ void the_camera_loop (void* pvParameter);
 void the_sd_loop (void* pvParameter);
 void delete_old_stuff();
 
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 void setup() 
 {
   Serial.begin(115200);
@@ -3577,9 +3564,6 @@ void setup()
 
   pinMode(12, INPUT_PULLUP);        // pull this down to stop recording
   pinMode(13, INPUT_PULLUP);        // pull this down switch wifi
-
-  //Serial.setDebugOutput(true);
-
 
   // SD camera init
   Serial.println("Mounting the SD card ...");
@@ -4061,3 +4045,5 @@ void loop() {
     }
   }
 }
+
+// ************************************ VideoRecorderESP32-CAM-junior62.ino ***

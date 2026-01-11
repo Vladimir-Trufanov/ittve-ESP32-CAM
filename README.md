@@ -92,10 +92,6 @@
  
 ###### [к содержанию](#soderzhanie)
 
-### [Использование модуля камеры ESP32 для видео трансляции и распознавания лиц](https://microkontroller.ru/esp32-projects/ispolzovanie-modulya-kamery-esp32-dlya-video-translyaczii-i-raspoznavaniya-licz/)
-
-### [Делаем простой видеорегистратор из ESP32-CAM](https://dzen.ru/a/ZDv6OUs-GT9zVSS5)
-
 ### [Веб-сервер потокового видео ESP32-CAM (работает с Home Assistant)](https://voltiq.ru/esp32-cam-video-web-server/)
 
 ### [Как своими руками сделать WiFi камеру слежения (ESP32-CAM)](https://habr.com/ru/companies/skillfactory/articles/645877/)

@@ -1,6 +1,5 @@
 ## ESP32-CAM-Video-Recorder
 
-
 ### [ESP32-CAM-Video-Recorder](https://github.com/jameszah/ESP32-CAM-Video-Recorder)
 
 Обновление от 12 января 2022 года — ***esp32-arduino 2.0.2*** и замена ftp на http для передачи файлов
@@ -308,6 +307,9 @@ desklens 10.3 + 120s.avi
 
 Маленький красный светодиод на задней панели мигает при каждом кадре.
 
+### Библиография
+
+#### [Делаем простой видеорегистратор из ESP32-CAM](https://dzen.ru/a/ZDv6OUs-GT9zVSS5)
 
 
 
