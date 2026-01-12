@@ -36,7 +36,8 @@ camera_config_t esp32cam_config{
     .fb_count = 2       // if more than one i2s runs in continous mode.  Use only with jpeg
 };
 
-camera_config_t esp32cam_aithinker_config{
+camera_config_t esp32cam_aithinker_config
+{
 
     .pin_pwdn = 32,
     .pin_reset = -1,
@@ -66,12 +67,14 @@ camera_config_t esp32cam_aithinker_config{
     // .frame_size = FRAMESIZE_UXGA, // needs 234K of framebuffer space
     // .frame_size = FRAMESIZE_SXGA, // needs 160K for framebuffer
     // .frame_size = FRAMESIZE_XGA, // needs 96K or even smaller FRAMESIZE_SVGA - can work if using only 1 fb
-    .frame_size = FRAMESIZE_SVGA,
+    // .frame_size = FRAMESIZE_SVGA,
+    .frame_size = FRAMESIZE_VGA,     // 640x480
     .jpeg_quality = 12, //0-63 lower numbers are higher quality
-    .fb_count = 2       // if more than one i2s runs in continous mode.  Use only with jpeg
+    .fb_count = 1       // if more than one i2s runs in continous mode.  Use only with jpeg
 };
 
-camera_config_t esp32cam_ttgo_t_config{
+camera_config_t esp32cam_ttgo_t_config
+{
 
     .pin_pwdn = 26,
     .pin_reset = -1,

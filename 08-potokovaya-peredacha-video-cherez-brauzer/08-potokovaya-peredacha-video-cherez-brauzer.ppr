@@ -1,0 +1,57 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-ESP32-CAM\08-potokovaya-peredacha-video-cherez-brauzer
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+Extensions=*.*
+[Project tree]
+08-potokovaya-peredacha-video-cherez-brauzer
+	+08-potokovaya-peredacha-video-cherez-brauzer
+		+ESP32-devcam
+			-Sklad
+				ESP32-devcam\Sklad\platformio.ini
+				ESP32-devcam\Sklad\wifikeys.h
+				ESP32-devcam\Sklad\wifikeys_template.h
+			ESP32-devcam\CRtspSession.cpp
+			ESP32-devcam\CRtspSession.h
+			ESP32-devcam\CStreamer.cpp
+			ESP32-devcam\CStreamer.h
+			ESP32-devcam\ESP32-devcam.ino
+			ESP32-devcam\JPEGSamples.cpp
+			ESP32-devcam\JPEGSamples.h
+			ESP32-devcam\LinkedListElement.h
+			ESP32-devcam\OV2640.cpp
+			ESP32-devcam\OV2640.h
+			ESP32-devcam\OV2640Streamer.cpp
+			ESP32-devcam\OV2640Streamer.h
+			ESP32-devcam\platglue.h
+			ESP32-devcam\platglue-esp32.h
+			ESP32-devcam\platglue-mbed.h
+			ESP32-devcam\platglue-posix.h
+			ESP32-devcam\SimStreamer.cpp
+			ESP32-devcam\SimStreamer.h
+		08-potokovaya-peredacha-video-cherez-brauzer.md
+		08-potokovaya-peredacha-video-cherez-brauzer.ppr
+		Micro-RTSP-master.zip
+[Open project files]
+0=ESP32-devcam\ESP32-devcam.ino
+1=ESP32-devcam\OV2640.cpp
+[Selected Project Files]
+Main=
+Selected=ESP32-devcam\OV2640.cpp
+[ESP32-devcam\ESP32-devcam.ino]
+TopLine=119
+Caret=31,133
+[ESP32-devcam\OV2640.cpp]
+TopLine=121
+Caret=1,76

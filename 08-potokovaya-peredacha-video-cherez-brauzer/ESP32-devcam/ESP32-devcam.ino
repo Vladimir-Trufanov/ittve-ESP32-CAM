@@ -7,10 +7,10 @@
 #include "OV2640Streamer.h"
 //#include "CRtspSession.h"
 
-#define ENABLE_OLED //if want use oled ,turn on thi macro
+// #define ENABLE_OLED //if want use oled ,turn on thi macro
 // #define SOFTAP_MODE // If you want to run our own softap turn this on
 #define ENABLE_WEBSERVER
-//#define ENABLE_RTSPSERVER
+// #define ENABLE_RTSPSERVER
 
 #ifdef ENABLE_OLED
 #include "SSD1306.h"
@@ -33,9 +33,10 @@ WebServer server(80);
 
 
 #ifdef SOFTAP_MODE
-IPAddress apIP = IPAddress(192, 168, 1, 1);
+  IPAddress apIP = IPAddress(192, 168, 1, 1);
 #else
-#include "wifikeys.h"
+  const char* ssid     = "OPPO A9 2020";
+  const char* password = "b277a4ee84e8";
 #endif
 
 #ifdef ENABLE_WEBSERVER
@@ -128,7 +129,8 @@ void setup()
     {
         ;
     }
-    cam.init(esp32cam_config);
+
+    cam.init(esp32cam_aithinker_config);
 
     IPAddress ip;
 
