@@ -25,100 +25,57 @@
 09:56:41.620 -> Guru Meditation Error: Core  0 panic'ed (LoadProhibited). Exception was unhandled.
 ```
 
+#### Задача 2: внести изменения по документации сайта
 
+Правим код для использования с ESP32-CAM:
 
+- Находим строчку ***cam.init(esp32cam_config)***, заменяем на ***cam.init(esp32cam_aithinker_config)***;
 
----
+- отключаем внешний OLED экран. На нашей плате его нет
 
-
-
-
-
-
-
-***Micro-RTSP*** - это небольшая библиотека, которую можно использовать для обслуживания потоков RTSP из микроконтроллеров с ограниченными ресурсами. Это позволяет вам тривиально создать камеру RTSP-видеопотока с открытым исходным кодом.
-
-### Комментарий 2025-12-17
-
-Сейчас установлена версия Esp32 3.3.4. Проверяю работоспособность на 6 контроллере ESP32-CAM с подключенным программатором:
-
-#### StreamESP32. 
-
-Работает.
-
-#### ESP32-devcam-tve. 
-
-Работает, но нужно разбираться и отлаживать.
-
-
-### Что делал:
-
-1. Скачал библиотеку для RTSP с [github https://github.com/geeksville/Micro-RTSP](https://github.com/geeksville/Micro-RTSP) и разархивировал.
-
-2. Скопировал пример ***ESP32-devcam.ino*** из папки ***examples*** библиотеки.
-
-3. (***2024-06-03***) Скетч -> Подключить библиотеку -> Добавить .Zip библиотеку… - подключил из каталога архив ***MicroRTSP.zip***.
-
-(***2024-07-10*** просто скопировал все файлы из каталога ***Micro-RTSP/src*** в текущий ***ESP32-devcam-tve*** c одноименным скетчем и внес в файлы необходимые - описанные далее изменения)
-
-4. Правил код примера следующим образом: 
-
-- поменял инициализацию на текущую плату, то есть нашел строчку ***cam.init(esp32cam_config);*** и заменил на ***cam.init(esp32cam_aithinker_config); ***
-- отключил (закомментировал) внешний OLED экран. На нашей плате его нет. 
 ```
 // #define ENABLE_OLED
 ```
-- выбрал куда транслировать изображение:
-```
-#define ENABLE_WEBSERVER      // через браузер
-// #define ENABLE_RTSPSERVER  // через RTSP
-```
-- (***2024-06-03***) настроил подключение к WiFi точке - нашел файл ***wifikeys.h*** и изменил его:
+- выбираем куда будем транслировать изображение
 
 ```
-const char *ssid     = "YOURNETHERE";      // здесь название WiFi сети
+#define ENABLE_WEBSERVER     // через браузер
+// #define ENABLE_RTSPSERVER //через RTSP
+```
+- настраиваем подключение к WiFi. Ищем файл ***wifikeys_template.h***, изменяем его
+
+```
+const char *ssid = "YOURNETHERE";          // здесь название WiFi сети
 const char *password = "YOURPASSWORDHERE"; // здесь пароль
 ```
-(***2024-07-10*** просто отключил ***wifikeys.h*** и перенес настройку на точку доступа смартфона) :
+
+я просто удалил файл, а название WiFi сети и пароль просто ввел в код на месте #include "wifikeys.h"
 
 ```
 const char* ssid     = "OPPO A9 2020";
 const char* password = "b277a4ee84e8";
 ```
+- настраиваем качество изображения. Ищем файл OV2640.cpp. Находим структуру
 
-- настроил качество изображения в файле ***OV2640.cpp***  (он находится в директории Arduino IDE в папке \libraries\Micro-RTSP\src)
+camera_config_t esp32cam_aithinker_config{}, устанавливаем параметр
 
-Нашел структуру
-
-```
-camera_config_t esp32cam_aithinker_config {}
-```
-
-Установил параметр:
-```
-.frame_size = FRAMESIZE_VGA,  // Это разрешение 640x480
+``` 
+.frame_size = FRAMESIZE_VGA
 ```
 
-Бывают еще:
+Это разрешение 640x480. Бывают ещё:
 
 ```
-FRAMESIZE_SVGA   // 800x600
-FRAMESIZE_XGA    // 1024x768
-FRAMESIZE_HD     // 1280x720
-FRAMESIZE_SXGA   // 1280x1024
-FRAMESIZE_UXGA   // 1600x1200
+FRAMESIZE_SVGA  // 800x600
+FRAMESIZE_XGA   // 1024x768
+FRAMESIZE_HD    // 1280x720
+FRAMESIZE_SXGA  // 1280x1024
+FRAMESIZE_UXGA  // 1600x1200
 ```
 
-Так как разрешение не очень большое то поменял   ***.fb_count = 1***
+- так как разрешение не очень большое, то меняем ***.fb_count = 1***.
 
-Сохранил. Получилось примерно так:
-
-![](nastroiki-scetcha.jpeg)
-
-
-### Тестирование
-
-Прошиваем модуль. После прошивки нажимаем кнопку Reset на коммуникационной плате. Открываем Монитор порта. Где находим ip адрес нашей камеры.
+- тестирование. Прошиваем модуль. После прошивки нажимаем кнопку Reset на коммуникационной плате. Открываем Монитор порта. Где находим ip адрес нашей камеры.
 
 Открываем веб браузер. Переходим по ссылке на ip-адрес, чтобы посмотреть видео
 ```
@@ -132,29 +89,11 @@ http://<ip>/jpg
 ```
 
 
-### Проблемы
-
-1. Поддерживается одна сессия. Т.е открыть видео можно только с одного приложения.
-
-2. Скорость передачи потока через RTSP очень маленькая. Через браузер все отлично. Пока не разобрался в чем проблема. Может кто подскажет в комментариях.
-
-3. Для стабильной работы должна быть внешняя антенна на модуле.
-
-### VideoStream
-
-> **Запросы:**
-> 
-> **"как показать video от esp32 в браузере";**
-> 
-> **"как открыть rtsp поток в браузере".**
 
 
-#### VideoStream1 2025-01-31
-
----
+### Далее старый материал, может пригодится
 
 #### [ESP32-CAM with RTSP video streaming](https://learn.circuit.rocks/esp32-cam-with-rtsp-video-streaming)
-
 
 ***Плата ESP32-CAM требует много энергии! Вам понадобится источник питания 5 В с силой тока не менее 2 А, иначе плата не загрузится.***
 
@@ -197,11 +136,6 @@ waiting for download
 
 б)  установил библиотеку Micro-RTSP_ID6071 из zip-файла  Micro-RTSP в каталоге ittve-ESP32-CAM;
 
-
-
-
-
-
 #### Источники:
 
 #### [Исходный код на Github - https://github.com/circuitrocks/ESP32-RTSP](https://github.com/circuitrocks/ESP32-RTSP)
@@ -211,8 +145,6 @@ waiting for download
 #### [Источники Micro-RTSP - https://github.com/geeksville/Micro-RTSP](https://github.com/geeksville/Micro-RTSP)
 
 #### [ESP32-CAM - https://circuit.rocks/product:2659](https://circuit.rocks/product:2659)
-
----
 
 #### [flashphoner: Raise STREAM_EVENT with UNMUTE_REQUIRED type if video is muted on playbalck startup](https://github.com/flashphoner/flashphoner_client/tree/wcs_api-2.0/examples/demo/streaming/player)
 
