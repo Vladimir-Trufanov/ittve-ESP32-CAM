@@ -29,6 +29,7 @@ CStreamer::CStreamer(u_short width, u_short height) : m_Clients()
     m_URIStream = "1";
 }
 
+
 CStreamer::~CStreamer()
 {
     LinkedListElement* element = m_Clients.m_Next;
@@ -49,6 +50,7 @@ CRtspSession* CStreamer::addSession( SOCKET aClient )
     session->debug = debug;
     return session;
 }
+
 
 void CStreamer::setURI( String hostport, String pres, String stream ) // set URI parts for sessions to use.
 {
@@ -109,10 +111,10 @@ int CStreamer::SendRtpPacket(unsigned const char * jpeg, int jpegLen, int fragme
     RtpBuf[18] = (fragmentOffset & 0x0000FF00) >> 8;
     RtpBuf[19] = (fragmentOffset & 0x000000FF);
 
-    /*    These sampling factors indicate that the chrominance components of
-       type 0 video is downsampled horizontally by 2 (often called 4:2:2)
-       while the chrominance components of type 1 video are downsampled both
-       horizontally and vertically by 2 (often called 4:2:0). */
+    //    These sampling factors indicate that the chrominance components of
+    //   type 0 video is downsampled horizontally by 2 (often called 4:2:2)
+    //   while the chrominance components of type 1 video are downsampled both
+    //   horizontally and vertically by 2 (often called 4:2:0). 
     RtpBuf[20] = 0x00;                               // type (fixme might be wrong for camera data) https://tools.ietf.org/html/rfc2435
     RtpBuf[21] = q;                               // quality scale factor was 0x5e
     RtpBuf[22] = m_width / 8;                           // width  / 8

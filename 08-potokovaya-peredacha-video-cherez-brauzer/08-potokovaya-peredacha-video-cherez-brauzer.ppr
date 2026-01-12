@@ -13,15 +13,12 @@ DontOpen=0
 AbsolutePath=0
 FileFormat=0
 ProjectFilesOnly=0
+HTServer=localhost
 Extensions=*.*
 [Project tree]
 08-potokovaya-peredacha-video-cherez-brauzer
 	+08-potokovaya-peredacha-video-cherez-brauzer
 		+ESP32-devcam
-			-Sklad
-				ESP32-devcam\Sklad\platformio.ini
-				ESP32-devcam\Sklad\wifikeys.h
-				ESP32-devcam\Sklad\wifikeys_template.h
 			ESP32-devcam\CRtspSession.cpp
 			ESP32-devcam\CRtspSession.h
 			ESP32-devcam\CStreamer.cpp
@@ -40,18 +37,40 @@ Extensions=*.*
 			ESP32-devcam\platglue-posix.h
 			ESP32-devcam\SimStreamer.cpp
 			ESP32-devcam\SimStreamer.h
+		-Sklad
+			Sklad\ESP32-devcam-tve.txt
+			Sklad\platformio.ini
+			Sklad\StreamESP32.txt
+			Sklad\wifikeys.h
+			Sklad\wifikeys_template.h
 		08-potokovaya-peredacha-video-cherez-brauzer.md
 		08-potokovaya-peredacha-video-cherez-brauzer.ppr
 		Micro-RTSP-master.zip
 [Open project files]
 0=ESP32-devcam\ESP32-devcam.ino
 1=ESP32-devcam\OV2640.cpp
+2=ESP32-devcam\CRtspSession.h
+3=ESP32-devcam\OV2640Streamer.h
+4=ESP32-devcam\CStreamer.h
+5=ESP32-devcam\CStreamer.cpp
 [Selected Project Files]
 Main=
-Selected=ESP32-devcam\OV2640.cpp
+Selected=ESP32-devcam\ESP32-devcam.ino
 [ESP32-devcam\ESP32-devcam.ino]
-TopLine=119
-Caret=31,133
+TopLine=1
+Caret=13,8
 [ESP32-devcam\OV2640.cpp]
-TopLine=121
+TopLine=76
 Caret=1,76
+[ESP32-devcam\CRtspSession.h]
+TopLine=1
+Caret=21,5
+[ESP32-devcam\OV2640Streamer.h]
+TopLine=1
+Caret=1,1
+[ESP32-devcam\CStreamer.h]
+TopLine=1
+Caret=1,1
+[ESP32-devcam\CStreamer.cpp]
+TopLine=1
+Caret=22,1
