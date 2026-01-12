@@ -1,5 +1,27 @@
 ## [Потоковая передача видео через браузер](https://dzen.ru/a/ZVSZf0qQD2rlCNrK)
 
+#### [Исходный код на Github - https://github.com/circuitrocks/ESP32-RTSP](https://github.com/circuitrocks/ESP32-RTSP/tree/master/ArduinoIDE)
+
+#### [ESP32-CAM with RTSP video streaming](https://learn.circuit.rocks/esp32-cam-with-rtsp-video-streaming)
+
+#### [Micro-RTSP](https://github.com/geeksville/Micro-RTSP)
+
+#### [ESP32 MJPEG Streaming Server](https://github.com/arkhipenko/esp32-cam-mjpeg)
+
+Guys, I have been working on this issue and was able to successfully stream to VLC and browsers.
+Also implemented multi-client streaming.
+Please check these repos:
+[https://github.com/arkhipenko/esp32-cam-mjpeg (single client)](https://github.com/arkhipenko/esp32-cam-mjpeg)
+https://github.com/arkhipenko/esp32-cam-mjpeg-multiclient (up to 10 clients)
+https://github.com/arkhipenko/esp32-mjpeg-multiclient-espcam-drivers (up to 10 clients using latest ESP32-cam drivers from espressif).
+
+Ребята, я работал над этой проблемой и смог успешно транслировать в VLC и браузеры.
+Также реализована мультиклиентская потоковая передача.
+Пожалуйста, проверьте эти репозитории:
+https://github.com/arkhipenko/esp32-cam-mjpeg (один клиент)
+https://github.com/arkhipenko/esp32-cam-mjpeg-multiclient (до 10 клиентов)
+https://github.com/arkhipenko/esp32-mjpeg-multiclient-espcam-drivers (до 10 клиентов используют новейшие драйверы ESP32-cam от espressif).
+
 ### 2026-12-01 Мои действия
 
 #### Задача 1: добиться компиляции при Arduino IDE 2.3.7 - Espressif ESP32 3.3.5
@@ -99,8 +121,6 @@ http://<ip>/jpg
 
 ### Далее старый материал, может пригодится
 
-#### [ESP32-CAM with RTSP video streaming](https://learn.circuit.rocks/esp32-cam-with-rtsp-video-streaming)
-
 ***Плата ESP32-CAM требует много энергии! Вам понадобится источник питания 5 В с силой тока не менее 2 А, иначе плата не загрузится.***
 
 #### Учетные данные
@@ -144,33 +164,13 @@ waiting for download
 
 #### Источники:
 
-#### [Исходный код на Github - https://github.com/circuitrocks/ESP32-RTSP](https://github.com/circuitrocks/ESP32-RTSP)
-
 #### [Библиотека OneButton - https://github.com/mathertel/OneButton](https://github.com/mathertel/OneButton)
-
-#### [Источники Micro-RTSP - https://github.com/geeksville/Micro-RTSP](https://github.com/geeksville/Micro-RTSP)
 
 #### [ESP32-CAM - https://circuit.rocks/product:2659](https://circuit.rocks/product:2659)
 
 #### [flashphoner: Raise STREAM_EVENT with UNMUTE_REQUIRED type if video is muted on playbalck startup](https://github.com/flashphoner/flashphoner_client/tree/wcs_api-2.0/examples/demo/streaming/player)
 
 #### [flashphoner: 7 способов отобразить видео с RTSP IP-камеры на веб-странице и 2 в мобильном приложении](https://habr.com/ru/companies/flashphoner/articles/329108/)
-
-#### [ESP32 MJPEG Streaming Server](https://github.com/arkhipenko/esp32-cam-mjpeg)
-
-Guys, I have been working on this issue and was able to successfully stream to VLC and browsers.
-Also implemented multi-client streaming.
-Please check these repos:
-[https://github.com/arkhipenko/esp32-cam-mjpeg (single client)](https://github.com/arkhipenko/esp32-cam-mjpeg)
-https://github.com/arkhipenko/esp32-cam-mjpeg-multiclient (up to 10 clients)
-https://github.com/arkhipenko/esp32-mjpeg-multiclient-espcam-drivers (up to 10 clients using latest ESP32-cam drivers from espressif).
-
-Ребята, я работал над этой проблемой и смог успешно транслировать в VLC и браузеры.
-Также реализована мультиклиентская потоковая передача.
-Пожалуйста, проверьте эти репозитории:
-https://github.com/arkhipenko/esp32-cam-mjpeg (один клиент)
-https://github.com/arkhipenko/esp32-cam-mjpeg-multiclient (до 10 клиентов)
-https://github.com/arkhipenko/esp32-mjpeg-multiclient-espcam-drivers (до 10 клиентов используют новейшие драйверы ESP32-cam от espressif).
 
 #### [Как Открыть RTSP Поток в Браузере: Полное Руководство](https://telegra.ph/Kak-Otkryt-RTSP-Potok-v-Brauzere-Polnoe-Rukovodstvo-06-12)
 
