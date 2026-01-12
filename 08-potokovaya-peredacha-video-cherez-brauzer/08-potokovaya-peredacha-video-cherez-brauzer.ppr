@@ -37,7 +37,7 @@ Extensions=*.*
 			ESP32-devcam\platglue-posix.h
 			ESP32-devcam\SimStreamer.cpp
 			ESP32-devcam\SimStreamer.h
-		-Sklad
+		+Sklad
 			Sklad\ESP32-devcam-tve.txt
 			Sklad\platformio.ini
 			Sklad\StreamESP32.txt
@@ -53,12 +53,14 @@ Extensions=*.*
 3=ESP32-devcam\OV2640Streamer.h
 4=ESP32-devcam\CStreamer.h
 5=ESP32-devcam\CStreamer.cpp
+6=Sklad\ESP32-devcam-tve.txt
+7=Sklad\StreamESP32.txt
 [Selected Project Files]
 Main=
 Selected=ESP32-devcam\ESP32-devcam.ino
 [ESP32-devcam\ESP32-devcam.ino]
-TopLine=1
-Caret=13,8
+TopLine=146
+Caret=1,180
 [ESP32-devcam\OV2640.cpp]
 TopLine=76
 Caret=1,76
@@ -74,3 +76,9 @@ Caret=1,1
 [ESP32-devcam\CStreamer.cpp]
 TopLine=1
 Caret=22,1
+[Sklad\ESP32-devcam-tve.txt]
+TopLine=110
+Caret=1,144
+[Sklad\StreamESP32.txt]
+TopLine=265
+Caret=1,36

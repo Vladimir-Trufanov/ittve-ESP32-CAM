@@ -21,8 +21,6 @@
 #include "OV2640Streamer.h"
 #include "CRtspSession.h"
 
-#define ENABLE_WEBSERVER
-
 OV2640 cam;
 
 // Инициализируем веб-сервер для обработки входящих HTTP-запросов на порту 80

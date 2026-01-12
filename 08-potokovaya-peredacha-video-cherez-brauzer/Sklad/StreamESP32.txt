@@ -33,8 +33,6 @@
 int pictureNumber = 0;
 // ```
 
-//#define ENABLE_WEBSERVER
-
 // Определяем наличие Oled-дисплея 128*64
 // #define ENABLE_OLED 
 #ifdef ENABLE_OLED

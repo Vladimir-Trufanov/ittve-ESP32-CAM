@@ -1,3 +1,6 @@
+
+// рус
+
 #include "OV2640.h"
 #include <WiFi.h>
 #include <WebServer.h>
@@ -9,8 +12,6 @@
 
 // #define ENABLE_OLED //if want use oled ,turn on thi macro
 // #define SOFTAP_MODE // If you want to run our own softap turn this on
-#define ENABLE_WEBSERVER
-// #define ENABLE_RTSPSERVER
 
 #ifdef ENABLE_OLED
 #include "SSD1306.h"
@@ -22,15 +23,7 @@ bool hasDisplay; // we probe for the device at runtime
 #endif
 
 OV2640 cam;
-
-#ifdef ENABLE_WEBSERVER
 WebServer server(80);
-#endif
-
-//#ifdef ENABLE_RTSPSERVER
-//WiFiServer rtspServer(8554);
-//#endif
-
 
 #ifdef SOFTAP_MODE
   IPAddress apIP = IPAddress(192, 168, 1, 1);
@@ -39,7 +32,6 @@ WebServer server(80);
   const char* password = "b277a4ee84e8";
 #endif
 
-#ifdef ENABLE_WEBSERVER
 void handle_jpg_stream(void)
 {
     WiFiClient client = server.client();
@@ -91,7 +83,6 @@ void handleNotFound()
     message += "\n";
     server.send(200, "text/plain", message);
 }
-#endif
 
 #ifdef ENABLE_OLED
 #define LCD_MESSAGE(msg) lcdMessage(msg)
@@ -170,58 +161,24 @@ void setup()
     Serial.println(ip);
 #endif
 
-    LCD_MESSAGE(ip.toString());
+  LCD_MESSAGE(ip.toString());
 
-#ifdef ENABLE_WEBSERVER
-    server.on("/", HTTP_GET, handle_jpg_stream);
-    server.on("/jpg", HTTP_GET, handle_jpg);
-    server.onNotFound(handleNotFound);
-    server.begin();
-#endif
+  // Определяем действия при различных HTTP-запросах. Простой запрос http://<IP-АДРЕС>/ 
+  // запускает непрерывную потоковую передачу изображений в веб-браузер.
+  // http://<IP-АДРЕС>/jpg отправляет одно изображение с камеры в веб-браузер.
+  // Все остальные запросы игнорируются.
 
-//#ifdef ENABLE_RTSPSERVER
-//    rtspServer.begin();
-//
-    //streamer = new SimStreamer(true);             // our streamer for UDP/TCP based RTP transport
-//    streamer = new OV2640Streamer(cam);             // our streamer for UDP/TCP based RTP transport
-//#endif
+  // Устанавливаем функцию для обработки потоковых запросов
+  server.on("/", HTTP_GET, handle_jpg_stream);
+  // Устанавливаем функцию для обработки запросов на отдельные изображения
+  server.on("/jpg", HTTP_GET, handle_jpg);
+  // Устанавливаем функцию для обработки других запросов
+  server.onNotFound(handleNotFound);
+  // Запускаем веб-сервер
+  server.begin();
 }
 
 void loop()
 {
-#ifdef ENABLE_WEBSERVER
-    server.handleClient();
-#endif
-
-/*
-#ifdef ENABLE_RTSPSERVER
-    uint32_t msecPerFrame = 100;
-    static uint32_t lastimage = millis();
-
-    // If we have an active client connection, just service that until gone
-    streamer->handleRequests(0); // we don't use a timeout here,
-    // instead we send only if we have new enough frames
-    uint32_t now = millis();
-    if(streamer->anySessions()) {
-        if(now > lastimage + msecPerFrame || now < lastimage) { // handle clock rollover
-            streamer->streamImage(now);
-            lastimage = now;
-
-            // check if we are overrunning our max frame rate
-            now = millis();
-            if(now > lastimage + msecPerFrame) {
-                printf("warning exceeding max frame rate of %d ms\n", now - lastimage);
-            }
-        }
-    }
-    
-    WiFiClient rtspClient = rtspServer.accept();
-    if(rtspClient) {
-        Serial.print("client: ");
-        Serial.print(rtspClient.remoteIP());
-        Serial.println();
-        streamer->addSession(rtspClient);
-    }
-#endif
-*/
+  server.handleClient();
 }

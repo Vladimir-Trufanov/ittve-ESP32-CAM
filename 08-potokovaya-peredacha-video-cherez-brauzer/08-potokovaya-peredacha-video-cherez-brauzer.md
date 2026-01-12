@@ -88,6 +88,12 @@ http://<ip>/
 http://<ip>/jpg
 ```
 
+#### Задача 3: чистим код
+
+- в главном файле убираем вставки с ENABLE_RTSPSERVER;
+- убираем отметки с ENABLE_WEBSERVER;
+
+
 
 
 
