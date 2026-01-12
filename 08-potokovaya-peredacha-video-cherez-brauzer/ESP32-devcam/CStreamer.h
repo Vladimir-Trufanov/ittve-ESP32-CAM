@@ -23,7 +23,7 @@ public:
     u_short GetRtpServerPort();
     u_short GetRtcpServerPort();
 
-    virtual void    streamImage(uint32_t curMsec) = 0; // send a new image to the client
+    virtual void streamImage(uint32_t curMsec) = 0; // send a new image to the client
     bool InitUdpTransport(void);
     void ReleaseUdpTransport(void);
     bool debug;

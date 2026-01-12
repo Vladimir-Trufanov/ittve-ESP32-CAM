@@ -185,6 +185,7 @@ void setup()
     }
   #else
     LCD_MESSAGE(String("join ") + ssid);
+
     WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED)
@@ -196,6 +197,13 @@ void setup()
     Serial.println(F("WiFi connected"));
     Serial.println("");
     Serial.println(ip);
+    
+    #ifndef ARDUINO_ARCH_ESP32
+      Serial.println("#ifndef ARDUINO_ARCH_ESP32");
+    #else
+      Serial.println("DEF ARDUINO_ARCH_ESP32");
+    #endif
+
   #endif
 
   LCD_MESSAGE(ip.toString());
