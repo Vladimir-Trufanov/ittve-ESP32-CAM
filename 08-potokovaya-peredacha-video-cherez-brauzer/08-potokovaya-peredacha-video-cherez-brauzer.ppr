@@ -29,8 +29,6 @@ Extensions=*.*
 			StreamESP32CAM\LinkedListElement.h
 			StreamESP32CAM\OV2640.cpp
 			StreamESP32CAM\OV2640.h
-			StreamESP32CAM\OV2640Streamer.cpp
-			StreamESP32CAM\OV2640Streamer.h
 			StreamESP32CAM\platglue-esp32.h
 			StreamESP32CAM\StreamESP32CAM.ino
 		08-potokovaya-peredacha-video-cherez-brauzer.md
@@ -60,7 +58,7 @@ Caret=10,22
 TopLine=11
 Caret=3,31
 [StreamESP32CAM\CRtspSession.cpp]
-TopLine=358
+TopLine=449
 Caret=3,488
 [StreamESP32CAM\CRtspSession.h]
 TopLine=28
