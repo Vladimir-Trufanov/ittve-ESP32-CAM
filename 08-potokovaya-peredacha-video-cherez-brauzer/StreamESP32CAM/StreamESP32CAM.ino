@@ -28,7 +28,7 @@
 #include <WebServer.h>
 #include <WiFiClient.h>
 
-#include "OV2640Streamer.h"
+//#include "OV2640Streamer.h"
 //#include "CRtspSession.h"
 
 // #define ENABLE_OLED //if want use oled ,turn on thi macro
@@ -142,7 +142,7 @@ void lcdMessage(String msg)
 }
 #endif
 
-CStreamer *streamer;
+//CStreamer *streamer;
 
 void setup()
 {
