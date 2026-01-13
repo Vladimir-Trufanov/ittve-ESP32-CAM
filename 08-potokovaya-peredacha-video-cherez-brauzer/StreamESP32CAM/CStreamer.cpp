@@ -5,6 +5,7 @@
 
 CStreamer::CStreamer(u_short width, u_short height) : m_Clients()
 {
+    /*
     printf("Creating TSP streamer\n");
     m_RtpServerPort  = 0;
     m_RtcpServerPort = 0;
@@ -27,11 +28,13 @@ CStreamer::CStreamer(u_short width, u_short height) : m_Clients()
     m_URIHost = "127.0.0.1:554";
     m_URIPresentation = "mjpeg";
     m_URIStream = "1";
+    */
 }
 
 
 CStreamer::~CStreamer()
 {
+    /*
     LinkedListElement* element = m_Clients.m_Next;
     CRtspSession* session = NULL;
     while (element != &m_Clients)
@@ -40,6 +43,7 @@ CStreamer::~CStreamer()
         element = element->m_Next;
         delete session;
     }
+    */
 };
 
 CRtspSession* CStreamer::addSession( SOCKET aClient )
@@ -59,8 +63,9 @@ void CStreamer::setURI( String hostport, String pres, String stream ) // set URI
     m_URIStream = stream;
 }
 */
-int CStreamer::SendRtpPacket(unsigned const char * jpeg, int jpegLen, int fragmentOffset, BufPtr quant0tbl, BufPtr quant1tbl)
-{
+//int CStreamer::SendRtpPacket(unsigned const char * jpeg, int jpegLen, int fragmentOffset, BufPtr quant0tbl, BufPtr quant1tbl)
+//{
+    /*
     // if ( debug ) printf("CStreamer::SendRtpPacket offset:%d - begin\n", fragmentOffset);
 #define KRtpHeaderSize 12           // size of the RTP header
 #define KJpegHeaderSize 8           // size of the special JPEG payload header
@@ -167,8 +172,10 @@ int CStreamer::SendRtpPacket(unsigned const char * jpeg, int jpegLen, int fragme
         element = element->m_Next;
     }
     // if ( debug ) printf("CStreamer::SendRtpPacket offset:%d - end\n", fragmentOffset);
-    return isLastFragment ? 0 : fragmentOffset;
-};
+    */
+    //return isLastFragment ? 0 : fragmentOffset;
+    //return 195;
+//};
 
 u_short CStreamer::GetRtpServerPort()
 {
@@ -182,6 +189,7 @@ u_short CStreamer::GetRtcpServerPort()
 
 bool CStreamer::InitUdpTransport(void)
 {
+    /*
     if (m_udpRefCount != 0)
     {
         ++m_udpRefCount;
@@ -208,11 +216,13 @@ bool CStreamer::InitUdpTransport(void)
         }
     };
     ++m_udpRefCount;
+    */
     return true;
 }
 
 void CStreamer::ReleaseUdpTransport(void)
 {
+    /*
     --m_udpRefCount;
     if (m_udpRefCount == 0)
     {
@@ -224,6 +234,7 @@ void CStreamer::ReleaseUdpTransport(void)
         m_RtpSocket = NULLSOCKET;
         m_RtcpSocket = NULLSOCKET;
     }
+    */
 }
 
 /**
@@ -232,6 +243,7 @@ void CStreamer::ReleaseUdpTransport(void)
 bool CStreamer::handleRequests(uint32_t readTimeoutMs)
 {
     bool retVal = true;
+    /*
     LinkedListElement* element = m_Clients.m_Next;
     while(element != &m_Clients)
     {
@@ -246,12 +258,13 @@ bool CStreamer::handleRequests(uint32_t readTimeoutMs)
             delete session;
         }
     }
-
+    */
     return retVal;
 }
 
 void CStreamer::streamFrame(unsigned const char *data, uint32_t dataLen, uint32_t curMsec)
 {
+    /*
     if(m_prevMsec == 0) // first frame init our timestamp
         m_prevMsec = curMsec;
 
@@ -278,6 +291,7 @@ void CStreamer::streamFrame(unsigned const char *data, uint32_t dataLen, uint32_
 
     m_SendIdx++;
     if (m_SendIdx > 1) m_SendIdx = 0;
+    */
 };
 
 #include <assert.h>

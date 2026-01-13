@@ -358,10 +358,10 @@ RTSP_CMD_TYPES CRtspSession::Handle_RtspRequest( char *aRequest, unsigned aReque
     {
         switch ( m_RtspCmdType )
         {
-            case RTSP_OPTIONS:  Handle_RtspOPTION();   break;
-            case RTSP_DESCRIBE: Handle_RtspDESCRIBE(); break;
-            case RTSP_SETUP:    Handle_RtspSETUP();    break;
-            case RTSP_PLAY:     Handle_RtspPLAY();     break;
+            //case RTSP_OPTIONS:  Handle_RtspOPTION();   break;
+            //case RTSP_DESCRIBE: Handle_RtspDESCRIBE(); break;
+            //case RTSP_SETUP:    Handle_RtspSETUP();    break;
+            //case RTSP_PLAY:     Handle_RtspPLAY();     break;
             default: break;
         }
     }
@@ -369,6 +369,7 @@ RTSP_CMD_TYPES CRtspSession::Handle_RtspRequest( char *aRequest, unsigned aReque
     return m_RtspCmdType;
 }
 
+/*
 void CRtspSession::Handle_RtspOPTION()
 {
     static char Response[1024]; // Note: we assume single threaded, this large buf we keep off of the tiny stack
@@ -379,7 +380,8 @@ void CRtspSession::Handle_RtspOPTION()
 
     socketsend(m_RtspClient,Response,strlen(Response));
 }
-
+*/
+/*
 void CRtspSession::Handle_RtspDESCRIBE() // FIXME: too much redundancy. should eliminate intermediate buffers.
 {
     static char Response[1024]; // Note: we assume single threaded, this large buf we keep off of the tiny stack
@@ -440,7 +442,7 @@ void CRtspSession::Handle_RtspDESCRIBE() // FIXME: too much redundancy. should e
 
     socketsend( m_RtspClient, Response, strlen(Response) );
 }
-
+*/
 void CRtspSession::InitTransport(u_short aRtpPort, u_short aRtcpPort)
 {
     m_RtpClientPort  = aRtpPort;
@@ -451,7 +453,7 @@ void CRtspSession::InitTransport(u_short aRtpPort, u_short aRtcpPort)
         m_Streamer->InitUdpTransport();
     };
 };
-
+/*
 void CRtspSession::Handle_RtspSETUP()
 {
     static char Response[1024];
@@ -482,7 +484,8 @@ void CRtspSession::Handle_RtspSETUP()
 
     socketsend(m_RtspClient,Response,strlen(Response));
 }
-
+*/
+/*
 void CRtspSession::Handle_RtspPLAY()
 {
     static char Response[1024];
@@ -500,7 +503,7 @@ void CRtspSession::Handle_RtspPLAY()
 
     socketsend(m_RtspClient,Response,strlen(Response));
 }
-
+*/
 char const * CRtspSession::DateHeader()
 {
     static char buf[200];

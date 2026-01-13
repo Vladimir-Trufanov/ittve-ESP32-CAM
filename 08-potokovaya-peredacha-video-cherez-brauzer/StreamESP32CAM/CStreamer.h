@@ -29,7 +29,7 @@ public:
     void ReleaseUdpTransport(void);
     bool debug;
     //void setURI( String hostport, String pres = "mjpeg", String stream = "1" ); // set URI parts for sessions to use.
-    String getURIHost(){ return m_URIHost; }; // for getting things back by sessions
+    //String getURIHost(){ return m_URIHost; }; // for getting things back by sessions
     String getURIPresentation(){ return m_URIPresentation; };
     String getURIStream(){ return m_URIStream; };
 
@@ -42,7 +42,7 @@ protected:
     String  m_URIStream; // stream part of the URI.
 
 private:
-    int    SendRtpPacket(unsigned const char *jpeg, int jpegLen, int fragmentOffset, BufPtr quant0tbl = NULL, BufPtr quant1tbl = NULL);// returns new fragmentOffset or 0 if finished with frame
+    //int SendRtpPacket(unsigned const char *jpeg, int jpegLen, int fragmentOffset, BufPtr quant0tbl = NULL, BufPtr quant1tbl = NULL);// returns new fragmentOffset or 0 if finished with frame
 
     UDPSOCKET m_RtpSocket;           // RTP socket for streaming RTP packets to client
     UDPSOCKET m_RtcpSocket;          // RTCP socket for sending/receiving RTCP packages

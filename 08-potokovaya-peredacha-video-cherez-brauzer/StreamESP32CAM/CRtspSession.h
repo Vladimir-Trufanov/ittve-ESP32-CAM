@@ -52,10 +52,10 @@ private:
     char const * DateHeader();
 
     // RTSP request command handlers
-    void Handle_RtspOPTION();
-    void Handle_RtspDESCRIBE();
-    void Handle_RtspSETUP();
-    void Handle_RtspPLAY();
+    //void Handle_RtspOPTION();
+    //void Handle_RtspDESCRIBE();
+    //void Handle_RtspSETUP();
+    //void Handle_RtspPLAY();
 
     // global session state parameters
     int m_RtspSessionID;
