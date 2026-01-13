@@ -17,8 +17,8 @@ HTServer=localhost
 Extensions=*.*
 [Project tree]
 08-potokovaya-peredacha-video-cherez-brauzer
-	-08-potokovaya-peredacha-video-cherez-brauzer
-		-ESP32-devcam
+	+08-potokovaya-peredacha-video-cherez-brauzer
+		+ESP32-devcam
 			ESP32-devcam\CRtspSession.cpp
 			ESP32-devcam\CRtspSession.h
 			ESP32-devcam\CStreamer.cpp
@@ -42,9 +42,21 @@ Extensions=*.*
 		Scheme-in-Fritzing.png
 [Open project files]
 0=ESP32-devcam\ESP32-devcam.ino
+1=ESP32-devcam\CRtspSession.cpp
+2=ESP32-devcam\CStreamer.cpp
+3=ESP32-devcam\OV2640Streamer.cpp
 [Selected Project Files]
 Main=
 Selected=ESP32-devcam\ESP32-devcam.ino
 [ESP32-devcam\ESP32-devcam.ino]
-TopLine=168
-Caret=1,207
+TopLine=15
+Caret=26,31
+[ESP32-devcam\CRtspSession.cpp]
+TopLine=1
+Caret=1,1
+[ESP32-devcam\CStreamer.cpp]
+TopLine=1
+Caret=22,1
+[ESP32-devcam\OV2640Streamer.cpp]
+TopLine=1
+Caret=1,1

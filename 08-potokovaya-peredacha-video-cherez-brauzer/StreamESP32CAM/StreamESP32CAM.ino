@@ -1,4 +1,4 @@
-/** Arduino, ESP32, C/C++ ******************************** ESP32-devcam.ino ***
+/** Arduino, ESP32, C/C++ ****************************** StreamESP32CAM.ino ***
  * 
  *                              Транслировать видео с камеры ESP32-CAM по Wi-Fi
  *                              
@@ -28,7 +28,6 @@
 #include <WebServer.h>
 #include <WiFiClient.h>
 
-#include "SimStreamer.h"
 #include "OV2640Streamer.h"
 //#include "CRtspSession.h"
 
@@ -229,5 +228,5 @@ void loop()
   server.handleClient();
 }
 
-// ******************************************************* ESP32-devcam.ino ***
+// ***************************************************** StreamESP32CAM.ino ***
 
