@@ -2,7 +2,7 @@
 
 #include "LinkedListElement.h"
 #include "CStreamer.h"
-#include "platglue.h"
+#include "platglue-esp32.h"
 
 // supported command types
 enum RTSP_CMD_TYPES

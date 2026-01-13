@@ -1,6 +1,6 @@
 #pragma once
 
-#include "platglue.h"
+#include "platglue-esp32.h"
 #include "LinkedListElement.h"
 
 typedef unsigned const char *BufPtr;

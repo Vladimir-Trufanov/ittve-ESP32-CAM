@@ -17,8 +17,8 @@ HTServer=localhost
 Extensions=*.*
 [Project tree]
 08-potokovaya-peredacha-video-cherez-brauzer
-	+08-potokovaya-peredacha-video-cherez-brauzer
-		+ESP32-devcam
+	-08-potokovaya-peredacha-video-cherez-brauzer
+		-ESP32-devcam
 			ESP32-devcam\CRtspSession.cpp
 			ESP32-devcam\CRtspSession.h
 			ESP32-devcam\CStreamer.cpp
@@ -31,63 +31,20 @@ Extensions=*.*
 			ESP32-devcam\OV2640.h
 			ESP32-devcam\OV2640Streamer.cpp
 			ESP32-devcam\OV2640Streamer.h
-			ESP32-devcam\platglue.h
 			ESP32-devcam\platglue-esp32.h
-			ESP32-devcam\platglue-mbed.h
-			ESP32-devcam\platglue-posix.h
 			ESP32-devcam\SimStreamer.cpp
 			ESP32-devcam\SimStreamer.h
 		-Sklad
-			Sklad\ESP32-devcam.ino
-			Sklad\ESP32-devcam.txt
-			Sklad\platformio.ini
-			Sklad\wifikeys.h
-			Sklad\wifikeys_template.h
+			Sklad\platglue-mbed.h
 		08-potokovaya-peredacha-video-cherez-brauzer.md
 		08-potokovaya-peredacha-video-cherez-brauzer.ppr
 		Micro-RTSP-master.zip
 		Scheme-in-Fritzing.png
 [Open project files]
 0=ESP32-devcam\ESP32-devcam.ino
-1=ESP32-devcam\SimStreamer.cpp
-2=ESP32-devcam\JPEGSamples.h
-3=ESP32-devcam\platglue.h
-4=ESP32-devcam\JPEGSamples.cpp
-5=ESP32-devcam\SimStreamer.h
-6=ESP32-devcam\CStreamer.h
-7=ESP32-devcam\CStreamer.cpp
-8=ESP32-devcam\OV2640Streamer.cpp
-9=ESP32-devcam\platglue-esp32.h
 [Selected Project Files]
 Main=
-Selected=ESP32-devcam\platglue.h
+Selected=ESP32-devcam\ESP32-devcam.ino
 [ESP32-devcam\ESP32-devcam.ino]
 TopLine=168
 Caret=1,207
-[ESP32-devcam\SimStreamer.cpp]
-TopLine=1
-Caret=8,6
-[ESP32-devcam\JPEGSamples.h]
-TopLine=1
-Caret=9,4
-[ESP32-devcam\platglue.h]
-TopLine=1
-Caret=27,3
-[ESP32-devcam\JPEGSamples.cpp]
-TopLine=1
-Caret=8,3
-[ESP32-devcam\SimStreamer.h]
-TopLine=1
-Caret=32,13
-[ESP32-devcam\CStreamer.h]
-TopLine=32
-Caret=14,33
-[ESP32-devcam\CStreamer.cpp]
-TopLine=177
-Caret=1,1
-[ESP32-devcam\OV2640Streamer.cpp]
-TopLine=1
-Caret=22,12
-[ESP32-devcam\platglue-esp32.h]
-TopLine=29
-Caret=1,1
