@@ -51,14 +51,14 @@ CRtspSession* CStreamer::addSession( SOCKET aClient )
     return session;
 }
 
-
+/*
 void CStreamer::setURI( String hostport, String pres, String stream ) // set URI parts for sessions to use.
 {
     m_URIHost = hostport;
     m_URIPresentation = pres;
     m_URIStream = stream;
 }
-
+*/
 int CStreamer::SendRtpPacket(unsigned const char * jpeg, int jpegLen, int fragmentOffset, BufPtr quant0tbl, BufPtr quant1tbl)
 {
     // if ( debug ) printf("CStreamer::SendRtpPacket offset:%d - begin\n", fragmentOffset);

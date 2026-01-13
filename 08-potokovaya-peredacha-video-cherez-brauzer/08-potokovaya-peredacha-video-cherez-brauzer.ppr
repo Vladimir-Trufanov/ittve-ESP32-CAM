@@ -18,45 +18,42 @@ Extensions=*.*
 [Project tree]
 08-potokovaya-peredacha-video-cherez-brauzer
 	+08-potokovaya-peredacha-video-cherez-brauzer
-		+ESP32-devcam
-			ESP32-devcam\CRtspSession.cpp
-			ESP32-devcam\CRtspSession.h
-			ESP32-devcam\CStreamer.cpp
-			ESP32-devcam\CStreamer.h
-			ESP32-devcam\ESP32-devcam.ino
-			ESP32-devcam\JPEGSamples.cpp
-			ESP32-devcam\JPEGSamples.h
-			ESP32-devcam\LinkedListElement.h
-			ESP32-devcam\OV2640.cpp
-			ESP32-devcam\OV2640.h
-			ESP32-devcam\OV2640Streamer.cpp
-			ESP32-devcam\OV2640Streamer.h
-			ESP32-devcam\platglue-esp32.h
-			ESP32-devcam\SimStreamer.cpp
-			ESP32-devcam\SimStreamer.h
 		-Sklad
-			Sklad\platglue-mbed.h
+		+StreamESP32CAM
+			StreamESP32CAM\CRtspSession.cpp
+			StreamESP32CAM\CRtspSession.h
+			StreamESP32CAM\CStreamer.cpp
+			StreamESP32CAM\CStreamer.h
+			StreamESP32CAM\JPEGSamples.cpp
+			StreamESP32CAM\JPEGSamples.h
+			StreamESP32CAM\LinkedListElement.h
+			StreamESP32CAM\OV2640.cpp
+			StreamESP32CAM\OV2640.h
+			StreamESP32CAM\OV2640Streamer.cpp
+			StreamESP32CAM\OV2640Streamer.h
+			StreamESP32CAM\platglue-esp32.h
+			StreamESP32CAM\StreamESP32CAM.ino
 		08-potokovaya-peredacha-video-cherez-brauzer.md
 		08-potokovaya-peredacha-video-cherez-brauzer.ppr
 		Micro-RTSP-master.zip
 		Scheme-in-Fritzing.png
 [Open project files]
-0=ESP32-devcam\ESP32-devcam.ino
-1=ESP32-devcam\CRtspSession.cpp
-2=ESP32-devcam\CStreamer.cpp
-3=ESP32-devcam\OV2640Streamer.cpp
+0=StreamESP32CAM\StreamESP32CAM.ino
+1=StreamESP32CAM\platglue-esp32.h
+2=StreamESP32CAM\CStreamer.cpp
+3=StreamESP32CAM\CStreamer.h
 [Selected Project Files]
 Main=
-Selected=ESP32-devcam\ESP32-devcam.ino
-[ESP32-devcam\ESP32-devcam.ino]
-TopLine=15
-Caret=26,31
-[ESP32-devcam\CRtspSession.cpp]
-TopLine=1
-Caret=1,1
-[ESP32-devcam\CStreamer.cpp]
-TopLine=1
-Caret=22,1
-[ESP32-devcam\OV2640Streamer.cpp]
-TopLine=1
-Caret=1,1
+Selected=StreamESP32CAM\CStreamer.h
+[StreamESP32CAM\StreamESP32CAM.ino]
+TopLine=23
+Caret=27,32
+[StreamESP32CAM\platglue-esp32.h]
+TopLine=9
+Caret=24,23
+[StreamESP32CAM\CStreamer.cpp]
+TopLine=165
+Caret=3,183
+[StreamESP32CAM\CStreamer.h]
+TopLine=9
+Caret=7,25
