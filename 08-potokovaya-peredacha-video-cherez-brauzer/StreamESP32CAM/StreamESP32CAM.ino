@@ -139,8 +139,6 @@ void lcdMessage(String msg)
 }
 #endif
 
-//CStreamer *streamer;
-
 void setup()
 {
   #ifdef ENABLE_OLED

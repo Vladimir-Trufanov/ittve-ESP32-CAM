@@ -1,5 +1,7 @@
 ## [Потоковая передача видео через браузер](https://dzen.ru/a/ZVSZf0qQD2rlCNrK)
 
+> ***2026-14-01*** Завершил изыскания потока изображений через локальный сервер и браузер. Оптимальный в приложении ***StreamESP32CAM*** (дополнительная информация применения записи на SD в приложении ***StreamESP32***).
+
 #### [Исходный код на Github - https://github.com/circuitrocks/ESP32-RTSP](https://github.com/circuitrocks/ESP32-RTSP/tree/master/ArduinoIDE)
 
 #### [ESP32-CAM with RTSP video streaming](https://learn.circuit.rocks/esp32-cam-with-rtsp-video-streaming)

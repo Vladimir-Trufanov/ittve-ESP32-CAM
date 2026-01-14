@@ -18,14 +18,9 @@ Extensions=*.*
 [Project tree]
 08-potokovaya-peredacha-video-cherez-brauzer
 	+08-potokovaya-peredacha-video-cherez-brauzer
-		-bpwin
-		-Sklad
-			Sklad\CRtspSession.cpp
-			Sklad\CRtspSession.h
-			Sklad\CStreamer.cpp
-			Sklad\CStreamer.h
-			Sklad\LinkedListElement.h
-			Sklad\platglue-esp32.h
+		-BP1
+			BP1\logSetup.bp1
+			BP1\StreamESP32CAM.bp1
 		+StreamESP32CAM
 			StreamESP32CAM\OV2640.cpp
 			StreamESP32CAM\OV2640.h
@@ -36,17 +31,9 @@ Extensions=*.*
 		Scheme-in-Fritzing.png
 [Open project files]
 0=StreamESP32CAM\StreamESP32CAM.ino
-1=StreamESP32CAM\OV2640.h
-2=StreamESP32CAM\OV2640.cpp
 [Selected Project Files]
 Main=
 Selected=StreamESP32CAM\StreamESP32CAM.ino
 [StreamESP32CAM\StreamESP32CAM.ino]
-TopLine=191
-Caret=3,127
-[StreamESP32CAM\OV2640.h]
-TopLine=5
-Caret=1,41
-[StreamESP32CAM\OV2640.cpp]
-TopLine=155
-Caret=1,193
+TopLine=142
+Caret=1,142
