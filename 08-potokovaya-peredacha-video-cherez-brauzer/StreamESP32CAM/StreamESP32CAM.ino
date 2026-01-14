@@ -28,19 +28,16 @@
 #include <WebServer.h>
 #include <WiFiClient.h>
 
-//#include "OV2640Streamer.h"
-//#include "CRtspSession.h"
-
 // #define ENABLE_OLED //if want use oled ,turn on thi macro
 // #define SOFTAP_MODE // If you want to run our own softap turn this on
 
 #ifdef ENABLE_OLED
-#include "SSD1306.h"
-#define OLED_ADDRESS 0x3c
-#define I2C_SDA 14
-#define I2C_SCL 13
-SSD1306Wire display(OLED_ADDRESS, I2C_SDA, I2C_SCL, GEOMETRY_128_32);
-bool hasDisplay; // мы проверяем наличие устройства во время выполнения
+  #include "SSD1306.h"
+  #define OLED_ADDRESS 0x3c
+  #define I2C_SDA 14
+  #define I2C_SCL 13
+  SSD1306Wire display(OLED_ADDRESS, I2C_SDA, I2C_SCL, GEOMETRY_128_32);
+  bool hasDisplay; // мы проверяем наличие устройства во время выполнения
 #endif
 
 OV2640 cam;
@@ -125,9 +122,9 @@ void handleNotFound()
 }
 
 #ifdef ENABLE_OLED
-#define LCD_MESSAGE(msg) lcdMessage(msg)
+  #define LCD_MESSAGE(msg) lcdMessage(msg)
 #else
-#define LCD_MESSAGE(msg)
+  #define LCD_MESSAGE(msg)
 #endif
 
 #ifdef ENABLE_OLED

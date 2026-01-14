@@ -18,48 +18,35 @@ Extensions=*.*
 [Project tree]
 08-potokovaya-peredacha-video-cherez-brauzer
 	+08-potokovaya-peredacha-video-cherez-brauzer
+		-bpwin
 		-Sklad
+			Sklad\CRtspSession.cpp
+			Sklad\CRtspSession.h
+			Sklad\CStreamer.cpp
+			Sklad\CStreamer.h
+			Sklad\LinkedListElement.h
+			Sklad\platglue-esp32.h
 		+StreamESP32CAM
-			StreamESP32CAM\CRtspSession.cpp
-			StreamESP32CAM\CRtspSession.h
-			StreamESP32CAM\CStreamer.cpp
-			StreamESP32CAM\CStreamer.h
-			StreamESP32CAM\JPEGSamples.cpp
-			StreamESP32CAM\JPEGSamples.h
-			StreamESP32CAM\LinkedListElement.h
 			StreamESP32CAM\OV2640.cpp
 			StreamESP32CAM\OV2640.h
-			StreamESP32CAM\platglue-esp32.h
 			StreamESP32CAM\StreamESP32CAM.ino
 		08-potokovaya-peredacha-video-cherez-brauzer.md
 		08-potokovaya-peredacha-video-cherez-brauzer.ppr
 		Micro-RTSP-master.zip
 		Scheme-in-Fritzing.png
 [Open project files]
-0=StreamESP32CAM\platglue-esp32.h
-1=StreamESP32CAM\CStreamer.cpp
-2=StreamESP32CAM\CStreamer.h
-3=StreamESP32CAM\StreamESP32CAM.ino
-4=StreamESP32CAM\CRtspSession.cpp
-5=StreamESP32CAM\CRtspSession.h
+0=StreamESP32CAM\StreamESP32CAM.ino
+1=StreamESP32CAM\OV2640.h
+2=StreamESP32CAM\OV2640.cpp
 [Selected Project Files]
 Main=
-Selected=StreamESP32CAM\CStreamer.h
-[StreamESP32CAM\platglue-esp32.h]
-TopLine=9
-Caret=24,23
-[StreamESP32CAM\CStreamer.cpp]
-TopLine=185
-Caret=33,190
-[StreamESP32CAM\CStreamer.h]
-TopLine=8
-Caret=10,22
+Selected=StreamESP32CAM\StreamESP32CAM.ino
 [StreamESP32CAM\StreamESP32CAM.ino]
-TopLine=11
-Caret=3,31
-[StreamESP32CAM\CRtspSession.cpp]
-TopLine=449
-Caret=3,488
-[StreamESP32CAM\CRtspSession.h]
-TopLine=28
-Caret=24,36
+TopLine=191
+Caret=3,127
+[StreamESP32CAM\OV2640.h]
+TopLine=5
+Caret=1,41
+[StreamESP32CAM\OV2640.cpp]
+TopLine=155
+Caret=1,193

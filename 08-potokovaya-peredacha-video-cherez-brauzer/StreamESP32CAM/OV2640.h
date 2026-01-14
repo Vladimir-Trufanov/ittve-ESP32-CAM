@@ -12,11 +12,13 @@ extern camera_config_t esp32cam_config, esp32cam_aithinker_config, esp32cam_ttgo
 
 class OV2640
 {
-public:
-    OV2640(){
-        fb = NULL;
+  public:
+    OV2640()
+    {
+      fb = NULL;
     };
-    ~OV2640(){
+    ~OV2640()
+    {
     };
     esp_err_t init(camera_config_t config);
     void done(void);
@@ -31,13 +33,11 @@ public:
     void setFrameSize(framesize_t size);
     void setPixelFormat(pixformat_t format);
 
-private:
+  private:
     void runIfNeeded(); // grab a frame if we don't already have one
-
     // camera_framesize_t _frame_size;
     // camera_pixelformat_t _pixel_format;
     camera_config_t _cam_config;
-
     camera_fb_t *fb;
 };
 
