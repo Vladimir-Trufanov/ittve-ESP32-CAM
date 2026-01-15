@@ -150,6 +150,7 @@ const char html_page[] PROGMEM = R"rawliteral(
     <h2>ВСТРОЕННЫЙ СВЕТОДИОД GPIO4</h2>
     <p><button id="button" class="button">Нажмите, чтобы переключить</button></p>
     <p class="state">State: <span id="state">%STATE%</span></p>
+    <p id="gate">gate</p>
   </div>
   <script>
     // Создаём шлюз, который будет служить входом в интерфейс WebSocket. 
@@ -186,6 +187,7 @@ const char html_page[] PROGMEM = R"rawliteral(
     function onOpen(event) 
     {
       console.log('Соединение открыто');
+      document.getElementById('gate').innerHTML = gateway;
     }
     // Отметить в консоли сообщением «Соединение закрыто» событие закрытия WebSocket-а и задать
     // новое инициирование сокета через 2 секунды
