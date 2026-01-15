@@ -64,138 +64,52 @@ AsyncWebSocket ws("/ws");
 <p><button id="button" class="button">Click to Toggle</button></p>
 <p class="state">State: <span id="state">%STATE%</span></p>
 
-Обработка веб-сокетов с помощью JavaScript
-
 Внутри тегов <script></script> добавляем JavaScript для обработки веб-сокетов. Обмен данными, а также установление двустороннего 
 соединения между клиентом и сервером будут осуществляться с помощью этого скрипта при формировании веб-страницы.
-
-Сначала мы создадим шлюз, который будет служить входом в интерфейс WebSocket. Мы укажем IP-адрес веб-сервера 
-(window.location.hostname) для шлюза.
-
-var gateway = 'ws://${window.location.hostname}/ws';
-
-Затем мы создадим новую переменную типа var с именем websocket. С помощью функции window.addwindowListener() мы вызовем функцию onload. 
-Это произойдет, когда веб-сервер будет загружен.
-
-var websocket;
-window.addEventListener('load', onload);
-
-Далее мы определим функцию onload(). Она принимает параметр event и вызывает функции initWebSocket() и initButton().
-Функция initWebsocket() будет использоваться для инициализации WebSocket. Аналогичным образом функция initButton() 
-добавит обработчики событий для кнопки.
-
-function onload(event) 
-{
-  initWebSocket();
-  initButton();
-}
-
-Функцию initWebSocket() будем использовать для инициализации соединения WebSocket. Также будут включены три различные 
-функции обратного вызова для обработки случаев получения сообщения или открытия/закрытия соединения. 
-Далее мы определим каждую функцию обратного вызова отдельно.
-
-function initWebSocket() 
-{
-  console.log('Trying to open a WebSocket connection…');
-  websocket = new WebSocket(gateway);
-  websocket.onopen    = onOpen;
-  websocket.onclose   = onClose;
-  websocket.onmessage = onMessage;
-}
-
-Теперь определим функцию onOpen(), в которую в качестве аргумента передается «событие» . При открытии соединения WebSocket
-вызывается функция console.log(). Она выводит в консоль браузера сообщение, переданное в качестве аргумента. 
-В нашем случае это сообщение «Соединение открыто».
-
-function onOpen(event) 
-{
-  console.log('Connection opened');
-}
-
-Для функции onClose() в качестве аргумента будет передано событие. Когда соединение WebSocket закрывается, 
-вызывается функция console.log(), которая выводит в журнал браузера сообщение «Соединение закрыто». 
-Кроме того, функция initWebSocket() будет вызываться каждые 2 секунды для установления соединения WebSocket.
-
-function onClose(event) 
-{
-  console.log('Connection closed');
-  setTimeout(initWebSocket, 2000);
-}
-
-Функция onMessage() вызывается при получении нового сообщения. Сообщение будет содержать значение 1 или 0 
-в зависимости от состояния GPIO2. Таким образом, мы будем использовать оператор if-else, чтобы проверить, 
-равно ли сообщение 1 или 0. Если оно равно 1, то состояние будет обновлено до строки «ON», 
-в противном случае — до строки «OFF». Это значение будет сохранено в строке id, которую мы ранее 
-инициализировали с помощью тега <span>.
-
-function onMessage(event) 
-{
-  var state;
-  if (event.data == "1")
-  {
-    state = "ON";
-  }
-  else
-  {
-    state = "OFF";
-  }
-  document.getElementById('state').innerHTML = state;
-}
-
-Инициализация кнопки. Внутри функции initButton() мы получим доступ к кнопке по её идентификатору, 
-который мы определили ранее. К кнопке также будет добавлен прослушиватель событий. 
-Мы добавим прослушиватель событий «click». Это связано с тем, что наша веб-страница 
-работает по принципу нажатия на кнопку переключения.
-
-function initButton() 
-{
-  document.getElementById('button').addEventListener('click', toggle);
-}
-
-Далее внутри функции toggle() мы вызовем функцию websocket.send() и передадим ей в качестве аргумента «toggle». 
-Это будет означать, что при каждом нажатии на кнопку будет вызываться функция toggle. 
-Эта функция отправит сообщение «toggle» через WebSocket.
-
-function toggle()
-{
-  websocket.send('toggle');
-}
-
 **/
 
 const char html_page[] PROGMEM = R"rawliteral(
-<!DOCTYPE HTML><html>
+<!DOCTYPE HTML>
+<html lang="ru">
 <head>
   <title>ESP32 Web Server</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <link rel="icon" href="data:,">
   <style>
-  html {
+  html 
+  {
     font-family: New Times Roman;
     text-align: center;
   }
-  h1 {
+  h1 
+  {
     font-size: 1.8rem;
     color: white;
   }
-  h2{
+  h2
+  {
     font-size: 1.5rem;
     font-weight: bold;
     color: #612b78;
   }
-  .topnav {
+  .topnav 
+  {
     overflow: hidden;
     background-color: #612b78;
   }
-  body {
+  body 
+  {
     margin: 0;
   }
-  .content {
+  .content 
+  {
     padding: 30px;
     max-width: 600px;
     margin: 0 auto; 
   }
-  .button {
+  .button 
+  {
     padding: 15px 50px;
     font-size: 24px;
     text-align: center;
@@ -211,93 +125,138 @@ const char html_page[] PROGMEM = R"rawliteral(
     -ms-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
-   }
-  .button:active {
-     background-color:#fa0f0f ; 
-     transform: translateY(2px);
-   }
-   .state {
-     font-size: 1.5rem;
-     color:#120707;
-     font-weight: bold;
-   }
+  }
+  .button:active 
+  {
+    background-color:#fa0f0f ; 
+    transform: translateY(2px);
+  }
+  .state 
+  {
+    font-size: 1.5rem;
+    color:#120707;
+    font-weight: bold;
+  }
   </style>
-<title>ESP32 Web Server</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="data:,">
+  <title>ESP32 Web Server</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
 </head>
 <body>
   <div class="topnav">
     <h1>ESP32 WebSocket Server</h1>
   </div>
   <div class="content">
-      <h2>ONBOARD LED GPIO</h2>
-       <p><button id="button" class="button">Click to Toggle</button></p>
-      <p class="state">State: <span id="state">%STATE%</span></p>
+    <h2>ВСТРОЕННЫЙ СВЕТОДИОД GPIO4</h2>
+    <p><button id="button" class="button">Нажмите, чтобы переключить</button></p>
+    <p class="state">State: <span id="state">%STATE%</span></p>
   </div>
-  </div>
-<script>
-  var gateway = `ws://${window.location.hostname}/ws`;
-  //var gateway = 'ws://${window.location.hostname}/ws';  // не работает
-  var websocket;
-  window.addEventListener('load', onLoad);
-  function initWebSocket() {
-    console.log('Trying to open a WebSocket connection...');
-    websocket = new WebSocket(gateway);
-    websocket.onopen    = onOpen;
-    websocket.onclose   = onClose;
-    websocket.onmessage = onMessage; // <-- add this line
-  }
-  function onOpen(event) {
-    console.log('Connection opened');
-  }
-  function onClose(event) {
-    console.log('Connection closed');
-    setTimeout(initWebSocket, 2000);
-  }
-  function onMessage(event) {
-    var state;
-    if (event.data == "1"){
-      state = "ON";
+  <script>
+    // Создаём шлюз, который будет служить входом в интерфейс WebSocket. 
+    // Указываем IP-адрес веб-сервера (window.location.hostname) для шлюза.
+    var gateway = `ws://${window.location.hostname}/ws`;
+    // Создаем var переменную websocket. 
+    // Прослушивая события с помощью функции window.addwindowListener() 
+    // будем вызывать функцию onload, когда веб-сервер будет загружен.
+    var websocket;
+    window.addEventListener('load', onLoad);
+
+    // При загрузке веб-сервера принять параметр события event и вызвать функции initWebSocket() и initButton().
+    // Функция initWebsocket() будет использоваться для инициализации WebSocket. Аналогичным образом функция initButton() 
+    // включает обработчики событий для кнопки.
+    function onLoad(event) 
+    {
+      initWebSocket();
+      initButton();
     }
-    else{
-      state = "OFF";
+    // Инициировать соединение WebSocket и включить включены три различные 
+    // функции обратного вызова для обработки случаев получения сообщения или открытия/закрытия соединения. 
+    // Далее определить каждую функцию обратного вызова отдельно.
+    function initWebSocket() 
+    {
+      console.log('Попытка открыть соединение с WebSocket...');
+      websocket = new WebSocket(gateway);
+      websocket.onopen    = onOpen;
+      websocket.onclose   = onClose;
+      websocket.onmessage = onMessage; 
     }
-    document.getElementById('state').innerHTML = state;
-  }
-  function onLoad(event) {
-    initWebSocket();
-    initButton();
-  }
-  function initButton() {
-    document.getElementById('button').addEventListener('click', toggle);
-  }
-  function toggle(){
-    websocket.send('toggle');
-  }
-</script>
+    // При открытии соединение WebSocket получить в качестве аргумента переданное «событие» и
+    // вывести в консоль браузера сообщение, соответствующее событию.
+    // В нашем случае это сообщение «Соединение открыто».
+    function onOpen(event) 
+    {
+      console.log('Соединение открыто');
+    }
+    // Отметить в консоли сообщением «Соединение закрыто» событие закрытия WebSocket-а и задать
+    // новое инициирование сокета через 2 секунды
+    function onClose(event) 
+    {
+      console.log('Соединение закрыто');
+      setTimeout(initWebSocket, 2000);
+    }
+    // Изменить состояние элемента 'stste' на странице при получении нового сообщения.
+    // Сообщение будет содержать значение 1 или 0 в зависимости от состояния светодиода. 
+    // Для проверки состояния светодиоты будет использоваться оператор if-else, чтобы проверить,
+    // равно ли сообщение 1 или 0. Если оно равно 1, то состояние будет обновлено до строки «ON», 
+    // в противном случае — до строки «OFF». Это значение будет сохранено в строке с id, которое
+    // ранее было инициализировано с помощью тега <span>
+    function onMessage(event) 
+    {
+      var state;
+      if (event.data == "1")
+      {
+        state = "ON";
+      }
+      else
+      {
+        state = "OFF";
+      }
+      document.getElementById('state').innerHTML = state;
+    }
+    // Инициализировать кнопку. Внутри функции initButton() возникает доступ к кнопке по её идентификатору, 
+    // который был определён ранее. К кнопке привязать прослушиватель событий «click», 
+    // так как веб-страница изменяется по нажатию на кнопку переключения.
+    function initButton() 
+    {
+      document.getElementById('button').addEventListener('click', toggle);
+    }
+    // Внутри функции toggle() вызвать функцию передачи сообщения сокетом и передадть для неё
+    // сообщение «toggle» в качестве аргумента. 
+    // Это будет означать, что при каждом нажатии на кнопку будет вызываться функция toggle
+    // отправляться сообщение «toggle» через WebSocket.
+    function toggle()
+    {
+      websocket.send('toggle');
+    }
+  </script>
+
 </body>
 </html>
 )rawliteral";
 
-void notifyClients() {
+void notifyClients() 
+{
   ws.textAll(String(GPIO_State));
 }
 
-void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
+void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) 
+{
   AwsFrameInfo *info = (AwsFrameInfo*)arg;
-  if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) {
+  if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) 
+  {
     data[len] = 0;
-    if (strcmp((char*)data, "toggle") == 0) {
+    if (strcmp((char*)data, "toggle") == 0) 
+    {
       GPIO_State = !GPIO_State;
       notifyClients();
     }
   }
 }
 
-void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type,
-             void *arg, uint8_t *data, size_t len) {
-  switch (type) {
+void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len) 
+{
+  switch (type) 
+  {
     case WS_EVT_CONNECT:
       Serial.printf("WebSocket client #%u connected from %s\n", client->id(), client->remoteIP().toString().c_str());
       break;
@@ -313,24 +272,30 @@ void onEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType 
   }
 }
 
-void initWebSocket() {
+void initWebSocket() 
+{
   ws.onEvent(onEvent);
   server.addHandler(&ws);
 }
 
-String processor(const String& var){
+String processor(const String& var)
+{
   Serial.println(var);
-  if(var == "STATE"){
-    if (GPIO_State){
+  if (var == "STATE")
+  {
+    if (GPIO_State)
+    {
       return "ON";
     }
-    else{
+    else
+    {
       return "OFF";
     }
   }
 }
 
-void setup(){
+void setup()
+{
   // Serial port for debugging purposes
   Serial.begin(115200);
 
@@ -339,7 +304,8 @@ void setup(){
   
   // Connect to Wi-Fi
   WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED) 
+  {
     delay(1000);
     Serial.println("Connecting to WiFi..");
   }
@@ -350,7 +316,8 @@ void setup(){
   initWebSocket();
 
   // Route for root / web page
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
+  {
     request->send_P(200, "text/html", html_page, processor);
   });
 
