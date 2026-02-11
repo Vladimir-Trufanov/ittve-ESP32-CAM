@@ -1392,7 +1392,7 @@ bool init_wifi() {
   String idfver = esp_get_idf_version();
   Serial.println(esp_get_idf_version());
 
-  jpr("Setting AP (Access Point)вЂ¦");
+  jpr("Setting AP (Access Point)…");
 
   WiFi.softAP(ssidch3, passch3);
 
