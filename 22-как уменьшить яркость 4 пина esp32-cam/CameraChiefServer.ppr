@@ -13,6 +13,7 @@ DontOpen=0
 AbsolutePath=0
 FileFormat=0
 ProjectFilesOnly=0
+HTServer=localhost
 Extensions=*.*
 [Project tree]
 CameraChiefServer
@@ -30,12 +31,16 @@ CameraChiefServer
 [Open project files]
 0=CameraWebServer\camera_index.h
 1=CameraWebServer\app_httpd.cpp
+2=CameraWebServer\camera_pins.h
 [Selected Project Files]
 Main=
-Selected=CameraWebServer\app_httpd.cpp
+Selected=CameraWebServer\camera_index.h
 [CameraWebServer\camera_index.h]
 TopLine=1
-Caret=41,4
+Caret=39,3
 [CameraWebServer\app_httpd.cpp]
 TopLine=647
 Caret=49,662
+[CameraWebServer\camera_pins.h]
+TopLine=1
+Caret=1,1

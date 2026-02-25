@@ -36,7 +36,7 @@ Gunzip()
 
 Gzip('Dynamic Huffman Coding','','',false)
 
-To_Hex('0x with comma',16)
+***To_Hex('0x with comma',16)***
 
 ![](iztekstavkod.jpg)
 
