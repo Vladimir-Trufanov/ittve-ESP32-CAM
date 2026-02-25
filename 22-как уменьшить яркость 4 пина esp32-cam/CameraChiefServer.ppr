@@ -1,0 +1,41 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-ESP32-CAM\22-как уменьшить €ркость 4 пина esp32-cam\CameraWebServer
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+Extensions=*.*
+[Project tree]
+CameraChiefServer
+	+CameraWebServer
+		-Old
+			CameraWebServer\Old\camera_index.hold
+			CameraWebServer\Old\camera_index.html
+		CameraWebServer\app_httpd.cpp
+		CameraWebServer\board_config.h
+		CameraWebServer\camera_index.h
+		CameraWebServer\camera_pins.h
+		CameraWebServer\CameraWebServer.ino
+		CameraWebServer\ci.yml
+		CameraWebServer\partitions.csv
+[Open project files]
+0=CameraWebServer\camera_index.h
+1=CameraWebServer\app_httpd.cpp
+[Selected Project Files]
+Main=
+Selected=CameraWebServer\app_httpd.cpp
+[CameraWebServer\camera_index.h]
+TopLine=1
+Caret=41,4
+[CameraWebServer\app_httpd.cpp]
+TopLine=647
+Caret=49,662
