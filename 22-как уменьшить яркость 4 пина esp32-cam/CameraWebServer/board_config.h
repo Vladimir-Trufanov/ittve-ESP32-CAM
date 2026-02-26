@@ -1,7 +1,7 @@
 #ifndef BOARD_CONFIG_H
 #define BOARD_CONFIG_H
 
-//
+// Рус
 // WARNING!!! PSRAM IC required for UXGA resolution and high JPEG quality
 //            Ensure ESP32 Wrover Module or other board with PSRAM is selected
 //            Partial images will be transmitted if image exceeds buffer size

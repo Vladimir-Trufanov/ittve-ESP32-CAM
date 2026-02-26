@@ -18,29 +18,37 @@ Extensions=*.*
 [Project tree]
 CameraChiefServer
 	+CameraWebServer
-		-Old
-			CameraWebServer\Old\camera_index.hold
-			CameraWebServer\Old\camera_index.html
+		-Res
+			CameraWebServer\Res\camera_index.hold
+			CameraWebServer\Res\camera_index.html
+			CameraWebServer\Res\ci.yml
+			CameraWebServer\Res\partitions.csv
 		CameraWebServer\app_httpd.cpp
 		CameraWebServer\board_config.h
 		CameraWebServer\camera_index.h
 		CameraWebServer\camera_pins.h
 		CameraWebServer\CameraWebServer.ino
-		CameraWebServer\ci.yml
-		CameraWebServer\partitions.csv
 [Open project files]
-0=CameraWebServer\camera_index.h
-1=CameraWebServer\app_httpd.cpp
-2=CameraWebServer\camera_pins.h
+0=CameraWebServer\CameraWebServer.ino
+1=CameraWebServer\board_config.h
+2=CameraWebServer\app_httpd.cpp
+3=CameraWebServer\camera_index.h
+4=CameraWebServer\camera_pins.h
 [Selected Project Files]
 Main=
-Selected=CameraWebServer\camera_index.h
+Selected=CameraWebServer\CameraWebServer.ino
+[CameraWebServer\CameraWebServer.ino]
+TopLine=115
+Caret=1,154
+[CameraWebServer\board_config.h]
+TopLine=1
+Caret=1,1
+[CameraWebServer\app_httpd.cpp]
+TopLine=632
+Caret=6,670
 [CameraWebServer\camera_index.h]
 TopLine=1
-Caret=39,3
-[CameraWebServer\app_httpd.cpp]
-TopLine=647
-Caret=49,662
+Caret=1,1
 [CameraWebServer\camera_pins.h]
 TopLine=1
 Caret=1,1

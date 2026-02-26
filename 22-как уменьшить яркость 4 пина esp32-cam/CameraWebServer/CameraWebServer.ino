@@ -1,22 +1,30 @@
+/** Arduino, ESP32, C/C++ *************************** CameraChiefServer.ino ***
+ * 
+ * v4.0.0, 26.02.2026                                 Автор:      Труфанов В.Е.
+ * Copyright © 2026 tve                               Дата создания: 26.02.2026
+ * 
+ * Preferences:       https://espressif.github.io/arduino-esp32/package_esp32_dev_index.json
+ * Espressif Systems: Esp32 от Espressif Systems версии 3.0.7 
+ * Payment:           "Al Thinker ESP32-CAM"
+ * CPU Frequency:     "240MHz (WiFi/BT)"
+ * Flash Frequency:   "80MHz"
+ * Flash Mode:        "QIO"
+**/
+
 #include "esp_camera.h"
 #include <WiFi.h>
 
-// ===========================
-// Select camera model in board_config.h
-// ===========================
+// Выбираем модель камеры
 #include "board_config.h"
-
-// ===========================
-// Enter your WiFi credentials
-// ===========================
+// Указываем учетные данные Wi-Fi
 const char* ssid     = "OPPO A9 2020";
 const char* password = "b277a4ee84e8";
-
 
 void startCameraServer();
 void setupLedFlash();
 
-void setup() {
+void setup() 
+{
   Serial.begin(115200);
   Serial.setDebugOutput(true);
   Serial.println();
@@ -41,91 +49,105 @@ void setup() {
   config.pin_pwdn = PWDN_GPIO_NUM;
   config.pin_reset = RESET_GPIO_NUM;
   config.xclk_freq_hz = 20000000;
+  config.pixel_format = PIXFORMAT_JPEG;       // для потока
+  // config.pixel_format = PIXFORMAT_RGB565;  // для распознавания лиц
+
+  // По присутствию PSRAM, для более высокого качества JPEG определяемся с 
+  // разрешением и выделением буфера кадров.
+
   config.frame_size = FRAMESIZE_UXGA;
-  config.pixel_format = PIXFORMAT_JPEG;  // for streaming
-  //config.pixel_format = PIXFORMAT_RGB565; // for face detection/recognition
-  config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;
+  config.grab_mode  = CAMERA_GRAB_WHEN_EMPTY;
   config.fb_location = CAMERA_FB_IN_PSRAM;
   config.jpeg_quality = 12;
   config.fb_count = 1;
 
-  // if PSRAM IC present, init with UXGA resolution and higher JPEG quality
-  //                      for larger pre-allocated frame buffer.
-  if (config.pixel_format == PIXFORMAT_JPEG) {
-    if (psramFound()) {
+  if (config.pixel_format == PIXFORMAT_JPEG) 
+  {
+    if (psramFound()) 
+    {
       config.jpeg_quality = 10;
       config.fb_count = 2;
       config.grab_mode = CAMERA_GRAB_LATEST;
-    } else {
-      // Limit the frame size when PSRAM is not available
+    } 
+    else 
+    {
+      // Ограничиваем размер кадра, если PSRAM недоступна
       config.frame_size = FRAMESIZE_SVGA;
       config.fb_location = CAMERA_FB_IN_DRAM;
     }
-  } else {
-    // Best option for face detection/recognition
+  } 
+  else 
+  {
+    // Определяем лучший вариант для обнаружения/распознавания лиц
     config.frame_size = FRAMESIZE_240X240;
-#if CONFIG_IDF_TARGET_ESP32S3
-    config.fb_count = 2;
-#endif
+    #if CONFIG_IDF_TARGET_ESP32S3
+      config.fb_count = 2;
+    #endif
   }
 
-#if defined(CAMERA_MODEL_ESP_EYE)
-  pinMode(13, INPUT_PULLUP);
-  pinMode(14, INPUT_PULLUP);
-#endif
+  #if defined(CAMERA_MODEL_ESP_EYE)
+    pinMode(13, INPUT_PULLUP);
+    pinMode(14, INPUT_PULLUP);
+  #endif
 
-  // camera init
+  // Инициализируем камеру
   esp_err_t err = esp_camera_init(&config);
-  if (err != ESP_OK) {
-    Serial.printf("Camera init failed with error 0x%x", err);
+  if (err != ESP_OK) 
+  {
+    Serial.printf("Ошибка инициализации камеры 0x%x", err);
     return;
   }
-
+  // Выполняем начальную перенастройку кадров
   sensor_t *s = esp_camera_sensor_get();
   // initial sensors are flipped vertically and colors are a bit saturated
-  if (s->id.PID == OV3660_PID) {
-    s->set_vflip(s, 1);        // flip it back
-    s->set_brightness(s, 1);   // up the brightness just a bit
-    s->set_saturation(s, -2);  // lower the saturation
+  // Переопределяем изображение, так как исходные сенсоры перевернуты вертикально, 
+  // а цвета получаются немного насыщенными
+  if (s->id.PID == OV3660_PID) 
+  {
+    s->set_vflip(s, 1);        // переворачиваем обратно
+    s->set_brightness(s, 1);   // немного увеличиваем яркость
+    s->set_saturation(s, -2);  // уменьшаем насыщенность
   }
-  // drop down frame size for higher initial frame rate
-  if (config.pixel_format == PIXFORMAT_JPEG) {
+  // По размеру кадра устанавливаем частоту кадров
+  if (config.pixel_format == PIXFORMAT_JPEG) 
+  {
     s->set_framesize(s, FRAMESIZE_QVGA);
   }
-
-#if defined(CAMERA_MODEL_M5STACK_WIDE) || defined(CAMERA_MODEL_M5STACK_ESP32CAM)
-  s->set_vflip(s, 1);
-  s->set_hmirror(s, 1);
-#endif
-
-#if defined(CAMERA_MODEL_ESP32S3_EYE)
-  s->set_vflip(s, 1);
-#endif
-
-// Setup LED FLash if LED pin is defined in camera_pins.h
-#if defined(LED_GPIO_NUM)
-  setupLedFlash();
-#endif
-
+  #if defined(CAMERA_MODEL_M5STACK_WIDE) || defined(CAMERA_MODEL_M5STACK_ESP32CAM)
+    s->set_vflip(s, 1);
+    s->set_hmirror(s, 1);
+  #endif
+  #if defined(CAMERA_MODEL_ESP32S3_EYE)
+    s->set_vflip(s, 1);
+  #endif
+  // Устанавливаем режим работы вспышки, если вывод светодиода указан в camera_pins.h
+  #if defined(LED_GPIO_NUM)
+    setupLedFlash();
+  #endif
+  // Подключаемся в WiFi
   WiFi.begin(ssid, password);
   WiFi.setSleep(false);
-
-  Serial.print("WiFi connecting");
+  Serial.print("Подключение к WiFi");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
   Serial.println("");
-  Serial.println("WiFi connected");
+  Serial.println("WiFi подключен");
 
   startCameraServer();
 
-  Serial.print("Camera Ready! Use 'http://");
+  Serial.print("Камера готова! \n'http://");
   Serial.print(WiFi.localIP());
-  Serial.println("' to connect");
+  Serial.println("' для подключения к потоку.");
 }
 
-void loop() {
-  // Do nothing. Everything is done in another task by the web server
-  delay(10000);
+void loop() 
+{
+  // В фоновом цикле ничего не делается. 
+  // Трансляция потока выполняется веб-сервером в другой задаче
+  // delay(10000);
+  delay(10);
 }
+
+// ************************************************** CameraChiefServer.ino ***
