@@ -1,0 +1,42 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-ESP32-CAM\22-как уменьшить €ркость 4 пина esp32-cam\CameraDachServer
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+Extensions=*.*
+[Project tree]
+CameraDachServer
+	+CameraDachServer
+		-Res
+			Res\camera_index.hold
+			Res\camera_index.html
+			Res\ci.yml
+			Res\partitions.csv
+		app_httpd.cpp
+		board_config.h
+		camera_index.h
+		camera_pins.h
+		CameraDachServer.ino
+		CameraDachServer.ppr
+[Open project files]
+0=CameraDachServer.ino
+1=app_httpd.cpp
+[Selected Project Files]
+Main=
+Selected=app_httpd.cpp
+[CameraDachServer.ino]
+TopLine=1
+Caret=1,13
+[app_httpd.cpp]
+TopLine=349
+Caret=1,423

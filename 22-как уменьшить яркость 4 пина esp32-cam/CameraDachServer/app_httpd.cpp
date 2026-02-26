@@ -1,16 +1,12 @@
-// Copyright 2015-2016 Espressif Systems (Shanghai) PTE LTD
-// рус
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+/** Arduino, ESP32, C/C++ *********************************** app_httpd.cpp ***
+ * 
+ * Построить работу сервера потока изображений
+ * 
+ * v4.0.0, 26.02.2026                                 Автор:      Труфанов В.Е.
+ * Copyright © 2026 tve                               Дата создания: 26.02.2026
+ * 
+**/
+
 #include "esp_http_server.h"
 #include "esp_timer.h"
 #include "esp_camera.h"
@@ -21,20 +17,110 @@
 #include "camera_index.h"
 #include "board_config.h"
 
+/*
+    ARDUINO_ARCH_ESP32 — макрос, который определяется при компиляции с использованием 
+  ядра ESP32 для Arduino. Он указывает на то, что плата — на базе микроконтроллера ESP32. 
+  Макрос одинаков для всех чипов ESP32-x, например, нет ARDUINO_ARCH_ESP32_S2. 
+    Макрос ARDUINO_ARCH_ESP32 используется в коде для проверки, что плата — ESP32. 
+    Однако есть и ограничение: макрос ARDUINO_ARCH_ESP32 не определяется при работе 
+  с ESP-IDF и arduino-esp32 как компонентом в других средах разработки. 
+
+    CONFIG_ARDUHAL_ESP_LOG — параметр, который влияет на работу библиотеки логирования в Arduino ESP32. 
+  Библиотека логирования в ESP-IDF поддерживает разные уровни детализации событий, и для каждого уровня 
+  есть специальный макрос. Некоторые уровни: 
+    ESP_LOGE — ошибка (минимальный уровень);
+    ESP_LOGW — предупреждение;
+    ESP_LOGI — информация;
+    ESP_LOGD — отладочные сообщения;
+    ESP_LOGV — всё подряд (максимальный уровень).
+  ESP32 Arduino Core поддерживает макросы ESP-IDF, но переопределяет их, например, 
+
+  Во время компиляции — опция CONFIG_LOG_DEFAULT_LEVEL устанавливает уровень детализации по умолчанию. 
+  Также можно установить максимальный уровень детализации с помощью опции CONFIG_LOG_MAXIMUM_LEVEL. 
+  По умолчанию это то же самое, что и CONFIG_LOG_DEFAULT_LEVEL, но его можно установить выше, 
+  чтобы добавить в прошивку больше необязательных сообщений.
+    Можно переопределить уровень детализации по умолчанию для отдельных модулей или файлов, 
+  используя макрос LOG_LOCAL_LEVEL. Его можно определить прямо в файле перед подключением esp_log.h.
+  Во время выполнения — все журналы для уровней детализации ниже CONFIG_LOG_DEFAULT_LEVEL включены по умолчанию. 
+  Для установки уровня детализации для каждого модуля отдельно можно использовать функцию esp_log_level_set().
+    Эта функция не может поднять уровень журнала выше уровня, установленного с помощью параметра CONFIG_LOG_MAXIMUM_LEVEL в menuconfig. 
+  В некоторых случаях использование параметра CONFIG_ARDUHAL_ESP_LOG может вызывать ошибки, 
+  например, при компиляции некоторых библиотек для ESP32. В этом случае рекомендуется проверить, 
+  определено ли CONFIG_ARDUHAL_ESP_LOG, и, если нет, определить его.
+
+  ARDUHAL_LOG_LEVEL — макрос, который определяет уровень ведения журнала в Arduino ESP32. 
+  Он переопределяет макросы ESP-IDF, которые поддерживают пять уровней: 
+    ARDUHAL_LOG_LEVEL_NONE — нет вывода журнала;
+    ARDUHAL_LOG_LEVEL_ERROR — критические ошибки, модуль программного обеспечения не может восстановиться самостоятельно;
+    ARDUHAL_LOG_LEVEL_WARN — предупреждение;
+    ARDUHAL_LOG_LEVEL_INFO — информация;
+    ARDUHAL_LOG_LEVEL_DEBUG — отладка;
+    ARDUHAL_LOG_LEVEL_VERBOSE — подробное ведение журнала.
+  По умолчанию уровень ведения журнала в Arduino ESP32 установлен на ARDUHAL_LOG_LEVEL_NONE. 
+  Уровень ведения журнала можно настроить: 
+    во время компиляции — с помощью опции CORE_DEBUG_LEVEL. Например, можно указать CORE_DEBUG_LEVEL=5. 
+  Для PlatformIO — через опцию build_flags = -DCORE_DEBUG_LEVEL=5; 
+    во время выполнения — с помощью функции esp_log_level_set. Можно установить уровень глобально 
+  или для конкретного модуля (идентификатора). Модули идентифицируются тегами — строками ASCII с 
+  нулевым завершением. Например, чтобы установить уровень ведения журнала на ERROR для всех компонентов, 
+  нужно вызвать esp_log_level_set("*", ESP_LOG_ERROR). 
+    Для конкретного файла источника — с помощью определения LOG_LOCAL_LEVEL. Оно позволяет переопределить 
+  максимальный уровень ведения журнала для конкретного файла без изменения опций Kconfig. 
+  Например, в файле my_file.c можно определить LOG_LOCAL_LEVEL ESP_LOG_VERBOSE перед включением esp_log.h. 
+  Важно: не добавлять LOG_LOCAL_LEVEL в файлы заголовков — это может не работать 
+  из-за подхода однократного включения, используемого в файлах заголовков. 
+
+  В некоторых случаях настройка уровня ведения журнала не работает. Например: 
+  esp_log_level_set() не изменяет уровень — в этом случае может потребоваться перестроить библиотеки.
+  Журналы печатаются только для одного уровня — например, для log_e(), а не для других уровней (log_d(), 
+  log_w(), log_i()). В этом случае нужно определить CORE_DEBUG_LEVEL как флаг сборки в файле platformio.ini.
+ 
+  Важно: Arduino использует свои функции ведения журнала, и ESP_LOG работает только для IDF 
+  (и действует на уже скомпилированные библиотеки). Вместо ESP_LOGx() в Arduino ESP32 
+  используются функции log_x(). 
+
+  ARDUHAL_LOG_LEVEL_INFO — это уровень ведения журнала в платформе ESP32. 
+  Уровень ведения журнала определяет серьёзность сообщения. Некоторые значения уровней:
+  ESP_LOG_NONE — нет вывода журнала;
+  ESP_LOG_ERROR — критические ошибки, модуль программного обеспечения не может восстановиться самостоятельно;
+  ESP_LOG_WARN — условия ошибок, из которых были приняты меры по восстановлению;
+  ESP_LOG_INFO — сообщения информации, которые описывают нормальный поток событий;
+  ESP_LOG_DEBUG — дополнительная информация, которая не необходима для нормального использования (значения, указатели, размеры и т. д.).
+  
+  Уровни ведения журнала настраиваются отдельно для приложения и загрузчика. 
+  Это позволяет разработчикам применять разные настройки ведения журнала для каждого из них с помощью опций Kconfig. 
+
+  Настроить уровень журнала в ESP32 можно двумя способами: во время компиляции и во время выполнения. 
+  Во время компиляции:
+  В menuconfig установить уровень детализации с помощью опции CONFIG_LOG_DEFAULT_LEVEL (уровень по умолчанию).
+  При желании также в menuconfig установить максимальный уровень детализации с помощью опции CONFIG_LOG_MAXIMUM_LEVEL.
+  По умолчанию это то же самое, что и CONFIG_LOG_DEFAULT_LEVEL, но его можно установить выше, 
+  чтобы добавить в прошивку больше необязательных сообщений.
+  Можно переопределить уровень детализации по умолчанию для отдельных модулей или файлов, 
+  используя макрос LOG_LOCAL_LEVEL. Его можно определить прямо в файле перед подключением esp_log.h.
+ 
+  Во время выполнения:
+  Все журналы для уровней детализации ниже CONFIG_LOG_DEFAULT_LEVEL включены по умолчанию.
+  Для установки уровня детализации для каждого модуля отдельно можно использовать функцию esp_log_level_set(). 
+  Для этого используется тег.
+
+  Важно учитывать, что эта функция не может поднять уровень журнала выше уровня, 
+  установленного с помощью параметра CONFIG_LOG_MAXIMUM_LEVEL в menuconfig. 
+*/
+
 #if defined(ARDUINO_ARCH_ESP32) && defined(CONFIG_ARDUHAL_ESP_LOG)
 #include "esp32-hal-log.h"
 #endif
 
-// LED FLASH setup
+// Определяем диапазон свечения вспышки при съемке
 #if defined(LED_GPIO_NUM)
-#define CONFIG_LED_MAX_INTENSITY 255
-
-int led_duty = 0;
-bool isStreaming = false;
-
+  #define CONFIG_LED_MAX_INTENSITY 255
+  int led_duty = 0;
+  bool isStreaming = false;
 #endif
 
-typedef struct {
+typedef struct 
+{
   httpd_req_t *req;
   size_t len;
 } jpg_chunking_t;
@@ -47,32 +133,36 @@ static const char *_STREAM_PART = "Content-Type: image/jpeg\r\nContent-Length: %
 httpd_handle_t stream_httpd = NULL;
 httpd_handle_t camera_httpd = NULL;
 
-typedef struct {
-  size_t size;   //number of values used for filtering
-  size_t index;  //current value index
-  size_t count;  //value count
+typedef struct 
+{
+  size_t size;   // количество значений, используемых для фильтрации
+  size_t index;  // текущий индекс
+  size_t count;  // счетчик
   int sum;
-  int *values;  //array to be filled with values
+  int *values;   // массив для заполнения значениями фильтрации
 } ra_filter_t;
 
 static ra_filter_t ra_filter;
 
-static ra_filter_t *ra_filter_init(ra_filter_t *filter, size_t sample_size) {
+static ra_filter_t *ra_filter_init(ra_filter_t *filter, size_t sample_size) 
+{
   memset(filter, 0, sizeof(ra_filter_t));
 
   filter->values = (int *)malloc(sample_size * sizeof(int));
-  if (!filter->values) {
+  if (!filter->values) 
+  {
     return NULL;
   }
   memset(filter->values, 0, sample_size * sizeof(int));
-
   filter->size = sample_size;
   return filter;
 }
 
 #if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
-static int ra_filter_run(ra_filter_t *filter, int value) {
-  if (!filter->values) {
+static int ra_filter_run(ra_filter_t *filter, int value) 
+{
+  if (!filter->values) 
+  {
     return value;
   }
   filter->sum -= filter->values[filter->index];
@@ -80,7 +170,8 @@ static int ra_filter_run(ra_filter_t *filter, int value) {
   filter->sum += filter->values[filter->index];
   filter->index++;
   filter->index = filter->index % filter->size;
-  if (filter->count < filter->size) {
+  if (filter->count < filter->size) 
+  {
     filter->count++;
   }
   return filter->sum / filter->count;
@@ -88,9 +179,12 @@ static int ra_filter_run(ra_filter_t *filter, int value) {
 #endif
 
 #if defined(LED_GPIO_NUM)
-void enable_led(bool en) {  // Turn LED On or Off
+// Включить или выключить светодиод
+void enable_led(bool en) 
+{ 
   int duty = en ? led_duty : 0;
-  if (en && isStreaming && (led_duty > CONFIG_LED_MAX_INTENSITY)) {
+  if (en && isStreaming && (led_duty > CONFIG_LED_MAX_INTENSITY)) 
+  {
     duty = CONFIG_LED_MAX_INTENSITY;
   }
   ledcWrite(LED_GPIO_NUM, duty);
@@ -100,15 +194,17 @@ void enable_led(bool en) {  // Turn LED On or Off
 }
 #endif
 
-static esp_err_t bmp_handler(httpd_req_t *req) {
+static esp_err_t bmp_handler(httpd_req_t *req) 
+{
   camera_fb_t *fb = NULL;
   esp_err_t res = ESP_OK;
-#if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
-  uint64_t fr_start = esp_timer_get_time();
-#endif
+  #if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
+    uint64_t fr_start = esp_timer_get_time();
+  #endif
   fb = esp_camera_fb_get();
-  if (!fb) {
-    log_e("Camera capture failed");
+  if (!fb) 
+  {
+    log_e("Не удалось выполнить захват с камеры");
     httpd_resp_send_500(req);
     return ESP_FAIL;
   }
@@ -125,50 +221,59 @@ static esp_err_t bmp_handler(httpd_req_t *req) {
   size_t buf_len = 0;
   bool converted = frame2bmp(fb, &buf, &buf_len);
   esp_camera_fb_return(fb);
-  if (!converted) {
-    log_e("BMP Conversion failed");
+  if (!converted) 
+  {
+    log_e("Не удалось выполнить преобразование в формат BMP");
     httpd_resp_send_500(req);
     return ESP_FAIL;
   }
   res = httpd_resp_send(req, (const char *)buf, buf_len);
   free(buf);
-#if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
-  uint64_t fr_end = esp_timer_get_time();
-#endif
+  #if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
+    uint64_t fr_end = esp_timer_get_time();
+  #endif
   log_i("BMP: %llums, %uB", (uint64_t)((fr_end - fr_start) / 1000), buf_len);
   return res;
 }
 
-static size_t jpg_encode_stream(void *arg, size_t index, const void *data, size_t len) {
+static size_t jpg_encode_stream(void *arg, size_t index, const void *data, size_t len) 
+{
   jpg_chunking_t *j = (jpg_chunking_t *)arg;
-  if (!index) {
+  if (!index) 
+  {
     j->len = 0;
   }
-  if (httpd_resp_send_chunk(j->req, (const char *)data, len) != ESP_OK) {
+  if (httpd_resp_send_chunk(j->req, (const char *)data, len) != ESP_OK) 
+  {
     return 0;
   }
   j->len += len;
   return len;
 }
 
-static esp_err_t capture_handler(httpd_req_t *req) {
+static esp_err_t capture_handler(httpd_req_t *req) 
+{
   camera_fb_t *fb = NULL;
   esp_err_t res = ESP_OK;
-#if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
-  int64_t fr_start = esp_timer_get_time();
-#endif
+  #if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
+    int64_t fr_start = esp_timer_get_time();
+  #endif
 
-#if defined(LED_GPIO_NUM)
-  enable_led(true);
-  vTaskDelay(150 / portTICK_PERIOD_MS);  // The LED needs to be turned on ~150ms before the call to esp_camera_fb_get()
-  fb = esp_camera_fb_get();              // or it won't be visible in the frame. A better way to do this is needed.
-  enable_led(false);
-#else
-  fb = esp_camera_fb_get();
-#endif
+  #if defined(LED_GPIO_NUM)
+    enable_led(true);
+    // Обеспечиваем включение вспышки примерно за 150 мс 
+    // до вызова функции esp_camera_fb_get()
+    // иначе она не будет освещать кадр
+    vTaskDelay(150 / portTICK_PERIOD_MS);  
+    fb = esp_camera_fb_get();             
+    enable_led(false);
+  #else
+    fb = esp_camera_fb_get();
+  #endif
 
-  if (!fb) {
-    log_e("Camera capture failed");
+  if (!fb) 
+  {
+    log_e("Не удалось выполнить захват с камеры");
     httpd_resp_send_500(req);
     return ESP_FAIL;
   }
@@ -181,31 +286,35 @@ static esp_err_t capture_handler(httpd_req_t *req) {
   snprintf(ts, 32, "%lld.%06ld", fb->timestamp.tv_sec, fb->timestamp.tv_usec);
   httpd_resp_set_hdr(req, "X-Timestamp", (const char *)ts);
 
-#if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
-  size_t fb_len = 0;
-#endif
-  if (fb->format == PIXFORMAT_JPEG) {
-#if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
-    fb_len = fb->len;
-#endif
+  #if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
+    size_t fb_len = 0;
+  #endif
+  if (fb->format == PIXFORMAT_JPEG) 
+  {
+    #if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
+      fb_len = fb->len;
+    #endif
     res = httpd_resp_send(req, (const char *)fb->buf, fb->len);
-  } else {
+  } 
+  else 
+  {
     jpg_chunking_t jchunk = {req, 0};
     res = frame2jpg_cb(fb, 80, jpg_encode_stream, &jchunk) ? ESP_OK : ESP_FAIL;
     httpd_resp_send_chunk(req, NULL, 0);
-#if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
-    fb_len = jchunk.len;
-#endif
+    #if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
+      fb_len = jchunk.len;
+    #endif
   }
   esp_camera_fb_return(fb);
-#if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
-  int64_t fr_end = esp_timer_get_time();
-#endif
+  #if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
+    int64_t fr_end = esp_timer_get_time();
+  #endif
   log_i("JPG: %uB %ums", (uint32_t)(fb_len), (uint32_t)((fr_end - fr_start) / 1000));
   return res;
 }
 
-static esp_err_t stream_handler(httpd_req_t *req) {
+static esp_err_t stream_handler(httpd_req_t *req) 
+{
   camera_fb_t *fb = NULL;
   struct timeval _timestamp;
   esp_err_t res = ESP_OK;
@@ -214,64 +323,81 @@ static esp_err_t stream_handler(httpd_req_t *req) {
   char *part_buf[128];
 
   static int64_t last_frame = 0;
-  if (!last_frame) {
+  if (!last_frame) 
+  {
     last_frame = esp_timer_get_time();
   }
 
   res = httpd_resp_set_type(req, _STREAM_CONTENT_TYPE);
-  if (res != ESP_OK) {
+  if (res != ESP_OK) 
+  {
     return res;
   }
 
   httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
   httpd_resp_set_hdr(req, "X-Framerate", "60");
 
-#if defined(LED_GPIO_NUM)
-  isStreaming = true;
-  enable_led(true);
-#endif
+  #if defined(LED_GPIO_NUM)
+    isStreaming = true;
+    enable_led(true);
+  #endif
 
-  while (true) {
+  while (true) 
+  {
     fb = esp_camera_fb_get();
-    if (!fb) {
-      log_e("Camera capture failed");
+    if (!fb) 
+    {
+      log_e("Не удалось выполнить захват с камеры");
       res = ESP_FAIL;
-    } else {
+    } 
+    else 
+    {
       _timestamp.tv_sec = fb->timestamp.tv_sec;
       _timestamp.tv_usec = fb->timestamp.tv_usec;
-      if (fb->format != PIXFORMAT_JPEG) {
+      if (fb->format != PIXFORMAT_JPEG) 
+      {
         bool jpeg_converted = frame2jpg(fb, 80, &_jpg_buf, &_jpg_buf_len);
         esp_camera_fb_return(fb);
         fb = NULL;
-        if (!jpeg_converted) {
-          log_e("JPEG compression failed");
+        if (!jpeg_converted) 
+        {
+          log_e("Не удалось выполнить сжатие в формате JPEG");
           res = ESP_FAIL;
         }
-      } else {
+      } 
+      else 
+      {
         _jpg_buf_len = fb->len;
         _jpg_buf = fb->buf;
       }
     }
-    if (res == ESP_OK) {
+    if (res == ESP_OK) 
+    {
       res = httpd_resp_send_chunk(req, _STREAM_BOUNDARY, strlen(_STREAM_BOUNDARY));
     }
-    if (res == ESP_OK) {
+    if (res == ESP_OK) 
+    {
       size_t hlen = snprintf((char *)part_buf, 128, _STREAM_PART, _jpg_buf_len, _timestamp.tv_sec, _timestamp.tv_usec);
       res = httpd_resp_send_chunk(req, (const char *)part_buf, hlen);
     }
-    if (res == ESP_OK) {
+    if (res == ESP_OK) 
+    {
       res = httpd_resp_send_chunk(req, (const char *)_jpg_buf, _jpg_buf_len);
     }
-    if (fb) {
+    if (fb) 
+    {
       esp_camera_fb_return(fb);
       fb = NULL;
       _jpg_buf = NULL;
-    } else if (_jpg_buf) {
+    } 
+    else if (_jpg_buf) 
+    {
       free(_jpg_buf);
       _jpg_buf = NULL;
     }
-    if (res != ESP_OK) {
-      log_e("Send frame failed");
+    if (res != ESP_OK) 
+    {
+      log_e("Не удалось отправить кадр");
       break;
     }
     int64_t fr_end = esp_timer_get_time();
@@ -280,20 +406,19 @@ static esp_err_t stream_handler(httpd_req_t *req) {
     last_frame = fr_end;
 
     frame_time /= 1000;
-#if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
-    uint32_t avg_frame_time = ra_filter_run(&ra_filter, frame_time);
-#endif
+    #if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
+      uint32_t avg_frame_time = ra_filter_run(&ra_filter, frame_time);
+    #endif
     log_i(
       "MJPG: %uB %ums (%.1ffps), AVG: %ums (%.1ffps)", (uint32_t)(_jpg_buf_len), (uint32_t)frame_time, 1000.0 / (uint32_t)frame_time, avg_frame_time,
       1000.0 / avg_frame_time
     );
   }
 
-#if defined(LED_GPIO_NUM)
-  isStreaming = false;
-  enable_led(false);
-#endif
-
+  #if defined(LED_GPIO_NUM)
+    isStreaming = false;
+    enable_led(false);
+  #endif
   return res;
 }
 
@@ -846,3 +971,5 @@ void setupLedFlash() {
   log_i("LED flash is disabled -> LED_GPIO_NUM undefined");
 #endif
 }
+
+// ********************************************************** app_httpd.cpp ***
