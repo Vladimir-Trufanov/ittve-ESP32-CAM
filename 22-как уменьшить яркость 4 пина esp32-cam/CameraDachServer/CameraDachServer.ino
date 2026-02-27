@@ -23,11 +23,17 @@ const char* password = "b277a4ee84e8";
 void startCameraServer();
 void setupLedFlash();
 
+#include "ctrl_define.h"
+
 void setup() 
 {
   Serial.begin(115200);
   Serial.setDebugOutput(true);
   Serial.println();
+  delay(5000);
+  
+  // Показываем контрольные определения
+  CtrlDefine();
 
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;

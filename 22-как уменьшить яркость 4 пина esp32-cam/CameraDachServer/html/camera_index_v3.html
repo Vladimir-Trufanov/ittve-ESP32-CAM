@@ -495,86 +495,98 @@
           <option value="4">Домашний свет</option>
         </select>
       </div>
-                        <div class="input-group" id="aec-group">
-                            <label for="aec">AEC SENSOR</label>
-                            <div class="switch">
-                                <input id="aec" type="checkbox" class="default-action" checked="checked">
-                                <label class="slider" for="aec"></label>
-                            </div>
-                        </div>
-                        <div class="input-group" id="aec2-group">
-                            <label for="aec2">AEC DSP</label>
-                            <div class="switch">
-                                <input id="aec2" type="checkbox" class="default-action" checked="checked">
-                                <label class="slider" for="aec2"></label>
-                            </div>
-                        </div>
-                        <div class="input-group" id="ae_level-group">
-                            <label for="ae_level">AE Level</label>
-                            <div class="range-min">-2</div>
-                            <input type="range" id="ae_level" min="-2" max="2" value="0" class="default-action">
-                            <div class="range-max">2</div>
-                        </div>
-                        <div class="input-group" id="aec_value-group">
-                            <label for="aec_value">Exposure</label>
-                            <div class="range-min">0</div>
-                            <input type="range" id="aec_value" min="0" max="1200" value="204" class="default-action">
-                            <div class="range-max">1200</div>
-                        </div>
-                        <div class="input-group" id="agc-group">
-                            <label for="agc">AGC</label>
-                            <div class="switch">
-                                <input id="agc" type="checkbox" class="default-action" checked="checked">
-                                <label class="slider" for="agc"></label>
-                            </div>
-                        </div>
-                        <div class="input-group hidden" id="agc_gain-group">
-                            <label for="agc_gain">Gain</label>
-                            <div class="range-min">1x</div>
-                            <input type="range" id="agc_gain" min="0" max="30" value="5" class="default-action">
-                            <div class="range-max">31x</div>
-                        </div>
-                        <div class="input-group" id="gainceiling-group">
-                            <label for="gainceiling">Gain Ceiling</label>
-                            <div class="range-min">2x</div>
-                            <input type="range" id="gainceiling" min="0" max="6" value="0" class="default-action">
-                            <div class="range-max">128x</div>
-                        </div>
-                        <div class="input-group" id="bpc-group">
-                            <label for="bpc">BPC</label>
-                            <div class="switch">
-                                <input id="bpc" type="checkbox" class="default-action">
-                                <label class="slider" for="bpc"></label>
-                            </div>
-                        </div>
-                        <div class="input-group" id="wpc-group">
-                            <label for="wpc">WPC</label>
-                            <div class="switch">
-                                <input id="wpc" type="checkbox" class="default-action" checked="checked">
-                                <label class="slider" for="wpc"></label>
-                            </div>
-                        </div>
-                        <div class="input-group" id="raw_gma-group">
-                            <label for="raw_gma">Raw GMA</label>
-                            <div class="switch">
-                                <input id="raw_gma" type="checkbox" class="default-action" checked="checked">
-                                <label class="slider" for="raw_gma"></label>
-                            </div>
-                        </div>
-                        <div class="input-group" id="lenc-group">
-                            <label for="lenc">Lens Correction</label>
-                            <div class="switch">
-                                <input id="lenc" type="checkbox" class="default-action" checked="checked">
-                                <label class="slider" for="lenc"></label>
-                            </div>
-                        </div>
-                        <div class="input-group" id="hmirror-group">
-                            <label for="hmirror">H-Mirror</label>
-                            <div class="switch">
-                                <input id="hmirror" type="checkbox" class="default-action" checked="checked">
-                                <label class="slider" for="hmirror"></label>
-                            </div>
-                        </div>
+      
+      <div class="input-group" id="aec-group">
+        <label for="aec">AEC SENSOR - контроль экспозиции</label>
+        <div class="switch">
+          <input id="aec" type="checkbox" class="default-action" checked="checked">
+          <label class="slider" for="aec"></label>
+        </div>
+      </div>
+      
+      <div class="input-group" id="aec2-group">
+        <label for="aec2">AEC DSP</label>
+        <div class="switch">
+          <input id="aec2" type="checkbox" class="default-action" checked="checked">
+          <label class="slider" for="aec2"></label>
+        </div>
+      </div>
+      
+      <div class="input-group" id="ae_level-group">
+        <label for="ae_level">AE Level - уровни яркости</label>
+        <div class="range-min">-2</div>
+        <input type="range" id="ae_level" min="-2" max="2" value="0" class="default-action">
+        <div class="range-max">2</div>
+      </div>
+      
+      <div class="input-group" id="aec_value-group">
+        <label for="aec_value">Экспозиция</label>
+        <div class="range-min">0</div>
+        <input type="range" id="aec_value" min="0" max="1200" value="204" class="default-action">
+        <div class="range-max">1200</div>
+      </div>
+      
+      <div class="input-group" id="agc-group">
+        <label for="agc">AGC - освещенность</label>
+        <div class="switch">
+          <input id="agc" type="checkbox" class="default-action" checked="checked">
+          <label class="slider" for="agc"></label>
+        </div>
+      </div>
+      
+      <div class="input-group hidden" id="agc_gain-group">
+        <label for="agc_gain">Gain - усиление сигнала</label>
+        <div class="range-min">1x</div>
+        <input type="range" id="agc_gain" min="0" max="30" value="5" class="default-action">
+        <div class="range-max">31x</div>
+      </div>
+      
+      <div class="input-group" id="gainceiling-group">
+        <label for="gainceiling">Gain Ceiling</label>
+        <div class="range-min">2x</div>
+        <input type="range" id="gainceiling" min="0" max="6" value="0" class="default-action">
+        <div class="range-max">128x</div>
+      </div>
+      
+      <div class="input-group" id="bpc-group">
+        <label for="bpc">BPC - разрядность цветов</label>
+        <div class="switch">
+          <input id="bpc" type="checkbox" class="default-action">
+          <label class="slider" for="bpc"></label>
+        </div>
+      </div>
+      
+      <div class="input-group" id="wpc-group">
+        <label for="wpc">WPC</label>
+        <div class="switch">
+           <input id="wpc" type="checkbox" class="default-action" checked="checked">
+           <label class="slider" for="wpc"></label>
+        </div>
+      </div>
+      
+      <div class="input-group" id="raw_gma-group">
+        <label for="raw_gma">«Cыроt» изображение</label>
+        <div class="switch">
+          <input id="raw_gma" type="checkbox" class="default-action" checked="checked">
+          <label class="slider" for="raw_gma"></label>
+        </div>
+      </div>
+      
+      <div class="input-group" id="lenc-group">
+        <label for="lenc">Коррекция искажений</label>
+        <div class="switch">
+          <input id="lenc" type="checkbox" class="default-action" checked="checked">
+          <label class="slider" for="lenc"></label>
+        </div>
+      </div>
+      
+      <div class="input-group" id="hmirror-group">
+        <label for="hmirror">H-Mirror</label>
+        <div class="switch">
+          <input id="hmirror" type="checkbox" class="default-action" checked="checked">
+          <label class="slider" for="hmirror"></label>
+        </div>
+      </div>
                         <div class="input-group" id="vflip-group">
                             <label for="vflip">V-Flip</label>
                             <div class="switch">
@@ -905,7 +917,7 @@ document.addEventListener('DOMContentLoaded', function (event)
   }
   const show = el => 
   {
-    console.log(el====);
+    console.log("el====");
     console.log(el);
     el.classList.remove('hidden');
   }
