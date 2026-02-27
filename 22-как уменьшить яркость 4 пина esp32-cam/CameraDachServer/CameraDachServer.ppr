@@ -19,7 +19,6 @@ Extensions=*.*
 CameraDachServer
 	+CameraDachServer
 		-html
-			html\camera_index_v2.html
 			html\camera_index_v3.html
 		app_httpd.cpp
 		board_config.h
@@ -44,11 +43,11 @@ Caret=1,26
 TopLine=245
 Caret=8,270
 [html\camera_index_v3.html]
-TopLine=1100
-Caret=1,1138
+TopLine=1101
+Caret=1,1139
 [camera_index.h]
-TopLine=446
-Caret=25,468
+TopLine=433
+Caret=20,471
 [ctrl_define.h]
 TopLine=1
 Caret=74,21
