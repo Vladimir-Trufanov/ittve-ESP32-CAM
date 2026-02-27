@@ -422,18 +422,22 @@ static esp_err_t stream_handler(httpd_req_t *req)
   return res;
 }
 
-static esp_err_t parse_get(httpd_req_t *req, char **obuf) {
+static esp_err_t parse_get(httpd_req_t *req, char **obuf) 
+{
   char *buf = NULL;
   size_t buf_len = 0;
 
   buf_len = httpd_req_get_url_query_len(req) + 1;
-  if (buf_len > 1) {
+  if (buf_len > 1) 
+  {
     buf = (char *)malloc(buf_len);
-    if (!buf) {
+    if (!buf) 
+    {
       httpd_resp_send_500(req);
       return ESP_FAIL;
     }
-    if (httpd_req_get_url_query_str(req, buf, buf_len) == ESP_OK) {
+    if (httpd_req_get_url_query_str(req, buf, buf_len) == ESP_OK) 
+    {
       *obuf = buf;
       return ESP_OK;
     }
@@ -443,15 +447,18 @@ static esp_err_t parse_get(httpd_req_t *req, char **obuf) {
   return ESP_FAIL;
 }
 
-static esp_err_t cmd_handler(httpd_req_t *req) {
+static esp_err_t cmd_handler(httpd_req_t *req) 
+{
   char *buf = NULL;
   char variable[32];
   char value[32];
 
-  if (parse_get(req, &buf) != ESP_OK) {
+  if (parse_get(req, &buf) != ESP_OK) 
+  {
     return ESP_FAIL;
   }
-  if (httpd_query_key_value(buf, "var", variable, sizeof(variable)) != ESP_OK || httpd_query_key_value(buf, "val", value, sizeof(value)) != ESP_OK) {
+  if (httpd_query_key_value(buf,"var",variable,sizeof(variable)) != ESP_OK || httpd_query_key_value(buf,"val",value,sizeof(value)) != ESP_OK) 
+  {
     free(buf);
     httpd_resp_send_404(req);
     return ESP_FAIL;
@@ -463,71 +470,124 @@ static esp_err_t cmd_handler(httpd_req_t *req) {
   sensor_t *s = esp_camera_sensor_get();
   int res = 0;
 
-  if (!strcmp(variable, "framesize")) {
-    if (s->pixformat == PIXFORMAT_JPEG) {
+  if (!strcmp(variable, "framesize")) 
+  {
+    if (s->pixformat == PIXFORMAT_JPEG) 
+    {
       res = s->set_framesize(s, (framesize_t)val);
     }
-  } else if (!strcmp(variable, "quality")) {
+  } 
+  else if (!strcmp(variable, "quality")) 
+  {
     res = s->set_quality(s, val);
-  } else if (!strcmp(variable, "contrast")) {
+  } 
+  else if (!strcmp(variable, "contrast")) 
+  {
     res = s->set_contrast(s, val);
-  } else if (!strcmp(variable, "brightness")) {
+  } 
+  else if (!strcmp(variable, "brightness")) 
+  {
     res = s->set_brightness(s, val);
-  } else if (!strcmp(variable, "saturation")) {
+  } 
+  else if (!strcmp(variable, "saturation")) 
+  {
     res = s->set_saturation(s, val);
-  } else if (!strcmp(variable, "gainceiling")) {
+  } 
+  else if (!strcmp(variable, "gainceiling")) 
+  {
     res = s->set_gainceiling(s, (gainceiling_t)val);
-  } else if (!strcmp(variable, "colorbar")) {
+  } 
+  else if (!strcmp(variable, "colorbar")) 
+  {
     res = s->set_colorbar(s, val);
-  } else if (!strcmp(variable, "awb")) {
+  } 
+  else if (!strcmp(variable, "awb")) 
+  {
     res = s->set_whitebal(s, val);
-  } else if (!strcmp(variable, "agc")) {
+  } 
+  else if (!strcmp(variable, "agc")) 
+  {
     res = s->set_gain_ctrl(s, val);
-  } else if (!strcmp(variable, "aec")) {
+  } 
+  else if (!strcmp(variable, "aec")) 
+  {
     res = s->set_exposure_ctrl(s, val);
-  } else if (!strcmp(variable, "hmirror")) {
+  } 
+  else if (!strcmp(variable, "hmirror")) 
+  {
     res = s->set_hmirror(s, val);
-  } else if (!strcmp(variable, "vflip")) {
+  } 
+  else if (!strcmp(variable, "vflip")) 
+  {
     res = s->set_vflip(s, val);
-  } else if (!strcmp(variable, "awb_gain")) {
+  } 
+  else if (!strcmp(variable, "awb_gain")) 
+  {
     res = s->set_awb_gain(s, val);
-  } else if (!strcmp(variable, "agc_gain")) {
+  } 
+  else if 
+  (!strcmp(variable, "agc_gain")) 
+  {
     res = s->set_agc_gain(s, val);
-  } else if (!strcmp(variable, "aec_value")) {
+  } 
+  else if (!strcmp(variable, "aec_value")) 
+  {
     res = s->set_aec_value(s, val);
-  } else if (!strcmp(variable, "aec2")) {
+  } 
+  else if (!strcmp(variable, "aec2")) 
+  {
     res = s->set_aec2(s, val);
-  } else if (!strcmp(variable, "dcw")) {
+  } 
+  else if (!strcmp(variable, "dcw")) 
+  {
     res = s->set_dcw(s, val);
-  } else if (!strcmp(variable, "bpc")) {
+  } 
+  else if (!strcmp(variable, "bpc")) 
+  {
     res = s->set_bpc(s, val);
-  } else if (!strcmp(variable, "wpc")) {
+  } 
+  else if (!strcmp(variable, "wpc")) 
+  {
     res = s->set_wpc(s, val);
-  } else if (!strcmp(variable, "raw_gma")) {
+  } 
+  else if (!strcmp(variable, "raw_gma")) 
+  {
     res = s->set_raw_gma(s, val);
-  } else if (!strcmp(variable, "lenc")) {
+  } 
+  else if (!strcmp(variable, "lenc")) 
+  {
     res = s->set_lenc(s, val);
-  } else if (!strcmp(variable, "special_effect")) {
+  } 
+  else if (!strcmp(variable, "special_effect")) 
+  {
     res = s->set_special_effect(s, val);
-  } else if (!strcmp(variable, "wb_mode")) {
+  } 
+  else if (!strcmp(variable, "wb_mode")) 
+  {
     res = s->set_wb_mode(s, val);
-  } else if (!strcmp(variable, "ae_level")) {
+  } 
+  else if (!strcmp(variable, "ae_level")) 
+  {
     res = s->set_ae_level(s, val);
   }
-#if defined(LED_GPIO_NUM)
-  else if (!strcmp(variable, "led_intensity")) {
+  #if defined(LED_GPIO_NUM)
+  else if (!strcmp(variable, "led_intensity")) 
+  {
     led_duty = val;
-    if (isStreaming) {
+    if (isStreaming) 
+    {
       enable_led(true);
     }
   }
-#endif
-  else {
+  #endif
+  else 
+  {
     log_i("Unknown command: %s", variable);
     res = -1;
   }
 
-  if (res < 0) {
+  if (res < 0) 
+  {
     return httpd_resp_send_500(req);
   }
 
@@ -535,41 +595,50 @@ static esp_err_t cmd_handler(httpd_req_t *req) {
   return httpd_resp_send(req, NULL, 0);
 }
 
-static int print_reg(char *p, sensor_t *s, uint16_t reg, uint32_t mask) {
+static int print_reg(char *p, sensor_t *s, uint16_t reg, uint32_t mask) 
+{
   return sprintf(p, "\"0x%x\":%u,", reg, s->get_reg(s, reg, mask));
 }
 
-static esp_err_t status_handler(httpd_req_t *req) {
+static esp_err_t status_handler(httpd_req_t *req) 
+{
   static char json_response[1024];
 
   sensor_t *s = esp_camera_sensor_get();
   char *p = json_response;
   *p++ = '{';
 
-  if (s->id.PID == OV5640_PID || s->id.PID == OV3660_PID) {
-    for (int reg = 0x3400; reg < 0x3406; reg += 2) {
-      p += print_reg(p, s, reg, 0xFFF);  //12 bit
+  if (s->id.PID == OV5640_PID || s->id.PID == OV3660_PID) 
+  {
+    for (int reg = 0x3400; reg < 0x3406; reg += 2) 
+    {
+      p += print_reg(p, s, reg, 0xFFF);     //12 bit
     }
     p += print_reg(p, s, 0x3406, 0xFF);
 
     p += print_reg(p, s, 0x3500, 0xFFFF0);  //16 bit
     p += print_reg(p, s, 0x3503, 0xFF);
-    p += print_reg(p, s, 0x350a, 0x3FF);   //10 bit
-    p += print_reg(p, s, 0x350c, 0xFFFF);  //16 bit
+    p += print_reg(p, s, 0x350a, 0x3FF);    //10 bit
+    p += print_reg(p, s, 0x350c, 0xFFFF);   //16 bit
 
-    for (int reg = 0x5480; reg <= 0x5490; reg++) {
+    for (int reg = 0x5480; reg <= 0x5490; reg++) 
+    {
       p += print_reg(p, s, reg, 0xFF);
     }
 
-    for (int reg = 0x5380; reg <= 0x538b; reg++) {
+    for (int reg = 0x5380; reg <= 0x538b; reg++) 
+    {
       p += print_reg(p, s, reg, 0xFF);
     }
 
-    for (int reg = 0x5580; reg < 0x558a; reg++) {
+    for (int reg = 0x5580; reg < 0x558a; reg++) 
+    {
       p += print_reg(p, s, reg, 0xFF);
     }
-    p += print_reg(p, s, 0x558a, 0x1FF);  //9 bit
-  } else if (s->id.PID == OV2640_PID) {
+    p += print_reg(p, s, 0x558a, 0x1FF);     //9 bit
+  } 
+  else if (s->id.PID == OV2640_PID) 
+  {
     p += print_reg(p, s, 0xd3, 0xFF);
     p += print_reg(p, s, 0x111, 0xFF);
     p += print_reg(p, s, 0x132, 0xFF);
@@ -602,11 +671,11 @@ static esp_err_t status_handler(httpd_req_t *req) {
   p += sprintf(p, "\"vflip\":%u,", s->status.vflip);
   p += sprintf(p, "\"dcw\":%u,", s->status.dcw);
   p += sprintf(p, "\"colorbar\":%u", s->status.colorbar);
-#if defined(LED_GPIO_NUM)
-  p += sprintf(p, ",\"led_intensity\":%u", led_duty);
-#else
-  p += sprintf(p, ",\"led_intensity\":%d", -1);
-#endif
+  #if defined(LED_GPIO_NUM)
+    p += sprintf(p, ",\"led_intensity\":%u", led_duty);
+  #else
+    p += sprintf(p, ",\"led_intensity\":%d", -1);
+  #endif
   *p++ = '}';
   *p++ = 0;
   httpd_resp_set_type(req, "application/json");
@@ -614,14 +683,17 @@ static esp_err_t status_handler(httpd_req_t *req) {
   return httpd_resp_send(req, json_response, strlen(json_response));
 }
 
-static esp_err_t xclk_handler(httpd_req_t *req) {
+static esp_err_t xclk_handler(httpd_req_t *req) 
+{
   char *buf = NULL;
   char _xclk[32];
 
-  if (parse_get(req, &buf) != ESP_OK) {
+  if (parse_get(req, &buf) != ESP_OK) 
+  {
     return ESP_FAIL;
   }
-  if (httpd_query_key_value(buf, "xclk", _xclk, sizeof(_xclk)) != ESP_OK) {
+  if (httpd_query_key_value(buf, "xclk", _xclk, sizeof(_xclk)) != ESP_OK) 
+  {
     free(buf);
     httpd_resp_send_404(req);
     return ESP_FAIL;
@@ -633,7 +705,8 @@ static esp_err_t xclk_handler(httpd_req_t *req) {
 
   sensor_t *s = esp_camera_sensor_get();
   int res = s->set_xclk(s, LEDC_TIMER_0, xclk);
-  if (res) {
+  if (res) 
+  {
     return httpd_resp_send_500(req);
   }
 
@@ -641,17 +714,20 @@ static esp_err_t xclk_handler(httpd_req_t *req) {
   return httpd_resp_send(req, NULL, 0);
 }
 
-static esp_err_t reg_handler(httpd_req_t *req) {
+static esp_err_t reg_handler(httpd_req_t *req) 
+{
   char *buf = NULL;
   char _reg[32];
   char _mask[32];
   char _val[32];
 
-  if (parse_get(req, &buf) != ESP_OK) {
+  if (parse_get(req, &buf) != ESP_OK) 
+  {
     return ESP_FAIL;
   }
-  if (httpd_query_key_value(buf, "reg", _reg, sizeof(_reg)) != ESP_OK || httpd_query_key_value(buf, "mask", _mask, sizeof(_mask)) != ESP_OK
-      || httpd_query_key_value(buf, "val", _val, sizeof(_val)) != ESP_OK) {
+  if (httpd_query_key_value(buf,"reg",_reg,sizeof(_reg)) != ESP_OK || httpd_query_key_value(buf,"mask", _mask,sizeof(_mask)) != ESP_OK
+      || httpd_query_key_value(buf,"val", _val,sizeof(_val)) != ESP_OK) 
+  {
     free(buf);
     httpd_resp_send_404(req);
     return ESP_FAIL;
@@ -665,7 +741,8 @@ static esp_err_t reg_handler(httpd_req_t *req) {
 
   sensor_t *s = esp_camera_sensor_get();
   int res = s->set_reg(s, reg, mask, val);
-  if (res) {
+  if (res) 
+  {
     return httpd_resp_send_500(req);
   }
 
@@ -673,15 +750,18 @@ static esp_err_t reg_handler(httpd_req_t *req) {
   return httpd_resp_send(req, NULL, 0);
 }
 
-static esp_err_t greg_handler(httpd_req_t *req) {
+static esp_err_t greg_handler(httpd_req_t *req) 
+{
   char *buf = NULL;
   char _reg[32];
   char _mask[32];
 
-  if (parse_get(req, &buf) != ESP_OK) {
+  if (parse_get(req, &buf) != ESP_OK) 
+  {
     return ESP_FAIL;
   }
-  if (httpd_query_key_value(buf, "reg", _reg, sizeof(_reg)) != ESP_OK || httpd_query_key_value(buf, "mask", _mask, sizeof(_mask)) != ESP_OK) {
+  if (httpd_query_key_value(buf, "reg", _reg, sizeof(_reg)) != ESP_OK || httpd_query_key_value(buf, "mask", _mask, sizeof(_mask)) != ESP_OK) 
+  {
     free(buf);
     httpd_resp_send_404(req);
     return ESP_FAIL;
@@ -692,7 +772,8 @@ static esp_err_t greg_handler(httpd_req_t *req) {
   int mask = atoi(_mask);
   sensor_t *s = esp_camera_sensor_get();
   int res = s->get_reg(s, reg, mask);
-  if (res < 0) {
+  if (res < 0) 
+  {
     return httpd_resp_send_500(req);
   }
   log_i("Get Register: reg: 0x%02x, mask: 0x%02x, value: 0x%02x", reg, mask, res);
@@ -703,18 +784,22 @@ static esp_err_t greg_handler(httpd_req_t *req) {
   return httpd_resp_send(req, val, strlen(val));
 }
 
-static int parse_get_var(char *buf, const char *key, int def) {
+static int parse_get_var(char *buf, const char *key, int def) 
+{
   char _int[16];
-  if (httpd_query_key_value(buf, key, _int, sizeof(_int)) != ESP_OK) {
+  if (httpd_query_key_value(buf, key, _int, sizeof(_int)) != ESP_OK) 
+  {
     return def;
   }
   return atoi(_int);
 }
 
-static esp_err_t pll_handler(httpd_req_t *req) {
+static esp_err_t pll_handler(httpd_req_t *req) 
+{
   char *buf = NULL;
 
-  if (parse_get(req, &buf) != ESP_OK) {
+  if (parse_get(req, &buf) != ESP_OK) 
+  {
     return ESP_FAIL;
   }
 
@@ -728,10 +813,11 @@ static esp_err_t pll_handler(httpd_req_t *req) {
   int pclk = parse_get_var(buf, "pclk", 0);
   free(buf);
 
-  log_i("Set Pll: bypass: %d, mul: %d, sys: %d, root: %d, pre: %d, seld5: %d, pclken: %d, pclk: %d", bypass, mul, sys, root, pre, seld5, pclken, pclk);
+  log_i("Set Pll: bypass: %d, mul: %d, sys: %d, root: %d, pre: %d, seld5: %d, pclken: %d, pclk: %d",bypass,mul,sys,root,pre,seld5,pclken,pclk);
   sensor_t *s = esp_camera_sensor_get();
   int res = s->set_pll(s, bypass, mul, sys, root, pre, seld5, pclken, pclk);
-  if (res) {
+  if (res) 
+  {
     return httpd_resp_send_500(req);
   }
 
@@ -739,10 +825,12 @@ static esp_err_t pll_handler(httpd_req_t *req) {
   return httpd_resp_send(req, NULL, 0);
 }
 
-static esp_err_t win_handler(httpd_req_t *req) {
+static esp_err_t win_handler(httpd_req_t *req) 
+{
   char *buf = NULL;
 
-  if (parse_get(req, &buf) != ESP_OK) {
+  if (parse_get(req, &buf) != ESP_OK) 
+  {
     return ESP_FAIL;
   }
 
@@ -761,11 +849,11 @@ static esp_err_t win_handler(httpd_req_t *req) {
   free(buf);
 
   log_i(
-    "Set Window: Start: %d %d, End: %d %d, Offset: %d %d, Total: %d %d, Output: %d %d, Scale: %u, Binning: %u", startX, startY, endX, endY, offsetX, offsetY,
-    totalX, totalY, outputX, outputY, scale, binning  // codespell:ignore totaly
+    "Set Window: Start: %d %d, End: %d %d, Offset: %d %d, Total: %d %d, Output: %d %d, Scale: %u, Binning: %u",startX,startY,endX,endY,
+    offsetX,offsetY,totalX,totalY,outputX,outputY,scale, binning  // codespell:ignore totaly
   );
   sensor_t *s = esp_camera_sensor_get();
-  int res = s->set_res_raw(s, startX, startY, endX, endY, offsetX, offsetY, totalX, totalY, outputX, outputY, scale, binning);  // codespell:ignore totaly
+  int res = s->set_res_raw(s,startX,startY,endX,endY,offsetX,offsetY,totalX,totalY,outputX,outputY,scale,binning);  // codespell:ignore totaly
   if (res) {
     return httpd_resp_send_500(req);
   }
@@ -774,174 +862,196 @@ static esp_err_t win_handler(httpd_req_t *req) {
   return httpd_resp_send(req, NULL, 0);
 }
 
-static esp_err_t index_handler(httpd_req_t *req) {
+static esp_err_t index_handler(httpd_req_t *req) 
+{
   httpd_resp_set_type(req, "text/html");
   httpd_resp_set_hdr(req, "Content-Encoding", "gzip");
   sensor_t *s = esp_camera_sensor_get();
-  if (s != NULL) {
-    if (s->id.PID == OV3660_PID) {
+  if (s != NULL) 
+  {
+    if (s->id.PID == OV3660_PID) 
+    {
       return httpd_resp_send(req, (const char *)index_ov3660_html_gz, index_ov3660_html_gz_len);
-    } else if (s->id.PID == OV5640_PID) {
+    } 
+    else if (s->id.PID == OV5640_PID) 
+    {
       return httpd_resp_send(req, (const char *)index_ov5640_html_gz, index_ov5640_html_gz_len);
-    } else {
+    } 
+    else 
+    {
+      // Запускаем управляющуюю html-страницу и возвращаем ответ
       return httpd_resp_send(req, (const char *)index_ov2640_html_gz, index_ov2640_html_gz_len);
     }
-  } else {
-    log_e("Camera sensor not found");
+  }
+  else 
+  {
+    log_e("Датчик камеры не найден");
     return httpd_resp_send_500(req);
   }
 }
 
-void startCameraServer() {
+void startCameraServer() 
+{
   httpd_config_t config = HTTPD_DEFAULT_CONFIG();
   config.max_uri_handlers = 16;
 
-  httpd_uri_t index_uri = {
+  httpd_uri_t index_uri = 
+  {
     .uri = "/",
     .method = HTTP_GET,
     .handler = index_handler,
     .user_ctx = NULL
-#ifdef CONFIG_HTTPD_WS_SUPPORT
-    ,
-    .is_websocket = true,
-    .handle_ws_control_frames = false,
-    .supported_subprotocol = NULL
-#endif
+    #ifdef CONFIG_HTTPD_WS_SUPPORT
+      ,
+      .is_websocket = true,
+      .handle_ws_control_frames = false,
+      .supported_subprotocol = NULL
+    #endif
   };
 
-  httpd_uri_t status_uri = {
+  httpd_uri_t status_uri = 
+  {
     .uri = "/status",
     .method = HTTP_GET,
     .handler = status_handler,
     .user_ctx = NULL
-#ifdef CONFIG_HTTPD_WS_SUPPORT
-    ,
-    .is_websocket = true,
-    .handle_ws_control_frames = false,
-    .supported_subprotocol = NULL
-#endif
+    #ifdef CONFIG_HTTPD_WS_SUPPORT
+      ,
+      .is_websocket = true,
+      .handle_ws_control_frames = false,
+      .supported_subprotocol = NULL
+    #endif
   };
 
-  httpd_uri_t cmd_uri = {
+  httpd_uri_t cmd_uri = 
+  {
     .uri = "/control",
     .method = HTTP_GET,
     .handler = cmd_handler,
     .user_ctx = NULL
-#ifdef CONFIG_HTTPD_WS_SUPPORT
-    ,
-    .is_websocket = true,
-    .handle_ws_control_frames = false,
-    .supported_subprotocol = NULL
-#endif
+    #ifdef CONFIG_HTTPD_WS_SUPPORT
+      ,
+      .is_websocket = true,
+      .handle_ws_control_frames = false,
+      .supported_subprotocol = NULL
+    #endif
   };
 
-  httpd_uri_t capture_uri = {
+  httpd_uri_t capture_uri = 
+  {
     .uri = "/capture",
     .method = HTTP_GET,
     .handler = capture_handler,
     .user_ctx = NULL
-#ifdef CONFIG_HTTPD_WS_SUPPORT
-    ,
-    .is_websocket = true,
-    .handle_ws_control_frames = false,
-    .supported_subprotocol = NULL
-#endif
+    #ifdef CONFIG_HTTPD_WS_SUPPORT
+      ,
+      .is_websocket = true,
+      .handle_ws_control_frames = false,
+      .supported_subprotocol = NULL
+    #endif
   };
 
-  httpd_uri_t stream_uri = {
+  httpd_uri_t stream_uri = 
+  {
     .uri = "/stream",
     .method = HTTP_GET,
     .handler = stream_handler,
     .user_ctx = NULL
-#ifdef CONFIG_HTTPD_WS_SUPPORT
-    ,
-    .is_websocket = true,
-    .handle_ws_control_frames = false,
-    .supported_subprotocol = NULL
-#endif
+    #ifdef CONFIG_HTTPD_WS_SUPPORT
+      ,
+      .is_websocket = true,
+      .handle_ws_control_frames = false,
+      .supported_subprotocol = NULL
+    #endif
   };
 
-  httpd_uri_t bmp_uri = {
+  httpd_uri_t bmp_uri = 
+  {
     .uri = "/bmp",
     .method = HTTP_GET,
     .handler = bmp_handler,
     .user_ctx = NULL
-#ifdef CONFIG_HTTPD_WS_SUPPORT
-    ,
-    .is_websocket = true,
-    .handle_ws_control_frames = false,
-    .supported_subprotocol = NULL
-#endif
+    #ifdef CONFIG_HTTPD_WS_SUPPORT
+      ,
+      .is_websocket = true,
+      .handle_ws_control_frames = false,
+      .supported_subprotocol = NULL
+    #endif
   };
 
-  httpd_uri_t xclk_uri = {
+  httpd_uri_t xclk_uri = 
+  {
     .uri = "/xclk",
     .method = HTTP_GET,
     .handler = xclk_handler,
     .user_ctx = NULL
-#ifdef CONFIG_HTTPD_WS_SUPPORT
-    ,
-    .is_websocket = true,
-    .handle_ws_control_frames = false,
-    .supported_subprotocol = NULL
-#endif
+    #ifdef CONFIG_HTTPD_WS_SUPPORT
+      ,
+      .is_websocket = true,
+      .handle_ws_control_frames = false,
+      .supported_subprotocol = NULL
+    #endif
   };
 
-  httpd_uri_t reg_uri = {
+  httpd_uri_t reg_uri = 
+  {
     .uri = "/reg",
     .method = HTTP_GET,
     .handler = reg_handler,
     .user_ctx = NULL
-#ifdef CONFIG_HTTPD_WS_SUPPORT
-    ,
-    .is_websocket = true,
-    .handle_ws_control_frames = false,
-    .supported_subprotocol = NULL
-#endif
+    #ifdef CONFIG_HTTPD_WS_SUPPORT
+      ,
+      .is_websocket = true,
+      .handle_ws_control_frames = false,
+      .supported_subprotocol = NULL
+    #endif
   };
 
-  httpd_uri_t greg_uri = {
+  httpd_uri_t greg_uri = 
+  {
     .uri = "/greg",
     .method = HTTP_GET,
     .handler = greg_handler,
     .user_ctx = NULL
-#ifdef CONFIG_HTTPD_WS_SUPPORT
-    ,
-    .is_websocket = true,
-    .handle_ws_control_frames = false,
-    .supported_subprotocol = NULL
-#endif
+    #ifdef CONFIG_HTTPD_WS_SUPPORT
+      ,
+      .is_websocket = true,
+      .handle_ws_control_frames = false,
+      .supported_subprotocol = NULL
+    #endif
   };
 
-  httpd_uri_t pll_uri = {
+  httpd_uri_t pll_uri = 
+  {
     .uri = "/pll",
     .method = HTTP_GET,
     .handler = pll_handler,
     .user_ctx = NULL
-#ifdef CONFIG_HTTPD_WS_SUPPORT
-    ,
-    .is_websocket = true,
-    .handle_ws_control_frames = false,
-    .supported_subprotocol = NULL
-#endif
+    #ifdef CONFIG_HTTPD_WS_SUPPORT
+      ,
+      .is_websocket = true,
+      .handle_ws_control_frames = false,
+      .supported_subprotocol = NULL
+    #endif
   };
 
-  httpd_uri_t win_uri = {
+  httpd_uri_t win_uri = 
+  {
     .uri = "/resolution",
     .method = HTTP_GET,
     .handler = win_handler,
     .user_ctx = NULL
-#ifdef CONFIG_HTTPD_WS_SUPPORT
-    ,
-    .is_websocket = true,
-    .handle_ws_control_frames = false,
-    .supported_subprotocol = NULL
-#endif
+    #ifdef CONFIG_HTTPD_WS_SUPPORT
+      ,
+      .is_websocket = true,
+      .handle_ws_control_frames = false,
+      .supported_subprotocol = NULL
+    #endif
   };
 
   ra_filter_init(&ra_filter, 20);
 
-  log_i("Starting web server on port: '%d'", config.server_port);
+  log_i("Запущен веб-сервер по порту: '%d'", config.server_port);
   if (httpd_start(&camera_httpd, &config) == ESP_OK) {
     httpd_register_uri_handler(camera_httpd, &index_uri);
     httpd_register_uri_handler(camera_httpd, &cmd_uri);
@@ -958,18 +1068,20 @@ void startCameraServer() {
 
   config.server_port += 1;
   config.ctrl_port += 1;
-  log_i("Starting stream server on port: '%d'", config.server_port);
-  if (httpd_start(&stream_httpd, &config) == ESP_OK) {
+  log_i("Запущен веб-сервер по порту: '%d'", config.server_port);
+  if (httpd_start(&stream_httpd, &config) == ESP_OK) 
+  {
     httpd_register_uri_handler(stream_httpd, &stream_uri);
   }
 }
 
-void setupLedFlash() {
-#if defined(LED_GPIO_NUM)
-  ledcAttach(LED_GPIO_NUM, 5000, 8);
-#else
-  log_i("LED flash is disabled -> LED_GPIO_NUM undefined");
-#endif
+void setupLedFlash() 
+{
+  #if defined(LED_GPIO_NUM)
+    ledcAttach(LED_GPIO_NUM, 5000, 8);
+  #else
+    log_i("Светодиодная вспышка отключена -> LED_GPIO_NUM не определен");
+  #endif
 }
 
 // ********************************************************** app_httpd.cpp ***

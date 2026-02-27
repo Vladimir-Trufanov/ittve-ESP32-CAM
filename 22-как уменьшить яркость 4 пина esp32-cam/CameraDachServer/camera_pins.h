@@ -1,5 +1,14 @@
-// Рус
+/** Arduino, ESP32, C/C++ *********************************** camera_pins.h ***
+ * 
+ * Определить соответствие контактов модели камеры
+ * 
+ * v4.0.0, 26.02.2026                                 Автор:      Труфанов В.Е.
+ * Copyright © 2026 tve                               Дата создания: 26.02.2026
+ * 
+**/
+
 #if defined(CAMERA_MODEL_WROVER_KIT)
+// ---------------------------------
 #define PWDN_GPIO_NUM  -1
 #define RESET_GPIO_NUM -1
 #define XCLK_GPIO_NUM  21
@@ -19,6 +28,7 @@
 #define PCLK_GPIO_NUM  22
 
 #elif defined(CAMERA_MODEL_ESP_EYE)
+// --------------------------------
 #define PWDN_GPIO_NUM  -1
 #define RESET_GPIO_NUM -1
 #define XCLK_GPIO_NUM  4
@@ -37,9 +47,10 @@
 #define HREF_GPIO_NUM  27
 #define PCLK_GPIO_NUM  25
 
-#define LED_GPIO_NUM 22
+#define LED_GPIO_NUM   22
 
 #elif defined(CAMERA_MODEL_M5STACK_PSRAM)
+// --------------------------------------
 #define PWDN_GPIO_NUM  -1
 #define RESET_GPIO_NUM 15
 #define XCLK_GPIO_NUM  27
@@ -59,6 +70,7 @@
 #define PCLK_GPIO_NUM  21
 
 #elif defined(CAMERA_MODEL_M5STACK_V2_PSRAM)
+// -----------------------------------------
 #define PWDN_GPIO_NUM  -1
 #define RESET_GPIO_NUM 15
 #define XCLK_GPIO_NUM  27
@@ -78,6 +90,7 @@
 #define PCLK_GPIO_NUM  21
 
 #elif defined(CAMERA_MODEL_M5STACK_WIDE)
+// -------------------------------------
 #define PWDN_GPIO_NUM  -1
 #define RESET_GPIO_NUM 15
 #define XCLK_GPIO_NUM  27
@@ -96,9 +109,10 @@
 #define HREF_GPIO_NUM  26
 #define PCLK_GPIO_NUM  21
 
-#define LED_GPIO_NUM 2
+#define LED_GPIO_NUM   2
 
 #elif defined(CAMERA_MODEL_M5STACK_ESP32CAM)
+// -----------------------------------------
 #define PWDN_GPIO_NUM  -1
 #define RESET_GPIO_NUM 15
 #define XCLK_GPIO_NUM  27
@@ -118,6 +132,7 @@
 #define PCLK_GPIO_NUM  21
 
 #elif defined(CAMERA_MODEL_M5STACK_UNITCAM)
+// ----------------------------------------
 #define PWDN_GPIO_NUM  -1
 #define RESET_GPIO_NUM 15
 #define XCLK_GPIO_NUM  27
@@ -137,6 +152,7 @@
 #define PCLK_GPIO_NUM  21
 
 #elif defined(CAMERA_MODEL_M5STACK_CAMS3_UNIT)
+// -------------------------------------------
 #define PWDN_GPIO_NUM  -1
 #define RESET_GPIO_NUM 21
 #define XCLK_GPIO_NUM  11
@@ -155,9 +171,10 @@
 #define HREF_GPIO_NUM  18
 #define PCLK_GPIO_NUM  12
 
-#define LED_GPIO_NUM 14
+#define LED_GPIO_NUM   14
 
 #elif defined(CAMERA_MODEL_AI_THINKER)
+// -----------------------------------
 #define PWDN_GPIO_NUM  32
 #define RESET_GPIO_NUM -1
 #define XCLK_GPIO_NUM  0
@@ -175,11 +192,11 @@
 #define VSYNC_GPIO_NUM 25
 #define HREF_GPIO_NUM  23
 #define PCLK_GPIO_NUM  22
-
 // 4 for flash led or 33 for normal led
 #define LED_GPIO_NUM   4
 
 #elif defined(CAMERA_MODEL_TTGO_T_JOURNAL)
+// ---------------------------------------
 #define PWDN_GPIO_NUM  0
 #define RESET_GPIO_NUM 15
 #define XCLK_GPIO_NUM  27
@@ -199,6 +216,7 @@
 #define PCLK_GPIO_NUM  21
 
 #elif defined(CAMERA_MODEL_XIAO_ESP32S3)
+// -------------------------------------
 #define PWDN_GPIO_NUM  -1
 #define RESET_GPIO_NUM -1
 #define XCLK_GPIO_NUM  10
@@ -218,6 +236,7 @@
 #define PCLK_GPIO_NUM  13
 
 #elif defined(CAMERA_MODEL_ESP32_CAM_BOARD)
+// ----------------------------------------
 // The 18 pin header on the board has Y5 and Y3 swapped
 #define USE_BOARD_HEADER 0
 #define PWDN_GPIO_NUM    32
@@ -226,27 +245,28 @@
 #define SIOD_GPIO_NUM    18
 #define SIOC_GPIO_NUM    23
 
-#define Y9_GPIO_NUM 36
-#define Y8_GPIO_NUM 19
-#define Y7_GPIO_NUM 21
-#define Y6_GPIO_NUM 39
+#define Y9_GPIO_NUM      36
+#define Y8_GPIO_NUM      19
+#define Y7_GPIO_NUM      21
+#define Y6_GPIO_NUM      39
 #if USE_BOARD_HEADER
-#define Y5_GPIO_NUM 13
+#define Y5_GPIO_NUM      13
 #else
-#define Y5_GPIO_NUM 35
+#define Y5_GPIO_NUM      35
 #endif
-#define Y4_GPIO_NUM 14
+#define Y4_GPIO_NUM      14
 #if USE_BOARD_HEADER
-#define Y3_GPIO_NUM 35
+#define Y3_GPIO_NUM      35
 #else
-#define Y3_GPIO_NUM 13
+#define Y3_GPIO_NUM      13
 #endif
-#define Y2_GPIO_NUM    34
-#define VSYNC_GPIO_NUM 5
-#define HREF_GPIO_NUM  27
-#define PCLK_GPIO_NUM  25
+#define Y2_GPIO_NUM      34
+#define VSYNC_GPIO_NUM   5
+#define HREF_GPIO_NUM    27
+#define PCLK_GPIO_NUM    25
 
 #elif defined(CAMERA_MODEL_ESP32S3_CAM_LCD)
+// ----------------------------------------
 #define PWDN_GPIO_NUM  -1
 #define RESET_GPIO_NUM -1
 #define XCLK_GPIO_NUM  40
@@ -266,6 +286,7 @@
 #define PCLK_GPIO_NUM  11
 
 #elif defined(CAMERA_MODEL_ESP32S2_CAM_BOARD)
+// ------------------------------------------
 // The 18 pin header on the board has Y5 and Y3 swapped
 #define USE_BOARD_HEADER 0
 #define PWDN_GPIO_NUM    1
@@ -295,6 +316,7 @@
 #define PCLK_GPIO_NUM  3
 
 #elif defined(CAMERA_MODEL_ESP32S3_EYE)
+// ------------------------------------
 #define PWDN_GPIO_NUM  -1
 #define RESET_GPIO_NUM -1
 #define XCLK_GPIO_NUM  15
@@ -315,6 +337,7 @@
 #define PCLK_GPIO_NUM  13
 
 #elif defined(CAMERA_MODEL_DFRobot_FireBeetle2_ESP32S3) || defined(CAMERA_MODEL_DFRobot_Romeo_ESP32S3)
+// ---------------------------------------------------------------------------------------------------
 #define PWDN_GPIO_NUM  -1
 #define RESET_GPIO_NUM -1
 #define XCLK_GPIO_NUM  45
@@ -336,3 +359,5 @@
 #else
 #error "Camera model not selected"
 #endif
+
+// ********************************************************** camera_pins.h ***

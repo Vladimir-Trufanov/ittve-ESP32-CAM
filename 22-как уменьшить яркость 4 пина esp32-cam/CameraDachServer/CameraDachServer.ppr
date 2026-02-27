@@ -13,15 +13,13 @@ DontOpen=0
 AbsolutePath=0
 FileFormat=0
 ProjectFilesOnly=0
+HTServer=localhost
 Extensions=*.*
 [Project tree]
 CameraDachServer
 	+CameraDachServer
-		-Res
-			Res\camera_index.hold
-			Res\camera_index.html
-			Res\ci.yml
-			Res\partitions.csv
+		+html
+			html\camera_index_v2.html
 		app_httpd.cpp
 		board_config.h
 		camera_index.h
@@ -31,12 +29,20 @@ CameraDachServer
 [Open project files]
 0=CameraDachServer.ino
 1=app_httpd.cpp
+2=html\camera_index_v2.html
+3=camera_index.h
 [Selected Project Files]
 Main=
-Selected=app_httpd.cpp
+Selected=camera_index.h
 [CameraDachServer.ino]
-TopLine=1
-Caret=1,13
+TopLine=17
+Caret=26,17
 [app_httpd.cpp]
-TopLine=349
-Caret=1,423
+TopLine=868
+Caret=29,883
+[html\camera_index_v2.html]
+TopLine=1079
+Caret=1,1117
+[camera_index.h]
+TopLine=1
+Caret=39,11
