@@ -17,9 +17,9 @@ HTServer=localhost
 Extensions=*.*
 [Project tree]
 CameraDachServer
-	+CameraDachServer
+	-CameraDachServer
 		-html
-			html\camera_index_v3.html
+			html\camera_index_v4.html
 		app_httpd.cpp
 		board_config.h
 		camera_index.h
@@ -30,7 +30,7 @@ CameraDachServer
 [Open project files]
 0=CameraDachServer.ino
 1=app_httpd.cpp
-2=html\camera_index_v3.html
+2=html\camera_index_v4.html
 3=camera_index.h
 4=ctrl_define.h
 [Selected Project Files]
@@ -40,14 +40,14 @@ Selected=camera_index.h
 TopLine=23
 Caret=33,23
 [app_httpd.cpp]
-TopLine=864
+TopLine=873
 Caret=5,873
-[html\camera_index_v3.html]
-TopLine=1097
-Caret=1,1135
+[html\camera_index_v4.html]
+TopLine=1143
+Caret=1,1181
 [camera_index.h]
-TopLine=482
-Caret=30,521
+TopLine=552
+Caret=20,591
 [ctrl_define.h]
 TopLine=1
 Caret=74,21
