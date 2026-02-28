@@ -869,6 +869,7 @@ static esp_err_t index_handler(httpd_req_t *req)
   sensor_t *s = esp_camera_sensor_get();
   if (s != NULL) 
   {
+    /*
     if (s->id.PID == OV3660_PID) 
     {
       return httpd_resp_send(req, (const char *)index_ov3660_html_gz, index_ov3660_html_gz_len);
@@ -879,9 +880,10 @@ static esp_err_t index_handler(httpd_req_t *req)
     } 
     else 
     {
+    */
       // Запускаем управляющуюю html-страницу и возвращаем ответ
       return httpd_resp_send(req, (const char *)index_ov2640_html_gz, index_ov2640_html_gz_len);
-    }
+    //}
   }
   else 
   {

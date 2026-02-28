@@ -668,9 +668,10 @@ input.toggle-section-button:checked+section.toggle-section {
                             <div class="input-group"><label for="2640pll4">PCLK DIV</label><div class="text">0<input id="2640pll4" type="text" minlength="1" maxlength="3" size="3" value="4" class="reg-action" reg="0xd3" offset="0" mask="0x7f">127</div></div>
 
                         </section>
-                        <hr style="width:100%">
-                        <label for="nav-toggle-win" class="toggle-section-label">&#9776;&nbsp;&nbsp;Window</label><input type="checkbox" id="nav-toggle-win" class="hidden toggle-section-button" checked="checked">
-                        <section class="toggle-section">
+      <hr style="width:100%">
+           
+      <label for="nav-toggle-win" class="toggle-section-label">&#9776;&nbsp;&nbsp;Window</label><input type="checkbox" id="nav-toggle-win" class="hidden toggle-section-button" checked="checked">
+      <section class="toggle-section">
 
                             <div class="input-group">
                                 <label for="start-x">Sensor Resolution</label><select id="start-x">
@@ -707,22 +708,21 @@ input.toggle-section-button:checked+section.toggle-section {
                                     Y:<input id="output-y" type="text" minlength="1" maxlength="4" size="6" value="240">
                                 </div>
                             </div>
-                            <button id="set-resolution">Set Resolution</button>
-                        </section>
+      <button id="set-resolution">Set Resolution</button>
+      </section>
+       
 
-
-
-                    </nav>
-                </div>
-                <figure>
-                    <div id="stream-container" class="image-container hidden">
-                        <a id="save-still" href="#" class="button save" download="capture.jpg">Save</a>
-                        <div class="close" id="close-stream">A?</div>
-                        <img id="stream" src="" crossorigin>
-                    </div>
-                </figure>
-            </div>
-        </section>
+    </nav>
+  </div>
+  <figure>
+    <div id="stream-container" class="image-container hidden">
+      <a id="save-still" href="#" class="button save" download="capture.jpg">Save</a>
+      <div class="close" id="close-stream">A?</div>
+      <img id="stream" src="" crossorigin>
+    </div>
+  </figure>
+  </div>
+</section>
 
 <!-- --- -->
         
@@ -1126,10 +1126,6 @@ document.addEventListener('DOMContentLoaded', function (event)
 
   framesize.onchange = () => {
     updateConfig(framesize)
-    if (framesize.value > 5) {
-      updateValue(detect, false)
-      updateValue(recognize, false)
-    }
   }
 })
 

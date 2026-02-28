@@ -17,8 +17,10 @@
 // Выбираем модель камеры
 #include "board_config.h"
 // Указываем учетные данные Wi-Fi
-const char* ssid     = "OPPO A9 2020";
-const char* password = "b277a4ee84e8";
+// "OPPO A9 2020"; "TP-Link_B394"; "tve-DESKTOP"; "linksystve"; "linksystve";
+// "b277a4ee84e8"; "18009217"    ; "Ue18-647"   ; "x93k6kq6wf"; "X93K6KQ6WF";
+const char* ssid     = "TP-Link_B394";
+const char* password = "18009217";
 
 void startCameraServer();
 void setupLedFlash();
