@@ -825,6 +825,7 @@ document.addEventListener('DOMContentLoaded', function (event)
     fetchUrl(`${baseHost}/resolution?sx=${start_x}&sy=${start_y}&ex=${end_x}&ey=${end_y}&offx=${offset_x}&offy=${offset_y}&tx=${total_x}&ty=${total_y}&ox=${output_x}&oy=${output_y}&scale=${scaling}&binning=${binning}`, cb);
   }
 
+  /*
   const setRegButton = document.getElementById('set-reg')
   setRegButton.onclick = () => 
   {
@@ -840,7 +841,9 @@ document.addEventListener('DOMContentLoaded', function (event)
       }
     });
   }
+  */
 
+  /*
   const getRegButton = document.getElementById('get-reg')
   getRegButton.onclick = () => {
     let reg = parseInt(document.getElementById('get-reg-addr').value);
@@ -855,6 +858,7 @@ document.addEventListener('DOMContentLoaded', function (event)
       }
     });
   }
+  */
 
   const setXclkButton = document.getElementById('set-xclk')
   setXclkButton.onclick = () => {
@@ -867,6 +871,7 @@ document.addEventListener('DOMContentLoaded', function (event)
     });
   }
 
+  /*
   const setResButton = document.getElementById('set-resolution');
   setResButton.onclick = () => 
   {
@@ -885,6 +890,7 @@ document.addEventListener('DOMContentLoaded', function (event)
       }
     });
   }
+  */
 
   const setRegValue = (el) => {
     let reg = el.attributes.reg?parseInt(el.attributes.reg.nodeValue):0;
