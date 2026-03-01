@@ -35,19 +35,19 @@ CameraDachServer
 4=ctrl_define.h
 [Selected Project Files]
 Main=
-Selected=CameraDachServer.ino
+Selected=camera_index.h
 [CameraDachServer.ino]
 TopLine=1
-Caret=22,3
+Caret=17,3
 [app_httpd.cpp]
-TopLine=873
-Caret=5,873
+TopLine=691
+Caret=5,706
 [html\camera_index_v4.html]
-TopLine=1149
-Caret=1,1187
+TopLine=1153
+Caret=1,1191
 [camera_index.h]
-TopLine=554
-Caret=1,593
+TopLine=561
+Caret=1,596
 [ctrl_define.h]
 TopLine=1
 Caret=74,21

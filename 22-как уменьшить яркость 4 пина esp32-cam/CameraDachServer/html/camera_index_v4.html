@@ -396,9 +396,11 @@ input.toggle-section-button:checked+section.toggle-section {
 
 <body>
 <section class="main">
+  <!-- 
   <div id="logo">
      <label for="nav-toggle-cb" id="nav-toggle">&#9776;&nbsp;&nbsp;Toggle OV2640 settings</label>
   </div>
+  -->
   <div id="content">
     <div id="sidebar">
       <input type="checkbox" id="nav-toggle-cb" checked="checked">
@@ -451,6 +453,15 @@ input.toggle-section-button:checked+section.toggle-section {
         <div class="range-max">2</div>
       </div>
       
+      <!-- 
+      <div class="input-group" id="ae_level-group">
+        <label for="ae_level">AE Level - уровни яркости</label>
+        <div class="range-min">-2</div>
+        <input type="range" id="ae_level" min="-2" max="2" value="0" class="default-action">
+        <div class="range-max">2</div>
+      </div>
+       -->
+      
       <div class="input-group" id="contrast-group">
         <label for="contrast">Контрастность</label>
         <div class="range-min">-2</div>
@@ -479,7 +490,7 @@ input.toggle-section-button:checked+section.toggle-section {
       </div>
       
       <div class="input-group" id="awb-group">
-        <label for="awb">AWB - баланс белого</label>
+        <label for="awb">Баланс белого цвета (AWB) </label>
         <div class="switch">
            <input id="awb" type="checkbox" class="default-action" checked="checked">
            <label class="slider" for="awb"></label>
@@ -487,7 +498,7 @@ input.toggle-section-button:checked+section.toggle-section {
       </div>
                         
       <div class="input-group" id="awb_gain-group">
-        <label for="awb_gain">Усиление AWB при освещении</label>
+        <label for="awb_gain">Корректировать AWB по освещению</label>
         <div class="switch">
           <input id="awb_gain" type="checkbox" class="default-action" checked="checked">
           <label class="slider" for="awb_gain"></label>
@@ -495,9 +506,9 @@ input.toggle-section-button:checked+section.toggle-section {
       </div>
       
       <div class="input-group" id="wb_mode-group">
-        <label for="wb_mode">Корректировка баланса</label>
+        <label for="wb_mode">Изменение баланса</label>
         <select id="wb_mode" class="default-action">
-          <option value="0" selected="selected">Auto</option>
+          <option value="0" selected="selected">Автоматически</option>
           <option value="1">Солнечно</option>
           <option value="2">Облачно</option>
           <option value="3">В оффисе</option>
@@ -520,14 +531,7 @@ input.toggle-section-button:checked+section.toggle-section {
           <label class="slider" for="aec2"></label>
         </div>
       </div>
-      
-      <div class="input-group" id="ae_level-group">
-        <label for="ae_level">AE Level - уровни яркости</label>
-        <div class="range-min">-2</div>
-        <input type="range" id="ae_level" min="-2" max="2" value="0" class="default-action">
-        <div class="range-max">2</div>
-      </div>
-      
+       
       <div class="input-group" id="aec_value-group">
         <label for="aec_value">Экспозиция</label>
         <div class="range-min">0</div>
@@ -574,7 +578,7 @@ input.toggle-section-button:checked+section.toggle-section {
       </div>
       
       <div class="input-group" id="raw_gma-group">
-        <label for="raw_gma">«Cыроt» изображение</label>
+        <label for="raw_gma">«Cырое» изображение</label>
         <div class="switch">
           <input id="raw_gma" type="checkbox" class="default-action" checked="checked">
           <label class="slider" for="raw_gma"></label>

@@ -464,6 +464,41 @@ static esp_err_t cmd_handler(httpd_req_t *req)
     return ESP_FAIL;
   }
   free(buf);
+  
+  /*
+  sensor_t * s = esp_camera_sensor_get();
+  
+  // Яркость
+  s->set_brightness(s, 0);     // -2 to 2 - яркость
+  // Уровень яркости - под это значение подстраивается выдержка затвора. 
+  // Меньшие значения дают тёмную картинку, большие — светлую.
+  s->set_ae_level(s, 0);       // -2 to 2
+  
+  s->set_contrast(s, 0);       // -2 to 2
+  s->set_saturation(s, 0);     // -2 to 2
+  s->set_special_effect(s, 0); // 0 to 6 (0 - No Effect, 1 - Negative, 2 - Grayscale, 3 - Red Tint, 4 - Green Tint, 5 - Blue Tint, 6 - Sepia)
+  // Устанавливаем белый баланс (AWB)
+  s->set_whitebal(s, 1);       // 0 = disable , 1 = enable
+  // Включаем/отключаем режимы белого баланса (AWB)
+  s->set_awb_gain(s, 1);       // 0 = disable , 1 = enable 
+  // Устанавливаем режим белого баланса
+  s->set_wb_mode(s, 0);        // 0 to 4 (if awb_gain enabled) => (0-Auto,1-Sunny,2-Cloudy,3-Office,4-Home)
+  
+  s->set_exposure_ctrl(s, 1);  // 0 = disable , 1 = enable
+  s->set_aec2(s, 0);           // 0 = disable , 1 = enable
+  s->set_aec_value(s, 300);    // 0 to 1200
+  s->set_gain_ctrl(s, 1);      // 0 = disable , 1 = enable
+  s->set_agc_gain(s, 0);       // 0 to 30
+  s->set_gainceiling(s, (gainceiling_t)0);  // 0 to 6
+  s->set_bpc(s, 0);            // 0 = disable , 1 = enable
+  s->set_wpc(s, 1);            // 0 = disable , 1 = enable
+  s->set_raw_gma(s, 1);        // 0 = disable , 1 = enable
+  s->set_lenc(s, 1);           // 0 = disable , 1 = enable
+  s->set_hmirror(s, 0);        // 0 = disable , 1 = enable
+  s->set_vflip(s, 0);          // 0 = disable , 1 = enable
+  s->set_dcw(s, 1);            // 0 = disable , 1 = enable
+  s->set_colorbar(s, 0);       // 0 = disable , 1 = enable
+  */
 
   int val = atoi(value);
   log_i("%s = %d", variable, val);
@@ -485,10 +520,16 @@ static esp_err_t cmd_handler(httpd_req_t *req)
   {
     res = s->set_contrast(s, val);
   } 
+  // Яркость
   else if (!strcmp(variable, "brightness")) 
   {
     res = s->set_brightness(s, val);
   } 
+  // AE Level - уровень яркости
+  else if (!strcmp(variable, "ae_level")) 
+  {
+    res = s->set_ae_level(s, val);
+  }
   else if (!strcmp(variable, "saturation")) 
   {
     res = s->set_saturation(s, val);
@@ -501,9 +542,20 @@ static esp_err_t cmd_handler(httpd_req_t *req)
   {
     res = s->set_colorbar(s, val);
   } 
+  // Устанавливаем белый баланс (AWB)
   else if (!strcmp(variable, "awb")) 
   {
     res = s->set_whitebal(s, val);
+  } 
+  // Включаем/отключаем режимы белого баланса 
+  else if (!strcmp(variable, "awb_gain")) 
+  {
+    res = s->set_awb_gain(s, val);
+  } 
+  // Устанавливаем режим белого баланса
+  else if (!strcmp(variable, "wb_mode")) 
+  {
+    res = s->set_wb_mode(s, val);
   } 
   else if (!strcmp(variable, "agc")) 
   {
@@ -520,10 +572,6 @@ static esp_err_t cmd_handler(httpd_req_t *req)
   else if (!strcmp(variable, "vflip")) 
   {
     res = s->set_vflip(s, val);
-  } 
-  else if (!strcmp(variable, "awb_gain")) 
-  {
-    res = s->set_awb_gain(s, val);
   } 
   else if 
   (!strcmp(variable, "agc_gain")) 
@@ -562,14 +610,6 @@ static esp_err_t cmd_handler(httpd_req_t *req)
   {
     res = s->set_special_effect(s, val);
   } 
-  else if (!strcmp(variable, "wb_mode")) 
-  {
-    res = s->set_wb_mode(s, val);
-  } 
-  else if (!strcmp(variable, "ae_level")) 
-  {
-    res = s->set_ae_level(s, val);
-  }
   #if defined(LED_GPIO_NUM)
   else if (!strcmp(variable, "led_intensity")) 
   {
@@ -607,7 +647,8 @@ static esp_err_t status_handler(httpd_req_t *req)
   sensor_t *s = esp_camera_sensor_get();
   char *p = json_response;
   *p++ = '{';
-
+  
+  /*
   if (s->id.PID == OV5640_PID || s->id.PID == OV3660_PID) 
   {
     for (int reg = 0x3400; reg < 0x3406; reg += 2) 
@@ -637,7 +678,9 @@ static esp_err_t status_handler(httpd_req_t *req)
     }
     p += print_reg(p, s, 0x558a, 0x1FF);     //9 bit
   } 
-  else if (s->id.PID == OV2640_PID) 
+  else 
+  */
+  if (s->id.PID == OV2640_PID) 
   {
     p += print_reg(p, s, 0xd3, 0xFF);
     p += print_reg(p, s, 0x111, 0xFF);

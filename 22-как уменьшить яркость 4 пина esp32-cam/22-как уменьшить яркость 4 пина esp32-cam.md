@@ -2,7 +2,11 @@
 
 #### Поиск: "как уменьшить яркость 4 пина esp32-cam"
 
-#### [ESP32-CAM. Регулировка яркости светодиода](https://dzen.ru/a/ZTug1nOlQxoHeEGK)
+### [Рекомендации для приложения камеры ESP32](https://docs.espressif.com/projects/esp-faq/en/latest/application-solution/camera-application.html)
+
+### [5 экспериментов с WiFi на ESP32](https://habr.com/ru/articles/504514/)
+
+### [ESP32-CAM. Регулировка яркости светодиода](https://dzen.ru/a/ZTug1nOlQxoHeEGK)
 
 Рассмотрим, как в стандартный пример CameraWebServer добавить ползунок для управления яркостью светодиода - вспышки.
 

@@ -92,6 +92,8 @@
  
 ###### [к содержанию](#soderzhanie)
 
+### [Все в куче на GitHub от Руи Сантос](https://github.com/RuiSantosdotme/ESP32-CAM-Arduino-IDE)
+
 ### [Веб-сервер потокового видео ESP32-CAM (работает с Home Assistant)](https://voltiq.ru/esp32-cam-video-web-server/)
 
 ### [Как своими руками сделать WiFi камеру слежения (ESP32-CAM)](https://habr.com/ru/companies/skillfactory/articles/645877/)
