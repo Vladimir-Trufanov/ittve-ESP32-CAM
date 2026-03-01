@@ -1,0 +1,53 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-ESP32-CAM\05-CameraDachServer\CameraDachServer
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+HTServer=localhost
+Extensions=*.*
+[Project tree]
+CameraDachServer
+	+CameraDachServer
+		+html
+			html\camera_index_v4.html
+		app_httpd.cpp
+		board_config.h
+		camera_index.h
+		camera_pins.h
+		CameraDachServer.ino
+		CameraDachServer.ppr
+		ctrl_define.h
+[Open project files]
+0=CameraDachServer.ino
+1=html\camera_index_v4.html
+2=app_httpd.cpp
+3=camera_pins.h
+4=camera_index.h
+[Selected Project Files]
+Main=
+Selected=camera_index.h
+[CameraDachServer.ino]
+TopLine=19
+Caret=3,36
+[html\camera_index_v4.html]
+TopLine=1159
+Caret=1,1197
+[app_httpd.cpp]
+TopLine=705
+Caret=25,720
+[camera_pins.h]
+TopLine=35
+Caret=9,50
+[camera_index.h]
+TopLine=555
+Caret=45,594

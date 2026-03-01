@@ -415,6 +415,11 @@ input.toggle-section-button:checked+section.toggle-section {
           <button class="inline-button" id="set-xclk">Set</button>
         </div>
       </section>
+      
+      <section id="buttons">
+        <button id="get-still">Get Still</button>
+        <button id="toggle-stream">Start Stream</button>
+      </section>
 
       <div class="input-group" id="framesize-group">
         <label for="framesize">Разрешение</label>
@@ -621,16 +626,14 @@ input.toggle-section-button:checked+section.toggle-section {
                                 <label class="slider" for="colorbar"></label>
                             </div>
                         </div>
-                        <div class="input-group" id="led-group">
-                          <label for="led_intensity">LED4 Intensity</label>
-                          <div class="range-min">0</div>
-                          <input type="range" id="led_intensity" min="0" max="255" value="0" class="default-action">
-                          <div class="range-max">255</div>
-                        </div>
-                        <section id="buttons">
-                            <button id="get-still">Get Still</button>
-                            <button id="toggle-stream">Start Stream</button>
-                        </section>
+                        
+      <div class="input-group" id="led-group">
+        <label for="led_intensity">LED4 Intensity</label>
+        <div class="range-min">0</div>
+        <input type="range" id="led_intensity" min="0" max="255" value="0" class="default-action">
+        <div class="range-max">255</div>
+      </div>
+
       <!--
       <div style="margin-top: 8px;"><center><span style="font-weight: bold;">Advanced Settings</span></center></div>
       <hr style="width:100%">
@@ -989,7 +992,8 @@ document.addEventListener('DOMContentLoaded', function (event)
     el.disabled = false
   }
 
-  const updateValue = (el, value, updateRemote) => {
+  const updateValue = (el, value, updateRemote) => 
+  {
     updateRemote = updateRemote == null ? true : updateRemote
     let initialValue
     if (el.type === 'checkbox') {
@@ -1016,7 +1020,9 @@ document.addEventListener('DOMContentLoaded', function (event)
         }
       } else if(el.id === "awb_gain"){
         value ? show(wb) : hide(wb)
-      } else if(el.id == "led_intensity"){
+      } 
+      else if(el.id == "led_intensity")
+      {
         value > -1 ? show(ledGroup) : hide(ledGroup)
       }
     }

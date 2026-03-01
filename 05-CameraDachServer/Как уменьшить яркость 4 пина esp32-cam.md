@@ -1,6 +1,27 @@
-## [Как уменьшить яркость 4 пина esp32-cam](#)
+## [Как изменить яркость вспышки на 4 пине esp32-cam](#)
 
-#### Поиск: "как уменьшить яркость 4 пина esp32-cam"
+### Управление светодиодом в CameraDachServer
+
+#### HTML:
+```
+<div class="input-group" id="led-group">
+<label for="led_intensity">LED4 Intensity</label>
+  <div class="range-min">0</div>
+  <input type="range" id="led_intensity" min="0" max="255" value="0" class="default-action">
+  <div class="range-max">255</div>
+</div>
+```
+#### CSS:
+```
+
+```
+
+#### JS
+
+```
+
+```
+
 
 ### [Рекомендации для приложения камеры ESP32](https://docs.espressif.com/projects/esp-faq/en/latest/application-solution/camera-application.html)
 

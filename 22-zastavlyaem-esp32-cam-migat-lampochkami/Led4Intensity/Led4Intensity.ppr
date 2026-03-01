@@ -1,0 +1,30 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-ESP32-CAM\22-zastavlyaem-esp32-cam-migat-lampochkami\Led4Intensity
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+HTServer=localhost
+Extensions=*.*
+[Project tree]
+Led4Intensity
+	+Led4Intensity
+		Led4Intensity.ino
+		Led4Intensity.ppr
+[Open project files]
+0=Led4Intensity.ino
+[Selected Project Files]
+Main=
+Selected=Led4Intensity.ino
+[Led4Intensity.ino]
+TopLine=45
+Caret=1,53
