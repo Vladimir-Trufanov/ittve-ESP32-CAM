@@ -13,14 +13,23 @@
 
 #include <WiFi.h>
 #include "esp32-hal-ledc.h"
+#include "esp_http_server.h"
+
+//#include "esp_timer.h"
+//#include "sdkconfig.h"
+
 
 #define LED_GPIO_NUM  4
+#define CONFIG_LED_MAX_INTENSITY 255
 
 // Указываем учетные данные Wi-Fi
 // "OPPO A9 2020"; "TP-Link_B394"; "tve-DESKTOP"; "linksystve"; "linksystve";
 // "b277a4ee84e8"; "18009217"    ; "Ue18-647"   ; "x93k6kq6wf"; "X93K6KQ6WF";
 const char* ssid     = "TP-Link_B394";
 const char* password = "18009217";
+
+httpd_handle_t camera_httpd = NULL;
+httpd_handle_t stream_httpd = NULL;
 
 // ****************************************************************************
 // *                       Установить яркость светодиода                      *
@@ -46,35 +55,31 @@ const char* password = "18009217";
  * если вывод уже подключён к LEDC. В этом случае нужно проверить, не подключён ли вывод 
  * к другому каналу LEDC, и, если да, отсоединить вывод перед новым подключением.
 **/
-// Определяем диапазон свечения вспышки при съемке
-#if defined(LED_GPIO_NUM)
-  #define CONFIG_LED_MAX_INTENSITY 255
-  int led_duty = 0;
-  bool isStreaming = false;
-#endif
-
 void setupLedFlash() 
 {
   ledcAttach(LED_GPIO_NUM, 5000, 8);
 }
-
-// Включить или выключить светодиод
+// ****************************************************************************
+// *                      Включить или выключить светодиод                    *
+// ****************************************************************************
+int led_duty = 0;
 void enable_led(bool en) 
 { 
   int duty = en ? led_duty : 0;
-  if (en && isStreaming && (led_duty > CONFIG_LED_MAX_INTENSITY)) 
+  if (en && (led_duty > CONFIG_LED_MAX_INTENSITY)) 
   {
     duty = CONFIG_LED_MAX_INTENSITY;
   }
   ledcWrite(LED_GPIO_NUM, duty);
   //ledc_set_duty(CONFIG_LED_LEDC_SPEED_MODE, CONFIG_LED_LEDC_CHANNEL, duty);
   //ledc_update_duty(CONFIG_LED_LEDC_SPEED_MODE, CONFIG_LED_LEDC_CHANNEL);
-  log_i("Set LED intensity to %d", duty);
+  // log_i("Set LED intensity to %d", duty);
 }
 
 
 static esp_err_t stream_handler(httpd_req_t *req) 
 {
+  /*
   camera_fb_t *fb = NULL;
   struct timeval _timestamp;
   esp_err_t res = ESP_OK;
@@ -180,11 +185,12 @@ static esp_err_t stream_handler(httpd_req_t *req)
     enable_led(false);
   #endif
   return res;
+  */
 }
-
 
 static esp_err_t cmd_handler(httpd_req_t *req) 
 {
+  /*
   char *buf = NULL;
   char variable[32];
   char value[32];
@@ -201,41 +207,6 @@ static esp_err_t cmd_handler(httpd_req_t *req)
   }
   free(buf);
   
-  /*
-  sensor_t * s = esp_camera_sensor_get();
-  
-  // Яркость
-  s->set_brightness(s, 0);     // -2 to 2 - яркость
-  // Уровень яркости - под это значение подстраивается выдержка затвора. 
-  // Меньшие значения дают тёмную картинку, большие — светлую.
-  s->set_ae_level(s, 0);       // -2 to 2
-  
-  s->set_contrast(s, 0);       // -2 to 2
-  s->set_saturation(s, 0);     // -2 to 2
-  s->set_special_effect(s, 0); // 0 to 6 (0 - No Effect, 1 - Negative, 2 - Grayscale, 3 - Red Tint, 4 - Green Tint, 5 - Blue Tint, 6 - Sepia)
-  // Устанавливаем белый баланс (AWB)
-  s->set_whitebal(s, 1);       // 0 = disable , 1 = enable
-  // Включаем/отключаем режимы белого баланса (AWB)
-  s->set_awb_gain(s, 1);       // 0 = disable , 1 = enable 
-  // Устанавливаем режим белого баланса
-  s->set_wb_mode(s, 0);        // 0 to 4 (if awb_gain enabled) => (0-Auto,1-Sunny,2-Cloudy,3-Office,4-Home)
-  
-  s->set_exposure_ctrl(s, 1);  // 0 = disable , 1 = enable
-  s->set_aec2(s, 0);           // 0 = disable , 1 = enable
-  s->set_aec_value(s, 300);    // 0 to 1200
-  s->set_gain_ctrl(s, 1);      // 0 = disable , 1 = enable
-  s->set_agc_gain(s, 0);       // 0 to 30
-  s->set_gainceiling(s, (gainceiling_t)0);  // 0 to 6
-  s->set_bpc(s, 0);            // 0 = disable , 1 = enable
-  s->set_wpc(s, 1);            // 0 = disable , 1 = enable
-  s->set_raw_gma(s, 1);        // 0 = disable , 1 = enable
-  s->set_lenc(s, 1);           // 0 = disable , 1 = enable
-  s->set_hmirror(s, 0);        // 0 = disable , 1 = enable
-  s->set_vflip(s, 0);          // 0 = disable , 1 = enable
-  s->set_dcw(s, 1);            // 0 = disable , 1 = enable
-  s->set_colorbar(s, 0);       // 0 = disable , 1 = enable
-  */
-
   int val = atoi(value);
   log_i("%s = %d", variable, val);
   sensor_t *s = esp_camera_sensor_get();
@@ -369,49 +340,18 @@ static esp_err_t cmd_handler(httpd_req_t *req)
 
   httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
   return httpd_resp_send(req, NULL, 0);
+  */
 }
-
 
 static esp_err_t status_handler(httpd_req_t *req) 
 {
+  /*
   static char json_response[1024];
 
   sensor_t *s = esp_camera_sensor_get();
   char *p = json_response;
   *p++ = '{';
   
-  /*
-  if (s->id.PID == OV5640_PID || s->id.PID == OV3660_PID) 
-  {
-    for (int reg = 0x3400; reg < 0x3406; reg += 2) 
-    {
-      p += print_reg(p, s, reg, 0xFFF);     //12 bit
-    }
-    p += print_reg(p, s, 0x3406, 0xFF);
-
-    p += print_reg(p, s, 0x3500, 0xFFFF0);  //16 bit
-    p += print_reg(p, s, 0x3503, 0xFF);
-    p += print_reg(p, s, 0x350a, 0x3FF);    //10 bit
-    p += print_reg(p, s, 0x350c, 0xFFFF);   //16 bit
-
-    for (int reg = 0x5480; reg <= 0x5490; reg++) 
-    {
-      p += print_reg(p, s, reg, 0xFF);
-    }
-
-    for (int reg = 0x5380; reg <= 0x538b; reg++) 
-    {
-      p += print_reg(p, s, reg, 0xFF);
-    }
-
-    for (int reg = 0x5580; reg < 0x558a; reg++) 
-    {
-      p += print_reg(p, s, reg, 0xFF);
-    }
-    p += print_reg(p, s, 0x558a, 0x1FF);     //9 bit
-  } 
-  else 
-  */
   if (s->id.PID == OV2640_PID) 
   {
     p += print_reg(p, s, 0xd3, 0xFF);
@@ -456,13 +396,78 @@ static esp_err_t status_handler(httpd_req_t *req)
   httpd_resp_set_type(req, "application/json");
   httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
   return httpd_resp_send(req, json_response, strlen(json_response));
+  */
 }
 
+static esp_err_t index_handler(httpd_req_t *req) 
+{
+  /*
+  httpd_resp_set_type(req, "text/html");
+  httpd_resp_set_hdr(req, "Content-Encoding", "gzip");
+  sensor_t *s = esp_camera_sensor_get();
+  if (s != NULL) 
+  {
+    // Запускаем управляющуюю html-страницу и возвращаем ответ
+    return httpd_resp_send(req, (const char *)index_ov2640_html_gz, index_ov2640_html_gz_len);
+  }
+  else 
+  {
+    log_e("Датчик камеры не найден");
+    return httpd_resp_send_500(req);
+  }
+  */
+}
 
-void startCameraServer() 
+/*
+httpd_config_t — структура, которая содержит конфигурацию для HTTP-сервера, например, в контексте ESP32 HTTP Server. 
+
+Поля:
+unsigned task_priority    — приоритет задачи FreeRTOS, которая запускает сервер;
+size_t stack_size         — максимальный размер стека, разрешённый для задачи сервера;
+BaseType_t core_id        — ядро, на котором будет работать задача HTTP-сервера;
+uint16_t server_port      — номер TCP-порта для приёма и передачи HTTP-трафика;
+uint16_t ctrl_port        — номер UDP-порта для асинхронного обмена управляющими сигналами между различными компонентами сервера;
+uint16_t max_open_sockets — максимальное количество сокетов/клиентов, подключённых в любое время (3 сокета зарезервированы для внутренней работы HTTP-сервера);
+uint16_t max_uri_handlers — максимальное количество разрешённых обработчиков URI.
+
+backlog_conn — параметр, который помогает справляться с кратковременными всплесками запросов, не теряя соединения. 
+
+Чтобы изменить настройки структуры httpd_config_t, можно использовать функцию HTTPD_DEFAULT_CONFIG 
+для инициализации конфигурации по умолчанию, а затем модифицировать только те поля, 
+которые конкретно определены в конкретном случае использования.
+
+Назначение:
+  Структура httpd_config_t используется в функции httpd_start — она создаёт экземпляр HTTP-сервера,
+выделяет ему память и ресурсы в зависимости от заданной конфигурации, и выдаёт дескриптор экземпляру сервера.
+  На сервере появляется прослушивающий сокет (TCP) для HTTP-трафика и управляющий сокет (UDP) 
+для управляющих сигналов. Они выбираются циклически (по алгоритму round robin) в цикле задач 
+сервера (server task loop).
+  TCP-трафик обрабатывается как HTTP-запросы. В зависимости от запрошенного URI 
+вызываются зарегистрированные пользователем обработчики, которые должны отправлять HTTP-пакеты ответов.
+
+С помощью структуры можно настраивать, например: 
+- приоритет задачи и размер её стека;
+- очередь ожидающих соединений (параметр backlog_conn) — помогает справляться с кратковременными 
+всплесками запросов, не теряя соединения;
+- опцию сокета (например, enable_so_linger) — определяет поведение при закрытии TCP-сокета, 
+когда в буфере остаются не переданные данные.
+
+Обмен информацией по HTTP-протоколу происходит по следующей схеме:
+- клиент формирует запрос на некоторый ресурс и отправляет его на сервер;
+- сторона сервера принимает запрос. На этом этапе происходит его обработка;
+- серверная сторона возвращает клиенту ресурс, который был запрошен изначально.
+ 
+По умолчанию для коммуникации по HTTP используется порт 80, но может быть выбран 
+и любой другой порт. Многое зависит от конфигурации конкретного веб-сервера
+*/
+
+// ****************************************************************************
+// *                     Запустить взаимодействие с сервером                  *
+// ****************************************************************************
+void startServer() 
 {
   httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-  config.max_uri_handlers = 16;
+  config.max_uri_handlers = 4;
 
   httpd_uri_t index_uri = 
   {
@@ -506,11 +511,11 @@ void startCameraServer()
     #endif
   };
 
-  httpd_uri_t capture_uri = 
+  httpd_uri_t stream_uri = 
   {
-    .uri = "/capture",
+    .uri = "/stream",
     .method = HTTP_GET,
-    .handler = capture_handler,
+    .handler = stream_handler,
     .user_ctx = NULL
     #ifdef CONFIG_HTTPD_WS_SUPPORT
       ,
@@ -520,11 +525,12 @@ void startCameraServer()
     #endif
   };
 
-  httpd_uri_t stream_uri = 
+  /*
+  httpd_uri_t capture_uri = 
   {
-    .uri = "/stream",
+    .uri = "/capture",
     .method = HTTP_GET,
-    .handler = stream_handler,
+    .handler = capture_handler,
     .user_ctx = NULL
     #ifdef CONFIG_HTTPD_WS_SUPPORT
       ,
@@ -621,10 +627,15 @@ void startCameraServer()
   ra_filter_init(&ra_filter, 20);
 
   log_i("Запущен веб-сервер по порту: '%d'", config.server_port);
-  if (httpd_start(&camera_httpd, &config) == ESP_OK) {
+  */
+  
+  Serial.print("Запущен веб-сервер по порту: "); Serial.println(config.server_port);
+  if (httpd_start(&camera_httpd, &config) == ESP_OK) 
+  {
     httpd_register_uri_handler(camera_httpd, &index_uri);
     httpd_register_uri_handler(camera_httpd, &cmd_uri);
     httpd_register_uri_handler(camera_httpd, &status_uri);
+    /*
     httpd_register_uri_handler(camera_httpd, &capture_uri);
     httpd_register_uri_handler(camera_httpd, &bmp_uri);
 
@@ -633,11 +644,13 @@ void startCameraServer()
     httpd_register_uri_handler(camera_httpd, &greg_uri);
     httpd_register_uri_handler(camera_httpd, &pll_uri);
     httpd_register_uri_handler(camera_httpd, &win_uri);
+    */
   }
 
   config.server_port += 1;
   config.ctrl_port += 1;
-  log_i("Запущен веб-сервер по порту: '%d'", config.server_port);
+  //log_i("Запущен веб-сервер по порту: '%d'", config.server_port);
+  Serial.print("Запущен веб-сервер по порту: "); Serial.println(config.server_port);
   if (httpd_start(&stream_httpd, &config) == ESP_OK) 
   {
     httpd_register_uri_handler(stream_httpd, &stream_uri);
