@@ -18,13 +18,18 @@ Extensions=*.*
 [Project tree]
 Led4Intensity
 	+Led4Intensity
+		Led4Intensity.html
 		Led4Intensity.ino
 		Led4Intensity.ppr
 [Open project files]
 0=Led4Intensity.ino
+1=Led4Intensity.html
 [Selected Project Files]
 Main=
 Selected=Led4Intensity.ino
 [Led4Intensity.ino]
-TopLine=631
-Caret=1,654
+TopLine=385
+Caret=33,409
+[Led4Intensity.html]
+TopLine=838
+Caret=47,896
