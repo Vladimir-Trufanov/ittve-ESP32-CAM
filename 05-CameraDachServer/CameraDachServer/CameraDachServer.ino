@@ -107,15 +107,6 @@ void setup()
   }
   // Выполняем начальную перенастройку кадров
   sensor_t *s = esp_camera_sensor_get();
-  // initial sensors are flipped vertically and colors are a bit saturated
-  // Переопределяем изображение, так как исходные сенсоры перевернуты вертикально, 
-  // а цвета получаются немного насыщенными
-  if (s->id.PID == OV3660_PID) 
-  {
-    s->set_vflip(s, 1);        // переворачиваем обратно
-    s->set_brightness(s, 1);   // немного увеличиваем яркость
-    s->set_saturation(s, -2);  // уменьшаем насыщенность
-  }
   // По размеру кадра устанавливаем частоту кадров
   if (config.pixel_format == PIXFORMAT_JPEG) 
   {

@@ -6,6 +6,7 @@
  * Copyright © 2026 tve                               Дата создания: 26.02.2026
  * 
 **/
+#include "arduino.h"
 
 #include "esp_http_server.h"
 #include "esp_timer.h"
@@ -643,49 +644,15 @@ static int print_reg(char *p, sensor_t *s, uint16_t reg, uint32_t mask)
 static esp_err_t status_handler(httpd_req_t *req) 
 {
   static char json_response[1024];
+  Serial.println("status_handler");
 
   sensor_t *s = esp_camera_sensor_get();
   char *p = json_response;
   *p++ = '{';
   
-  /*
-  if (s->id.PID == OV5640_PID || s->id.PID == OV3660_PID) 
-  {
-    for (int reg = 0x3400; reg < 0x3406; reg += 2) 
-    {
-      p += print_reg(p, s, reg, 0xFFF);     //12 bit
-    }
-    p += print_reg(p, s, 0x3406, 0xFF);
-
-    p += print_reg(p, s, 0x3500, 0xFFFF0);  //16 bit
-    p += print_reg(p, s, 0x3503, 0xFF);
-    p += print_reg(p, s, 0x350a, 0x3FF);    //10 bit
-    p += print_reg(p, s, 0x350c, 0xFFFF);   //16 bit
-
-    for (int reg = 0x5480; reg <= 0x5490; reg++) 
-    {
-      p += print_reg(p, s, reg, 0xFF);
-    }
-
-    for (int reg = 0x5380; reg <= 0x538b; reg++) 
-    {
-      p += print_reg(p, s, reg, 0xFF);
-    }
-
-    for (int reg = 0x5580; reg < 0x558a; reg++) 
-    {
-      p += print_reg(p, s, reg, 0xFF);
-    }
-    p += print_reg(p, s, 0x558a, 0x1FF);     //9 bit
-  } 
-  else 
-  */
-  if (s->id.PID == OV2640_PID) 
-  {
-    p += print_reg(p, s, 0xd3, 0xFF);
-    p += print_reg(p, s, 0x111, 0xFF);
-    p += print_reg(p, s, 0x132, 0xFF);
-  }
+  p += print_reg(p, s, 0xd3, 0xFF);
+  p += print_reg(p, s, 0x111, 0xFF);
+  p += print_reg(p, s, 0x132, 0xFF);
 
   p += sprintf(p, "\"xclk\":%u,", s->xclk_freq_hz / 1000000);
   p += sprintf(p, "\"pixformat\":%u,", s->pixformat);
@@ -721,6 +688,10 @@ static esp_err_t status_handler(httpd_req_t *req)
   #endif
   *p++ = '}';
   *p++ = 0;
+  
+  Serial.println("json_response");
+  Serial.println(json_response);
+  
   httpd_resp_set_type(req, "application/json");
   httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
   return httpd_resp_send(req, json_response, strlen(json_response));
