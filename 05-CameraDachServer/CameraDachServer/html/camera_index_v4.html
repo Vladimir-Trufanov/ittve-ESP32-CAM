@@ -681,48 +681,6 @@ input.toggle-section-button:checked+section.toggle-section {
                             <div class="input-group"><label for="2640pll5">Auto PCLK</label><div class="switch"><input id="2640pll5" type="checkbox" class="reg-action" reg="0xd3" offset="7" mask="0x01"><label class="slider" for="2640pll5"></label></div></div>
                             <div class="input-group"><label for="2640pll4">PCLK DIV</label><div class="text">0<input id="2640pll4" type="text" minlength="1" maxlength="3" size="3" value="4" class="reg-action" reg="0xd3" offset="0" mask="0x7f">127</div></div>
       </section>
-      <hr style="width:100%">
-           
-      <label for="nav-toggle-win" class="toggle-section-label">&#9776;&nbsp;&nbsp;Window</label><input type="checkbox" id="nav-toggle-win" class="hidden toggle-section-button" checked="checked">
-      <section class="toggle-section">
-
-                            <div class="input-group">
-                                <label for="start-x">Sensor Resolution</label><select id="start-x">
-                                    <option value="2">CIF (400x296)</option>
-                                    <option value="1">SVGA (800x600)</option>
-                                    <option value="0" selected="selected">UXGA (1600x1200)</option>
-                                </select>
-                            </div>
-
-                            <div class="input-group" id="set-offset-res-group">
-                                <label for="offset-x">Offset</label>
-                                <div class="text">
-                                    X:<input id="offset-x" type="text" minlength="1" maxlength="3" size="6" value="400">
-                                </div>
-                                <div class="text">
-                                    Y:<input id="offset-y" type="text" minlength="1" maxlength="3" size="6" value="300">
-                                </div>
-                            </div>
-                            <div class="input-group" id="set-total-res-group">
-                                <label for="total-x">Window Size</label>
-                                <div class="text">
-                                    X:<input id="total-x" type="text" minlength="1" maxlength="4" size="6" value="800">
-                                </div>
-                                <div class="text">
-                                    Y:<input id="total-y" type="text" minlength="1" maxlength="4" size="6" value="600">
-                                </div>
-                            </div>
-                            <div class="input-group" id="set-output-res-group">
-                                <label for="output-x">Output Size</label>
-                                <div class="text">
-                                    X:<input id="output-x" type="text" minlength="1" maxlength="4" size="6" value="320">
-                                </div>
-                                <div class="text">
-                                    Y:<input id="output-y" type="text" minlength="1" maxlength="4" size="6" value="240">
-                                </div>
-                            </div>
-      <button id="set-resolution">Установить разрешение</button>
-      </section>
       -->       
 
     </nav>
@@ -877,27 +835,6 @@ document.addEventListener('DOMContentLoaded', function (event)
       }
     });
   }
-
-  /*
-  const setResButton = document.getElementById('set-resolution');
-  setResButton.onclick = () => 
-  {
-    let start_x = parseInt(document.getElementById('start-x').value);
-    let offset_x = parseInt(document.getElementById('offset-x').value);
-    let offset_y = parseInt(document.getElementById('offset-y').value);
-    let total_x = parseInt(document.getElementById('total-x').value);
-    let total_y = parseInt(document.getElementById('total-y').value);
-    let output_x = parseInt(document.getElementById('output-x').value);
-    let output_y = parseInt(document.getElementById('output-y').value);
-
-    setWindow(start_x, 0, 0, 0, offset_x, offset_y, total_x, total_y, output_x, output_y, false, false, function(code, txt)
-    {
-      if(code != 200){
-        alert('Error['+code+']: '+txt);
-      }
-    });
-  }
-  */
 
   const setRegValue = (el) => {
     let reg = el.attributes.reg?parseInt(el.attributes.reg.nodeValue):0;
