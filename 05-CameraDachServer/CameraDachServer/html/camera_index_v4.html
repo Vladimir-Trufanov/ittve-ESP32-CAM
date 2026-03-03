@@ -417,8 +417,8 @@ input.toggle-section-button:checked+section.toggle-section {
       </section>
       
       <section id="buttons">
-        <button id="get-still">Get Still</button>
-        <button id="toggle-stream">Start Stream</button>
+        <button id="get-still">Фотография</button>
+        <button id="toggle-stream">Включить поток</button>
       </section>
 
       <div class="input-group" id="framesize-group">
@@ -605,93 +605,43 @@ input.toggle-section-button:checked+section.toggle-section {
           <label class="slider" for="hmirror"></label>
         </div>
       </div>
-                        <div class="input-group" id="vflip-group">
+      <div class="input-group" id="vflip-group">
                             <label for="vflip">V-Flip</label>
                             <div class="switch">
                                 <input id="vflip" type="checkbox" class="default-action" checked="checked">
                                 <label class="slider" for="vflip"></label>
                             </div>
-                        </div>
-                        <div class="input-group" id="dcw-group">
+      </div>
+      <div class="input-group" id="dcw-group">
                             <label for="dcw">DCW (Downsize EN)</label>
                             <div class="switch">
                                 <input id="dcw" type="checkbox" class="default-action" checked="checked">
                                 <label class="slider" for="dcw"></label>
                             </div>
-                        </div>
-                        <div class="input-group" id="colorbar-group">
+      </div>
+      <div class="input-group" id="colorbar-group">
                             <label for="colorbar">Color Bar</label>
                             <div class="switch">
                                 <input id="colorbar" type="checkbox" class="default-action">
                                 <label class="slider" for="colorbar"></label>
                             </div>
-                        </div>
-                        
+      </div>
       <div class="input-group" id="led-group">
-        <label for="led_intensity">LED4 Intensity</label>
+        <label for="led_intensity">Яркость вспышки</label>
         <div class="range-min">0</div>
         <input type="range" id="led_intensity" min="0" max="255" value="0" class="default-action">
         <div class="range-max">255</div>
       </div>
+      </nav>
+    </div>
 
-      <!--
-      <div style="margin-top: 8px;"><center><span style="font-weight: bold;">Advanced Settings</span></center></div>
-      <hr style="width:100%">
-      <label for="nav-toggle-reg" class="toggle-section-label">&#9776;&nbsp;&nbsp;Register Get/Set</label><input type="checkbox" id="nav-toggle-reg" class="hidden toggle-section-button" checked="checked">
-      <section class="toggle-section">
-                            <h4>Set Register</h4>
-                            <div class="input-group" id="set-reg-group">
-                                <label for="set-reg">Reg, Mask, Value</label>
-                                <div class="text">
-                                    <input id="reg-addr" type="text" minlength="4" maxlength="6" size="6" value="0x111">
-                                </div>
-                                <div class="text">
-                                    <input id="reg-mask" type="text" minlength="4" maxlength="4" size="4" value="0x80">
-                                </div>
-                                <div class="text">
-                                    <input id="reg-value" type="text" minlength="4" maxlength="4" size="4" value="0x80">
-                                </div>
-                                <button class="inline-button" id="set-reg">Set</button>
-                            </div>
-                            <hr style="width:50%">
-                            <h4>Get Register</h4>
-                            <div class="input-group" id="get-reg-group">
-                                <label for="get-reg">Reg, Mask</label>
-                                <div class="text">
-                                    <input id="get-reg-addr" type="text" minlength="4" maxlength="6" size="6" value="0x111">
-                                </div>
-                                <div class="text">
-                                    <input id="get-reg-mask" type="text" minlength="4" maxlength="6" size="6" value="0x80">
-                                </div>
-                                <button class="inline-button" id="get-reg">Get</button>
-                            </div>
-                            <div class="input-group">
-                                <label for="get-reg-value">Value</label>
-                                <div class="text">
-                                    <span id="get-reg-value">0x1234</span>
-                                </div>
-                            </div>
-      </section>
-      <hr style="width:100%">
-      <label for="nav-toggle-2640pll" class="toggle-section-label">&#9776;&nbsp;&nbsp;CLK</label><input type="checkbox" id="nav-toggle-2640pll" class="hidden toggle-section-button" checked="checked">
-      <section class="toggle-section">
-
-                            <div class="input-group"><label for="2640pll1">CLK 2X</label><div class="switch"><input id="2640pll1" type="checkbox" class="reg-action" reg="0x111" offset="7" mask="0x01"><label class="slider" for="2640pll1"></label></div></div>
-                            <div class="input-group"><label for="2640pll3">CLK DIV</label><div class="text">0<input id="2640pll3" type="text" minlength="1" maxlength="2" size="2" value="1" class="reg-action" reg="0x111" offset="0" mask="0x3f">63</div></div>
-                            <div class="input-group"><label for="2640pll5">Auto PCLK</label><div class="switch"><input id="2640pll5" type="checkbox" class="reg-action" reg="0xd3" offset="7" mask="0x01"><label class="slider" for="2640pll5"></label></div></div>
-                            <div class="input-group"><label for="2640pll4">PCLK DIV</label><div class="text">0<input id="2640pll4" type="text" minlength="1" maxlength="3" size="3" value="4" class="reg-action" reg="0xd3" offset="0" mask="0x7f">127</div></div>
-      </section>
-      -->       
-
-    </nav>
-  </div>
-  <figure>
+    <figure>
     <div id="stream-container" class="image-container hidden">
       <a id="save-still" href="#" class="button save" download="capture.jpg">Save</a>
       <div class="close" id="close-stream">A?</div>
       <img id="stream" src="" crossorigin>
     </div>
-  </figure>
+    </figure>
   </div>
 </section>
 
@@ -810,23 +760,6 @@ document.addEventListener('DOMContentLoaded', function (event)
   }
   */
 
-  /*
-  const getRegButton = document.getElementById('get-reg')
-  getRegButton.onclick = () => {
-    let reg = parseInt(document.getElementById('get-reg-addr').value);
-    let mask = parseInt(document.getElementById('get-reg-mask').value);
-    let value = document.getElementById('get-reg-value');
-
-    getReg(reg, 0, mask, function(code, txt){
-      if(code != 200){
-        value.innerHTML = 'Error['+code+']: '+txt;
-      } else {
-        value.innerHTML = '0x'+parseInt(txt).toString(16)+' ('+txt+')';
-      }
-    });
-  }
-  */
-
   const setXclkButton = document.getElementById('set-xclk')
   setXclkButton.onclick = () => {
     let xclk = parseInt(document.getElementById('xclk').value);
@@ -838,12 +771,14 @@ document.addEventListener('DOMContentLoaded', function (event)
     });
   }
 
-  const setRegValue = (el) => {
+  const setRegValue = (el) => 
+  {
     let reg = el.attributes.reg?parseInt(el.attributes.reg.nodeValue):0;
     let offset = el.attributes.offset?parseInt(el.attributes.offset.nodeValue):0;
     let mask = el.attributes.mask?parseInt(el.attributes.mask.nodeValue):255;
     let value = 0;
-    switch (el.type) {
+    switch (el.type) 
+    {
       case 'checkbox':
         value = el.checked ? mask : 0;
         break;
@@ -855,30 +790,14 @@ document.addEventListener('DOMContentLoaded', function (event)
       default:
         return;
     }
-
-    setReg(reg, offset, mask, value, function(code, txt){
-      if(code != 200){
+    setReg(reg, offset, mask, value, function(code, txt)
+    {
+      if(code != 200)
+      {
         alert('Error['+code+']: '+txt);
       }
     });
   }
-
-  /* 
-  // Attach on change action for register elements
-  document
-    .querySelectorAll('.reg-action')
-    .forEach(el => {
-        if (el.type === 'text') {
-            el.onkeyup = function(e){
-                if(e.keyCode == 13){
-                    setRegValue(el);
-                }
-            }
-        } else {
-            el.onchange = () => setRegValue(el)
-        }
-    })
-  */  
 
   const updateRegValue = (el, value, updateRemote) => {
     let initialValue;
@@ -932,28 +851,38 @@ document.addEventListener('DOMContentLoaded', function (event)
     el.classList.remove('disabled')
     el.disabled = false
   }
-
+  // ---
+  // Заменить значения в html-строках
+  // ---
   const updateValue = (el, value, updateRemote) => 
   {
-    //console.log("el=",el,"value=",value);
-    updateRemote = updateRemote == null ? true : updateRemote
-    let initialValue
+    // Меняем умалчиваемое значение updateRemote="true" на заданное (как правило ""false")
+    updateRemote = updateRemote == null ? true : updateRemote;
+    let initialValue;
+    // Для элементов, типа checkbox меняем на противоположное
     if (el.type === 'checkbox') 
     {
       initialValue = el.checked
       value = !!value
       el.checked = value
     } 
+    // Для остальных меняем на заданное
     else 
     {
       initialValue = el.value
       el.value = value
     }
-
+    // Если поступила команда на обновление значений в памяти через страницу
+    // сервера "/control" (updateRemote=true), то делаем это
     if (updateRemote && initialValue !== value) 
     {
       updateConfig(el);
     } 
+    // Сворачиваем/раскрываем:
+    // "aec"           - AEC SENSOR - контроль экспозиции;
+    // "agc"           - AGC - освещенность;
+    // "awb_gain"      - Корректировка AWB по освещению;
+    // "led_intensity" - Яркость вспышки
     else if (!updateRemote)
     {
       if (el.id === "aec")
@@ -983,10 +912,15 @@ document.addEventListener('DOMContentLoaded', function (event)
       }
     }
   }
-
-  function updateConfig (el) {
+  // ---
+  // Если поступила команда на обновление значений в памяти через страницу
+  // сервера "/control" (updateRemote=true), то выполнить запрос на обновление
+  // ---
+  function updateConfig (el) 
+  {
     let value
-    switch (el.type) {
+    switch (el.type) 
+    {
       case 'checkbox':
         value = el.checked ? 1 : 0
         break
@@ -1001,64 +935,54 @@ document.addEventListener('DOMContentLoaded', function (event)
       default:
         return
     }
-
+    // Готовим запрос
     const query = `${baseHost}/control?var=${el.id}&val=${value}`
-
+    // Выполняем запрос
     fetch(query)
-      .then(response => {
-        console.log(`request to ${query} finished, status: ${response.status}`)
-      })
+    .then(response => 
+    {
+      console.log(`request to ${query} finished, status: ${response.status}`)
+    })
   }
-
+  // Закрываем html-элементы класса "close"
   document
-    .querySelectorAll('.close')
-    .forEach(el => {
-      el.onclick = () => {
-        hide(el.parentNode)
-      }
-    })
-
-  // ---
-  // Отправить запрос параметров камеры (потока изображений)  на сервер, 
-  // а затем в функцию передать статус ответа и текст ответа
-  // По запросу сервера передать один раз параметры потока изображений    *
-  //          на экране управления в начале сессии главной страницы           *
-  // ---
-  
-  //console.log("ffetchhiv");
-  
+  .querySelectorAll('.close')
+  .forEach(el => 
+  {
+    el.onclick = () => 
+    {
+      hide(el.parentNode)
+    }
+  })
+  // Отправляем запрос параметров камеры (потока изображений) на сервер, 
+  // а затем, после получения их в виде json-строки обновляем значения
+  // html-текста на экране управления в главной странице
   fetch(`${baseHost}/status`)
-    .then(function (response) 
+  .then(function (response) 
+  {
+    console.log("Параметры потока изображений: ");
+    return response.json();
+  })
+  .then(function (state) 
+  {
+    // Перебираем html-строки класса "default-action"
+    document
+    .querySelectorAll('.default-action')
+    // Находим соответствия, выбираем значения из json-строки и заменяем  
+    // значения в html-строках класса "default-action" на выбранные
+    // (третий параметр updateValue = false, это значит не нужно запускать
+    // страницу сервера "/control" для обновления значений в памяти,
+    // так как только-что значения выбрали)
+    .forEach(el => 
     {
-      console.log("Параметры потока изображений: ");
-      return response.json();
+      console.log("el:");
+      console.log(el);
+      console.log("el.id:",el.id,"state[el.id] =",state[el.id]);
+      console.log(" ");
+      updateValue(el, state[el.id], false);
     })
-    .then(function (state) 
-    {
-      document
-      .querySelectorAll('.default-action')
-      .forEach(el => 
-      {
-        console.log("el:");
-        console.log(el);
-        console.log("el.id=",el.id,"state[el.id]=",state[el.id]);
-        console.log(" ");
-        updateValue(el, state[el.id], false)
-      })
-      /*
-      document
-        .querySelectorAll('.reg-action')
-        .forEach(el => {
-            let reg = el.attributes.reg?parseInt(el.attributes.reg.nodeValue):0;
-            if(reg == 0){
-              return;
-            }
-            updateRegValue(el, state['0x'+reg.toString(16)], false)
-        })
-      */
-    })
-  
-
+  })
+  // Выбираем элементы главной страницы
   const view = document.getElementById('stream')
   const viewContainer = document.getElementById('stream-container')
   const stillButton = document.getElementById('get-still')
@@ -1067,16 +991,17 @@ document.addEventListener('DOMContentLoaded', function (event)
   const saveButton = document.getElementById('save-still')
   const ledGroup = document.getElementById('led-group')
 
-  const stopStream = () => {
+  const stopStream = () => 
+  {
     window.stop();
-    streamButton.innerHTML = 'Start Stream'
+    streamButton.innerHTML = 'Включить поток'
   }
 
   const startStream = () => 
   {
     view.src = `${streamUrl}/stream`
     show(viewContainer)
-    streamButton.innerHTML = 'Stop Stream'
+    streamButton.innerHTML = 'Остановить поток'
   }
 
   // Attach actions to buttons
@@ -1092,11 +1017,15 @@ document.addEventListener('DOMContentLoaded', function (event)
     hide(viewContainer)
   }
 
-  streamButton.onclick = () => {
-    const streamEnabled = streamButton.innerHTML === 'Stop Stream'
-    if (streamEnabled) {
+  streamButton.onclick = () => 
+  {
+    const streamEnabled = streamButton.innerHTML === 'Остановить поток'
+    if (streamEnabled) 
+    {
       stopStream()
-    } else {
+    } 
+    else 
+    {
       startStream()
     }
   }
