@@ -648,6 +648,10 @@ static esp_err_t cmd_handler(httpd_req_t *req)
   mask — маска, которая используется, если нужно изменить только определённые биты
 регистра. Например, если задать маску 0xFF, изменится весь регистр, а 0x00 не изменит ничего. 
 Результат метода — значение регистра. Если значение не найдено, метод возвращает -1. 
+
+[esp32-cam_ov2640-timelapse](https://github.com/raduprv/esp32-cam_ov2640-timelapse/blob/main/ov2640_timelapse_github.ino)
+s->set_reg(s,0xd3,0xff,0x8); // clock
+s->set_reg(s,0x11,0xff,0x0); // frame rate
 */
 static int print_reg(char *p, sensor_t *s, uint16_t reg, uint32_t mask) 
 {
@@ -707,7 +711,7 @@ static esp_err_t status_handler(httpd_req_t *req)
   *p++ = 0;
   
   // Трассируем в параметры потока изображений
-  Serial.println("Параметры потока изображений");
+  Serial.println("Параметры потока изображений: ");
   Serial.println(json_response);
   // Возвращаем ответ на запрос с указанием параметров в json-строке
   httpd_resp_set_type(req, "application/json");

@@ -746,6 +746,7 @@ document.addEventListener('DOMContentLoaded', function (event)
         }).
         catch(function(err) 
         {
+          console.log(1113);
           cb(-1, err);
           ut(url,-1,err);
         });
@@ -753,6 +754,7 @@ document.addEventListener('DOMContentLoaded', function (event)
     }).
     catch(function(err) 
     {
+      console.log(1114);
       cb(-1, err);
       ut(url,-1,err);
     });
@@ -861,6 +863,7 @@ document.addEventListener('DOMContentLoaded', function (event)
     });
   }
 
+  /* 
   // Attach on change action for register elements
   document
     .querySelectorAll('.reg-action')
@@ -875,6 +878,7 @@ document.addEventListener('DOMContentLoaded', function (event)
             el.onchange = () => setRegValue(el)
         }
     })
+  */  
 
   const updateRegValue = (el, value, updateRemote) => {
     let initialValue;
@@ -931,31 +935,46 @@ document.addEventListener('DOMContentLoaded', function (event)
 
   const updateValue = (el, value, updateRemote) => 
   {
+    //console.log("el=",el,"value=",value);
     updateRemote = updateRemote == null ? true : updateRemote
     let initialValue
-    if (el.type === 'checkbox') {
+    if (el.type === 'checkbox') 
+    {
       initialValue = el.checked
       value = !!value
       el.checked = value
-    } else {
+    } 
+    else 
+    {
       initialValue = el.value
       el.value = value
     }
 
-    if (updateRemote && initialValue !== value) {
+    if (updateRemote && initialValue !== value) 
+    {
       updateConfig(el);
-    } else if(!updateRemote){
-      if(el.id === "aec"){
+    } 
+    else if (!updateRemote)
+    {
+      if (el.id === "aec")
+      {
         value ? hide(exposure) : show(exposure)
-      } else if(el.id === "agc"){
-        if (value) {
+      } 
+      else if (el.id === "agc")
+      {
+        if (value) 
+        {
           show(gainCeiling)
           hide(agcGain)
-        } else {
+        } 
+        else 
+        {
           hide(gainCeiling)
           show(agcGain)
         }
-      } else if(el.id === "awb_gain"){
+      }
+      else if (el.id === "awb_gain")
+      {
         value ? show(wb) : hide(wb)
       } 
       else if(el.id == "led_intensity")
@@ -999,21 +1018,34 @@ document.addEventListener('DOMContentLoaded', function (event)
       }
     })
 
-  // read initial values
+  // ---
+  // Отправить запрос параметров камеры (потока изображений)  на сервер, 
+  // а затем в функцию передать статус ответа и текст ответа
+  // По запросу сервера передать один раз параметры потока изображений    *
+  //          на экране управления в начале сессии главной страницы           *
+  // ---
   
-  
-  console.log("ffetchhiv");
+  //console.log("ffetchhiv");
   
   fetch(`${baseHost}/status`)
-    .then(function (response) {
-      return response.json()
+    .then(function (response) 
+    {
+      console.log("Параметры потока изображений: ");
+      return response.json();
     })
-    .then(function (state) {
+    .then(function (state) 
+    {
       document
-        .querySelectorAll('.default-action')
-        .forEach(el => {
-          updateValue(el, state[el.id], false)
-        })
+      .querySelectorAll('.default-action')
+      .forEach(el => 
+      {
+        console.log("el:");
+        console.log(el);
+        console.log("el.id=",el.id,"state[el.id]=",state[el.id]);
+        console.log(" ");
+        updateValue(el, state[el.id], false)
+      })
+      /*
       document
         .querySelectorAll('.reg-action')
         .forEach(el => {
@@ -1023,6 +1055,7 @@ document.addEventListener('DOMContentLoaded', function (event)
             }
             updateRegValue(el, state['0x'+reg.toString(16)], false)
         })
+      */
     })
   
 
