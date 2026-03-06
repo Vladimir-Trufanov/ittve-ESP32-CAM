@@ -1,3 +1,28 @@
+/** Arduino, ESP32, C/C++ ************************************ BasicOTA.ino ***
+ * 
+ *         Обеспечить перепрошивку ПО контроллеров ESP8266, ESP32 по WiFi - OTA
+ *   на штатной ArduinoOTA, которая подменяет для перепрошивки последовательный
+ *         порт на порт локальной сети и загружает код после компиляции по WiFi
+ *
+ *    (OTA-обновление (от англ. Over-The-Air update, «обновление по воздуху») — 
+ * способ обновления встроенных систем, при котором обновления передаются через 
+ *    беспроводные сети. Это позволяет распространять новые версии программного 
+ *            обеспечения, снижать затраты на их доставку и ускорять внедрение) 
+ *                                                     
+ * v1.0.2, 06.03.2026                                 Автор:      Труфанов В.Е.
+ * Copyright © 2026 tve                               Дата создания: 05.03.2026
+ * 
+ * Arduino IDE 2.3.8 
+ * Esp32 от Espressif Systems версии 3.3.5
+ * Payment:           "Al Thinker ESP32-CAM"
+ * Partition Scheme:  Minimal SPIFFS (1.9MB App with OTA/128KB SPIFFS)
+ *
+ * CPU Frequency:     "240MHz (WiFi/BT)"
+ * Flash Frequency:   "80MHz"
+ * Flash Mode:        "QIO"
+
+**/
+
 // Copyright 2024 Espressif Systems (Shanghai) PTE LTD
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,12 +49,14 @@ const char* password = "b277a4ee84e8";
 
 uint32_t last_ota_time = 0;
 
-void setup() {
+void setup() 
+{
   Serial.begin(115200);
   Serial.println("Загружаемся!");
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
-  while (WiFi.waitForConnectResult() != WL_CONNECTED) {
+  while (WiFi.waitForConnectResult() != WL_CONNECTED) 
+  {
     Serial.println("Connection Failed! Rebooting...");
     delay(5000);
     ESP.restart();
@@ -50,37 +77,55 @@ void setup() {
   // ArduinoOTA.setPasswordHash("8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918");
 
   ArduinoOTA
-    .onStart([]() {
+    .onStart([]() 
+    {
       String type;
-      if (ArduinoOTA.getCommand() == U_FLASH) {
+      if (ArduinoOTA.getCommand() == U_FLASH) 
+      {
         type = "sketch";
-      } else {  // U_SPIFFS
+      } 
+      else 
+      {  
+        // U_SPIFFS
         type = "filesystem";
       }
 
       // NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
       Serial.println("Start updating " + type);
     })
-    .onEnd([]() {
+    .onEnd([]() 
+    {
       Serial.println("\nEnd");
     })
-    .onProgress([](unsigned int progress, unsigned int total) {
-      if (millis() - last_ota_time > 500) {
+    .onProgress([](unsigned int progress, unsigned int total) 
+    {
+      if (millis() - last_ota_time > 500) 
+      {
         Serial.printf("Прошивание: %u%%\n", (progress / (total / 100)));
         last_ota_time = millis();
       }
     })
-    .onError([](ota_error_t error) {
+    .onError([](ota_error_t error) 
+    {
       Serial.printf("Error[%u]: ", error);
-      if (error == OTA_AUTH_ERROR) {
+      if (error == OTA_AUTH_ERROR) 
+      {
         Serial.println("Auth Failed");
-      } else if (error == OTA_BEGIN_ERROR) {
+      } 
+      else if (error == OTA_BEGIN_ERROR) 
+      {
         Serial.println("Begin Failed");
-      } else if (error == OTA_CONNECT_ERROR) {
+      } 
+      else if (error == OTA_CONNECT_ERROR) 
+      {
         Serial.println("Connect Failed");
-      } else if (error == OTA_RECEIVE_ERROR) {
+      } 
+      else if (error == OTA_RECEIVE_ERROR) 
+      {
         Serial.println("Receive Failed");
-      } else if (error == OTA_END_ERROR) {
+      } 
+      else if (error == OTA_END_ERROR) 
+      {
         Serial.println("End Failed");
       }
     });
@@ -92,6 +137,9 @@ void setup() {
   Serial.println(WiFi.localIP());
 }
 
-void loop() {
+void loop() 
+{
   ArduinoOTA.handle();
 }
+
+// *********************************************************** BasicOTA.ino ***
