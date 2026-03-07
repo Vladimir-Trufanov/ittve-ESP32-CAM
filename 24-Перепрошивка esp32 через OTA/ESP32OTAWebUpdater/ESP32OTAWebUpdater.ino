@@ -96,6 +96,7 @@ const uint8_t IP_Gateway[4]      = {192, 168, 2, 1};
 const uint8_t IP_Subnet[4]       = {255, 255, 255, 0};
 const uint8_t IP_PrimaryDNS[4]   = {8, 8, 8, 8};
 const uint8_t IP_SecondaryDNS[4] = {8, 8, 4, 4};
+char hostname[12];
 
 bool init_wifi()
 {
@@ -178,46 +179,45 @@ bool init_wifi()
   Serial.println("****************************");
   */
   
-      WiFi.begin(ssid, password);  
-      while (WiFi.status() != WL_CONNECTED) 
-      {  
-        delay(1000);  
-        Serial.println("Присоединяемся к WiFi-сети...");  
-      }  
-      Serial.println("Есть подключение к WiFi-сети");  
-
+  /*
+  // Тестовое подключение к WiFi-сети
+  WiFi.begin(ssid, password);  
+  while (WiFi.status() != WL_CONNECTED) 
+  {  
+    delay(1000);  
+    Serial.println("Присоединяемся к WiFi-сети...");  
+  }  
+  Serial.println("Есть подключение к WiFi-сети");  
+  */
   
-  /*8
-  // uncomment the below to use DHCP
-  //WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE); // workaround for bug in WiFi class
+  // Раскомментировать строку ниже, чтобы использовать DHCP
+  // (временное решение проблемы с классом WiFi)
+  // WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE); 
 
+  // Подключаемся к WiFi c использованием DHCP
   WiFi.begin(ssid, password);
-  
-  char hostname[12];
-  sprintf( hostname, "ESP32CAM%d", IP_Address[3] );
-  WiFi.setHostname(hostname);  // only effective when using DHCP
-
-  while (WiFi.status() != WL_CONNECTED ) {
-    delay(500);
+  sprintf(hostname, "ESP32CAM%d", IP_Address[3]);
+  WiFi.setHostname(hostname);  
+  while (WiFi.status() != WL_CONNECTED ) 
+  {
     Serial.print(".");
-    if (connAttempts > 10) {
-      Serial.println("Cannot connect");
-      WiFi.printDiag(Serial);
+    delay(500);
+    if (connAttempts > 10) 
+    {
+      Serial.println("Ошибка подключения к WiFi-сети");  
+      //WiFi.printDiag(Serial);
       //8major_fail();
       return false;
     }
     connAttempts++;
   }
-  */
+  Serial.println(" ");
   return true;
 }
 
-
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-// 
-
-void init_time() {
+void init_time() 
+{
 
   sntp_setoperatingmode(SNTP_OPMODE_POLL);
   sntp_setservername(0, "pool.ntp.org");
@@ -488,38 +488,36 @@ static esp_err_t init_sdcard()
 }
 */
 
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-// idle_task0() - used to calculate system load on CPU0 (run at priority 0)
-//
+// ****************************************************************************
+// *      Задача подготовки расчета системной нагрузки на процессор CPU0      *
+// *                        (работает с приоритетом 0)                        *
+// ****************************************************************************
 static unsigned long idle_cnt0 = 0LL;
-
-static void idle_task0(void *parm) {
-  while(1==1) {
+static void idle_task0(void *parm) 
+{
+  while(1==1) 
+  {
     int64_t now = esp_timer_get_time();     // time anchor
     vTaskDelay(0 / portTICK_RATE_MS);
     int64_t now2 = esp_timer_get_time();
-    idle_cnt0 += (now2 - now) / 1000;        // diff
+    idle_cnt0 += (now2 - now) / 1000;       // diff
   }
 }
-
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-// idle_task1() - used to calculate system load on CPU1 (run at priority 0)
-//
+// ****************************************************************************
+// *      Задача подготовки расчета системной нагрузки на процессор CPU1      *
+// *                        (работает с приоритетом 0)                        *
+// ****************************************************************************
 static unsigned long idle_cnt1 = 0LL;
-
-static void idle_task1(void *parm) {
-  while(1==1) {
+static void idle_task1(void *parm) 
+{
+  while(1==1) 
+  {
     int64_t now = esp_timer_get_time();     // time anchor
     vTaskDelay(0 / portTICK_RATE_MS);
     int64_t now2 = esp_timer_get_time();
-    idle_cnt1 += (now2 - now) / 1000;        // diff
+    idle_cnt1 += (now2 - now) / 1000;       // diff
   }
 }
-
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
@@ -553,6 +551,7 @@ void setup()
   //8 WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); //disable brownout detector
 
   Serial.begin(115200);
+  delay(3000);
 
   pinMode(33, OUTPUT);    // little red led on back of chip
   digitalWrite(33, LOW);  // turn on the red LED on the back of chip
@@ -576,24 +575,21 @@ void setup()
   //}, WiFiEvent_t::SYSTEM_EVENT_STA_DISCONNECTED);
 
   if (init_wifi()) 
-  { // Connected to WiFi
-    Serial.println("Internet connected");
-
+  { 
+    Serial.println("Соединение по WiFi установлено!");
     /*8
     init_time();
     time(&now);
-
     // set timezone
     setenv("TZ", TZ_INFO, 1); 
     tzset();
     time(&now);
     localtime_r(&now, &timeinfo);
-
     Serial.print("After timezone : "); Serial.println(ctime(&now));
     */
   }
 
-/*  
+  /*  
   // SD card init
   esp_err_t card_err = init_sdcard();
   if (card_err != ESP_OK) {
@@ -601,27 +597,24 @@ void setup()
     major_fail();
     return;
   }
-*/
+  */
 
-  //uncomment the section below to report CPU load every 60 seconds
-/*
-  // create tasks for monitoring system load  
+  // Создаём задачи для мониторинга нагрузки на систему  
   xTaskCreatePinnedToCore(idle_task0, "idle_task0", 1024 * 2, NULL,  0, NULL, 0);
   xTaskCreatePinnedToCore(idle_task1, "idle_task1", 1024 * 2, NULL,  0, NULL, 1);
-  xTaskCreate(mon_task, "mon_task", 1024 * 2, NULL, 10, NULL);
-*/
-
+  //xTaskCreate(mon_task, "mon_task", 1024 * 2, NULL, 10, NULL);
+ 
   // allocate PSRAM for holding web page content before sending
   //8the_page = (char*) heap_caps_calloc(8000, 1, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
 
   //8startWebServer();
 
-  digitalWrite(33, HIGH);  // turn off the red LED on the back of chip
+  // turn off the red LED on the back of chip
+  digitalWrite(33, HIGH);  
 
-  Serial.print("ESP32 Ready! Use 'http://");
-  Serial.print(WiFi.localIP());
-  Serial.println("' to connect");
-
+  Serial.print("Hostname: "); Serial.println(hostname);
+  Serial.print("ESP32 Готов! Используйте 'http://");
+  Serial.print(WiFi.localIP()); Serial.println("' для управления из браузера");
 }
 
 
@@ -632,6 +625,15 @@ unsigned long last_wakeup_1sec = 0;
 
 void loop() 
 {
+  // Проверяем работу задач производительности
+  for  (int i = 0;  i < 5; i++) 
+  {
+    Serial.print("  idle_cnt0: "); Serial.print  (idle_cnt0);
+    Serial.print("  idle_cnt1: "); Serial.println(idle_cnt1);
+    delay(1500);
+  }
+
+
   /*8
   if ( (millis() - last_wakeup_1sec) > 1000 ) 
   {       // 1 second
