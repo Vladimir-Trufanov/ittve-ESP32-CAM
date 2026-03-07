@@ -1,5 +1,24 @@
 ## [Как изменить яркость вспышки на 4 пине esp32-cam](#)
 
+### "Обеспечиваем включение вспышки примерно за 150 мс"
+
+Интересная мысль была в CameraWebServer: "Обеспечиваем включение вспышки примерно за 150 мс до вызова функции esp_camera_fb_get() иначе она не будет освещать кадр".
+
+```
+  #if defined(LED_GPIO_NUM)
+    enable_led(true);
+    // Обеспечиваем включение вспышки примерно за 150 мс 
+    // до вызова функции esp_camera_fb_get()
+    // иначе она не будет освещать кадр
+    vTaskDelay(150 / portTICK_PERIOD_MS);  
+    fb = esp_camera_fb_get();             
+    enable_led(false);
+  #else
+    fb = esp_camera_fb_get();
+  #endif
+```
+
+
 ### Управление светодиодом в CameraDachServer
 
 #### HTML:

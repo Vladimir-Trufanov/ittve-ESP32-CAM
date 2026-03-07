@@ -332,7 +332,8 @@ Select an ESP32 firmware file (.bin) to update the ESP32 firmware<br><br>
 // 
 #define UPLOAD_CACHE_SIZE 1600
 
-static esp_err_t updatefirmware_post_handler(httpd_req_t *req) {
+static esp_err_t updatefirmware_post_handler(httpd_req_t *req) 
+{
 
   Serial.println("In updatefirmware_post_handler");
 
@@ -518,25 +519,26 @@ static void idle_task1(void *parm)
     idle_cnt1 += (now2 - now) / 1000;       // diff
   }
 }
+// ****************************************************************************
+// *       mon_task() - used to display system load (run at priority 10)      *
+// ****************************************************************************
+static uint32_t nmon_task = 0;
+static int mon_task_freq =  10; //60;  // how often mon_task will wake in seconds
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//
-// mon_task() - used to display system load (run at priority 10)
-//
-static int mon_task_freq = 60;  // how often mon_task will wake in seconds
-
-static void mon_task(void *parm) {
-  while(1==1) {
+static void mon_task(void *parm) 
+{
+  while(1==1) 
+  {
     float new_cnt0 =  (float)idle_cnt0;    // Save the count for printing it ...
     float new_cnt1 =  (float)idle_cnt1;    // Save the count for printing it ...
-        
     // Compensate for the 100 ms delay artifact: 900 ms = 100%
     float cpu_percent0 = ((99.9 / 90.) * new_cnt0) / (mon_task_freq * 10);
     float cpu_percent1 = ((99.9 / 90.) * new_cnt1) / (mon_task_freq * 10);
-    printf("Load (CPU0, CPU1): %.0f%%, %.0f%%\n", 100 - cpu_percent0, 
-      100 - cpu_percent1); fflush(stdout);
+    printf("%d) Load (CPU0, CPU1): %.0f%%, %.0f%%\n",nmon_task,100 - cpu_percent0,100 - cpu_percent1); 
+    fflush(stdout);
     idle_cnt0 = 0;                        // Reset variable
     idle_cnt1 = 0;                        // Reset variable
+    nmon_task++;
     vTaskDelay((mon_task_freq * 1000) / portTICK_RATE_MS);
   }
 }
@@ -602,12 +604,11 @@ void setup()
   // Создаём задачи для мониторинга нагрузки на систему  
   xTaskCreatePinnedToCore(idle_task0, "idle_task0", 1024 * 2, NULL,  0, NULL, 0);
   xTaskCreatePinnedToCore(idle_task1, "idle_task1", 1024 * 2, NULL,  0, NULL, 1);
-  //xTaskCreate(mon_task, "mon_task", 1024 * 2, NULL, 10, NULL);
+  xTaskCreate(mon_task, "mon_task", 1024 * 2, NULL, 10, NULL);
  
   // allocate PSRAM for holding web page content before sending
-  //8the_page = (char*) heap_caps_calloc(8000, 1, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
-
-  //8startWebServer();
+  the_page = (char*) heap_caps_calloc(8000, 1, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+  startWebServer();
 
   // turn off the red LED on the back of chip
   digitalWrite(33, HIGH);  
@@ -615,6 +616,7 @@ void setup()
   Serial.print("Hostname: "); Serial.println(hostname);
   Serial.print("ESP32 Готов! Используйте 'http://");
   Serial.print(WiFi.localIP()); Serial.println("' для управления из браузера");
+  Serial.print("'http://"); Serial.print(WiFi.localIP()); Serial.println("/updatefirmware'");
 }
 
 
@@ -625,6 +627,7 @@ unsigned long last_wakeup_1sec = 0;
 
 void loop() 
 {
+  /*
   // Проверяем работу задач производительности
   for  (int i = 0;  i < 5; i++) 
   {
@@ -632,7 +635,7 @@ void loop()
     Serial.print("  idle_cnt1: "); Serial.println(idle_cnt1);
     delay(1500);
   }
-
+  */
 
   /*8
   if ( (millis() - last_wakeup_1sec) > 1000 ) 
@@ -646,6 +649,7 @@ void loop()
   }
   delay(200);
   */
-  Serial.println("***** Далее 1 минута ожидания *****");
-  delay(60000);
+  //Serial.println("***** Далее 1 минута ожидания *****");
+  //delay(60000);
+  delay(20);
 }

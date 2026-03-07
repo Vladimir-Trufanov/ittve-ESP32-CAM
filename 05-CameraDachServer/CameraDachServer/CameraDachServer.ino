@@ -1,6 +1,6 @@
 /** Arduino, ESP32, C/C++ **************************** CameraDachServer.ino ***
  * 
- * v4.0.2, 01.03.2026                                 Автор:      Труфанов В.Е.
+ * v4.0.3, 07.03.2026                                 Автор:      Труфанов В.Е.
  * Copyright © 2026 tve                               Дата создания: 26.02.2026
  * 
  * Preferences:       https://espressif.github.io/arduino-esp32/package_esp32_dev_index.json
@@ -93,10 +93,12 @@ void setup()
     #endif
   }
 
+  /*
   #if defined(CAMERA_MODEL_ESP_EYE)
     pinMode(13, INPUT_PULLUP);
     pinMode(14, INPUT_PULLUP);
   #endif
+  */
 
   // Инициализируем камеру
   esp_err_t err = esp_camera_init(&config);
@@ -112,6 +114,7 @@ void setup()
   {
     s->set_framesize(s, FRAMESIZE_QVGA);
   }
+  /*
   #if defined(CAMERA_MODEL_M5STACK_WIDE) || defined(CAMERA_MODEL_M5STACK_ESP32CAM)
     s->set_vflip(s, 1);
     s->set_hmirror(s, 1);
@@ -119,10 +122,7 @@ void setup()
   #if defined(CAMERA_MODEL_ESP32S3_EYE)
     s->set_vflip(s, 1);
   #endif
-  // Устанавливаем режим работы вспышки, если вывод светодиода указан в camera_pins.h
-  #if defined(LED_GPIO_NUM)
-    setupLedFlash();
-  #endif
+  */
   // Подключаемся в WiFi
   WiFi.begin(ssid, password);
   WiFi.setSleep(false);

@@ -626,12 +626,6 @@ input.toggle-section-button:checked+section.toggle-section {
                                 <label class="slider" for="colorbar"></label>
                             </div>
       </div>
-      <div class="input-group" id="led-group">
-        <label for="led_intensity">Яркость вспышки</label>
-        <div class="range-min">0</div>
-        <input type="range" id="led_intensity" min="0" max="255" value="0" class="default-action">
-        <div class="range-max">255</div>
-      </div>
       </nav>
     </div>
 
@@ -645,7 +639,7 @@ input.toggle-section-button:checked+section.toggle-section {
   </div>
 </section>
 
-<!-- --- -->
+<!-- -->
         
 <script>
 document.addEventListener('DOMContentLoaded', function (event) 
@@ -741,24 +735,6 @@ document.addEventListener('DOMContentLoaded', function (event)
   {
     fetchUrl(`${baseHost}/resolution?sx=${start_x}&sy=${start_y}&ex=${end_x}&ey=${end_y}&offx=${offset_x}&offy=${offset_y}&tx=${total_x}&ty=${total_y}&ox=${output_x}&oy=${output_y}&scale=${scaling}&binning=${binning}`, cb);
   }
-
-  /*
-  const setRegButton = document.getElementById('set-reg')
-  setRegButton.onclick = () => 
-  {
-    let reg = parseInt(document.getElementById('reg-addr').value);
-    let mask = parseInt(document.getElementById('reg-mask').value);
-    let value = parseInt(document.getElementById('reg-value').value);
-
-    setReg(reg, 0, mask, value, function(code, txt)
-    {
-      if(code != 200)
-      {
-        alert('Error['+code+']: '+txt);
-      }
-    });
-  }
-  */
 
   const setXclkButton = document.getElementById('set-xclk')
   setXclkButton.onclick = () => {
@@ -882,7 +858,6 @@ document.addEventListener('DOMContentLoaded', function (event)
     // "aec"           - AEC SENSOR - контроль экспозиции;
     // "agc"           - AGC - освещенность;
     // "awb_gain"      - Корректировка AWB по освещению;
-    // "led_intensity" - Яркость вспышки
     else if (!updateRemote)
     {
       if (el.id === "aec")
@@ -906,10 +881,6 @@ document.addEventListener('DOMContentLoaded', function (event)
       {
         value ? show(wb) : hide(wb)
       } 
-      else if(el.id == "led_intensity")
-      {
-        value > -1 ? show(ledGroup) : hide(ledGroup)
-      }
     }
   }
   // ---

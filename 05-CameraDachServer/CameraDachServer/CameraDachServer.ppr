@@ -20,6 +20,7 @@ CameraDachServer
 	+CameraDachServer
 		+html
 			html\camera_index_v4.html
+			html\new.html
 		app_httpd.cpp
 		board_config.h
 		camera_index.h
@@ -30,24 +31,24 @@ CameraDachServer
 [Open project files]
 0=CameraDachServer.ino
 1=html\camera_index_v4.html
-2=app_httpd.cpp
-3=camera_pins.h
-4=camera_index.h
+2=camera_index.h
+3=app_httpd.cpp
+4=camera_pins.h
 [Selected Project Files]
 Main=
-Selected=camera_pins.h
+Selected=app_httpd.cpp
 [CameraDachServer.ino]
-TopLine=94
-Caret=3,109
+TopLine=113
+Caret=14,3
 [html\camera_index_v4.html]
-TopLine=951
-Caret=48,980
-[app_httpd.cpp]
-TopLine=538
-Caret=31,565
-[camera_pins.h]
-TopLine=33
-Caret=1,62
+TopLine=1034
+Caret=1,1072
 [camera_index.h]
-TopLine=537
-Caret=40,576
+TopLine=528
+Caret=80,567
+[app_httpd.cpp]
+TopLine=1006
+Caret=1,115
+[camera_pins.h]
+TopLine=1
+Caret=17,5

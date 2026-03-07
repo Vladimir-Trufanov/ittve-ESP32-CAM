@@ -27,5 +27,5 @@ ESP32OTAWebUpdater
 Main=
 Selected=ESP32OTAWebUpdater.ino
 [ESP32OTAWebUpdater.ino]
-TopLine=619
-Caret=4,634
+TopLine=626
+Caret=1,620

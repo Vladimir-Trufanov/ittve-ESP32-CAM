@@ -113,13 +113,6 @@
 #include "esp32-hal-log.h"
 #endif
 
-// Определяем диапазон свечения вспышки при съемке
-#if defined(LED_GPIO_NUM)
-  #define CONFIG_LED_MAX_INTENSITY 255
-  int led_duty = 0;
-  bool isStreaming = false;
-#endif
-
 typedef struct 
 {
   httpd_req_t *req;
@@ -176,22 +169,6 @@ static int ra_filter_run(ra_filter_t *filter, int value)
     filter->count++;
   }
   return filter->sum / filter->count;
-}
-#endif
-
-#if defined(LED_GPIO_NUM)
-// Включить или выключить светодиод
-void enable_led(bool en) 
-{ 
-  int duty = en ? led_duty : 0;
-  if (en && isStreaming && (led_duty > CONFIG_LED_MAX_INTENSITY)) 
-  {
-    duty = CONFIG_LED_MAX_INTENSITY;
-  }
-  ledcWrite(LED_GPIO_NUM, duty);
-  //ledc_set_duty(CONFIG_LED_LEDC_SPEED_MODE, CONFIG_LED_LEDC_CHANNEL, duty);
-  //ledc_update_duty(CONFIG_LED_LEDC_SPEED_MODE, CONFIG_LED_LEDC_CHANNEL);
-  log_i("Set LED intensity to %d", duty);
 }
 #endif
 
@@ -259,19 +236,8 @@ static esp_err_t capture_handler(httpd_req_t *req)
   #if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
     int64_t fr_start = esp_timer_get_time();
   #endif
-
-  #if defined(LED_GPIO_NUM)
-    enable_led(true);
-    // Обеспечиваем включение вспышки примерно за 150 мс 
-    // до вызова функции esp_camera_fb_get()
-    // иначе она не будет освещать кадр
-    vTaskDelay(150 / portTICK_PERIOD_MS);  
-    fb = esp_camera_fb_get();             
-    enable_led(false);
-  #else
-    fb = esp_camera_fb_get();
-  #endif
-
+  fb = esp_camera_fb_get();
+  
   if (!fb) 
   {
     log_e("Не удалось выполнить захват с камеры");
@@ -337,12 +303,7 @@ static esp_err_t stream_handler(httpd_req_t *req)
 
   httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
   httpd_resp_set_hdr(req, "X-Framerate", "60");
-
-  #if defined(LED_GPIO_NUM)
-    isStreaming = true;
-    enable_led(true);
-  #endif
-
+  
   while (true) 
   {
     fb = esp_camera_fb_get();
@@ -415,11 +376,6 @@ static esp_err_t stream_handler(httpd_req_t *req)
       1000.0 / avg_frame_time
     );
   }
-
-  #if defined(LED_GPIO_NUM)
-    isStreaming = false;
-    enable_led(false);
-  #endif
   return res;
 }
 
@@ -610,17 +566,7 @@ static esp_err_t cmd_handler(httpd_req_t *req)
   else if (!strcmp(variable, "special_effect")) 
   {
     res = s->set_special_effect(s, val);
-  } 
-  #if defined(LED_GPIO_NUM)
-  else if (!strcmp(variable, "led_intensity")) 
-  {
-    led_duty = val;
-    if (isStreaming) 
-    {
-      enable_led(true);
-    }
   }
-  #endif
   else 
   {
     log_i("Unknown command: %s", variable);
@@ -702,11 +648,6 @@ static esp_err_t status_handler(httpd_req_t *req)
   p += sprintf(p, "\"vflip\":%u,", s->status.vflip);
   p += sprintf(p, "\"dcw\":%u,", s->status.dcw);
   p += sprintf(p, "\"colorbar\":%u", s->status.colorbar);
-  #if defined(LED_GPIO_NUM)
-    p += sprintf(p, ",\"led_intensity\":%u", led_duty);
-  #else
-    p += sprintf(p, ",\"led_intensity\":%d", -1);
-  #endif
   *p++ = '}';
   *p++ = 0;
   
@@ -1098,15 +1039,6 @@ void startCameraServer()
   {
     httpd_register_uri_handler(stream_httpd, &stream_uri);
   }
-}
-
-void setupLedFlash() 
-{
-  #if defined(LED_GPIO_NUM)
-    ledcAttach(LED_GPIO_NUM, 5000, 8);
-  #else
-    log_i("Светодиодная вспышка отключена -> LED_GPIO_NUM не определен");
-  #endif
 }
 
 // ********************************************************** app_httpd.cpp ***
